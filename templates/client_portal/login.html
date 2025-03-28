@@ -1,0 +1,140 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Login - Client Portal{% endblock %}
+
+{% block extra_css %}
+<style>
+    .login-container {
+        min-height: 70vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .login-card {
+        max-width: 450px;
+        width: 100%;
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+        overflow: hidden;
+    }
+
+    .login-header {
+        background-color: var(--primary-color);
+        color: white;
+        padding: 30px;
+        text-align: center;
+    }
+
+    .login-header h2 {
+        margin-bottom: 0;
+        font-weight: 700;
+    }
+
+    .login-body {
+        padding: 30px;
+    }
+
+    .login-footer {
+        text-align: center;
+        padding: 15px;
+        background-color: var(--light-gray);
+        border-top: 1px solid #e3e6f0;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-control {
+        border-radius: 5px;
+        padding: 12px;
+    }
+
+    .btn-login {
+        width: 100%;
+        padding: 12px;
+        background-color: var(--primary-color);
+        border: none;
+        border-radius: 5px;
+        color: white;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+
+    .btn-login:hover {
+        background-color: var(--primary-dark);
+    }
+
+    .login-icon {
+        font-size: 3rem;
+        margin-bottom: 20px;
+        color: white;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="login-container">
+    <div class="login-card">
+        <div class="login-header">
+            <i class="fas fa-user-circle login-icon"></i>
+            <h2>Client Login</h2>
+            <p>Sign in to access your projects</p>
+        </div>
+        <div class="login-body">
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert {% if message.tags == 'error' %}alert-danger{% else %}alert-{{ message.tags }}{% endif %} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+            <form method="post" action="{% url 'client_portal:login' %}">
+                {% csrf_token %}
+
+                <div class="form-group">
+                    <label for="{{ form.username.id_for_label }}" class="form-label">Username or Email</label>
+                    {{ form.username }}
+                    {% if form.username.errors %}
+                        <div class="text-danger mt-1">
+                            {{ form.username.errors }}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    <label for="{{ form.password.id_for_label }}" class="form-label">Password</label>
+                    {{ form.password }}
+                    {% if form.password.errors %}
+                        <div class="text-danger mt-1">
+                            {{ form.password.errors }}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="remember-me">
+                        <label class="form-check-label" for="remember-me">
+                            Remember Me
+                        </label>
+                    </div>
+                    <a href="#" class="text-decoration-none">Forgot Password?</a>
+                </div>
+
+                <button type="submit" class="btn btn-login">Login</button>
+            </form>
+        </div>
+        <div class="login-footer">
+            <p class="mb-0">
+                Don't have an account? <a href="{% url 'client_portal:register' %}" class="text-decoration-none">Register here</a>
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}

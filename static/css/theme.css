@@ -1,0 +1,171 @@
+/* Theme Stylesheet for CloudLink_Devs */
+
+/* Light Mode (default) */
+.light-mode {
+    --text-color: #333333;
+    --bg-color: #ffffff;
+    --light-gray: #f8f9fa;
+    --card-bg: #ffffff;
+    --input-bg: #ffffff;
+}
+
+/* Dark Mode */
+.dark-mode {
+    --text-color: #f0f0f0;
+    --bg-color: #121212;
+    --light-gray: #2a2a2a;
+    --card-bg: #202020;
+    --input-bg: #2a2a2a;
+}
+
+/* Navbar Dark Mode */
+.dark-mode .navbar {
+    background-color: #202020 !important;
+}
+
+.dark-mode .navbar-light .navbar-brand,
+.dark-mode .navbar-light .navbar-nav .nav-link {
+    color: #f0f0f0;
+}
+
+.dark-mode .dropdown-menu {
+    background-color: #202020;
+}
+
+.dark-mode .dropdown-item {
+    color: #f0f0f0;
+}
+
+.dark-mode .dropdown-item:hover {
+    background-color: #2a2a2a;
+}
+
+/* Card and Content Dark Mode */
+.dark-mode .card,
+.dark-mode .service-card,
+.dark-mode .testimonial-card,
+.dark-mode .mission-card,
+.dark-mode .vision-card,
+.dark-mode .team-card,
+.dark-mode .work-card,
+.dark-mode .contact-info,
+.dark-mode .contact-form {
+    background-color: var(--card-bg);
+    border-color: #333;
+    color: var(--text-color);
+}
+
+.dark-mode .card-title,
+.dark-mode .service-card h3,
+.dark-mode .testimonial-card h4,
+.dark-mode .team-card h4,
+.dark-mode h1,
+.dark-mode h2,
+.dark-mode h3,
+.dark-mode h4,
+.dark-mode h5,
+.dark-mode h6 {
+    color: #f0f0f0;
+}
+
+.dark-mode .features-section,
+.dark-mode .mission-vision,
+.dark-mode .timeline-section,
+.dark-mode .recent-work-section {
+    background-color: #1a1a1a;
+}
+
+/* Buttons and UI Elements Dark Mode */
+.dark-mode .btn-light {
+    background-color: #2a2a2a;
+    border-color: #333;
+    color: #f0f0f0;
+}
+
+.dark-mode .btn-outline-light {
+    border-color: #f0f0f0;
+    color: #f0f0f0;
+}
+
+.dark-mode .service-icon,
+.dark-mode .card-icon {
+    background-color: #2a2a2a;
+}
+
+.dark-mode .social-link {
+    background-color: #2a2a2a;
+}
+
+.dark-mode .timeline-date {
+    color: var(--accent-color);
+}
+
+/* Form Elements Dark Mode */
+.dark-mode .form-control {
+    background-color: var(--input-bg);
+    border-color: #444;
+    color: #f0f0f0;
+}
+
+.dark-mode .form-control:focus {
+    border-color: var(--primary-color);
+}
+
+.dark-mode .form-check-label {
+    color: #f0f0f0;
+}
+
+/* Table Dark Mode */
+.dark-mode .table {
+    color: #f0f0f0;
+}
+
+.dark-mode hr {
+    border-color: #444;
+}
+
+/* Chat Widget Dark Mode */
+.dark-mode .chat-container {
+    background-color: #202020;
+}
+
+.dark-mode .message.bot p {
+    background-color: #2a2a2a;
+    color: #f0f0f0;
+}
+
+.dark-mode .chat-input input {
+    background-color: #2a2a2a;
+    color: #f0f0f0;
+}
+
+/* Other Dark Mode Adjustments */
+.dark-mode .testimonial-content:before {
+    color: #2a2a2a;
+}
+
+.dark-mode .map-placeholder {
+    background-color: #2a2a2a;
+    color: #f0f0f0;
+}
+
+/* Transitions for smooth theme switching */
+body,
+.navbar,
+.card,
+.chat-container,
+.chat-messages,
+.form-control,
+.dropdown-menu,
+.btn,
+.service-card,
+.feature-item,
+.testimonial-card,
+.work-card,
+.mission-card,
+.vision-card,
+.team-card,
+.contact-info,
+.contact-form {
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}

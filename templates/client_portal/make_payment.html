@@ -1,0 +1,418 @@
+{% extends 'client_portal/base.html' %}
+{% load static %}
+
+{% block client_portal_title %}Make Payment - Client Portal{% endblock %}
+
+{% block breadcrumb_items %}
+<li class="breadcrumb-item"><a href="{% url 'client_portal:invoices' %}">Invoices</a></li>
+<li class="breadcrumb-item"><a href="{% url 'client_portal:invoice_detail' pk=invoice.id %}">Invoice #{{ invoice.invoice_number }}</a></li>
+<li class="breadcrumb-item active">Make Payment</li>
+{% endblock %}
+
+{% block page_title %}Make Payment{% endblock %}
+
+{% block client_portal_css %}
+<style>
+    .payment-container {
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+        margin-bottom: 30px;
+        padding: 30px;
+    }
+    
+    .invoice-summary {
+        background-color: #f8f9fc;
+        border-radius: 10px;
+        padding: 20px;
+        margin-bottom: 30px;
+    }
+    
+    .payment-methods {
+        margin-bottom: 30px;
+    }
+    
+    .payment-method-card {
+        border: 2px solid #e3e6f0;
+        border-radius: 10px;
+        padding: 20px;
+        margin-bottom: 20px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+    
+    .payment-method-card:hover {
+        border-color: var(--primary-color);
+        background-color: rgba(78, 115, 223, 0.05);
+    }
+    
+    .payment-method-card.selected {
+        border-color: var(--primary-color);
+        background-color: rgba(78, 115, 223, 0.05);
+    }
+    
+    .payment-method-icon {
+        font-size: 2rem;
+        margin-bottom: 15px;
+        color: var(--primary-color);
+    }
+    
+    .payment-method-title {
+        font-weight: 700;
+        margin-bottom: 5px;
+    }
+    
+    .payment-method-description {
+        color: #858796;
+        font-size: 0.9rem;
+    }
+    
+    .payment-form {
+        margin-top: 30px;
+    }
+    
+    .credit-card-form {
+        max-width: 500px;
+        margin: 0 auto;
+    }
+    
+    .form-group {
+        margin-bottom: 20px;
+    }
+    
+    .card-icon {
+        font-size: 1.5rem;
+        margin-right: 10px;
+    }
+    
+    .card-number-group {
+        position: relative;
+    }
+    
+    .card-type {
+        position: absolute;
+        top: 50%;
+        right: 15px;
+        transform: translateY(-50%);
+        font-size: 1.5rem;
+    }
+    
+    .expiry-cvv-group {
+        display: flex;
+        gap: 15px;
+    }
+    
+    .expiry-group {
+        flex: 1;
+    }
+    
+    .cvv-group {
+        flex: 1;
+    }
+    
+    .payment-btn {
+        margin-top: 20px;
+    }
+
+    .secure-badge {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        margin-top: 20px;
+        color: #6c757d;
+    }
+</style>
+{% endblock %}
+
+{% block client_portal_content %}
+<div class="row">
+    <div class="col-lg-8 mx-auto">
+        <div class="payment-container">
+            <!-- Invoice Summary -->
+            <div class="invoice-summary">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h5 class="mb-0">Invoice Summary</h5>
+                    <a href="{% url 'client_portal:invoice_detail' pk=invoice.id %}" class="btn btn-sm btn-outline-primary">View Invoice</a>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <strong>Invoice #:</strong> {{ invoice.invoice_number }}
+                        </div>
+                        <div class="mb-3">
+                            <strong>Issue Date:</strong> {{ invoice.issue_date|date:"M d, Y" }}
+                        </div>
+                        <div class="mb-3">
+                            <strong>Due Date:</strong> {{ invoice.due_date|date:"M d, Y" }}
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <strong>Total Amount:</strong> ${{ invoice.total|floatformat:2 }}
+                        </div>
+                        <div class="mb-3">
+                            <strong>Amount Paid:</strong> ${{ invoice.amount_paid|floatformat:2 }}
+                        </div>
+                        <div class="mb-3">
+                            <strong>Balance Due:</strong> ${{ invoice.balance_due|floatformat:2 }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Payment Form -->
+            <h4 class="mb-4">Make a Payment</h4>
+            
+            <form method="post" action="{% url 'client_portal:make_payment' invoice_id=invoice.id %}" id="payment-form">
+                {% csrf_token %}
+                
+                <!-- Payment Methods -->
+                <div class="payment-methods">
+                    <h5 class="mb-3">Select Payment Method</h5>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="payment-method-card selected" data-method="credit_card">
+                                <div class="text-center">
+                                    <div class="payment-method-icon">
+                                        <i class="fas fa-credit-card"></i>
+                                    </div>
+                                    <h5 class="payment-method-title">Credit Card</h5>
+                                    <p class="payment-method-description">Pay securely with your credit card</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="payment-method-card" data-method="paypal">
+                                <div class="text-center">
+                                    <div class="payment-method-icon">
+                                        <i class="fab fa-paypal"></i>
+                                    </div>
+                                    <h5 class="payment-method-title">PayPal</h5>
+                                    <p class="payment-method-description">Pay with your PayPal account</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="payment-method-card" data-method="mpesa">
+                                <div class="text-center">
+                                    <div class="payment-method-icon">
+                                        <i class="fas fa-mobile-alt"></i>
+                                    </div>
+                                    <h5 class="payment-method-title">M-Pesa</h5>
+                                    <p class="payment-method-description">Pay using M-Pesa</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Amount Input -->
+                <div class="form-group">
+                    <label for="{{ form.amount.id_for_label }}" class="form-label">Payment Amount</label>
+                    <div class="input-group">
+                        <span class="input-group-text">$</span>
+                        {{ form.amount }}
+                    </div>
+                    {% if form.amount.errors %}
+                        <div class="text-danger mt-1">
+                            {{ form.amount.errors }}
+                        </div>
+                    {% endif %}
+                    <div class="form-text">Enter the amount you wish to pay. Maximum amount is ${{ invoice.balance_due|floatformat:2 }}</div>
+                </div>
+                
+                <!-- Payment Method (Hidden) -->
+                {{ form.payment_method }}
+                
+                <!-- Credit Card Form -->
+                <div id="credit-card-form" class="payment-form">
+                    <div class="credit-card-form">
+                        <div class="form-group">
+                            <label for="cardholder-name" class="form-label">Cardholder Name</label>
+                            <input type="text" class="form-control" id="cardholder-name" placeholder="John Doe">
+                        </div>
+                        
+                        <div class="form-group card-number-group">
+                            <label for="card-number" class="form-label">Card Number</label>
+                            <input type="text" class="form-control" id="card-number" placeholder="1234 5678 9012 3456">
+                            <div class="card-type">
+                                <i class="fab fa-cc-visa"></i>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group expiry-cvv-group">
+                            <div class="expiry-group">
+                                <label for="expiry-date" class="form-label">Expiry Date</label>
+                                <input type="text" class="form-control" id="expiry-date" placeholder="MM/YY">
+                            </div>
+                            <div class="cvv-group">
+                                <label for="cvv" class="form-label">CVV</label>
+                                <input type="text" class="form-control" id="cvv" placeholder="123">
+                            </div>
+                        </div>
+
+                        <div class="mt-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="save-card">
+                                <label class="form-check-label" for="save-card">
+                                    Save card for future payments
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- PayPal Form -->
+                <div id="paypal-form" class="payment-form d-none">
+                    <p class="text-center">You will be redirected to PayPal to complete your payment after you click the "Proceed to Payment" button below.</p>
+                    <div class="text-center">
+                        <img src="https://www.paypalobjects.com/webstatic/mktg/logo/pp_cc_mark_111x69.jpg" alt="PayPal" height="60">
+                    </div>
+                </div>
+                
+                <!-- M-Pesa Form -->
+                <div id="mpesa-form" class="payment-form d-none">
+                    <div class="form-group">
+                        <label for="phone-number" class="form-label">M-Pesa Phone Number</label>
+                        <input type="text" class="form-control" id="phone-number" placeholder="+2547XXXXXXXX">
+                        <div class="form-text">Enter the phone number linked to your M-Pesa account</div>
+                    </div>
+                    <p class="text-center mt-3">
+                        You will receive a prompt on your phone to confirm the payment after clicking the button below.
+                    </p>
+                </div>
+                
+                <!-- Submit Button -->
+                <div class="text-center payment-btn">
+                    <button type="submit" class="btn btn-success btn-lg">
+                        <i class="fas fa-lock me-2"></i> Proceed to Payment
+                    </button>
+                </div>
+                
+                <div class="secure-badge">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>All payments are secure and encrypted.</span>
+                </div>
+                
+                <div class="text-center mt-4">
+                    <div class="row justify-content-center">
+                        <div class="col-auto">
+                            <i class="fab fa-cc-visa fa-2x mx-1 text-muted"></i>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fab fa-cc-mastercard fa-2x mx-1 text-muted"></i>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fab fa-cc-amex fa-2x mx-1 text-muted"></i>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fab fa-cc-discover fa-2x mx-1 text-muted"></i>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block client_portal_js %}
+<script>
+    $(document).ready(function() {
+        // Payment method selection
+        $('.payment-method-card').on('click', function() {
+            $('.payment-method-card').removeClass('selected');
+            $(this).addClass('selected');
+            
+            const method = $(this).data('method');
+            $('#id_payment_method').val(method);
+            
+            // Show the appropriate form
+            $('.payment-form').addClass('d-none');
+            if (method === 'credit_card') {
+                $('#credit-card-form').removeClass('d-none');
+            } else if (method === 'paypal') {
+                $('#paypal-form').removeClass('d-none');
+            } else if (method === 'mpesa') {
+                $('#mpesa-form').removeClass('d-none');
+            }
+        });
+        
+        // Format credit card number
+        $('#card-number').on('input', function() {
+            let value = $(this).val().replace(/\D/g, '');
+            let formattedValue = '';
+            
+            for (let i = 0; i < value.length; i++) {
+                if (i > 0 && i % 4 === 0) {
+                    formattedValue += ' ';
+                }
+                formattedValue += value[i];
+            }
+            
+            $(this).val(formattedValue);
+            
+            // Detect card type (simple example)
+            if (value.startsWith('4')) {
+                $('.card-type i').attr('class', 'fab fa-cc-visa');
+            } else if (value.startsWith('5')) {
+                $('.card-type i').attr('class', 'fab fa-cc-mastercard');
+            } else if (value.startsWith('3')) {
+                $('.card-type i').attr('class', 'fab fa-cc-amex');
+            } else if (value.startsWith('6')) {
+                $('.card-type i').attr('class', 'fab fa-cc-discover');
+            } else {
+                $('.card-type i').attr('class', 'fab fa-credit-card');
+            }
+        });
+        
+        // Format expiry date
+        $('#expiry-date').on('input', function() {
+            let value = $(this).val().replace(/\D/g, '');
+            let formattedValue = '';
+            
+            if (value.length > 0) {
+                formattedValue = value.substring(0, Math.min(2, value.length));
+                if (value.length > 2) {
+                    formattedValue += '/' + value.substring(2, Math.min(4, value.length));
+                }
+            }
+            
+            $(this).val(formattedValue);
+        });
+        
+        // Limit CVV to 3 or 4 digits
+        $('#cvv').on('input', function() {
+            let value = $(this).val().replace(/\D/g, '');
+            $(this).val(value.substring(0, 4));
+        });
+        
+        // Form validation
+        $('#payment-form').on('submit', function(e) {
+            const method = $('#id_payment_method').val();
+            
+            if (method === 'credit_card') {
+                const cardholderName = $('#cardholder-name').val();
+                const cardNumber = $('#card-number').val().replace(/\s/g, '');
+                const expiryDate = $('#expiry-date').val();
+                const cvv = $('#cvv').val();
+                
+                if (!cardholderName || !cardNumber || !expiryDate || !cvv) {
+                    alert('Please fill in all credit card details');
+                    e.preventDefault();
+                    return false;
+                }
+            } else if (method === 'mpesa') {
+                const phoneNumber = $('#phone-number').val();
+                
+                if (!phoneNumber) {
+                    alert('Please enter your M-Pesa phone number');
+                    e.preventDefault();
+                    return false;
+                }
+            }
+        });
+    });
+</script>
+{% endblock %}

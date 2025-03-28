@@ -1,0 +1,668 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}App Development Services - CloudLink_Devs{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* Service Header */
+    .service-header {
+        background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+        color: white;
+        padding: 80px 0;
+        text-align: center;
+    }
+
+    .service-header h1 {
+        font-weight: 800;
+        margin-bottom: 20px;
+    }
+
+    /* Main Content */
+    .service-intro {
+        padding: 80px 0;
+    }
+
+    .intro-image {
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    }
+
+    .intro-text h2 {
+        margin-bottom: 25px;
+        font-weight: 700;
+    }
+
+    /* Features Section */
+    .features-section {
+        padding: 80px 0;
+        background-color: var(--light-gray);
+    }
+
+    .feature-card {
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+        background-color: white;
+        height: 100%;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .feature-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 1rem 3rem rgba(58, 59, 69, 0.175);
+    }
+
+    .feature-icon {
+        width: 60px;
+        height: 60px;
+        background-color: var(--light-gray);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--accent-color);
+        font-size: 1.5rem;
+        margin-bottom: 20px;
+    }
+
+    /* Platforms Section */
+    .platforms-section {
+        padding: 80px 0;
+    }
+
+    .platform-card {
+        text-align: center;
+        padding: 30px;
+        margin-bottom: 30px;
+    }
+
+    .platform-icon {
+        font-size: 3rem;
+        color: var(--primary-color);
+        margin-bottom: 20px;
+    }
+
+    .platform-content h3 {
+        margin-bottom: 15px;
+    }
+
+    /* Process Section */
+    .process-section {
+        padding: 80px 0;
+        background-color: var(--light-gray);
+    }
+
+    .process-step {
+        text-align: center;
+        padding: 30px;
+        position: relative;
+    }
+
+    .step-number {
+        width: 50px;
+        height: 50px;
+        background-color: var(--primary-color);
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.25rem;
+        font-weight: 700;
+        margin: 0 auto 20px;
+    }
+
+    .step-connector {
+        position: absolute;
+        top: 55px;
+        right: -15px;
+        width: 30px;
+        height: 2px;
+        background-color: var(--primary-color);
+        z-index: 1;
+    }
+
+    .step-connector:after {
+        content: '';
+        position: absolute;
+        right: 0;
+        top: -4px;
+        width: 10px;
+        height: 10px;
+        border-top: 2px solid var(--primary-color);
+        border-right: 2px solid var(--primary-color);
+        transform: rotate(45deg);
+    }
+
+    /* Last step has no connector */
+    .process-step:last-child .step-connector {
+        display: none;
+    }
+
+    /* Projects Section */
+    .projects-section {
+        padding: 80px 0;
+    }
+
+    .project-card {
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+        margin-bottom: 30px;
+        background-color: white;
+        height: 100%;
+    }
+
+    .project-image {
+        height: 200px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .project-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+    }
+
+    .project-card:hover .project-image img {
+        transform: scale(1.1);
+    }
+
+    .project-info {
+        padding: 20px;
+    }
+
+    .project-info h4 {
+        margin-bottom: 10px;
+    }
+
+    /* FAQ Section */
+    .faq-section {
+        padding: 80px 0;
+        background-color: var(--light-gray);
+    }
+
+    .accordion-item {
+        margin-bottom: 15px;
+        border-radius: 10px;
+        overflow: hidden;
+        border: none;
+    }
+
+    .accordion-button {
+        background-color: white;
+        font-weight: 600;
+        padding: 20px;
+    }
+
+    .accordion-button:not(.collapsed) {
+        color: var(--primary-color);
+        background-color: white;
+    }
+
+    .accordion-button:focus {
+        box-shadow: none;
+        border-color: rgba(0, 0, 0, 0.125);
+    }
+
+    /* CTA Section */
+    .cta-section {
+        padding: 80px 0;
+        background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+        color: white;
+        text-align: center;
+    }
+
+    .cta-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 1.5rem;
+    }
+
+    .cta-text {
+        max-width: 700px;
+        margin: 0 auto 2rem;
+        opacity: 0.9;
+    }
+
+    /* Dark mode adaptations */
+    body.dark-mode .feature-card,
+    body.dark-mode .project-card {
+        background-color: #2a2c3e;
+    }
+
+    body.dark-mode .feature-icon {
+        background-color: #3a3d52;
+    }
+
+    body.dark-mode .features-section,
+    body.dark-mode .process-section,
+    body.dark-mode .faq-section {
+        background-color: #222533;
+    }
+
+    body.dark-mode .accordion-button {
+        background-color: #2a2c3e;
+        color: #f8f9fc;
+    }
+
+    body.dark-mode .accordion-button:not(.collapsed) {
+        color: var(--accent-color);
+        background-color: #2a2c3e;
+    }
+
+    body.dark-mode .accordion-body {
+        background-color: #2a2c3e;
+        color: #f8f9fc;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Service Header -->
+<section class="service-header">
+    <div class="container">
+        <h1>Mobile App Development</h1>
+        <p class="lead">Custom mobile applications that connect you with your customers</p>
+    </div>
+</section>
+
+<!-- Service Intro -->
+<section class="service-intro">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 mb-4 mb-lg-0">
+                <div class="intro-image">
+                    <img src="{% static 'images/app-development-intro.jpg' %}" alt="App Development" class="img-fluid">
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="intro-text">
+                    <h2>Transform Your Business with a Custom Mobile App</h2>
+                    <p>In today's mobile-first world, having a custom mobile application can be a game-changer for your business. At CloudLink_Devs, we create native and cross-platform mobile apps that help businesses engage with customers, streamline operations, and drive growth.</p>
+                    <p>Our experienced team of mobile developers works closely with you to understand your business needs and develop a mobile app that delivers exceptional user experiences across all devices. From concept to launch and beyond, we provide comprehensive mobile app development services that bring your ideas to life.</p>
+                    <a href="{% url 'quotes:service_estimator' %}" class="btn btn-primary mt-3">Get a Free Quote</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="features-section">
+    <div class="container">
+        <div class="section-title text-center mb-5">
+            <h2>Our App Development Services</h2>
+            <p>End-to-end mobile app development solutions</p>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fab fa-android"></i>
+                    </div>
+                    <h3>Android App Development</h3>
+                    <p>Custom Android applications that work flawlessly across all Android devices and versions.</p>
+                    <ul class="mt-3">
+                        <li>Native Android development</li>
+                        <li>Material Design implementation</li>
+                        <li>Google Play Store publishing</li>
+                        <li>Android app optimization</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fab fa-apple"></i>
+                    </div>
+                    <h3>iOS App Development</h3>
+                    <p>Elegant iOS applications that provide exceptional user experiences on iPhone and iPad.</p>
+                    <ul class="mt-3">
+                        <li>Native iOS development</li>
+                        <li>Apple Human Interface Guidelines</li>
+                        <li>App Store submission</li>
+                        <li>iOS app optimization</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3>Cross-Platform Development</h3>
+                    <p>Cost-effective solutions that work on both iOS and Android from a single codebase.</p>
+                    <ul class="mt-3">
+                        <li>React Native development</li>
+                        <li>Flutter development</li>
+                        <li>Code reusability</li>
+                        <li>Faster time-to-market</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-palette"></i>
+                    </div>
+                    <h3>UI/UX Design</h3>
+                    <p>Intuitive and engaging user interfaces that enhance the overall app experience.</p>
+                    <ul class="mt-3">
+                        <li>User-centered design</li>
+                        <li>Wireframing and prototyping</li>
+                        <li>Interactive animations</li>
+                        <li>User testing</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-cloud"></i>
+                    </div>
+                    <h3>Backend Development</h3>
+                    <p>Scalable server-side solutions that power your mobile application.</p>
+                    <ul class="mt-3">
+                        <li>API development</li>
+                        <li>Database design</li>
+                        <li>Cloud integration</li>
+                        <li>Security implementation</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-tools"></i>
+                    </div>
+                    <h3>App Maintenance & Support</h3>
+                    <p>Ongoing support and updates to keep your app running smoothly.</p>
+                    <ul class="mt-3">
+                        <li>Bug fixes and updates</li>
+                        <li>Performance optimization</li>
+                        <li>Feature enhancements</li>
+                        <li>Platform compatibility updates</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Platforms Section -->
+<section class="platforms-section">
+    <div class="container">
+        <div class="section-title text-center mb-5">
+            <h2>Platforms & Technologies</h2>
+            <p>The tools and frameworks we use for mobile app development</p>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3 col-6">
+                <div class="platform-card">
+                    <div class="platform-icon">
+                        <i class="fab fa-android"></i>
+                    </div>
+                    <div class="platform-content">
+                        <h3>Android</h3>
+                        <p>Java, Kotlin</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3 col-6">
+                <div class="platform-card">
+                    <div class="platform-icon">
+                        <i class="fab fa-apple"></i>
+                    </div>
+                    <div class="platform-content">
+                        <h3>iOS</h3>
+                        <p>Swift, Objective-C</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3 col-6">
+                <div class="platform-card">
+                    <div class="platform-icon">
+                        <i class="fab fa-react"></i>
+                    </div>
+                    <div class="platform-content">
+                        <h3>React Native</h3>
+                        <p>Cross-platform</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3 col-6">
+                <div class="platform-card">
+                    <div class="platform-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <div class="platform-content">
+                        <h3>Flutter</h3>
+                        <p>Cross-platform</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Process Section -->
+<section class="process-section">
+    <div class="container">
+        <div class="section-title text-center mb-5">
+            <h2>Our App Development Process</h2>
+            <p>How we turn your app idea into reality</p>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-3 col-md-6">
+                <div class="process-step">
+                    <div class="step-number">1</div>
+                    <div class="step-connector"></div>
+                    <h4>Discovery</h4>
+                    <p>We understand your business goals, target audience, and app requirements to develop a clear vision.</p>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-6">
+                <div class="process-step">
+                    <div class="step-number">2</div>
+                    <div class="step-connector"></div>
+                    <h4>Design</h4>
+                    <p>Our designers create wireframes and interactive prototypes to visualize the app's user interface and flow.</p>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-6">
+                <div class="process-step">
+                    <div class="step-number">3</div>
+                    <div class="step-connector"></div>
+                    <h4>Development</h4>
+                    <p>Our developers build the app using agile methodology with regular updates and quality assurance.</p>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-6">
+                <div class="process-step">
+                    <div class="step-number">4</div>
+                    <h4>Launch & Support</h4>
+                    <p>We help you publish your app to the stores and provide ongoing maintenance and support.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Projects Section -->
+<section class="projects-section">
+    <div class="container">
+        <div class="section-title text-center mb-5">
+            <h2>Our Recent App Projects</h2>
+            <p>Some of our successful mobile app development case studies</p>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="project-card">
+                    <div class="project-image">
+                    <img src="{% static 'images/project-app-1.jpg' %}" alt="Food Delivery App">
+                    </div>
+                    <div class="project-info">
+                        <h4>Food Delivery App</h4>
+                        <p>A custom food delivery application for a restaurant chain that increased online orders by 65%.</p>
+                    <a href="{% url 'portfolio:case_study' 4 %}" class="btn btn-sm btn-primary mt-2">View Case Study</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="{% static 'images/project-app-2.jpg' %}" alt="Fitness Tracking App">
+                    </div>
+                    <div class="project-info">
+                        <h4>Fitness Tracking App</h4>
+                        <p>A comprehensive fitness tracking application with personalized workout plans and progress tracking.</p>
+                    <a href="{% url 'portfolio:case_study' 5 %}" class="btn btn-sm btn-primary mt-2">View Case Study</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="project-card">
+                    <div class="project-image">
+                    <img src="{% static 'images/project-app-3.jpg' %}" alt="E-commerce App">
+                    </div>
+                    <div class="project-info">
+                        <h4>E-commerce App</h4>
+                        <p>A mobile shopping application for a fashion retailer with AR try-on features and personalized recommendations.</p>
+                       <a href="{% url 'portfolio:case_study' 6 %}" class="btn btn-sm btn-primary mt-2">View Case Study</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center mt-4">
+           <a href="{% url 'portfolio:portfolio' %}" class="btn btn-primary">View All Projects</a>#}
+        </div>
+    </div>
+</section>
+
+<!-- FAQ Section -->
+<section class="faq-section">
+    <div class="container">
+        <div class="section-title text-center mb-5">
+            <h2>Frequently Asked Questions</h2>
+            <p>Common questions about mobile app development</p>
+        </div>
+
+        <div class="accordion" id="appFaqAccordion">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="faqOne">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        How long does it take to develop a mobile app?
+                    </button>
+                </h2>
+                <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="faqOne" data-bs-parent="#appFaqAccordion">
+                    <div class="accordion-body">
+                        The development timeline varies depending on the complexity of the app. A simple app can take 2-3 months, while a more complex app with advanced features may take 4-6 months or longer. We provide a detailed timeline during the project planning phase.
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="faqTwo">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        What is the difference between native and cross-platform app development?
+                    </button>
+                </h2>
+                <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="faqTwo" data-bs-parent="#appFaqAccordion">
+                    <div class="accordion-body">
+                        Native apps are developed specifically for one platform (iOS or Android) using platform-specific programming languages. They typically offer the best performance and user experience but require separate codebases. Cross-platform apps are developed using frameworks like React Native or Flutter, allowing for a single codebase to work on both platforms, which can be more cost-effective but may have some limitations for highly specialized features.
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="faqThree">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                        How much does it cost to develop a mobile app?
+                    </button>
+                </h2>
+                <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="faqThree" data-bs-parent="#appFaqAccordion">
+                    <div class="accordion-body">
+                        App development costs vary widely based on complexity, features, and platforms. Simple apps may start around $10,000-$30,000, while more complex apps with advanced features can range from $50,000 to $250,000+. We provide detailed estimates based on your specific requirements during the consultation phase.
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="faqFour">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                        Do you help with app store submission and publishing?
+                    </button>
+                </h2>
+                <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="faqFour" data-bs-parent="#appFaqAccordion">
+                    <div class="accordion-body">
+                        Yes, we provide full support for app store submission and publishing. We help prepare all necessary materials, including app descriptions, screenshots, and promotional videos, and guide you through the submission process for both the Apple App Store and Google Play Store.
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="faqFive">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                        What happens after my app is launched?
+                    </button>
+                </h2>
+                <div id="collapseFive" class="accordion-collapse collapse" aria-labelledby="faqFive" data-bs-parent="#appFaqAccordion">
+                    <div class="accordion-body">
+                        We offer ongoing maintenance and support services to ensure your app continues to run smoothly. This includes bug fixes, performance optimization, compatibility updates for new OS versions, and feature enhancements. We also provide analytics to help you understand user behavior and make data-driven decisions for future updates.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta-section">
+    <div class="container">
+        <h2 class="cta-title">Ready to Build Your Mobile App?</h2>
+        <p class="cta-text">Contact us today for a free consultation and let's bring your app idea to life.</p>
+        <div class="cta-buttons">
+            <a href="{% url 'quotes:service_estimator' %}" class="btn btn-light btn-lg me-3">Get a Quote</a>
+            <a href="{% url 'core:contact' %}" class="btn btn-outline-light btn-lg">Contact Us</a>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Add animation classes on scroll
+        const animateElements = document.querySelectorAll('.feature-card, .platform-card, .process-step, .project-card');
+
+        animateElements.forEach((element, index) => {
+            element.classList.add('animate-on-scroll');
+            element.dataset.animation = 'slide-up';
+            element.style.animationDelay = `${index * 0.1}s`;
+        });
+    });
+</script>
+{% endblock %}

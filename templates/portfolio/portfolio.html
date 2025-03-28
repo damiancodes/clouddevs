@@ -1,0 +1,376 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Portfolio - CloudLink_Devs{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* Portfolio Header */
+    .portfolio-header {
+        background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+        color: white;
+        padding: 80px 0;
+        text-align: center;
+    }
+
+    .portfolio-header h1 {
+        font-weight: 800;
+        margin-bottom: 20px;
+    }
+
+    /* Filter Section */
+    .filter-section {
+        padding: 30px 0;
+        background-color: var(--light-gray);
+    }
+
+    .filter-btn {
+        padding: 8px 20px;
+        margin: 5px;
+        border-radius: 30px;
+        background-color: white;
+        color: var(--text-color);
+        border: 1px solid #ddd;
+        transition: all 0.3s ease;
+    }
+
+    .filter-btn:hover, .filter-btn.active {
+        background-color: var(--primary-color);
+        color: white;
+        border-color: var(--primary-color);
+    }
+
+    /* Projects Grid */
+    .projects-section {
+        padding: 80px 0;
+    }
+
+    .project-card {
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+        margin-bottom: 30px;
+        background-color: white;
+        height: 100%;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .project-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 1rem 3rem rgba(58, 59, 69, 0.175);
+    }
+
+    .project-image {
+        height: 220px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .project-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+    }
+
+    .project-card:hover .project-image img {
+        transform: scale(1.1);
+    }
+
+    .project-category {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        background-color: var(--primary-color);
+        color: white;
+        padding: 5px 15px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        z-index: 1;
+    }
+
+    .project-info {
+        padding: 25px;
+    }
+
+    .project-info h3 {
+        margin-bottom: 10px;
+        font-weight: 700;
+    }
+
+    .project-info p {
+        color: var(--body-color);
+        margin-bottom: 20px;
+    }
+
+    .project-meta {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 20px;
+        color: var(--body-color);
+        font-size: 0.9rem;
+    }
+
+    .project-technologies {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 15px;
+    }
+
+    .tech-badge {
+        font-size: 0.75rem;
+        padding: 4px 10px;
+        background-color: var(--light-gray);
+        border-radius: 15px;
+    }
+
+    /* CTA Section */
+    .cta-section {
+        padding: 80px 0;
+       background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+        color: white;
+        text-align: center;
+    }
+
+    .cta-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 1.5rem;
+    }
+
+    .cta-text {
+        max-width: 700px;
+        margin: 0 auto 2rem;
+        opacity: 0.9;
+    }
+
+    /* Pagination */
+    .pagination {
+        display: flex;
+        justify-content: center;
+        margin-top: 40px;
+    }
+
+    .pagination .page-item .page-link {
+        padding: 10px 15px;
+        color: var(--primary-color);
+        background-color: white;
+        border: 1px solid #ddd;
+        margin: 0 5px;
+        border-radius: 5px;
+        transition: all 0.3s ease;
+    }
+
+    .pagination .page-item.active .page-link,
+    .pagination .page-item .page-link:hover {
+        background-color: var(--primary-color);
+        color: white;
+        border-color: var(--primary-color);
+    }
+
+    /* No results */
+    .no-results {
+        text-align: center;
+        padding: 50px 0;
+    }
+
+    .no-results i {
+        font-size: 5rem;
+        color: #ddd;
+        margin-bottom: 20px;
+        display: block;
+    }
+
+    /* Dark mode adaptations */
+    body.dark-mode .filter-btn {
+        background-color: #2a2c3e;
+        border-color: #3a3d52;
+        color: #f8f9fc;
+    }
+
+    body.dark-mode .filter-btn:hover,
+    body.dark-mode .filter-btn.active {
+        background-color: var(--primary-color);
+        border-color: var(--primary-color);
+    }
+
+    body.dark-mode .project-card {
+        background-color: #2a2c3e;
+    }
+
+    body.dark-mode .project-info p,
+    body.dark-mode .project-meta {
+        color: #c2c5d3;
+    }
+
+    body.dark-mode .tech-badge {
+        background-color: #3a3d52;
+        color: #f8f9fc;
+    }
+
+    body.dark-mode .filter-section {
+        background-color: #222533;
+    }
+
+    body.dark-mode .pagination .page-item .page-link {
+        background-color: #2a2c3e;
+        color: #f8f9fc;
+        border-color: #3a3d52;
+    }
+
+    body.dark-mode .pagination .page-item.active .page-link,
+    body.dark-mode .pagination .page-item .page-link:hover {
+        background-color: var(--primary-color);
+        border-color: var(--primary-color);
+    }
+
+    body.dark-mode .no-results i {
+        color: #3a3d52;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Portfolio Header -->
+<section class="portfolio-header">
+    <div class="container">
+        <h1>Our Portfolio</h1>
+        <p class="lead">
+            {% if current_category %}
+                Showcasing our {{ current_category.name }} projects
+            {% else %}
+                Explore our latest work for clients across various industries
+            {% endif %}
+        </p>
+    </div>
+</section>
+
+<!-- Filter Section -->
+<section class="filter-section">
+    <div class="container">
+        <div class="text-center">
+            <a href="{% url 'portfolio:portfolio' %}" class="filter-btn {% if not current_category %}active{% endif %}">All Projects</a>
+            {% for category in categories %}
+                <a href="{{ category.get_absolute_url }}" class="filter-btn {% if current_category == category %}active{% endif %}">{{ category.name }}</a>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Projects Grid -->
+<section class="projects-section">
+    <div class="container">
+        {% if projects %}
+            <div class="row">
+                {% for project in projects %}
+                    <div class="col-lg-4 col-md-6 mb-4">
+                        <div class="project-card">
+                            <div class="project-image">
+                                <img src="{{ project.featured_image.url }}" alt="{{ project.title }}">
+                                {% with category=project.categories.first %}
+                                    {% if category %}
+                                        <div class="project-category">{{ category.name }}</div>
+                                    {% endif %}
+                                {% endwith %}
+                            </div>
+                            <div class="project-info">
+                                <h3>{{ project.title }}</h3>
+                                <p>{{ project.short_description }}</p>
+                                <div class="project-technologies">
+                                    {% for tech in project.technologies.all|slice:":3" %}
+                                        <span class="tech-badge">{{ tech.name }}</span>
+                                    {% endfor %}
+                                    {% if project.technologies.count > 3 %}
+                                        <span class="tech-badge">+{{ project.technologies.count|add:"-3" }}</span>
+                                    {% endif %}
+                                </div>
+                                <div class="project-meta">
+                                    {% if project.client %}
+                                        <span>Client: {{ project.client.name }}</span>
+                                    {% endif %}
+                                    <span>{{ project.completion_date|date:"M Y" }}</span>
+                                </div>
+                                <a href="{{ project.get_absolute_url }}" class="btn btn-primary mt-3">View Case Study</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <!-- Pagination (if needed) -->
+            {% if is_paginated %}
+                <div class="pagination">
+                    <ul class="pagination">
+                        {% if page_obj.has_previous %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+                            </li>
+                        {% endif %}
+
+                        {% for i in paginator.page_range %}
+                            {% if page_obj.number == i %}
+                                <li class="page-item active">
+                                    <span class="page-link">{{ i }}</span>
+                                </li>
+                            {% else %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+
+                        {% if page_obj.has_next %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            {% endif %}
+        {% else %}
+            <div class="no-results">
+                <i class="fas fa-folder-open"></i>
+                <h3>No Projects Found</h3>
+                <p>
+                    {% if current_category %}
+                        We don't have any {{ current_category.name }} projects at the moment.
+                    {% else %}
+                        We don't have any projects to display at the moment.
+                    {% endif %}
+                </p>
+                <a href="{% url 'portfolio:portfolio' %}" class="btn btn-primary mt-3">View All Projects</a>
+            </div>
+        {% endif %}
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta-section">
+    <div class="container">
+        <h2 class="cta-title">Ready to Start Your Project?</h2>
+        <p class="cta-text">Contact us today for a free consultation and let's bring your ideas to life.</p>
+        <div class="cta-buttons">
+            <a href="{% url 'quotes:service_estimator' %}" class="btn btn-light btn-lg me-3">Get a Quote</a>
+            <a href="{% url 'core:contact' %}" class="btn btn-outline-light btn-lg">Contact Us</a>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Add animation classes on scroll
+        const animateElements = document.querySelectorAll('.project-card');
+
+        animateElements.forEach((element, index) => {
+            element.classList.add('animate-on-scroll');
+            element.dataset.animation = 'slide-up';
+            element.style.animationDelay = `${index * 0.1}s`;
+        });
+    });
+</script>
+{% endblock %}

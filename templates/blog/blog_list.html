@@ -1,0 +1,600 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Blog - CloudLink_Devs{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* Blog Header */
+    .blog-header {
+        background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+        color: white;
+        padding: 80px 0;
+        text-align: center;
+    }
+
+    .blog-header h1 {
+        font-weight: 800;
+        margin-bottom: 20px;
+    }
+
+    /* Blog Content */
+    .blog-section {
+        padding: 80px 0;
+    }
+
+    /* Featured Posts */
+    .featured-posts {
+        margin-bottom: 60px;
+    }
+
+    .featured-post {
+        position: relative;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+        height: 400px;
+        margin-bottom: 30px;
+    }
+
+    .featured-post-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .featured-post-overlay {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        padding: 30px;
+        background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 100%);
+        color: white;
+    }
+
+    .featured-badge {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        background-color: var(--accent-color);
+        color: white;
+        padding: 5px 15px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 600;
+    }
+
+    .featured-post-title {
+        font-size: 1.5rem;
+        margin-bottom: 10px;
+        font-weight: 700;
+    }
+
+    .featured-post-title a {
+        color: white;
+        text-decoration: none;
+    }
+
+    .featured-post-meta {
+        font-size: 0.9rem;
+        opacity: 0.8;
+        margin-bottom: 15px;
+    }
+
+    .featured-post-excerpt {
+        opacity: 0.9;
+        margin-bottom: 15px;
+    }
+
+    /* Blog Posts Grid */
+    .blog-post-card {
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+        margin-bottom: 30px;
+        background-color: white;
+        height: 100%;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .blog-post-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 1rem 3rem rgba(58, 59, 69, 0.175);
+    }
+
+    .blog-post-img {
+        height: 200px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .blog-post-img img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+    }
+
+    .blog-post-card:hover .blog-post-img img {
+        transform: scale(1.1);
+    }
+
+    .blog-post-content {
+        padding: 20px;
+    }
+
+    .blog-post-title {
+        font-size: 1.25rem;
+        font-weight: 700;
+        margin-bottom: 10px;
+    }
+
+    .blog-post-title a {
+        color: var(--text-color);
+        text-decoration: none;
+    }
+
+    .blog-post-meta {
+        color: #858796;
+        font-size: 0.85rem;
+        margin-bottom: 10px;
+    }
+
+    .blog-post-excerpt {
+        margin-bottom: 20px;
+        color: var(--body-color);
+    }
+
+    .blog-post-categories {
+        margin-top: 15px;
+    }
+
+    .category-badge {
+        display: inline-block;
+        padding: 3px 10px;
+        background-color: var(--light-gray);
+        border-radius: 15px;
+        font-size: 0.75rem;
+        margin-right: 5px;
+        color: var(--body-color);
+        text-decoration: none;
+        transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .category-badge:hover {
+        background-color: var(--primary-color);
+        color: white;
+    }
+
+    /* Sidebar */
+    .blog-sidebar {
+        position: sticky;
+        top: 30px;
+    }
+
+    .sidebar-widget {
+        background-color: white;
+        border-radius: 10px;
+        padding: 25px;
+        margin-bottom: 30px;
+        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+    }
+
+    .sidebar-title {
+        font-size: 1.25rem;
+        font-weight: 700;
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #e3e6f0;
+    }
+
+    .search-form .form-control {
+        border-radius: 50px;
+        padding-left: 20px;
+    }
+
+    .search-form .btn {
+        border-radius: 50px;
+        padding: 10px 20px;
+    }
+
+    .category-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .category-list li {
+        margin-bottom: 10px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #e3e6f0;
+    }
+
+    .category-list li:last-child {
+        margin-bottom: 0;
+        padding-bottom: 0;
+        border-bottom: none;
+    }
+
+    .category-list a {
+        display: flex;
+        justify-content: space-between;
+        color: var(--body-color);
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+
+    .category-list a:hover {
+        color: var(--primary-color);
+    }
+
+    .category-count {
+        background-color: var(--light-gray);
+        color: var(--body-color);
+        padding: 2px 8px;
+        border-radius: 10px;
+        font-size: 0.8rem;
+    }
+
+    .recent-post {
+        display: flex;
+        margin-bottom: 15px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #e3e6f0;
+    }
+
+    .recent-post:last-child {
+        margin-bottom: 0;
+        padding-bottom: 0;
+        border-bottom: none;
+    }
+
+    .recent-post-img {
+        width: 60px;
+        height: 60px;
+        border-radius: 5px;
+        overflow: hidden;
+        margin-right: 15px;
+    }
+
+    .recent-post-img img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .recent-post-info h5 {
+        font-size: 0.95rem;
+        font-weight: 600;
+        margin-bottom: 5px;
+    }
+
+    .recent-post-info h5 a {
+        color: var(--text-color);
+        text-decoration: none;
+    }
+
+    .recent-post-info .post-date {
+        font-size: 0.8rem;
+        color: #858796;
+    }
+
+    .tag-cloud {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .tag-badge {
+        padding: 5px 15px;
+        background-color: var(--light-gray);
+        border-radius: 20px;
+        font-size: 0.8rem;
+        color: var(--body-color);
+        text-decoration: none;
+       transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .tag-badge:hover {
+        background-color: var(--primary-color);
+        color: white;
+    }
+
+    /* Pagination */
+    .pagination {
+        display: flex;
+        justify-content: center;
+        margin-top: 40px;
+    }
+
+    .pagination .page-item .page-link {
+        padding: 10px 15px;
+        color: var(--primary-color);
+        background-color: white;
+        border: 1px solid #e3e6f0;
+        margin: 0 5px;
+        border-radius: 5px;
+        transition: all 0.3s ease;
+    }
+
+    .pagination .page-item.active .page-link,
+    .pagination .page-item .page-link:hover {
+        background-color: var(--primary-color);
+        color: white;
+        border-color: var(--primary-color);
+    }
+
+    /* Dark mode adaptations */
+    body.dark-mode .blog-post-card,
+    body.dark-mode .sidebar-widget {
+        background-color: #2a2c3e;
+    }
+
+    body.dark-mode .blog-post-title a {
+        color: #f8f9fc;
+    }
+
+    body.dark-mode .blog-post-meta,
+    body.dark-mode .blog-post-excerpt {
+        color: #c2c5d3;
+    }
+
+    body.dark-mode .category-badge {
+        background-color: #3a3d52;
+        color: #f8f9fc;
+    }
+
+    body.dark-mode .sidebar-title {
+        border-color: #3a3d52;
+    }
+
+    body.dark-mode .category-list li {
+        border-color: #3a3d52;
+    }
+
+    body.dark-mode .category-list a {
+        color: #c2c5d3;
+    }
+
+    body.dark-mode .category-list a:hover {
+        color: var(--primary-color);
+    }
+
+    body.dark-mode .category-count {
+        background-color: #3a3d52;
+        color: #f8f9fc;
+    }
+
+    body.dark-mode .recent-post {
+        border-color: #3a3d52;
+    }
+
+    body.dark-mode .recent-post-info h5 a {
+        color: #f8f9fc;
+    }
+
+    body.dark-mode .recent-post-info .post-date {
+        color: #c2c5d3;
+    }
+
+    body.dark-mode .tag-badge {
+        background-color: #3a3d52;
+        color: #f8f9fc;
+    }
+
+    body.dark-mode .pagination .page-item .page-link {
+        background-color: #2a2c3e;
+        color: #f8f9fc;
+        border-color: #3a3d52;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Blog Header -->
+<section class="blog-header">
+    <div class="container">
+        <h1>Blog</h1>
+        <p class="lead">Insights, news, and resources from CloudLink_Devs</p>
+    </div>
+</section>
+
+<!-- Blog Content -->
+<section class="blog-section">
+    <div class="container">
+        <div class="row">
+            <!-- Main Content -->
+            <div class="col-lg-8">
+                <!-- Featured Posts -->
+                {% if featured_posts %}
+                <div class="featured-posts">
+                    <div class="row">
+                        {% for post in featured_posts %}
+                            <div class="col-md-{% if forloop.first %}12{% else %}6{% endif %}">
+                                <div class="featured-post">
+                                    {% if post.featured_image %}
+                                        <img src="{{ post.featured_image.url }}" alt="{{ post.title }}" class="featured-post-img">
+                                    {% else %}
+                                        <img src="{% static 'images/blog-placeholder.jpg' %}" alt="{{ post.title }}" class="featured-post-img">
+                                    {% endif %}
+                                    <span class="featured-badge">Featured</span>
+                                    <div class="featured-post-overlay">
+                                        <h3 class="featured-post-title">
+                                            <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+                                        </h3>
+                                        <div class="featured-post-meta">
+                                            <span><i class="far fa-user me-1"></i> {{ post.author.get_full_name|default:post.author.username }}</span>
+                                            <span class="mx-2">|</span>
+                                            <span><i class="far fa-calendar me-1"></i> {{ post.published_at|date:"M d, Y" }}</span>
+                                        </div>
+                                        <p class="featured-post-excerpt">{{ post.excerpt }}</p>
+                                        <a href="{{ post.get_absolute_url }}" class="btn btn-outline-light btn-sm">Read More</a>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+
+                <!-- Blog Posts -->
+                <div class="row">
+                    {% for post in posts %}
+                        <div class="col-md-6">
+                            <div class="blog-post-card">
+                                <div class="blog-post-img">
+                                    {% if post.featured_image %}
+                                        <img src="{{ post.featured_image.url }}" alt="{{ post.title }}">
+                                    {% else %}
+                                        <img src="{% static 'images/blog-placeholder.jpg' %}" alt="{{ post.title }}">
+                                    {% endif %}
+                                </div>
+                                <div class="blog-post-content">
+                                    <h3 class="blog-post-title">
+                                        <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+                                    </h3>
+                                    <div class="blog-post-meta">
+                                        <span><i class="far fa-user me-1"></i> {{ post.author.get_full_name|default:post.author.username }}</span>
+                                        <span class="mx-2">|</span>
+                                        <span><i class="far fa-calendar me-1"></i> {{ post.published_at|date:"M d, Y" }}</span>
+                                        <span class="mx-2">|</span>
+                                        <span><i class="far fa-clock me-1"></i> {{ post.reading_time }} min read</span>
+                                    </div>
+                                    <div class="blog-post-excerpt">
+                                        {{ post.excerpt }}
+                                    </div>
+                                    <a href="{{ post.get_absolute_url }}" class="btn btn-primary btn-sm">Read More</a>
+
+                                    <div class="blog-post-categories">
+                                        {% for category in post.categories.all %}
+                                            <a href="{{ category.get_absolute_url }}" class="category-badge">{{ category.name }}</a>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% empty %}
+                        <div class="col-12">
+                            <div class="alert alert-info">
+                                No posts found. Check back soon for new content!
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+
+                <!-- Pagination -->
+                {% if is_paginated %}
+                    <div class="pagination">
+                        <ul class="pagination">
+                            {% if page_obj.has_previous %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">
+                                        <i class="fas fa-angle-left"></i>
+                                    </a>
+                                </li>
+                            {% endif %}
+
+                            {% for i in paginator.page_range %}
+                                {% if page_obj.number == i %}
+                                    <li class="page-item active">
+                                        <span class="page-link">{{ i }}</span>
+                                    </li>
+                                {% elif i > page_obj.number|add:'-3' and i < page_obj.number|add:'3' %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="?page={{ i }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">{{ i }}</a>
+                                    </li>
+                                {% endif %}
+                            {% endfor %}
+
+                            {% if page_obj.has_next %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ page_obj.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">
+                                        <i class="fas fa-angle-right"></i>
+                                    </a>
+                                </li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- Sidebar -->
+            <div class="col-lg-4">
+                <div class="blog-sidebar">
+                    <!-- Search Widget -->
+                    <div class="sidebar-widget">
+                        <h3 class="sidebar-title">Search</h3>
+                        <form action="{% url 'blog:blog_search' %}" method="get" class="search-form">
+                            {{ search_form.query }}
+                            <button type="submit" class="btn btn-primary w-100 mt-2">
+                                <i class="fas fa-search me-2"></i> Search
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- Categories Widget -->
+                    <div class="sidebar-widget">
+                        <h3 class="sidebar-title">Categories</h3>
+                        <ul class="category-list">
+                            {% for category in categories %}
+                                <li>
+                                    <a href="{{ category.get_absolute_url }}">
+                                        <span>{{ category.name }}</span>
+                                        <span class="category-count">{{ category.post_count }}</span>
+                                    </a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+
+                    <!-- Recent Posts Widget -->
+                    <div class="sidebar-widget">
+                        <h3 class="sidebar-title">Recent Posts</h3>
+                        {% for post in recent_posts %}
+                            <div class="recent-post">
+                                <div class="recent-post-img">
+                                    {% if post.featured_image %}
+                                        <img src="{{ post.featured_image.url }}" alt="{{ post.title }}">
+                                    {% else %}
+                                        <img src="{% static 'images/blog-placeholder.jpg' %}" alt="{{ post.title }}">
+                                    {% endif %}
+                                </div>
+                                <div class="recent-post-info">
+                                    <h5><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h5>
+                                    <span class="post-date">{{ post.published_at|date:"M d, Y" }}</span>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                    <!-- Tags Widget -->
+                    <div class="sidebar-widget">
+                        <h3 class="sidebar-title">Tags</h3>
+                        <div class="tag-cloud">
+                            {% for tag in tags %}
+                                <a href="{{ tag.get_absolute_url }}" class="tag-badge">{{ tag.name }}</a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Add animation classes on scroll
+        const animateElements = document.querySelectorAll('.blog-post-card, .sidebar-widget');
+
+        animateElements.forEach((element, index) => {
+            element.classList.add('animate-on-scroll');
+            element.dataset.animation = 'slide-up';
+            element.style.animationDelay = `${index * 0.1}s`;
+        });
+    });
+</script>
+{% endblock %}

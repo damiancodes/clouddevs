@@ -1,0 +1,691 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Service Estimator - CloudLink_Devs{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* Estimator Header */
+    .estimator-header {
+        background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+        color: white;
+        padding: 80px 0;
+        text-align: center;
+    }
+
+    .estimator-header h1 {
+        font-weight: 800;
+        margin-bottom: 20px;
+    }
+
+    /* Estimator Content */
+    .estimator-section {
+        padding: 80px 0;
+    }
+
+    .estimator-card {
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+        margin-bottom: 30px;
+        background-color: white;
+    }
+
+    .estimator-card-header {
+        padding: 20px;
+        background-color: #f8f9fc;
+        border-bottom: 1px solid #e3e6f0;
+    }
+
+    .estimator-card-header h2 {
+        margin-bottom: 0;
+        font-size: 1.5rem;
+    }
+
+    .estimator-card-body {
+        padding: 30px;
+    }
+
+    /* Service Selection */
+    .service-selector {
+        margin-bottom: 40px;
+    }
+
+    .service-info {
+        margin-top: 20px;
+        padding: 20px;
+        background-color: #f8f9fc;
+        border-radius: 10px;
+        display: none;
+    }
+
+    .service-info.active {
+        display: block;
+    }
+
+    .service-description {
+        margin-bottom: 15px;
+    }
+
+    .service-price {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: var(--primary-color);
+    }
+
+    /* Features Selection */
+    .features-section {
+        margin-top: 40px;
+        display: none;
+    }
+
+    .features-section.active {
+        display: block;
+    }
+
+    .feature-item {
+        padding: 20px;
+        border: 1px solid #e3e6f0;
+        border-radius: 10px;
+        margin-bottom: 20px;
+        transition: all 0.3s ease;
+    }
+
+    .feature-item:hover {
+        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+    }
+
+    .feature-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+
+    .feature-name {
+        font-weight: 700;
+        font-size: 1.1rem;
+        margin-bottom: 0;
+    }
+
+    .feature-price {
+        font-weight: 700;
+        color: var(--primary-color);
+    }
+
+    .feature-description {
+        margin-bottom: 15px;
+        color: #858796;
+    }
+
+    .feature-required {
+        display: inline-block;
+        padding: 2px 8px;
+        background-color: #f8f9fc;
+        border-radius: 10px;
+        font-size: 0.8rem;
+        color: #5a5c69;
+    }
+
+    /* Estimate Summary */
+    .estimate-summary {
+        margin-top: 40px;
+        padding: 30px;
+        background-color: #f8f9fc;
+        border-radius: 10px;
+        display: none;
+    }
+
+    .estimate-summary.active {
+        display: block;
+    }
+
+    .estimate-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin-bottom: 20px;
+    }
+
+    .estimate-detail {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+    }
+
+    .estimate-total {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--primary-color);
+        margin-top: 20px;
+        text-align: right;
+    }
+
+    /* Action Buttons */
+    .action-buttons {
+        margin-top: 40px;
+        text-align: center;
+    }
+
+    .btn-next, .btn-back, .btn-request-quote {
+        padding: 10px 20px;
+        border-radius: 50px;
+    }
+
+    .btn-next, .btn-request-quote {
+        background-color: var(--primary-color);
+        color: white;
+    }
+
+    .btn-back {
+        background-color: white;
+        color: var(--primary-color);
+        border: 1px solid var(--primary-color);
+        margin-right: 10px;
+    }
+
+    /* Progress Steps */
+    .progress-steps {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 30px;
+    }
+
+    .progress-step {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 120px;
+    }
+
+    .step-number {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background-color: #f8f9fc;
+        color: #858796;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        margin-bottom: 10px;
+        border: 2px solid #e3e6f0;
+    }
+
+    .step-name {
+        font-size: 0.9rem;
+        color: #858796;
+    }
+
+    .progress-connector {
+        width: 60px;
+        height: 2px;
+        background-color: #e3e6f0;
+        margin-top: 15px;
+    }
+
+    .progress-step.active .step-number {
+        background-color: var(--primary-color);
+        color: white;
+        border-color: var(--primary-color);
+    }
+
+    .progress-step.active .step-name {
+        color: var(--primary-color);
+        font-weight: 700;
+    }
+
+    .progress-step.completed .step-number {
+        background-color: var(--accent-color);
+        color: white;
+        border-color: var(--accent-color);
+    }
+
+    .progress-step.completed .step-name {
+        color: var(--accent-color);
+    }
+
+    /* Dark mode adaptations */
+    body.dark-mode .estimator-card,
+    body.dark-mode .feature-item {
+        background-color: #2a2c3e;
+    }
+
+    body.dark-mode .estimator-card-header,
+    body.dark-mode .service-info,
+    body.dark-mode .estimate-summary {
+        background-color: #222533;
+    }
+
+    body.dark-mode .feature-required {
+        background-color: #3a3d52;
+        color: #e3e6f0;
+    }
+
+    body.dark-mode .btn-back {
+        background-color: #2a2c3e;
+        border-color: var(--primary-color);
+    }
+
+    body.dark-mode .feature-description {
+        color: #c2c5d3;
+    }
+
+    body.dark-mode .step-number {
+        background-color: #2a2c3e;
+        border-color: #3a3d52;
+        color: #c2c5d3;
+    }
+
+    body.dark-mode .progress-connector {
+        background-color: #3a3d52;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Estimator Header -->
+<section class="estimator-header">
+    <div class="container">
+        <h1>Service Estimator</h1>
+        <p class="lead">Get an instant estimate for your project</p>
+    </div>
+</section>
+
+<!-- Estimator Content -->
+<section class="estimator-section">
+    <div class="container">
+        <div class="estimator-card">
+            <div class="estimator-card-header">
+                <h2>Build Your Custom Solution</h2>
+            </div>
+            <div class="estimator-card-body">
+                <!-- Progress Steps -->
+                <div class="progress-steps">
+                    <div class="progress-step active" id="step-1">
+                        <div class="step-number">1</div>
+                        <div class="step-name">Select Service</div>
+                    </div>
+                    <div class="progress-connector"></div>
+                    <div class="progress-step" id="step-2">
+                        <div class="step-number">2</div>
+                        <div class="step-name">Choose Features</div>
+                    </div>
+                    <div class="progress-connector"></div>
+                    <div class="progress-step" id="step-3">
+                        <div class="step-number">3</div>
+                        <div class="step-name">Review Estimate</div>
+                    </div>
+                </div>
+
+                <form id="estimator-form" method="post" action="{% url 'quotes:service_estimator' %}">
+                    {% csrf_token %}
+
+                    <!-- Step 1: Service Selection -->
+                    <div id="step-1-content">
+                        <div class="service-selector">
+                            <label for="service-selector" class="form-label">Select a Service:</label>
+                            <select id="service-selector" name="service" class="form-control">
+                                <option value="">-- Choose a service --</option>
+                                {% for service in services %}
+                                    <option value="{{ service.id }}">{{ service.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div class="service-info" id="service-info">
+                            <h3 id="service-name"></h3>
+                            <div class="service-description" id="service-description"></div>
+                            <div class="service-price">Starting from: <span id="service-price"></span></div>
+                        </div>
+
+                        <div class="action-buttons">
+                            <button type="button" id="btn-step-1-next" class="btn btn-next" disabled>
+                                Next <i class="fas fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Step 2: Feature Selection -->
+                    <div id="step-2-content" style="display: none;">
+                        <div class="features-section active">
+                            <h3>Select Features</h3>
+                            <p>Customize your project by selecting the features you need:</p>
+
+                            <div id="features-container">
+                                <!-- Features will be populated dynamically -->
+                            </div>
+                        </div>
+
+                        <div class="action-buttons">
+                            <button type="button" id="btn-step-2-back" class="btn btn-back">
+                                <i class="fas fa-arrow-left"></i> Back
+                            </button>
+                            <button type="button" id="btn-step-2-next" class="btn btn-next">
+                                Next <i class="fas fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Step 3: Review Estimate -->
+                    <div id="step-3-content" style="display: none;">
+                        <div class="estimate-summary active">
+                            <h3 class="estimate-title">Your Estimate Summary</h3>
+                            <div class="estimate-detail">
+                                <span>Selected Service:</span>
+                                <span id="summary-service-name"></span>
+                            </div>
+
+                            <div class="estimate-detail">
+                                <span>Base Price:</span>
+                                <span id="summary-base-price"></span>
+                            </div>
+
+                            <div id="summary-features">
+                                <!-- Features summary will be populated dynamically -->
+                            </div>
+
+                            <div class="estimate-total">
+                                <span>Estimated Total:</span>
+                                <span id="summary-total-price"></span>
+                            </div>
+
+                            <div class="mt-4">
+                                <p><i class="fas fa-info-circle"></i> This is an estimated price based on your selections. The final quote may vary based on your specific requirements.</p>
+                            </div>
+                        </div>
+
+                        <div class="action-buttons">
+                            <button type="button" id="btn-step-3-back" class="btn btn-back">
+                                <i class="fas fa-arrow-left"></i> Back
+                            </button>
+                            <button type="submit" class="btn btn-request-quote">
+                                Request Detailed Quote <i class="fas fa-check"></i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Elements
+        const serviceSelector = document.getElementById('service-selector');
+        const serviceInfo = document.getElementById('service-info');
+        const serviceName = document.getElementById('service-name');
+        const serviceDescription = document.getElementById('service-description');
+        const servicePrice = document.getElementById('service-price');
+        const featuresContainer = document.getElementById('features-container');
+        const summaryServiceName = document.getElementById('summary-service-name');
+        const summaryBasePrice = document.getElementById('summary-base-price');
+        const summaryFeatures = document.getElementById('summary-features');
+        const summaryTotalPrice = document.getElementById('summary-total-price');
+
+        // Step navigation buttons
+        const btnStep1Next = document.getElementById('btn-step-1-next');
+        const btnStep2Back = document.getElementById('btn-step-2-back');
+        const btnStep2Next = document.getElementById('btn-step-2-next');
+        const btnStep3Back = document.getElementById('btn-step-3-back');
+
+        // Step content divs
+        const step1Content = document.getElementById('step-1-content');
+        const step2Content = document.getElementById('step-2-content');
+        const step3Content = document.getElementById('step-3-content');
+
+        // Step indicators
+        const step1 = document.getElementById('step-1');
+        const step2 = document.getElementById('step-2');
+        const step3 = document.getElementById('step-3');
+
+        // Variables to store data
+        let selectedServiceData = null;
+        let selectedFeatures = [];
+
+        // Service selection
+        serviceSelector.addEventListener('change', function() {
+            const serviceId = this.value;
+
+            if (serviceId) {
+                fetchServiceData(serviceId);
+                btnStep1Next.disabled = false;
+            } else {
+                serviceInfo.classList.remove('active');
+                btnStep1Next.disabled = true;
+                selectedServiceData = null;
+            }
+        });
+
+        // Fetch service data
+        function fetchServiceData(serviceId) {
+            fetch(`/quotes/api/service-features/${serviceId}/`)
+                .then(response => response.json())
+                .then(data => {
+                    // Store service data
+                    selectedServiceData = data.service;
+
+                    // Update service info
+                    serviceName.textContent = data.service.name;
+                    serviceDescription.textContent = data.service.description;
+                    servicePrice.textContent = `$${data.service.base_price.toFixed(2)}`;
+
+                    // Show service info
+                    serviceInfo.classList.add('active');
+
+                    // Populate features
+                    populateFeatures(data.features);
+                })
+                .catch(error => {
+                    console.error('Error fetching service data:', error);
+                });
+        }
+
+        // Populate features
+        function populateFeatures(features) {
+            featuresContainer.innerHTML = '';
+
+            if (features.length === 0) {
+                featuresContainer.innerHTML = '<p>No additional features available for this service.</p>';
+                return;
+            }
+
+            // Group required and optional features
+            const requiredFeatures = features.filter(feature => feature.is_required);
+            const optionalFeatures = features.filter(feature => !feature.is_required);
+
+            // Create hidden fields for required features
+            requiredFeatures.forEach(feature => {
+                // Create feature item
+                const featureItem = createFeatureItem(feature, true);
+                featuresContainer.appendChild(featureItem);
+
+                // Add to selected features
+                selectedFeatures.push(feature);
+            });
+
+            // Create checkboxes for optional features
+            if (optionalFeatures.length > 0) {
+                const optionalTitle = document.createElement('h4');
+                optionalTitle.textContent = 'Optional Features';
+                optionalTitle.className = 'mt-4 mb-3';
+                featuresContainer.appendChild(optionalTitle);
+
+                optionalFeatures.forEach(feature => {
+                    // Create feature item
+                    const featureItem = createFeatureItem(feature, false);
+                    featuresContainer.appendChild(featureItem);
+                });
+            }
+        }
+
+        // Create feature item
+        function createFeatureItem(feature, isRequired) {
+            const featureItem = document.createElement('div');
+            featureItem.className = 'feature-item';
+
+            const featureHeader = document.createElement('div');
+            featureHeader.className = 'feature-header';
+
+            const featureNameWrapper = document.createElement('div');
+
+            const checkboxLabel = document.createElement('label');
+            checkboxLabel.className = 'd-flex align-items-center';
+
+            if (!isRequired) {
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.name = 'features';
+                checkbox.value = feature.id;
+                checkbox.className = 'me-2 feature-checkbox';
+                checkbox.dataset.featureId = feature.id;
+
+                checkbox.addEventListener('change', function() {
+                    if (this.checked) {
+                        selectedFeatures.push(feature);
+                    } else {
+                        selectedFeatures = selectedFeatures.filter(f => f.id !== feature.id);
+                    }
+                });
+
+                checkboxLabel.appendChild(checkbox);
+            } else {
+                // Hidden input for required features
+                const hiddenInput = document.createElement('input');
+                hiddenInput.type = 'hidden';
+                hiddenInput.name = 'features';
+                hiddenInput.value = feature.id;
+                featureItem.appendChild(hiddenInput);
+            }
+
+            const featureName = document.createElement('span');
+            featureName.className = 'feature-name';
+            featureName.textContent = feature.name;
+            checkboxLabel.appendChild(featureName);
+
+            featureNameWrapper.appendChild(checkboxLabel);
+
+            if (isRequired) {
+                const requiredBadge = document.createElement('span');
+                requiredBadge.className = 'feature-required ms-2';
+                requiredBadge.textContent = 'Required';
+                featureNameWrapper.appendChild(requiredBadge);
+            }
+
+            featureHeader.appendChild(featureNameWrapper);
+
+            const featurePrice = document.createElement('div');
+            featurePrice.className = 'feature-price';
+
+            if (feature.price_type === 'fixed') {
+                featurePrice.textContent = `$${feature.price_value.toFixed(2)}`;
+            } else {
+                featurePrice.textContent = `${feature.price_value.toFixed(2)}%`;
+            }
+
+            featureHeader.appendChild(featurePrice);
+            featureItem.appendChild(featureHeader);
+
+            if (feature.description) {
+                const featureDescription = document.createElement('div');
+                featureDescription.className = 'feature-description';
+                featureDescription.textContent = feature.description;
+                featureItem.appendChild(featureDescription);
+            }
+
+            return featureItem;
+        }
+
+        // Update summary
+        function updateSummary() {
+            if (!selectedServiceData) return;
+
+            // Set service info
+            summaryServiceName.textContent = selectedServiceData.name;
+            summaryBasePrice.textContent = `$${selectedServiceData.base_price.toFixed(2)}`;
+
+            // Clear features summary
+            summaryFeatures.innerHTML = '';
+
+            // Calculate total
+            let total = selectedServiceData.base_price;
+
+            // Add features
+            selectedFeatures.forEach(feature => {
+                const featureDetail = document.createElement('div');
+                featureDetail.className = 'estimate-detail';
+
+                const featureName = document.createElement('span');
+                featureName.innerHTML = `&nbsp;&nbsp;+ ${feature.name}`;
+
+                const featurePrice = document.createElement('span');
+
+                let featureValue = 0;
+                if (feature.price_type === 'fixed') {
+                    featureValue = feature.price_value;
+                    featurePrice.textContent = `$${feature.price_value.toFixed(2)}`;
+                } else {
+                    featureValue = selectedServiceData.base_price * (feature.price_value / 100);
+                    featurePrice.textContent = `$${featureValue.toFixed(2)} (${feature.price_value}%)`;
+                }
+
+                total += featureValue;
+
+                featureDetail.appendChild(featureName);
+                featureDetail.appendChild(featurePrice);
+                summaryFeatures.appendChild(featureDetail);
+            });
+
+            // Update total
+            summaryTotalPrice.textContent = `$${total.toFixed(2)}`;
+        }
+
+        // Step navigation
+        btnStep1Next.addEventListener('click', function() {
+            step1Content.style.display = 'none';
+            step2Content.style.display = 'block';
+
+            step1.classList.remove('active');
+            step1.classList.add('completed');
+            step2.classList.add('active');
+        });
+
+        btnStep2Back.addEventListener('click', function() {
+            step2Content.style.display = 'none';
+            step1Content.style.display = 'block';
+
+            step2.classList.remove('active');
+            step1.classList.remove('completed');
+            step1.classList.add('active');
+        });
+
+        btnStep2Next.addEventListener('click', function() {
+            updateSummary();
+
+            step2Content.style.display = 'none';
+            step3Content.style.display = 'block';
+
+            step2.classList.remove('active');
+            step2.classList.add('completed');
+            step3.classList.add('active');
+        });
+
+        btnStep3Back.addEventListener('click', function() {
+            step3Content.style.display = 'none';
+            step2Content.style.display = 'block';
+
+            step3.classList.remove('active');
+            step2.classList.remove('completed');
+            step2.classList.add('active');
+        });
+
+        // Check if form was pre-filled from session
+        if (serviceSelector.value) {
+            fetchServiceData(serviceSelector.value);
+            btnStep1Next.disabled = false;
+        }
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{% block client_portal_title %}Client Portal{% endblock %}{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'client_portal/css/client_portal.css' %}">
+{% block client_portal_css %}{% endblock %}
+{% endblock %}
+
+{% block content %}
+<div class="client-portal-wrapper">
+    <div class="container py-4">
+        <div class="row">
+            <!-- Breadcrumbs and page title -->
+            <div class="col-12 mb-4">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{% url 'core:home' %}">Home</a></li>
+                        <li class="breadcrumb-item"><a href="{% url 'client_portal:dashboard' %}">Client Portal</a></li>
+                        {% block breadcrumb_items %}{% endblock %}
+                    </ol>
+                </nav>
+                <h1 class="mt-2">{% block page_title %}Client Portal{% endblock %}</h1>
+            </div>
+        </div>
+
+        <!-- Client Portal Content -->
+        {% block client_portal_content %}{% endblock %}
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'client_portal/js/client_portal.js' %}"></script>
+{% block client_portal_js %}{% endblock %}
+{% endblock %}

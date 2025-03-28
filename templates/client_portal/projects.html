@@ -1,0 +1,282 @@
+{% extends 'client_portal/base.html' %}
+{% load static %}
+{% load custom_filters %}
+
+{% block client_portal_title %}Projects - Client Portal{% endblock %}
+
+{% block breadcrumb_items %}
+<li class="breadcrumb-item active">Projects</li>
+{% endblock %}
+
+{% block page_title %}My Projects{% endblock %}
+
+{% block client_portal_css %}
+<style>
+    .project-card {
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+        margin-bottom: 30px;
+        overflow: hidden;
+        transition: all 0.3s ease;
+    }
+
+    .project-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 0.5rem 2rem 0 rgba(58, 59, 69, 0.25);
+    }
+
+    .project-card-header {
+        padding: 15px 20px;
+        border-bottom: 1px solid #e3e6f0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .project-title {
+        font-weight: 700;
+        margin-bottom: 0;
+    }
+
+    .project-status {
+        display: inline-block;
+        padding: 3px 10px;
+        border-radius: 15px;
+        font-size: 0.75rem;
+    }
+
+    .status-planning {
+        background-color: rgba(78, 115, 223, 0.1);
+        color: var(--primary-color);
+    }
+
+    .status-in-progress {
+        background-color: rgba(246, 194, 62, 0.1);
+        color: #f6c23e;
+    }
+
+    .status-completed {
+        background-color: rgba(28, 200, 138, 0.1);
+        color: #1cc88a;
+    }
+
+    .status-on-hold {
+        background-color: rgba(231, 74, 59, 0.1);
+        color: #e74a3b;
+    }
+
+    .status-cancelled {
+        background-color: rgba(108, 117, 125, 0.1);
+        color: #6c757d;
+    }
+
+    .project-card-body {
+        padding: 20px;
+    }
+
+    .project-details {
+        color: #858796;
+        font-size: 0.9rem;
+        margin-bottom: 15px;
+    }
+
+    .project-details i {
+        margin-right: 5px;
+        width: 20px;
+        text-align: center;
+    }
+
+    .project-progress {
+        margin: 15px 0;
+    }
+
+    .progress {
+        height: 8px;
+        border-radius: 4px;
+    }
+
+    .progress-status {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.8rem;
+        color: #858796;
+    }
+
+    .project-card-footer {
+        background-color: #f8f9fc;
+        padding: 15px 20px;
+        border-top: 1px solid #e3e6f0;
+    }
+
+    .projects-filter {
+        margin-bottom: 30px;
+    }
+
+    .filter-btn {
+        margin-right: 10px;
+        margin-bottom: 10px;
+    }
+
+    .empty-state {
+        text-align: center;
+        padding: 50px 20px;
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+    }
+
+    .empty-icon {
+        font-size: 4rem;
+        color: #d1d3e2;
+        margin-bottom: 20px;
+    }
+</style>
+{% endblock %}
+
+{% block client_portal_content %}
+<div class="row">
+    <div class="col-12">
+        <div class="projects-filter">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h4>Filter Projects</h4>
+                <div>
+                    <select id="projects-sort" class="form-select">
+                        <option value="latest">Latest Updated</option>
+                        <option value="oldest">Oldest Updated</option>
+                        <option value="start-date">Start Date</option>
+                        <option value="due-date">Due Date</option>
+                    </select>
+                </div>
+            </div>
+            <div>
+                <button class="btn btn-outline-primary filter-btn active" data-filter="all">All</button>
+                <button class="btn btn-outline-primary filter-btn" data-filter="planning">Planning</button>
+                <button class="btn btn-outline-primary filter-btn" data-filter="in-progress">In Progress</button>
+                <button class="btn btn-outline-primary filter-btn" data-filter="on-hold">On Hold</button>
+                <button class="btn btn-outline-primary filter-btn" data-filter="completed">Completed</button>
+                <button class="btn btn-outline-primary filter-btn" data-filter="cancelled">Cancelled</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row" id="projects-container">
+    {% if projects %}
+        {% for project in projects %}
+        <div class="col-lg-6 project-item" data-status="{{ project.status }}">
+            <div class="project-card">
+                <div class="project-card-header">
+                    <h5 class="project-title">{{ project.title }}</h5>
+                    <span class="project-status status-{{ project.status }}">{{ project.get_status_display }}</span>
+                </div>
+                <div class="project-card-body">
+                    <p>{{ project.description|truncatechars:150 }}</p>
+                    <div class="project-details">
+                        <div class="mb-2">
+                            <i class="far fa-calendar-alt"></i> Started: {{ project.start_date|date:"M d, Y" }}
+                        </div>
+                        {% if project.end_date %}
+                        <div class="mb-2">
+                            <i class="far fa-calendar-check"></i> Due: {{ project.end_date|date:"M d, Y" }}
+                            {% if project.is_overdue %}
+                            <span class="badge bg-danger ms-2">Overdue</span>
+                            {% endif %}
+                        </div>
+                        {% endif %}
+                        {% if project.days_remaining is not None %}
+                        <div class="mb-2">
+                            <i class="far fa-clock"></i>
+                            {% if project.days_remaining > 0 %}
+                                {{ project.days_remaining }} days remaining
+                            {% elif project.days_remaining == 0 %}
+                                Due today
+                            {% else %}
+                                {{ project.days_remaining|abs_value }} days overdue
+                            {% endif %}
+                        </div>
+                        {% endif %}
+                        <div class="mb-2">
+                            <i class="fas fa-dollar-sign"></i> Budget: ${{ project.budget|floatformat:2 }}
+                        </div>
+                    </div>
+
+                    <div class="project-progress">
+                        <div class="progress-status">
+                            <span>Progress</span>
+                            <span>{{ project.completion_percentage }}%</span>
+                        </div>
+                        <div class="progress">
+                            <div class="progress-bar bg-success" role="progressbar" style="width: {{ project.completion_percentage }}%"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-card-footer">
+                    <a href="{% url 'client_portal:project_detail' pk=project.id %}" class="btn btn-primary">View Project</a>
+                    {% if project.status == 'in_progress' %}
+                    <a href="#" class="btn btn-outline-secondary ms-2" data-bs-toggle="tooltip" title="Request Changes">
+                        <i class="fas fa-comment-alt"></i>
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    {% else %}
+        <div class="col-12">
+            <div class="empty-state">
+                <i class="fas fa-clipboard-list empty-icon"></i>
+                <h4>No Projects Found</h4>
+                <p>You don't have any projects yet. Contact us to discuss your next project idea!</p>
+                <a href="{% url 'core:contact' %}" class="btn btn-primary mt-3">Contact Us</a>
+            </div>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block client_portal_js %}
+<script>
+    $(document).ready(function() {
+        // Project filtering
+        $('.filter-btn').on('click', function() {
+            // Update active filter button
+            $('.filter-btn').removeClass('active');
+            $(this).addClass('active');
+
+            const filter = $(this).data('filter');
+
+            if (filter === 'all') {
+                $('.project-item').show();
+            } else {
+                $('.project-item').hide();
+                $('.project-item[data-status="' + filter.replace('-', '_') + '"]').show();
+            }
+        });
+
+        // Project sorting
+        $('#projects-sort').on('change', function() {
+            const sortOption = $(this).val();
+            let projectItems = $('.project-item').get();
+
+            projectItems.sort(function(a, b) {
+                // Implementation depends on what data you have in the DOM
+                // For simplicity, using data attributes here
+                // This would need to be customized based on your actual data structure
+                return 0; // Placeholder
+            });
+
+            // Reorder the items in the DOM
+            $.each(projectItems, function(index, item) {
+                $('#projects-container').append(item);
+            });
+        });
+
+        // Initialize tooltips
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl)
+        });
+    });
+</script>
+{% endblock %}

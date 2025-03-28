@@ -1,0 +1,322 @@
+{% extends 'client_portal/base.html' %}
+{% load static %}
+
+{% block client_portal_title %}Balance Due - Client Portal{% endblock %}
+
+{% block breadcrumb_items %}
+<li class="breadcrumb-item"><a href="{% url 'client_portal:invoices' %}">Invoices</a></li>
+<li class="breadcrumb-item active">Balance Due</li>
+{% endblock %}
+
+{% block page_title %}Balance Due{% endblock %}
+
+{% block client_portal_css %}
+<style>
+    .balance-card {
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+        margin-bottom: 30px;
+        overflow: hidden;
+    }
+
+    .balance-header {
+        padding: 25px;
+        background-color: var(--primary-color);
+        color: white;
+        text-align: center;
+    }
+
+    .balance-title {
+        font-weight: 700;
+        margin-bottom: 5px;
+    }
+
+    .balance-amount {
+        font-size: 2.5rem;
+        font-weight: 700;
+    }
+
+    .balance-body {
+        padding: 25px;
+    }
+
+    .payment-option {
+        background-color: #f8f9fc;
+        border-radius: 10px;
+        padding: 20px;
+        margin-bottom: 20px;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        border: 2px solid transparent;
+    }
+
+    .payment-option:hover {
+        border-color: var(--primary-color);
+        transform: translateY(-5px);
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+    }
+
+    .payment-icon {
+        font-size: 2rem;
+        margin-bottom: 15px;
+        color: var(--primary-color);
+    }
+
+    .payment-title {
+        font-weight: 700;
+        margin-bottom: 5px;
+    }
+
+    .payment-description {
+        color: #858796;
+        font-size: 0.9rem;
+    }
+
+    .invoice-list {
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+        margin-bottom: 30px;
+    }
+
+    .invoice-list-header {
+        padding: 15px 20px;
+        border-bottom: 1px solid #e3e6f0;
+        font-weight: 700;
+    }
+
+    .invoice-item {
+        padding: 15px;
+        border-bottom: 1px solid #e3e6f0;
+        transition: all 0.3s ease;
+    }
+
+    .invoice-item:last-child {
+        border-bottom: none;
+    }
+
+    .invoice-item:hover {
+        background-color: var(--light-gray);
+    }
+
+    .invoice-number {
+        font-weight: 700;
+        margin-bottom: 5px;
+    }
+
+    .invoice-status {
+        display: inline-block;
+        padding: 3px 10px;
+        border-radius: 15px;
+        font-size: 0.75rem;
+        margin-bottom: 5px;
+    }
+
+    .status-paid {
+        background-color: rgba(28, 200, 138, 0.1);
+        color: #1cc88a;
+    }
+
+    .status-draft, .status-sent {
+        background-color: rgba(78, 115, 223, 0.1);
+        color: var(--primary-color);
+    }
+
+    .status-overdue {
+        background-color: rgba(231, 74, 59, 0.1);
+        color: #e74a3b;
+    }
+
+    .status-cancelled {
+        background-color: rgba(108, 117, 125, 0.1);
+        color: #6c757d;
+    }
+
+    .invoice-details {
+        color: #858796;
+        font-size: 0.9rem;
+    }
+
+    .invoice-amount {
+        font-weight: 700;
+        color: var(--text-color);
+    }
+
+    .payment-instructions {
+        background-color: #f8f9fc;
+        border-radius: 10px;
+        padding: 20px;
+        margin-bottom: 30px;
+    }
+
+    .payment-instructions h5 {
+        margin-bottom: 15px;
+        font-weight: 700;
+    }
+
+    .payment-instructions p {
+        margin-bottom: 10px;
+    }
+
+    .alert-overdue {
+        background-color: rgba(231, 74, 59, 0.1);
+        color: #e74a3b;
+        border: 1px solid rgba(231, 74, 59, 0.2);
+    }
+
+    .alert-overdue i {
+        margin-right: 10px;
+    }
+</style>
+{% endblock %}
+
+{% block client_portal_content %}
+<div class="row">
+    <div class="col-lg-8">
+        <!-- Unpaid Invoices -->
+        {% if unpaid_invoices %}
+        {% if has_overdue_invoices %}
+                <div class="alert alert-overdue mb-4">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    You have overdue invoices. Please make a payment as soon as possible to avoid service interruptions.
+                </div>
+            {% endif %}
+
+            <div class="invoice-list">
+                <div class="invoice-list-header">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span>Unpaid Invoices</span>
+                    </div>
+                </div>
+                <div class="invoice-list-body">
+                    {% for invoice in unpaid_invoices %}
+                        <div class="invoice-item">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h5 class="invoice-number">
+                                        <a href="{% url 'client_portal:invoice_detail' pk=invoice.id %}">Invoice #{{ invoice.invoice_number }}</a>
+                                    </h5>
+                                    <span class="invoice-status status-{{ invoice.status }}">{{ invoice.get_status_display }}</span>
+                                    <div class="invoice-details">
+                                        <div>
+                                            <i class="far fa-calendar-alt"></i> Issued: {{ invoice.issue_date|date:"M d, Y" }}
+                                            <span class="mx-2">|</span>
+                                            <i class="far fa-calendar-check"></i> Due: {{ invoice.due_date|date:"M d, Y" }}
+                                        </div>
+                                        {% if invoice.project %}
+                                            <div>
+                                                <i class="fas fa-project-diagram"></i> Project:
+                                                <a href="{% url 'client_portal:project_detail' pk=invoice.project.id %}">{{ invoice.project.title }}</a>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="d-flex align-items-center">
+                                    <div class="text-end me-3">
+                                        <div class="invoice-amount">${{ invoice.total|floatformat:2 }}</div>
+                                        <small class="text-danger">Balance: ${{ invoice.balance_due|floatformat:2 }}</small>
+                                    </div>
+                                    <a href="{% url 'client_portal:make_payment' invoice_id=invoice.id %}" class="btn btn-success">
+                                        <i class="fas fa-credit-card"></i> Pay
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Payment Instructions -->
+            <div class="payment-instructions">
+                <h5>Payment Instructions</h5>
+                <p>Please note that all payments are processed securely. Once your payment is confirmed, your invoice status will be updated automatically.</p>
+                <p>For any questions regarding your invoices or payments, please <a href="{% url 'client_portal:messages' %}">contact us</a> or call our finance department at (123) 456-7890.</p>
+            </div>
+        {% else %}
+            <div class="alert alert-success">
+                <i class="fas fa-check-circle me-2"></i>
+                You have no unpaid invoices at this time. Thank you for your business!
+            </div>
+        {% endif %}
+    </div>
+
+    <div class="col-lg-4">
+        <!-- Balance Summary -->
+        <div class="balance-card">
+            <div class="balance-header">
+                <h5 class="balance-title">Your Balance</h5>
+                <div class="balance-amount">${{ balance_due|floatformat:2 }}</div>
+            </div>
+            <div class="balance-body">
+                <div class="d-flex justify-content-between mb-3">
+                    <div>Total Invoiced:</div>
+                    <div><strong>${{ total_invoiced|floatformat:2 }}</strong></div>
+                </div>
+                <div class="d-flex justify-content-between mb-3">
+                    <div>Total Paid:</div>
+                    <div><strong>${{ total_paid|floatformat:2 }}</strong></div>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <div>Balance Due:</div>
+                    <div><strong>${{ balance_due|floatformat:2 }}</strong></div>
+                </div>
+
+                {% if balance_due > 0 %}
+                    <hr>
+                    <div class="text-center">
+                        <a href="#payment-options" class="btn btn-primary w-100">
+                            <i class="fas fa-credit-card me-2"></i> Make a Payment
+                        </a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        {% if balance_due > 0 %}
+            <!-- Payment Options -->
+            <div id="payment-options" class="balance-card">
+                <div class="balance-body">
+                    <h5 class="mb-4">Payment Options</h5>
+
+                    <a href="{% url 'client_portal:make_payment' invoice_id=unpaid_invoices.0.id %}" class="text-decoration-none">
+                        <div class="payment-option">
+                            <div class="text-center">
+                                <div class="payment-icon">
+                                    <i class="fas fa-credit-card"></i>
+                                </div>
+                                <h5 class="payment-title">Credit Card</h5>
+                                <p class="payment-description">Pay securely with your credit or debit card</p>
+                            </div>
+                        </div>
+                    </a>
+
+                    <a href="{% url 'client_portal:make_payment' invoice_id=unpaid_invoices.0.id %}" class="text-decoration-none">
+                        <div class="payment-option">
+                            <div class="text-center">
+                                <div class="payment-icon">
+                                    <i class="fab fa-paypal"></i>
+                                </div>
+                                <h5 class="payment-title">PayPal</h5>
+                                <p class="payment-description">Pay using your PayPal account</p>
+                            </div>
+                        </div>
+                    </a>
+
+                    <a href="{% url 'client_portal:make_payment' invoice_id=unpaid_invoices.0.id %}" class="text-decoration-none">
+                        <div class="payment-option">
+                            <div class="text-center">
+                                <div class="payment-icon">
+                                    <i class="fas fa-mobile-alt"></i>
+                                </div>
+                                <h5 class="payment-title">M-Pesa</h5>
+                                <p class="payment-description">Pay using M-Pesa mobile payment</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

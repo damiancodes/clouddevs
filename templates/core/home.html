@@ -1,0 +1,1131 @@
+{#{% extends "base.html" %}#}
+{#{% load static %}#}
+{##}
+{##}
+{#{% block title %}CloudLink_Devs - Web & App Development Solutions{% endblock %}#}
+{##}
+{#{% block extra_css %}#}
+{#<style>#}
+{#    /* Hero Section */#}
+{#    .hero-section {#}
+{#        background: linear-gradient(135deg, #4e73df 0%, #36b9cc 100%);#}
+{#        color: white;#}
+{#        padding: 100px 0;#}
+{#        position: relative;#}
+{#        overflow: hidden;#}
+{#    }#}
+{#    #}
+{#    .hero-content {#}
+{#        position: relative;#}
+{#        z-index: 2;#}
+{#    }#}
+{#    #}
+{#    .hero-title {#}
+{#        font-size: 3rem;#}
+{#        font-weight: 800;#}
+{#        margin-bottom: 1.5rem;#}
+{#    }#}
+{#    #}
+{#    .hero-subtitle {#}
+{#        font-size: 1.25rem;#}
+{#        margin-bottom: 2rem;#}
+{#        opacity: 0.9;#}
+{#    }#}
+{#    #}
+{#    .hero-buttons .btn {#}
+{#        margin-right: 1rem;#}
+{#        padding: 0.75rem 1.5rem;#}
+{#        font-weight: 600;#}
+{#    }#}
+{#    #}
+{#    .hero-image {#}
+{#        animation: float 6s ease-in-out infinite;#}
+{#    }#}
+{#    #}
+{#    /* Services Section */#}
+{#    .services-section {#}
+{#        padding: 80px 0;#}
+{#    }#}
+{#    #}
+{#    .section-title {#}
+{#        text-align: center;#}
+{#        margin-bottom: 3rem;#}
+{#    }#}
+{#    #}
+{#    .section-title h2 {#}
+{#        font-weight: 700;#}
+{#        margin-bottom: 1rem;#}
+{#        color: #333;#}
+{#    }#}
+{#    #}
+{#    .service-card {#}
+{#        padding: 30px;#}
+{#        text-align: center;#}
+{#        border-radius: 10px;#}
+{#        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);#}
+{#        transition: all 0.3s ease;#}
+{#        height: 100%;#}
+{#        background-color: white;#}
+{#    }#}
+{#    #}
+{#    .service-card:hover {#}
+{#        transform: translateY(-10px);#}
+{#        box-shadow: 0 1rem 3rem rgba(58, 59, 69, 0.175);#}
+{#    }#}
+{#    #}
+{#    .service-icon {#}
+{#        width: 80px;#}
+{#        height: 80px;#}
+{#        margin: 0 auto 20px;#}
+{#        background-color: #f8f9fc;#}
+{#        border-radius: 50%;#}
+{#        display: flex;#}
+{#        align-items: center;#}
+{#        justify-content: center;#}
+{#        color: #4e73df;#}
+{#        font-size: 2rem;#}
+{#    }#}
+{#    #}
+{#    /* Features Section */#}
+{#    .features-section {#}
+{#        padding: 80px 0;#}
+{#        background-color: #f8f9fc;#}
+{#    }#}
+{#    #}
+{#    .feature-item {#}
+{#        margin-bottom: 30px;#}
+{#    }#}
+{#    #}
+{#    .feature-icon {#}
+{#        width: 60px;#}
+{#        height: 60px;#}
+{#        background-color: #4e73df;#}
+{#        color: white;#}
+{#        border-radius: 50%;#}
+{#        display: flex;#}
+{#        align-items: center;#}
+{#        justify-content: center;#}
+{#        font-size: 1.5rem;#}
+{#        margin-bottom: 20px;#}
+{#    }#}
+{#    #}
+{#    /* CTA Section */#}
+{#    .cta-section {#}
+{#        padding: 80px 0;#}
+{#        background: linear-gradient(135deg, #4e73df 0%, #36b9cc 100%);#}
+{#        color: white;#}
+{#        text-align: center;#}
+{#    }#}
+{#    #}
+{#    .cta-title {#}
+{#        font-size: 2.5rem;#}
+{#        font-weight: 700;#}
+{#        margin-bottom: 1.5rem;#}
+{#    }#}
+{#    #}
+{#    .cta-text {#}
+{#        max-width: 700px;#}
+{#        margin: 0 auto 2rem;#}
+{#        opacity: 0.9;#}
+{#    }#}
+{#    #}
+{#    /* Testimonials Section */#}
+{#    .testimonials-section {#}
+{#        padding: 80px 0;#}
+{#    }#}
+{#    #}
+{#    .testimonial-card {#}
+{#        background-color: white;#}
+{#        border-radius: 10px;#}
+{#        padding: 30px;#}
+{#        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);#}
+{#        margin-bottom: 30px;#}
+{#        height: 100%;#}
+{#    }#}
+{#    #}
+{#    .testimonial-content {#}
+{#        font-style: italic;#}
+{#        margin-bottom: 20px;#}
+{#        position: relative;#}
+{#    }#}
+{#    #}
+{#    .testimonial-content:before {#}
+{#        content: '"';#}
+{#        font-size: 4rem;#}
+{#        position: absolute;#}
+{#        top: -20px;#}
+{#        left: -15px;#}
+{#        color: #f2f3f5;#}
+{#        z-index: -1;#}
+{#    }#}
+{#    #}
+{#    .testimonial-author {#}
+{#        display: flex;#}
+{#        align-items: center;#}
+{#    }#}
+{#    #}
+{#    .testimonial-avatar {#}
+{#        width: 50px;#}
+{#        height: 50px;#}
+{#        border-radius: 50%;#}
+{#        margin-right: 15px;#}
+{#        background-color: #f2f3f5;#}
+{#        display: flex;#}
+{#        align-items: center;#}
+{#        justify-content: center;#}
+{#    }#}
+{#    #}
+{#    .testimonial-info h5 {#}
+{#        margin-bottom: 0;#}
+{#    }#}
+{#    #}
+{#    .testimonial-info p {#}
+{#        color: #858796;#}
+{#        margin-bottom: 0;#}
+{#    }#}
+{#    #}
+{#    /* Recent Work Section */#}
+{#    .recent-work-section {#}
+{#        padding: 80px 0;#}
+{#        background-color: #f8f9fc;#}
+{#    }#}
+{#    #}
+{#    .work-card {#}
+{#        border-radius: 10px;#}
+{#        overflow: hidden;#}
+{#        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);#}
+{#        margin-bottom: 30px;#}
+{#        background-color: white;#}
+{#    }#}
+{#    #}
+{#    .work-image {#}
+{#        position: relative;#}
+{#        overflow: hidden;#}
+{#        height: 200px;#}
+{#    }#}
+{#    #}
+{#    .work-image .work-overlay {#}
+{#        position: absolute;#}
+{#        top: 0;#}
+{#        left: 0;#}
+{#        width: 100%;#}
+{#        height: 100%;#}
+{#        background-color: rgba(78, 115, 223, 0.7);#}
+{#        display: flex;#}
+{#        align-items: center;#}
+{#        justify-content: center;#}
+{#        opacity: 0;#}
+{#        transition: all 0.3s ease;#}
+{#    }#}
+{#    #}
+{#    .work-image:hover .work-overlay {#}
+{#        opacity: 1;#}
+{#    }#}
+{#    #}
+{#    .work-image .btn {#}
+{#        transform: translateY(20px);#}
+{#        transition: all 0.3s ease;#}
+{#    }#}
+{#    #}
+{#    .work-image:hover .btn {#}
+{#        transform: translateY(0);#}
+{#    }#}
+{#    #}
+{#    .work-info {#}
+{#        padding: 20px;#}
+{#    }#}
+{#    #}
+{#    .work-info h5 {#}
+{#        margin-bottom: 10px;#}
+{#    }#}
+{#    #}
+{#    /* Animations */#}
+{#    @keyframes float {#}
+{#        0% {#}
+{#            transform: translateY(0px);#}
+{#        }#}
+{#        50% {#}
+{#            transform: translateY(-20px);#}
+{#        }#}
+{#        100% {#}
+{#            transform: translateY(0px);#}
+{#        }#}
+{#    }#}
+{#    #}
+{#    /* Dark mode adaptations */#}
+{#    body.dark-mode .service-card,#}
+{#    body.dark-mode .testimonial-card,#}
+{#    body.dark-mode .work-card {#}
+{#        background-color: #2a2c3e;#}
+{#        color: #f8f9fc;#}
+{#    }#}
+{#    #}
+{#    body.dark-mode .service-icon {#}
+{#        background-color: #3a3d52;#}
+{#        color: #4e73df;#}
+{#    }#}
+{#    #}
+{#    body.dark-mode .section-title h2,#}
+{#    body.dark-mode .testimonial-info h5 {#}
+{#        color: #f8f9fc;#}
+{#    }#}
+{#    #}
+{#    body.dark-mode .features-section,#}
+{#    body.dark-mode .recent-work-section {#}
+{#        background-color: #222533;#}
+{#    }#}
+{#</style>#}
+{#{% endblock %}#}
+{##}
+{#{% block content %}#}
+{#<!-- Hero Section -->#}
+{#<section class="hero-section">#}
+{#    <div class="container">#}
+{#        <div class="row align-items-center">#}
+{#            <div class="col-lg-6 hero-content">#}
+{#                <h1 class="hero-title">Web & App Solutions for Your Business</h1>#}
+{#                <p class="hero-subtitle">We build custom web applications, mobile apps, and POS systems to help your business thrive in the digital world.</p>#}
+{#                <div class="hero-buttons">#}
+{#                    <a href="{% url 'quotes:service_estimator' %}" class="btn btn-light btn-lg">Get a Quote</a>#}
+{#                    <a href="{% url 'portfolio:portfolio' %}" class="btn btn-outline-light btn-lg">View Our Work</a>#}
+{#                </div>#}
+{#            </div>#}
+{#            <div class="col-lg-6 d-none d-lg-block">#}
+{#                <div class="hero-image text-center">#}
+{#                  <img src="{% static 'images/hero.png' %}" alt="CloudLink_Devs Solutions" class="img-fluid">#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
+{#</section>#}
+{##}
+{#<!-- Services Section -->#}
+{#<section class="services-section">#}
+{#    <div class="container">#}
+{#        <div class="section-title">#}
+{#            <h2>Our Services</h2>#}
+{#            <p>We offer comprehensive development solutions to meet your business needs</p>#}
+{#        </div>#}
+{#        #}
+{#        <div class="row">#}
+{#            <div class="col-md-4 mb-4">#}
+{#                <div class="service-card">#}
+{#                    <div class="service-icon">#}
+{#                        <i class="fas fa-laptop-code"></i>#}
+{#                    </div>#}
+{#                    <h3>Web Development</h3>#}
+{#                    <p>Custom websites and web applications built with modern technologies to meet your business needs.</p>#}
+{#                    <a href="{% url 'services:web_development' %}" class="btn btn-sm btn-primary mt-3">Learn More</a>#}
+{#                </div>#}
+{#            </div>#}
+{#            #}
+{#            <div class="col-md-4 mb-4">#}
+{#                <div class="service-card">#}
+{#                    <div class="service-icon">#}
+{#                        <i class="fas fa-mobile-alt"></i>#}
+{#                    </div>#}
+{#                    <h3>App Development</h3>#}
+{#                    <p>Native and cross-platform mobile applications for iOS and Android to reach your customers anywhere.</p>#}
+{#                    <a href="{% url 'services:app_development' %}" class="btn btn-sm btn-primary mt-3">Learn More</a>#}
+{#                </div>#}
+{#            </div>#}
+{#            #}
+{#            <div class="col-md-4 mb-4">#}
+{#                <div class="service-card">#}
+{#                    <div class="service-icon">#}
+{#                        <i class="fas fa-cash-register"></i>#}
+{#                    </div>#}
+{#                    <h3>POS Systems</h3>#}
+{#                    <p>Customized point-of-sale solutions for retail, restaurants, and other businesses to streamline operations.</p>#}
+{#                    <a href="{% url 'services:pos_systems' %}" class="btn btn-sm btn-primary mt-3">Learn More</a>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
+{#</section>#}
+{##}
+{#<!-- Features Section -->#}
+{#<section class="features-section">#}
+{#    <div class="container">#}
+{#        <div class="section-title">#}
+{#            <h2>Why Choose Us</h2>#}
+{#            <p>What makes CloudLink_Devs the right partner for your digital journey</p>#}
+{#        </div>#}
+{#        #}
+{#        <div class="row">#}
+{#            <div class="col-lg-4">#}
+{#                <div class="feature-item">#}
+{#                    <div class="feature-icon">#}
+{#                        <i class="fas fa-code"></i>#}
+{#                    </div>#}
+{#                    <h4>Clean Code</h4>#}
+{#                    <p>We write maintainable, well-documented code following best practices to ensure long-term success.</p>#}
+{#                </div>#}
+{#            </div>#}
+{#            #}
+{#            <div class="col-lg-4">#}
+{#                <div class="feature-item">#}
+{#                    <div class="feature-icon">#}
+{#                        <i class="fas fa-rocket"></i>#}
+{#                    </div>#}
+{#                    <h4>Fast Delivery</h4>#}
+{#                    <p>We follow agile methodologies to deliver your project on time without compromising quality.</p>#}
+{#                </div>#}
+{#            </div>#}
+{#            #}
+{#            <div class="col-lg-4">#}
+{#                <div class="feature-item">#}
+{#                    <div class="feature-icon">#}
+{#                        <i class="fas fa-headset"></i>#}
+{#                    </div>#}
+{#                    <h4>24/7 Support</h4>#}
+{#                    <p>Our dedicated support team is always available to help you with any issues or questions.</p>#}
+{#                </div>#}
+{#            </div>#}
+{#            #}
+{#            <div class="col-lg-4">#}
+{#                <div class="feature-item">#}
+{#                    <div class="feature-icon">#}
+{#                        <i class="fas fa-shield-alt"></i>#}
+{#                    </div>#}
+{#                    <h4>Security Focus</h4>#}
+{#                    <p>We implement robust security measures to protect your data and applications from threats.</p>#}
+{#                </div>#}
+{#            </div>#}
+{#            #}
+{#            <div class="col-lg-4">#}
+{#                <div class="feature-item">#}
+{#                    <div class="feature-icon">#}
+{#                        <i class="fas fa-tachometer-alt"></i>#}
+{#                    </div>#}
+{#                    <h4>Optimized Performance</h4>#}
+{#                    <p>Our solutions are designed for speed and efficiency to provide the best user experience.</p>#}
+{#                </div>#}
+{#            </div>#}
+{#            #}
+{#            <div class="col-lg-4">#}
+{#                <div class="feature-item">#}
+{#                    <div class="feature-icon">#}
+{#                        <i class="fas fa-sync"></i>#}
+{#                    </div>#}
+{#                    <h4>Regular Updates</h4>#}
+{#                    <p>We provide ongoing maintenance and updates to keep your systems running smoothly.</p>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
+{#</section>#}
+{##}
+{#<!-- CTA Section -->#}
+{#<section class="cta-section">#}
+{#    <div class="container">#}
+{#        <h2 class="cta-title">Ready to Start Your Project?</h2>#}
+{#        <p class="cta-text">Contact us today for a free consultation and let's bring your ideas to life. Our team is ready to help you transform your business.</p>#}
+{#        <a href="{% url 'quotes:service_estimator' %}" class="btn btn-light btn-lg">Get a Free Quote</a>#}
+{#    </div>#}
+{#</section>#}
+{##}
+{#<!-- Testimonials Section -->#}
+{#<section class="testimonials-section">#}
+{#    <div class="container">#}
+{#        <div class="section-title">#}
+{#            <h2>What Our Clients Say</h2>#}
+{#            <p>Testimonials from businesses we've helped succeed</p>#}
+{#        </div>#}
+{#        #}
+{#        <div class="row">#}
+{#            <div class="col-md-4 mb-4">#}
+{#                <div class="testimonial-card">#}
+{#                    <div class="testimonial-content">#}
+{#                        <p>CloudLink_Devs transformed our business with a custom web application that streamlined our operations. Their team was professional and delivered beyond our expectations.</p>#}
+{#                    </div>#}
+{#                    <div class="testimonial-author">#}
+{#                        <div class="testimonial-avatar">#}
+{#                            <i class="fas fa-user"></i>#}
+{#                        </div>#}
+{#                        <div class="testimonial-info">#}
+{#                            <h5>John Smith</h5>#}
+{#                            <p>CEO, TechSolutions Inc.</p>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{#            #}
+{#            <div class="col-md-4 mb-4">#}
+{#                <div class="testimonial-card">#}
+{#                    <div class="testimonial-content">#}
+{#                        <p>The mobile app developed by CloudLink_Devs helped us increase customer engagement by 200%. Their attention to detail and commitment to quality is impressive.</p>#}
+{#                    </div>#}
+{#                    <div class="testimonial-author">#}
+{#                        <div class="testimonial-avatar">#}
+{#                            <i class="fas fa-user"></i>#}
+{#                        </div>#}
+{#                        <div class="testimonial-info">#}
+{#                            <h5>Sarah Johnson</h5>#}
+{#                            <p>Marketing Director, GrowFast</p>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{#            #}
+{#            <div class="col-md-4 mb-4">#}
+{#                <div class="testimonial-card">#}
+{#                    <div class="testimonial-content">#}
+{#                        <p>Our new POS system has made managing our restaurant so much easier. The team at CloudLink_Devs understood our needs perfectly and delivered a solution that works flawlessly.</p>#}
+{#                    </div>#}
+{#                    <div class="testimonial-author">#}
+{#                        <div class="testimonial-avatar">#}
+{#                            <i class="fas fa-user"></i>#}
+{#                        </div>#}
+{#                        <div class="testimonial-info">#}
+{#                            <h5>Michael Rodriguez</h5>#}
+{#                            <p>Owner, Taste of Italy</p>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
+{#</section>#}
+{##}
+{#<!-- Recent Work Section -->#}
+{#<section class="recent-work-section">#}
+{#    <div class="container">#}
+{#        <div class="section-title">#}
+{#            <h2>Recent Projects</h2>#}
+{#            <p>Some of our latest work for clients across different industries</p>#}
+{#        </div>#}
+{#        #}
+{#        <div class="row">#}
+{#            <div class="col-md-4 mb-4">#}
+{#                <div class="work-card">#}
+{#                    <div class="work-image">#}
+{#                        <img src="{% static 'images/project-placeholder.jpg' %}" alt="Project 1" class="img-fluid">#}
+{#                        <div class="work-overlay">#}
+{#                            <a href="{% url 'portfolio:case_study' 1 %}" class="btn btn-light">View Project</a>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                    <div class="work-info">#}
+{#                        <h5>E-commerce Platform</h5>#}
+{#                        <p>Web Development</p>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{#            #}
+{#            <div class="col-md-4 mb-4">#}
+{#                <div class="work-card">#}
+{#                    <div class="work-image">#}
+{#                        <img src="{% static 'images/project-placeholder.jpg' %}" alt="Project 2" class="img-fluid">#}
+{#                        <div class="work-overlay">#}
+{#                            <a href="{% url 'portfolio:case_study' 2 %}" class="btn btn-light">View Project</a>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                    <div class="work-info">#}
+{#                        <h5>Delivery App</h5>#}
+{#                        <p>Mobile App Development</p>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{#            #}
+{#            <div class="col-md-4 mb-4">#}
+{#                <div class="work-card">#}
+{#                    <div class="work-image">#}
+{#                        <img src="{% static 'images/project-placeholder.jpg' %}" alt="Project 3" class="img-fluid">#}
+{#                        <div class="work-overlay">#}
+{#                            <a href="{% url 'portfolio:case_study' 3 %}" class="btn btn-light">View Project</a>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                    <div class="work-info">#}
+{#                        <h5>Restaurant POS</h5>#}
+{#                        <p>POS System</p>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#        #}
+{#        <div class="text-center mt-4">#}
+{#            <a href="{% url 'portfolio:portfolio' %}" class="btn btn-primary">View All Projects</a>#}
+{#        </div>#}
+{#    </div>#}
+{#</section>#}
+{#{% endblock %}#}
+{##}
+{#{% block extra_js %}#}
+{#<script>#}
+{#    document.addEventListener('DOMContentLoaded', function() {#}
+{#        // Add animation classes on scroll#}
+{#        const animateElements = document.querySelectorAll('.service-card, .feature-item, .testimonial-card, .work-card');#}
+{#        #}
+{#        animateElements.forEach((element, index) => {#}
+{#            element.classList.add('animate-on-scroll');#}
+{#            element.dataset.animation = 'slide-up';#}
+{#            element.style.animationDelay = `${index * 0.1}s`;#}
+{#        });#}
+{#    });#}
+{#</script>#}
+{#{% endblock %}#}
+
+{% extends "base.html" %}
+
+{% block title %}CloudLink_Devs - Web & App Development Solutions{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* Hero Section */
+    .hero-section {
+        background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+        color: white;
+        padding: 100px 0;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .hero-content {
+        position: relative;
+        z-index: 2;
+    }
+
+    .hero-title {
+        font-size: 3rem;
+        font-weight: 800;
+        margin-bottom: 1.5rem;
+    }
+
+    .hero-subtitle {
+        font-size: 1.25rem;
+        margin-bottom: 2rem;
+        opacity: 0.9;
+    }
+
+    .hero-buttons .btn {
+        margin-right: 1rem;
+        padding: 0.75rem 1.5rem;
+        font-weight: 600;
+    }
+
+    .hero-image {
+        animation: float 6s ease-in-out infinite;
+    }
+
+    /* Services Section */
+    .services-section {
+        padding: 80px 0;
+    }
+
+    .section-title {
+        text-align: center;
+        margin-bottom: 3rem;
+    }
+
+    .section-title h2 {
+        font-weight: 700;
+        margin-bottom: 1rem;
+        color: #333;
+    }
+
+    .service-card {
+        padding: 30px;
+        text-align: center;
+        border-radius: 10px;
+        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+        transition: all 0.3s ease;
+        height: 100%;
+        background-color: white;
+    }
+
+    .service-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 1rem 3rem rgba(58, 59, 69, 0.175);
+    }
+
+    .service-icon {
+        width: 80px;
+        height: 80px;
+        margin: 0 auto 20px;
+        background-color: var(--light-gray);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--accent-color);
+        font-size: 2rem;
+    }
+
+    /* Features Section */
+    .features-section {
+        padding: 80px 0;
+        background-color: var(--light-gray);
+    }
+
+    .feature-item {
+        margin-bottom: 30px;
+    }
+
+    .feature-icon {
+        width: 60px;
+        height: 60px;
+        background-color: var(--primary-color);
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        margin-bottom: 20px;
+    }
+
+    /* CTA Section */
+    .cta-section {
+        padding: 80px 0;
+        background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+        color: white;
+        text-align: center;
+    }
+
+    .cta-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 1.5rem;
+    }
+
+    .cta-text {
+        max-width: 700px;
+        margin: 0 auto 2rem;
+        opacity: 0.9;
+    }
+
+    /* Testimonials Section */
+    .testimonials-section {
+        padding: 80px 0;
+    }
+
+    .testimonial-card {
+        background-color: white;
+        border-radius: 10px;
+        padding: 30px;
+        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+        margin-bottom: 30px;
+        height: 100%;
+    }
+
+    .testimonial-content {
+        font-style: italic;
+        margin-bottom: 20px;
+        position: relative;
+    }
+
+    .testimonial-content:before {
+        content: '"';
+        font-size: 4rem;
+        position: absolute;
+        top: -20px;
+        left: -15px;
+        color: #f2f3f5;
+        z-index: -1;
+    }
+
+    .testimonial-author {
+        display: flex;
+        align-items: center;
+    }
+
+    .testimonial-avatar {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        margin-right: 15px;
+        background-color: #f2f3f5;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .testimonial-info h5 {
+        margin-bottom: 0;
+    }
+
+    .testimonial-info p {
+        color: #858796;
+        margin-bottom: 0;
+    }
+
+    /* Recent Work Section */
+    .recent-work-section {
+        padding: 80px 0;
+        background-color: var(--light-gray);
+    }
+
+    .work-card {
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+        margin-bottom: 30px;
+        background-color: white;
+    }
+
+    .work-image {
+        position: relative;
+        overflow: hidden;
+        height: 200px;
+    }
+
+    .work-image .work-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 102, 204, 0.7);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transition: all 0.3s ease;
+    }
+
+    .work-image:hover .work-overlay {
+        opacity: 1;
+    }
+
+    .work-image .btn {
+        transform: translateY(20px);
+        transition: all 0.3s ease;
+    }
+
+    .work-image:hover .btn {
+        transform: translateY(0);
+    }
+
+    .work-info {
+        padding: 20px;
+    }
+
+    .work-info h5 {
+        margin-bottom: 10px;
+    }
+
+    /* Animations */
+    @keyframes float {
+        0% {
+            transform: translateY(0px);
+        }
+        50% {
+            transform: translateY(-20px);
+        }
+        100% {
+            transform: translateY(0px);
+        }
+    }
+
+    /* Dark mode adaptations */
+    body.dark-mode .service-card,
+    body.dark-mode .testimonial-card,
+    body.dark-mode .work-card {
+        background-color: #2a2c3e;
+        color: #f8f9fc;
+    }
+
+    body.dark-mode .service-icon {
+        background-color: #3a3d52;
+        color: #4e73df;
+    }
+
+    body.dark-mode .section-title h2,
+    body.dark-mode .testimonial-info h5 {
+        color: #f8f9fc;
+    }
+
+    body.dark-mode .features-section,
+    body.dark-mode .recent-work-section {
+        background-color: #222533;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 hero-content">
+                <h1 class="hero-title">Web & App Solutions for Your Business</h1>
+                <p class="hero-subtitle">We build custom web applications, mobile apps, and POS systems to help your business thrive in the digital world.</p>
+                <div class="hero-buttons">
+                    <a href="{% url 'quotes:service_estimator' %}" class="btn btn-light btn-lg">Get a Quote</a>
+                    <a href="{% url 'portfolio:portfolio' %}" class="btn btn-outline-light btn-lg">View Our Work</a>
+                </div>
+            </div>
+            <div class="col-lg-6 d-none d-lg-block">
+                <div class="hero-image text-center">
+{#                    <img src="{% static 'images/hero-illustration.png' %}" alt="CloudLink_Devs Solutions" class="img-fluid">#}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Services Section -->
+<section class="services-section">
+    <div class="container">
+        <div class="section-title">
+            <h2>Our Services</h2>
+            <p>We offer comprehensive development solutions to meet your business needs</p>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-laptop-code"></i>
+                    </div>
+                    <h3>Web Development</h3>
+                    <p>Custom websites and web applications built with modern technologies to meet your business needs.</p>
+                    <a href="{% url 'services:web_development' %}" class="btn btn-sm btn-primary mt-3">Learn More</a>
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-4">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3>App Development</h3>
+                    <p>Native and cross-platform mobile applications for iOS and Android to reach your customers anywhere.</p>
+                    <a href="{% url 'services:app_development' %}" class="btn btn-sm btn-primary mt-3">Learn More</a>
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-4">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-cash-register"></i>
+                    </div>
+                    <h3>POS Systems</h3>
+                    <p>Customized point-of-sale solutions for retail, restaurants, and other businesses to streamline operations.</p>
+                    <a href="{% url 'services:pos_systems' %}" class="btn btn-sm btn-primary mt-3">Learn More</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="features-section">
+    <div class="container">
+        <div class="section-title">
+            <h2>Why Choose Us</h2>
+            <p>What makes CloudLink_Devs the right partner for your digital journey</p>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h4>Clean Code</h4>
+                    <p>We write maintainable, well-documented code following best practices to ensure long-term success.</p>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <h4>Fast Delivery</h4>
+                    <p>We follow agile methodologies to deliver your project on time without compromising quality.</p>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <h4>24/7 Support</h4>
+                    <p>Our dedicated support team is always available to help you with any issues or questions.</p>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h4>Security Focus</h4>
+                    <p>We implement robust security measures to protect your data and applications from threats.</p>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-tachometer-alt"></i>
+                    </div>
+                    <h4>Optimized Performance</h4>
+                    <p>Our solutions are designed for speed and efficiency to provide the best user experience.</p>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-sync"></i>
+                    </div>
+                    <h4>Regular Updates</h4>
+                    <p>We provide ongoing maintenance and updates to keep your systems running smoothly.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta-section">
+    <div class="container">
+        <h2 class="cta-title">Ready to Start Your Project?</h2>
+        <p class="cta-text">Contact us today for a free consultation and let's bring your ideas to life. Our team is ready to help you transform your business.</p>
+        <a href="{% url 'quotes:service_estimator' %}" class="btn btn-light btn-lg">Get a Free Quote</a>
+    </div>
+</section>
+
+<!-- Testimonials Section -->
+<section class="testimonials-section">
+    <div class="container">
+        <div class="section-title">
+            <h2>What Our Clients Say</h2>
+            <p>Testimonials from businesses we've helped succeed</p>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <p>CloudLink_Devs transformed our business with a custom web application that streamlined our operations. Their team was professional and delivered beyond our expectations.</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="testimonial-info">
+                            <h5>John Smith</h5>
+                            <p>CEO, TechSolutions Inc.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-4">
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <p>The mobile app developed by CloudLink_Devs helped us increase customer engagement by 200%. Their attention to detail and commitment to quality is impressive.</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="testimonial-info">
+                            <h5>Sarah Johnson</h5>
+                            <p>Marketing Director, GrowFast</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-4">
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <p>Our new POS system has made managing our restaurant so much easier. The team at CloudLink_Devs understood our needs perfectly and delivered a solution that works flawlessly.</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="testimonial-info">
+                            <h5>Michael Rodriguez</h5>
+                            <p>Owner, Taste of Italy</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Recent Work Section -->
+<section class="recent-work-section">
+    <div class="container">
+        <div class="section-title">
+            <h2>Recent Projects</h2>
+            <p>Some of our latest work for clients across different industries</p>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="work-card">
+                    <div class="work-image">
+{#                        <img src="{% static 'images/project-placeholder.jpg' %}" alt="Project 1" class="img-fluid">#}
+                        <div class="work-overlay">
+{#                            <a href="{% url 'portfolio:case_study' 1 %}" class="btn btn-light">View Project</a>#}
+                        </div>
+                    </div>
+                    <div class="work-info">
+                        <h5>E-commerce Platform</h5>
+                        <p>Web Development</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-4">
+                <div class="work-card">
+                    <div class="work-image">
+{#                        <img src="{% static 'images/project-placeholder.jpg' %}" alt="Project 2" class="img-fluid">#}
+                        <div class="work-overlay">
+{#                            <a href="{% url 'portfolio:case_study' 2 %}" class="btn btn-light">View Project</a>#}
+                        </div>
+                    </div>
+                    <div class="work-info">
+                        <h5>Delivery App</h5>
+                        <p>Mobile App Development</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-4">
+                <div class="work-card">
+                    <div class="work-image">
+{#                        <img src="{% static 'images/project-placeholder.jpg' %}" alt="Project 3" class="img-fluid">#}
+                        <div class="work-overlay">
+{#                            <a href="{% url 'portfolio:case_study' 3 %}" class="btn btn-light">View Project</a>#}
+                        </div>
+                    </div>
+                    <div class="work-info">
+                        <h5>Restaurant POS</h5>
+                        <p>POS System</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center mt-4">
+            <a href="{% url 'portfolio:portfolio' %}" class="btn btn-primary">View All Projects</a>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Add animation classes on scroll
+        const animateElements = document.querySelectorAll('.service-card, .feature-item, .testimonial-card, .work-card');
+
+        animateElements.forEach((element, index) => {
+            element.classList.add('animate-on-scroll');
+            element.dataset.animation = 'slide-up';
+            element.style.animationDelay = `${index * 0.1}s`;
+        });
+    });
+</script>
+{% endblock %}

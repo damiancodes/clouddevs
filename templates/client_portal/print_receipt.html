@@ -1,0 +1,246 @@
+{% extends 'client_portal/base.html' %}
+{% load static %}
+
+{% block client_portal_title %}Payment Receipt - Client Portal{% endblock %}
+
+{% block breadcrumb_items %}
+<li class="breadcrumb-item"><a href="{% url 'client_portal:invoices' %}">Invoices</a></li>
+<li class="breadcrumb-item"><a href="{% url 'client_portal:invoice_detail' pk=payment.invoice.id %}">Invoice #{{ payment.invoice.invoice_number }}</a></li>
+<li class="breadcrumb-item active">Payment Receipt</li>
+{% endblock %}
+
+{% block page_title %}Payment Receipt{% endblock %}
+
+{% block client_portal_css %}
+<style>
+    .receipt-container {
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+        margin-bottom: 30px;
+        padding: 30px;
+    }
+    
+    .receipt-header {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+    
+    .receipt-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin-bottom: 5px;
+    }
+    
+    .receipt-subtitle {
+        color: #858796;
+    }
+    
+    .company-info {
+        margin-bottom: 30px;
+        display: flex;
+        justify-content: space-between;
+    }
+    
+    .company-logo {
+        text-align: center;
+    }
+    
+    .company-details {
+        text-align: right;
+    }
+    
+    .client-info {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 30px;
+    }
+    
+    .payment-info {
+        margin-bottom: 30px;
+    }
+    
+    .payment-details {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px 0;
+        border-bottom: 1px solid #e3e6f0;
+    }
+    
+    .payment-details:last-child {
+        border-bottom: none;
+    }
+    
+    .payment-label {
+        font-weight: 600;
+    }
+    
+    .payment-amount {
+        font-weight: 700;
+        font-size: 1.2rem;
+    }
+    
+    .receipt-footer {
+        text-align: center;
+        margin-top: 40px;
+        color: #858796;
+        font-size: 0.9rem;
+    }
+    
+    .receipt-actions {
+        margin-top: 30px;
+        text-align: center;
+    }
+    
+    .receipt-notes {
+        margin-top: 30px;
+        padding-top: 20px;
+        border-top: 1px solid #e3e6f0;
+    }
+    
+    .receipt-barcode {
+        text-align: center;
+        margin-top: 20px;
+    }
+    
+    @media print {
+        body {
+            background-color: white !important;
+        }
+        
+        .no-print, .receipt-actions, .breadcrumb, .page-title {
+            display: none !important;
+        }
+        
+        .receipt-container {
+            box-shadow: none !important;
+            padding: 0 !important;
+        }
+        
+        .container {
+            max-width: 100% !important;
+            width: 100% !important;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block client_portal_content %}
+<div class="row">
+    <div class="col-lg-8 mx-auto">
+        <div class="receipt-container">
+            <!-- Receipt Header -->
+            <div class="receipt-header">
+                <h2 class="receipt-title">PAYMENT RECEIPT</h2>
+                <p class="receipt-subtitle">Thank you for your payment</p>
+            </div>
+            
+            <!-- Company and Client Info -->
+            <div class="company-info">
+                <div class="company-logo">
+                    <h4>CloudLink_Devs</h4>
+                    <img src="{% static 'images/logo.png' %}" alt="CloudLink_Devs Logo" height="60">
+                </div>
+                <div class="company-details">
+                    <p>CloudLink_Devs</p>
+                    <p>123 Tech Street</p>
+                    <p>Digital City</p>
+                    <p>contact@cloudlinkdevs.com</p>
+                    <p>(123) 456-7890</p>
+                </div>
+            </div>
+            
+            <div class="client-info">
+                <div>
+                    <h5>Billed To:</h5>
+                    <p>{{ client.full_name }}</p>
+                    {% if client.company_name %}
+                        <p>{{ client.company_name }}</p>
+                    {% endif %}
+                    {% if client.address %}
+                        <p>{{ client.address }}</p>
+                    {% endif %}
+                    <p>{{ client.user.email }}</p>
+                    {% if client.phone %}
+                        <p>{{ client.phone }}</p>
+                    {% endif %}
+                </div>
+                <div>
+                    <h5>Receipt Details:</h5>
+                    <p><strong>Receipt Number:</strong> R-{{ payment.id }}</p>
+                    <p><strong>Payment Date:</strong> {{ payment.payment_date|date:"F d, Y" }}</p>
+                    <p><strong>Invoice Number:</strong> {{ payment.invoice.invoice_number }}</p>
+                    <p><strong>Payment Method:</strong> {{ payment.get_payment_method_display }}</p>
+                    {% if payment.transaction_id %}
+                        <p><strong>Transaction ID:</strong> {{ payment.transaction_id }}</p>
+                    {% endif %}
+                </div>
+            </div>
+            
+            <!-- Payment Information -->
+            <div class="payment-info">
+                <h5 class="mb-3">Payment Summary</h5>
+                <div class="payment-details">
+                    <div class="payment-label">Invoice Total:</div>
+                    <div>${{ payment.invoice.total|floatformat:2 }}</div>
+                </div>
+                <div class="payment-details">
+                    <div class="payment-label">Previous Payments:</div>
+                    <div>${{ payment.invoice.amount_paid|subtract:payment.amount|floatformat:2 }}</div>
+                </div>
+                <div class="payment-details">
+                    <div class="payment-label">This Payment:</div>
+                    <div class="payment-amount">${{ payment.amount|floatformat:2 }}</div>
+                </div>
+                <div class="payment-details">
+                    <div class="payment-label">Remaining Balance:</div>
+                    <div>${{ payment.invoice.balance_due|floatformat:2 }}</div>
+                </div>
+            </div>
+            
+            {% if payment.notes %}
+            <!-- Payment Notes -->
+            <div class="receipt-notes">
+                <h5>Notes</h5>
+                <p>{{ payment.notes|linebreaks }}</p>
+            </div>
+            {% endif %}
+            
+            <!-- Receipt Footer -->
+            <div class="receipt-footer">
+                <p>This receipt was automatically generated and is valid without a signature.</p>
+                <p>If you have any questions, please contact our finance department.</p>
+            </div>
+            
+            <div class="receipt-barcode">
+                <svg id="barcode"></svg>
+            </div>
+            
+            <!-- Receipt Actions -->
+            <div class="receipt-actions no-print">
+                <button class="btn btn-primary me-2" onclick="window.print()">
+                    <i class="fas fa-print me-2"></i> Print Receipt
+                </button>
+                <a href="{% url 'client_portal:invoice_detail' pk=payment.invoice.id %}" class="btn btn-outline-secondary">
+                    <i class="fas fa-arrow-left me-2"></i> Back to Invoice
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block client_portal_js %}
+<script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+<script>
+    $(document).ready(function() {
+        // Generate barcode
+        JsBarcode("#barcode", "R{{ payment.id }}{{ payment.invoice.invoice_number }}", {
+            format: "CODE128",
+            width: 2,
+            height: 50,
+            displayValue: false
+        });
+    });
+</script>
+{% endblock %}

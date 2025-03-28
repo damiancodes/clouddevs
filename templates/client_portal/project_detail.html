@@ -1,0 +1,571 @@
+{% extends 'client_portal/base.html' %}
+{% load static %}
+{% load custom_filters %}
+
+{% block client_portal_title %}{{ project.title }} - Project Details{% endblock %}
+
+{% block breadcrumb_items %}
+<li class="breadcrumb-item"><a href="{% url 'client_portal:projects' %}">Projects</a></li>
+<li class="breadcrumb-item active">{{ project.title }}</li>
+{% endblock %}
+
+{% block page_title %}{{ project.title }}{% endblock %}
+
+{% block client_portal_css %}
+<style>
+    .project-header {
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+        margin-bottom: 30px;
+        padding: 25px;
+    }
+
+    .project-status {
+        display: inline-block;
+        padding: 5px 15px;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        font-weight: 600;
+    }
+
+    .status-planning {
+        background-color: rgba(78, 115, 223, 0.1);
+        color: var(--primary-color);
+    }
+
+    .status-in_progress {
+        background-color: rgba(246, 194, 62, 0.1);
+        color: #f6c23e;
+    }
+
+    .status-completed {
+        background-color: rgba(28, 200, 138, 0.1);
+        color: #1cc88a;
+    }
+
+    .status-on_hold {
+        background-color: rgba(231, 74, 59, 0.1);
+        color: #e74a3b;
+    }
+
+    .status-cancelled {
+        background-color: rgba(108, 117, 125, 0.1);
+        color: #6c757d;
+    }
+
+    .project-progress {
+        margin: 15px 0;
+    }
+
+    .progress {
+        height: 8px;
+        border-radius: 4px;
+    }
+
+    .progress-status {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.9rem;
+        color: #858796;
+    }
+
+    .section-card {
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+        margin-bottom: 30px;
+        overflow: hidden;
+    }
+
+    .section-header {
+        padding: 15px 20px;
+        border-bottom: 1px solid #e3e6f0;
+        font-weight: 700;
+        background-color: #f8f9fc;
+    }
+
+    .section-body {
+        padding: 20px;
+    }
+
+    .task-item {
+        padding: 15px;
+        border-bottom: 1px solid #e3e6f0;
+        transition: all 0.3s ease;
+    }
+
+    .task-item:last-child {
+        border-bottom: none;
+    }
+
+    .task-item:hover {
+        background-color: var(--light-gray);
+    }
+
+    .task-checkbox {
+        margin-right: 10px;
+        cursor: not-allowed;
+    }
+
+    .task-title {
+        font-weight: 600;
+        margin-bottom: 5px;
+    }
+
+    .task-title.completed {
+        text-decoration: line-through;
+        color: #858796;
+    }
+
+    .task-date {
+        font-size: 0.85rem;
+        color: #858796;
+    }
+
+    .update-item {
+        padding: 15px;
+        border-bottom: 1px solid #e3e6f0;
+    }
+
+    .update-item:last-child {
+        border-bottom: none;
+    }
+
+    .update-title {
+        font-weight: 600;
+        margin-bottom: 5px;
+    }
+
+    .update-date {
+        font-size: 0.85rem;
+        color: #858796;
+        margin-bottom: 10px;
+    }
+
+    .file-item {
+        padding: 15px;
+        border-bottom: 1px solid #e3e6f0;
+        transition: all 0.3s ease;
+    }
+
+    .file-item:last-child {
+        border-bottom: none;
+    }
+
+    .file-item:hover {
+        background-color: var(--light-gray);
+    }
+
+    .file-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 5px;
+        background-color: #f8f9fc;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+        margin-right: 15px;
+    }
+
+    .file-info {
+        flex: 1;
+    }
+
+    .file-title {
+        font-weight: 600;
+        margin-bottom: 5px;
+    }
+
+    .file-details {
+        font-size: 0.85rem;
+        color: #858796;
+    }
+
+    .invoice-item {
+        padding: 15px;
+        border-bottom: 1px solid #e3e6f0;
+        transition: all 0.3s ease;
+    }
+
+    .invoice-item:last-child {
+        border-bottom: none;
+    }
+
+    .invoice-item:hover {
+        background-color: var(--light-gray);
+    }
+
+    .invoice-number {
+        font-weight: 600;
+        margin-bottom: 5px;
+    }
+
+    .invoice-status {
+        display: inline-block;
+        padding: 3px 10px;
+        border-radius: 15px;
+        font-size: 0.75rem;
+        margin-bottom: 5px;
+    }
+
+    .metadata-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
+    }
+
+    .metadata-icon {
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        background-color: var(--light-gray);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 10px;
+    }
+
+    .metadata-label {
+        font-size: 0.85rem;
+        color: #858796;
+        margin-bottom: 0;
+    }
+
+    .metadata-value {
+        font-weight: 600;
+        margin-bottom: 0;
+    }
+
+    .file-icon.pdf {
+        color: #e74a3b;
+    }
+
+    .file-icon.image {
+        color: #36b9cc;
+    }
+
+    .file-icon.doc {
+        color: #4e73df;
+    }
+
+    .file-icon.other {
+        color: #858796;
+    }
+
+    .tab-content {
+        padding-top: 20px;
+    }
+</style>
+{% endblock %}
+
+{% block client_portal_content %}
+<!-- Project Header -->
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="project-header">
+            <div class="d-flex justify-content-between align-items-start">
+                <div>
+                    <span class="project-status status-{{ project.status }}">{{ project.get_status_display }}</span>
+                    <p class="mt-3 mb-4">{{ project.description }}</p>
+                </div>
+                <div class="d-flex gap-2">
+                    <a href="{% url 'client_portal:messages' %}" class="btn btn-outline-primary">
+                        <i class="fas fa-comment-alt me-2"></i> Message
+                    </a>
+                </div>
+            </div>
+
+            <div class="project-progress mt-3">
+                <div class="progress-status">
+                    <span>Project Progress</span>
+                    <span>{{ project.completion_percentage }}%</span>
+                </div>
+                <div class="progress">
+                    <div class="progress-bar bg-success" role="progressbar" style="width: {{ project.completion_percentage }}%"></div>
+                </div>
+            </div>
+
+            <div class="row mt-4">
+                <div class="col-md-3 col-6">
+                    <div class="metadata-item">
+                        <div class="metadata-icon">
+                            <i class="far fa-calendar-alt"></i>
+                        </div>
+                        <div>
+                            <p class="metadata-label">Start Date</p>
+                            <p class="metadata-value">{{ project.start_date|date:"M d, Y" }}</p>
+                        </div>
+                    </div>
+                </div>
+
+                {% if project.end_date %}
+                <div class="col-md-3 col-6">
+                    <div class="metadata-item">
+                        <div class="metadata-icon">
+                            <i class="far fa-calendar-check"></i>
+                        </div>
+                        <div>
+                            <p class="metadata-label">Due Date</p>
+                            <p class="metadata-value">{{ project.end_date|date:"M d, Y" }}</p>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+
+                {% if project.days_remaining is not None %}
+                <div class="col-md-3 col-6">
+                    <div class="metadata-item">
+                        <div class="metadata-icon">
+                            <i class="far fa-clock"></i>
+                        </div>
+                        <div>
+                            <p class="metadata-label">Timeline</p>
+                            <p class="metadata-value">
+                                {% if project.days_remaining > 0 %}
+                                    {{ project.days_remaining }} days remaining
+                                {% elif project.days_remaining == 0 %}
+                                    Due today
+                                {% else %}
+                                    {{ project.days_remaining|abs_value }} days overdue
+                                {% endif %}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+
+                <div class="col-md-3 col-6">
+                    <div class="metadata-item">
+                        <div class="metadata-icon">
+                            <i class="fas fa-dollar-sign"></i>
+                        </div>
+                        <div>
+                            <p class="metadata-label">Budget</p>
+                            <p class="metadata-value">${{ project.budget|floatformat:2 }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Project Content Tabs -->
+<div class="row">
+    <div class="col-12">
+        <ul class="nav nav-tabs" id="projectTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="tasks-tab" data-bs-toggle="tab" data-bs-target="#tasks" type="button" role="tab" aria-controls="tasks" aria-selected="true">Tasks</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="updates-tab" data-bs-toggle="tab" data-bs-target="#updates" type="button" role="tab" aria-controls="updates" aria-selected="false">Updates</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="files-tab" data-bs-toggle="tab" data-bs-target="#files" type="button" role="tab" aria-controls="files" aria-selected="false">Files</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="invoices-tab" data-bs-toggle="tab" data-bs-target="#invoices" type="button" role="tab" aria-controls="invoices" aria-selected="false">Invoices</button>
+            </li>
+        </ul>
+
+        <div class="tab-content" id="projectTabsContent">
+            <!-- Tasks Tab -->
+            <div class="tab-pane fade show active" id="tasks" role="tabpanel" aria-labelledby="tasks-tab">
+                <div class="section-card">
+                    <div class="section-header">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span>Project Tasks</span>
+                        </div>
+                    </div>
+                    <div class="section-body p-0">
+                        {% if tasks %}
+                            {% for task in tasks %}
+                                <div class="task-item">
+                                    <div class="d-flex align-items-start">
+                                        <input type="checkbox" class="task-checkbox" {% if task.is_completed %}checked{% endif %} disabled>
+                                        <div>
+                                            <h6 class="task-title {% if task.is_completed %}completed{% endif %}">{{ task.title }}</h6>
+                                            {% if task.description %}
+                                                <p class="mb-2">{{ task.description }}</p>
+                                            {% endif %}
+                                            <div class="task-date">
+                                                {% if task.due_date %}
+                                                    <i class="far fa-calendar"></i> Due: {{ task.due_date|date:"M d, Y" }}
+                                                    {% if task.is_overdue and not task.is_completed %}
+                                                        <span class="badge bg-danger ms-2">Overdue</span>
+                                                    {% endif %}
+                                                {% endif %}
+
+                                                {% if task.is_completed %}
+                                                    <span class="badge bg-success ms-2">Completed</span>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        {% else %}
+                            <div class="text-center py-5">
+                                <p>No tasks have been created for this project yet.</p>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Updates Tab -->
+            <div class="tab-pane fade" id="updates" role="tabpanel" aria-labelledby="updates-tab">
+                <div class="section-card">
+                    <div class="section-header">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span>Project Updates</span>
+                        </div>
+                    </div>
+                    <div class="section-body p-0">
+                        {% if updates %}
+                            {% for update in updates %}
+                                <div class="update-item">
+                                    <h5 class="update-title">{{ update.title }}</h5>
+                                    <div class="update-date">
+                                        <i class="far fa-calendar-alt"></i> {{ update.created_at|date:"M d, Y" }}
+                                    </div>
+                                    <div>{{ update.description|linebreaks }}</div>
+                                </div>
+                            {% endfor %}
+                        {% else %}
+                            <div class="text-center py-5">
+                                <p>No updates have been posted for this project yet.</p>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Files Tab -->
+            <div class="tab-pane fade" id="files" role="tabpanel" aria-labelledby="files-tab">
+                <div class="section-card">
+                    <div class="section-header">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span>Project Files</span>
+                        </div>
+                    </div>
+                    <div class="section-body p-0">
+                        {% if files %}
+                            {% for file in files %}
+                                <div class="file-item">
+                                    <div class="d-flex align-items-center">
+                                        <div class="file-icon {% if file.is_pdf %}pdf{% elif file.is_image %}image{% elif file.is_document %}doc{% else %}other{% endif %}">
+                                            {% if file.is_pdf %}
+                                                <i class="far fa-file-pdf"></i>
+                                            {% elif file.is_image %}
+                                                <i class="far fa-file-image"></i>
+                                            {% elif file.is_document %}
+                                                <i class="far fa-file-word"></i>
+                                            {% else %}
+                                                <i class="far fa-file"></i>
+                                            {% endif %}
+                                        </div>
+                                        <div class="file-info">
+                                            <h6 class="file-title">{{ file.title }}</h6>
+                                            {% if file.description %}
+                                                <p class="mb-2">{{ file.description }}</p>
+                                            {% endif %}
+                                            <div class="file-details">
+                                                <i class="far fa-clock"></i> Uploaded: {{ file.uploaded_at|date:"M d, Y" }}
+                                                <span class="mx-2">|</span>
+                                                <i class="fas fa-file"></i> {{ file.file_extension|upper }}
+                                            </div>
+                                        </div>
+                                        <a href="{{ file.file.url }}" class="btn btn-sm btn-primary" download>
+                                            <i class="fas fa-download"></i> Download
+                                        </a>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        {% else %}
+                            <div class="text-center py-5">
+                                <p>No files have been uploaded for this project yet.</p>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Invoices Tab -->
+            <div class="tab-pane fade" id="invoices" role="tabpanel" aria-labelledby="invoices-tab">
+                <div class="section-card">
+                    <div class="section-header">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span>Project Invoices</span>
+                        </div>
+                    </div>
+                    <div class="section-body p-0">
+                        {% if invoices %}
+                            {% for invoice in invoices %}
+                                <div class="invoice-item">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <h6 class="invoice-number">
+                                                <a href="{% url 'client_portal:invoice_detail' pk=invoice.id %}">Invoice #{{ invoice.invoice_number }}</a>
+                                            </h6>
+                                            <span class="invoice-status status-{{ invoice.status }}">{{ invoice.get_status_display }}</span>
+                                            <div class="task-date">
+                                                <i class="far fa-calendar-alt"></i> Issued: {{ invoice.issue_date|date:"M d, Y" }}
+                                                <span class="mx-2">|</span>
+                                                <i class="far fa-calendar-check"></i> Due: {{ invoice.due_date|date:"M d, Y" }}
+                                            </div>
+                                        </div>
+                                        <div class="d-flex align-items-center">
+                                            <div class="text-end me-3">
+                                                <div class="invoice-amount">${{ invoice.total|floatformat:2 }}</div>
+                                                {% if invoice.balance_due > 0 %}
+                                                    <small class="text-danger">Balance: ${{ invoice.balance_due|floatformat:2 }}</small>
+                                                {% else %}
+                                                    <small class="text-success">Paid in Full</small>
+                                                {% endif %}
+                                            </div>
+                                            <a href="{% url 'client_portal:invoice_detail' pk=invoice.id %}" class="btn btn-sm btn-primary">
+                                                <i class="fas fa-eye"></i> View
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        {% else %}
+                            <div class="text-center py-5">
+                                <p>No invoices have been created for this project yet.</p>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block client_portal_js %}
+<script>
+    $(document).ready(function() {
+        // Initialize tab functionality if needed
+        // Bootstrap 5 handles this automatically
+
+        // Handle tab persistence with URL hash
+        let hash = window.location.hash;
+        if (hash) {
+            $('#projectTabs a[href="' + hash + '"]').tab('show');
+        }
+
+        // Change hash on tab change
+        $('#projectTabs a').on('shown.bs.tab', function (e) {
+            if (history.pushState) {
+                history.pushState(null, null, e.target.hash);
+            } else {
+                window.location.hash = e.target.hash;
+            }
+        });
+    });
+</script>
+{% endblock %}

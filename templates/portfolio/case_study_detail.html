@@ -1,0 +1,555 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ project.title }} Case Study - CloudLink_Devs{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* Case Study Header */
+    .case-study-header {
+        background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+        color: white;
+        padding: 80px 0;
+    }
+
+    .case-study-header h1 {
+        font-weight: 800;
+        margin-bottom: 20px;
+    }
+
+    .case-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 30px;
+        margin-top: 30px;
+    }
+
+    .meta-item {
+        display: flex;
+        align-items: center;
+    }
+
+    .meta-item i {
+        font-size: 1.25rem;
+        margin-right: 10px;
+    }
+
+    /* Overview Section */
+    .overview-section {
+        padding: 80px 0;
+    }
+
+    .overview-image {
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+    }
+
+    .overview-text h2 {
+        margin-bottom: 25px;
+        font-weight: 700;
+    }
+
+    /* Sections */
+    .case-section {
+        padding: 80px 0;
+    }
+
+    .case-section:nth-child(even) {
+        background-color: var(--light-gray);
+    }
+
+    .section-title {
+        margin-bottom: 40px;
+        position: relative;
+        padding-bottom: 15px;
+    }
+
+    .section-title:after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 50px;
+        height: 3px;
+        background-color: var(--primary-color);
+    }
+
+    /* Gallery Section */
+    .gallery-section {
+        padding: 80px 0;
+    }
+
+    .gallery-image {
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+        margin-bottom: 30px;
+        transition: transform 0.3s ease;
+    }
+
+    .gallery-image:hover {
+        transform: translateY(-10px);
+    }
+
+    /* Testimonial Section */
+    .testimonial-section {
+        padding: 80px 0;
+        background-color: var(--light-gray);
+    }
+
+    .testimonial-card {
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+        padding: 30px;
+        background-color: white;
+        position: relative;
+    }
+
+    .testimonial-card:before {
+        content: '\201C';
+        font-size: 5rem;
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        color: #f2f3f5;
+        font-family: Georgia, serif;
+        z-index: 0;
+    }
+
+    .testimonial-content {
+        position: relative;
+        z-index: 1;
+        font-style: italic;
+        margin-bottom: 20px;
+    }
+
+    .testimonial-author {
+        display: flex;
+        align-items: center;
+    }
+
+    .author-image {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        overflow: hidden;
+        margin-right: 15px;
+    }
+
+    .author-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .author-info h4 {
+        margin-bottom: 5px;
+    }
+
+    /* Technologies Section */
+    .tech-section {
+        padding: 80px 0;
+    }
+
+    .tech-badges {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+
+    .tech-badge {
+        padding: 10px 20px;
+        background-color: var(--light-gray);
+        border-radius: 50px;
+        display: inline-block;
+        margin-bottom: 15px;
+        font-weight: 600;
+    }
+
+    /* Related Projects */
+    .related-projects {
+        padding: 80px 0;
+        background-color: var(--light-gray);
+    }
+
+    .related-card {
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+        margin-bottom: 30px;
+        background-color: white;
+        height: 100%;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .related-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 1rem 3rem rgba(58, 59, 69, 0.175);
+    }
+
+    .related-image {
+        height: 200px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .related-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+    }
+
+    .related-card:hover .related-image img {
+        transform: scale(1.1);
+    }
+
+    .related-info {
+        padding: 20px;
+    }
+
+    .related-info h4 {
+        margin-bottom: 10px;
+    }
+
+    /* CTA Section */
+    .cta-section {
+        padding: 80px 0;
+        background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+        color: white;
+        text-align: center;
+    }
+
+    .cta-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 1.5rem;
+    }
+
+    .cta-text {
+        max-width: 700px;
+        margin: 0 auto 2rem;
+        opacity: 0.9;
+    }
+
+    /* Project Links */
+    .project-links {
+        display: flex;
+        margin-top: 30px;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+
+    .project-link {
+        display: flex;
+        align-items: center;
+        padding: 10px 20px;
+        background-color: white;
+        color: var(--primary-color);
+        border-radius: 30px;
+        transition: all 0.3s ease;
+        text-decoration: none;
+    }
+
+    .project-link:hover {
+        background-color: var(--primary-color);
+        color: white;
+    }
+
+    .project-link i {
+        margin-right: 10px;
+    }
+
+    /* Dark mode adaptations */
+    body.dark-mode .testimonial-card,
+    body.dark-mode .related-card {
+        background-color: #2a2c3e;
+    }
+
+    body.dark-mode .tech-badge {
+        background-color: #3a3d52;
+    }
+
+    body.dark-mode .case-section:nth-child(even),
+    body.dark-mode .testimonial-section,
+    body.dark-mode .related-projects {
+        background-color: #222533;
+    }
+
+    body.dark-mode .testimonial-card:before {
+        color: #3a3d52;
+    }
+
+    body.dark-mode .project-link {
+        background-color: #3a3d52;
+        color: #f8f9fc;
+    }
+
+    body.dark-mode .project-link:hover {
+        background-color: var(--primary-color);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Case Study Header -->
+<section class="case-study-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2 text-center">
+                <h1>{{ project.title }}</h1>
+                <p class="lead">{{ project.short_description }}</p>
+
+                <div class="meta-item">
+                    <div class="tech-badges">
+                        {% for tech in project.technologies.all %}
+                            <span class="tech-badge">{{ tech.name }}</span>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="case-meta justify-content-center">
+                    {% if project.client %}
+                        <div class="meta-item">
+                            <i class="fas fa-building"></i>
+                            <span>{{ project.client.name }}</span>
+                        </div>
+                    {% endif %}
+
+                    {% with category=project.categories.first %}
+                        {% if category %}
+                            <div class="meta-item">
+                                <i class="fas fa-folder"></i>
+                                <span>{{ category.name }}</span>
+                            </div>
+                        {% endif %}
+                    {% endwith %}
+
+                    <div class="meta-item">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span>{{ project.completion_date|date:"F Y" }}</span>
+                    </div>
+                </div>
+
+                <div class="project-links justify-content-center">
+                    {% if project.website_url %}
+                        <a href="{{ project.website_url }}" target="_blank" class="project-link">
+                            <i class="fas fa-globe"></i> Visit Website
+                        </a>
+                    {% endif %}
+
+                    {% if project.app_store_url %}
+                        <a href="{{ project.app_store_url }}" target="_blank" class="project-link">
+                            <i class="fab fa-app-store"></i> App Store
+                        </a>
+                    {% endif %}
+
+                    {% if project.play_store_url %}
+                        <a href="{{ project.play_store_url }}" target="_blank" class="project-link">
+                            <i class="fab fa-google-play"></i> Google Play
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Overview Section -->
+<section class="overview-section">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 mb-4 mb-lg-0">
+                <div class="overview-image">
+                    <img src="{{ project.featured_image.url }}" alt="{{ project.title }}" class="img-fluid">
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="overview-text">
+                    <h2>Project Overview</h2>
+                    <div>{{ project.description|linebreaks }}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Challenge Section -->
+{% if project.challenge %}
+<section class="case-section">
+    <div class="container">
+        <h2 class="section-title">The Challenge</h2>
+        <div class="row">
+            <div class="col-lg-10">
+                <div>{{ project.challenge|linebreaks }}</div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- Solution Section -->
+{% if project.solution %}
+<section class="case-section">
+    <div class="container">
+        <h2 class="section-title">Our Solution</h2>
+        <div class="row">
+            <div class="col-lg-10">
+                <div>{{ project.solution|linebreaks }}</div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- Results Section -->
+{% if project.results %}
+<section class="case-section">
+    <div class="container">
+        <h2 class="section-title">The Results</h2>
+        <div class="row">
+            <div class="col-lg-10">
+                <div>{{ project.results|linebreaks }}</div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- Gallery Section -->
+{% if project.image_1 or project.image_2 or project.image_3 %}
+<section class="gallery-section">
+    <div class="container">
+        <h2 class="section-title">Project Gallery</h2>
+        <div class="row">
+            {% if project.image_1 %}
+            <div class="col-md-4">
+                <div class="gallery-image">
+                    <img src="{{ project.image_1.url }}" alt="{{ project.title }}" class="img-fluid">
+                </div>
+            </div>
+            {% endif %}
+
+            {% if project.image_2 %}
+            <div class="col-md-4">
+                <div class="gallery-image">
+                    <img src="{{ project.image_2.url }}" alt="{{ project.title }}" class="img-fluid">
+                </div>
+            </div>
+            {% endif %}
+
+            {% if project.image_3 %}
+            <div class="col-md-4">
+                <div class="gallery-image">
+                    <img src="{{ project.image_3.url }}" alt="{{ project.title }}" class="img-fluid">
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- Testimonial Section -->
+{% if project.testimonials.count > 0 %}
+<section class="testimonial-section">
+    <div class="container">
+        <h2 class="section-title">Client Testimonial</h2>
+        <div class="row">
+            <div class="col-lg-10 offset-lg-1">
+                {% for testimonial in project.testimonials.all %}
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <p>{{ testimonial.content }}</p>
+                    </div>
+                    <div class="testimonial-author">
+                        {% if testimonial.client_image %}
+                        <div class="author-image">
+                            <img src="{{ testimonial.client_image.url }}" alt="{{ testimonial.client_name }}">
+                        </div>
+                        {% endif %}
+                        <div class="author-info">
+                            <h4>{{ testimonial.client_name }}</h4>
+                            <p>{{ testimonial.client_position }}</p>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- Technologies Section -->
+{% if project.technologies.exists %}
+<section class="tech-section">
+    <div class="container">
+        <h2 class="section-title">Technologies Used</h2>
+        <div class="row">
+            <div class="col-lg-10">
+                <div class="tech-badges">
+                    {% for tech in project.technologies.all %}
+                        <span class="tech-badge">{{ tech.name }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- Related Projects -->
+{% if related_projects %}
+<section class="related-projects">
+    <div class="container">
+        <h2 class="section-title">Related Projects</h2>
+        <div class="row">
+            {% for related in related_projects %}
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="related-card">
+                        <div class="related-image">
+                            <img src="{{ related.featured_image.url }}" alt="{{ related.title }}">
+                        </div>
+                        <div class="related-info">
+                            <h4>{{ related.title }}</h4>
+                            <p>{{ related.short_description|truncatechars:100 }}</p>
+                            <a href="{{ related.get_absolute_url }}" class="btn btn-sm btn-primary mt-2">View Case Study</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- CTA Section -->
+<section class="cta-section">
+    <div class="container">
+        <h2 class="cta-title">Ready to Start Your Project?</h2>
+        <p class="cta-text">Contact us today for a free consultation and let's bring your ideas to life.</p>
+        <div class="cta-buttons">
+            <a href="{% url 'quotes:service_estimator' %}" class="btn btn-light btn-lg me-3">Get a Quote</a>
+            <a href="{% url 'core:contact' %}" class="btn btn-outline-light btn-lg">Contact Us</a>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Add animation classes on scroll
+        const animateElements = document.querySelectorAll('.gallery-image, .testimonial-card, .related-card');
+
+        animateElements.forEach((element, index) => {
+            element.classList.add('animate-on-scroll');
+            element.dataset.animation = 'slide-up';
+            element.style.animationDelay = `${index * 0.1}s`;
+        });
+    });
+</script>
+{% endblock %}

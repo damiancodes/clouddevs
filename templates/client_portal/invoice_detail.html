@@ -1,0 +1,499 @@
+{% extends 'client_portal/base.html' %}
+{% load static %}
+
+{% block client_portal_title %}Invoice #{{ invoice.invoice_number }} - Client Portal{% endblock %}
+
+{% block breadcrumb_items %}
+<li class="breadcrumb-item"><a href="{% url 'client_portal:invoices' %}">Invoices</a></li>
+<li class="breadcrumb-item active">Invoice #{{ invoice.invoice_number }}</li>
+{% endblock %}
+
+{% block page_title %}Invoice #{{ invoice.invoice_number }}{% endblock %}
+
+{% block client_portal_css %}
+<style>
+    .invoice-container {
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+        margin-bottom: 30px;
+        padding: 30px;
+    }
+
+    .invoice-header {
+        border-bottom: 1px solid #e3e6f0;
+        padding-bottom: 20px;
+        margin-bottom: 20px;
+    }
+
+    .invoice-company {
+        margin-bottom: 20px;
+    }
+
+    .invoice-company h4 {
+        font-weight: 700;
+        margin-bottom: 5px;
+    }
+
+    .invoice-company p {
+        margin-bottom: 5px;
+    }
+
+    .invoice-status {
+        display: inline-block;
+        padding: 5px 15px;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        font-weight: 600;
+    }
+
+    .status-paid {
+        background-color: rgba(28, 200, 138, 0.1);
+        color: #1cc88a;
+    }
+
+    .status-draft, .status-sent {
+        background-color: rgba(78, 115, 223, 0.1);
+        color: var(--primary-color);
+    }
+
+    .status-overdue {
+        background-color: rgba(231, 74, 59, 0.1);
+        color: #e74a3b;
+    }
+
+    .status-cancelled {
+        background-color: rgba(108, 117, 125, 0.1);
+        color: #6c757d;
+    }
+
+    .invoice-info {
+        margin-bottom: 30px;
+    }
+
+    .invoice-to {
+        margin-bottom: 20px;
+    }
+
+    .invoice-to h5 {
+        font-weight: 700;
+        margin-bottom: 10px;
+    }
+
+    .invoice-details {
+        margin-bottom: 20px;
+    }
+
+    .invoice-detail-title {
+        font-weight: 700;
+        margin-bottom: 5px;
+    }
+
+    .invoice-table {
+        margin-bottom: 30px;
+    }
+
+    .table-striped tbody tr:nth-of-type(odd) {
+        background-color: rgba(0, 0, 0, 0.02);
+    }
+
+    .invoice-item-description {
+        min-width: 300px;
+    }
+
+    .invoice-total {
+        border-top: 2px solid #e3e6f0;
+        padding-top: 20px;
+    }
+
+    .invoice-total-row {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+    }
+
+    .invoice-total-label {
+        font-weight: 600;
+    }
+
+    .invoice-total-value {
+        font-weight: 700;
+        min-width: 120px;
+        text-align: right;
+    }
+
+    .invoice-grand-total {
+        font-size: 1.2rem;
+        margin-top: 10px;
+        padding-top: 10px;
+        border-top: 1px solid #e3e6f0;
+    }
+
+    .invoice-notes {
+        margin-top: 30px;
+        padding-top: 20px;
+        border-top: 1px solid #e3e6f0;
+    }
+
+    .invoice-actions {
+        margin-top: 30px;
+        padding-top: 30px;
+        border-top: 1px solid #e3e6f0;
+    }
+
+    .payment-section {
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+        margin-bottom: 30px;
+    }
+
+    .payment-header {
+        padding: 15px 20px;
+        border-bottom: 1px solid #e3e6f0;
+        font-weight: 700;
+        background-color: #f8f9fc;
+    }
+
+    .payment-body {
+        padding: 20px;
+    }
+
+    .payment-item {
+        padding: 15px;
+        border-bottom: 1px solid #e3e6f0;
+    }
+
+    .payment-item:last-child {
+        border-bottom: none;
+    }
+
+    .payment-method {
+        display: inline-block;
+        padding: 3px 10px;
+        border-radius: 15px;
+        font-size: 0.75rem;
+        background-color: rgba(78, 115, 223, 0.1);
+        color: var(--primary-color);
+    }
+
+    .payment-date {
+        font-size: 0.85rem;
+        color: #858796;
+    }
+
+    .payment-amount {
+        font-weight: 700;
+    }
+
+    .payment-action {
+        margin-top: 15px;
+    }
+
+    .empty-state {
+        text-align: center;
+        padding: 30px;
+        color: #858796;
+    }
+
+    @media print {
+        .breadcrumb, .page-title, .invoice-actions, .payment-action, .no-print {
+            display: none !important;
+        }
+
+        body, .invoice-container {
+            background-color: white !important;
+            box-shadow: none !important;
+        }
+
+        .container {
+            max-width: 100% !important;
+            width: 100% !important;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block client_portal_content %}
+<div class="row">
+    <div class="col-lg-8">
+        <!-- Invoice Container -->
+        <div class="invoice-container">
+            <!-- Invoice Header -->
+            <div class="invoice-header d-flex justify-content-between align-items-start">
+                <div class="invoice-company">
+                    <h4>CloudLink_Devs</h4>
+                    <p>123 Tech Street</p>
+                    <p>Digital City</p>
+                    <p>contact@cloudlinkdevs.com</p>
+                    <p>(123) 456-7890</p>
+                </div>
+                <div class="text-end">
+                    <h2>INVOICE</h2>
+                    <h4 class="text-primary">#{{ invoice.invoice_number }}</h4>
+                    <span class="invoice-status status-{{ invoice.status }}">{{ invoice.get_status_display }}</span>
+                </div>
+            </div>
+
+            <!-- Invoice Info -->
+            <div class="invoice-info row">
+                <div class="col-md-6">
+                    <div class="invoice-to">
+                        <h5>Invoice To:</h5>
+                        <p><strong>{{ invoice.client.full_name }}</strong></p>
+                        {% if invoice.client.company_name %}
+                            <p>{{ invoice.client.company_name }}</p>
+                        {% endif %}
+                        {% if invoice.client.address %}
+                            <p>{{ invoice.client.address }}</p>
+                        {% endif %}
+                        <p>{{ invoice.client.user.email }}</p>
+                        {% if invoice.client.phone %}
+                            <p>{{ invoice.client.phone }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="invoice-details">
+                        <div class="row mb-2">
+                            <div class="col-5 invoice-detail-title">Invoice Date:</div>
+                            <div class="col-7">{{ invoice.issue_date|date:"M d, Y" }}</div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-5 invoice-detail-title">Due Date:</div>
+                            <div class="col-7">{{ invoice.due_date|date:"M d, Y" }}</div>
+                        </div>
+                        {% if invoice.project %}
+                        <div class="row mb-2">
+                            <div class="col-5 invoice-detail-title">Project:</div>
+                            <div class="col-7">
+                                <a href="{% url 'client_portal:project_detail' pk=invoice.project.id %}">{{ invoice.project.title }}</a>
+                            </div>
+                        </div>
+                        {% endif %}
+                        <div class="row mb-2">
+                            <div class="col-5 invoice-detail-title">Status:</div>
+                            <div class="col-7">
+                                <span class="invoice-status status-{{ invoice.status }}">{{ invoice.get_status_display }}</span>
+                            </div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-5 invoice-detail-title">Amount Due:</div>
+                            <div class="col-7"><strong>${{ invoice.balance_due|floatformat:2 }}</strong></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Invoice Items -->
+            <div class="invoice-table">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th class="invoice-item-description">Description</th>
+                            <th class="text-center">Qty</th>
+                            <th class="text-end">Unit Price</th>
+                            <th class="text-end">Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in items %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ item.description }}</td>
+                            <td class="text-center">{{ item.quantity }}</td>
+                            <td class="text-end">${{ item.unit_price|floatformat:2 }}</td>
+                            <td class="text-end">${{ item.amount|floatformat:2 }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Invoice Total -->
+            <div class="invoice-total">
+                <div class="row">
+                    <div class="col-md-6"></div>
+                    <div class="col-md-6">
+                        <div class="invoice-total-row">
+                            <div class="invoice-total-label">Subtotal:</div>
+                            <div class="invoice-total-value">${{ invoice.subtotal|floatformat:2 }}</div>
+                        </div>
+                        {% if invoice.tax_rate > 0 %}
+                        <div class="invoice-total-row">
+                            <div class="invoice-total-label">Tax ({{ invoice.tax_rate }}%):</div>
+                            <div class="invoice-total-value">${{ invoice.tax_amount|floatformat:2 }}</div>
+                        </div>
+                        {% endif %}
+                        {% if invoice.discount > 0 %}
+                        <div class="invoice-total-row">
+                            <div class="invoice-total-label">Discount:</div>
+                            <div class="invoice-total-value">-${{ invoice.discount|floatformat:2 }}</div>
+                        </div>
+                        {% endif %}
+                        <div class="invoice-total-row invoice-grand-total">
+                            <div class="invoice-total-label">Total:</div>
+                            <div class="invoice-total-value">${{ invoice.total|floatformat:2 }}</div>
+                        </div>
+                        {% if invoice.amount_paid > 0 %}
+                        <div class="invoice-total-row">
+                            <div class="invoice-total-label">Amount Paid:</div>
+                            <div class="invoice-total-value">-${{ invoice.amount_paid|floatformat:2 }}</div>
+                        </div>
+                        <div class="invoice-total-row">
+                            <div class="invoice-total-label">Balance Due:</div>
+                            <div class="invoice-total-value">${{ invoice.balance_due|floatformat:2 }}</div>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            {% if invoice.notes %}
+            <!-- Invoice Notes -->
+            <div class="invoice-notes">
+                <h5>Notes</h5>
+                <p>{{ invoice.notes|linebreaks }}</p>
+            </div>
+            {% endif %}
+
+            <!-- Invoice Actions -->
+            <div class="invoice-actions text-center">
+                <button class="btn btn-outline-primary me-2" onclick="window.print()">
+                    <i class="fas fa-print me-2"></i> Print Invoice
+                </button>
+                <a href="#" class="btn btn-outline-secondary me-2">
+                    <i class="fas fa-download me-2"></i> Download PDF
+                </a>
+                {% if invoice.status in 'sent,overdue' and invoice.balance_due > 0 %}
+                <a href="{% url 'client_portal:make_payment' invoice_id=invoice.id %}" class="btn btn-success">
+                    <i class="fas fa-credit-card me-2"></i> Make Payment
+                </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-4">
+        <!-- Payment Summary -->
+        <div class="payment-section">
+            <div class="payment-header">Payment Summary</div>
+            <div class="payment-body">
+                <div class="d-flex justify-content-between mb-3">
+                    <div>Total Amount:</div>
+                    <div><strong>${{ invoice.total|floatformat:2 }}</strong></div>
+                </div>
+                <div class="d-flex justify-content-between mb-3">
+                    <div>Amount Paid:</div>
+                    <div><strong>${{ invoice.amount_paid|floatformat:2 }}</strong></div>
+                </div>
+                <div class="d-flex justify-content-between mb-3">
+                    <div>Balance Due:</div>
+                    <div><strong class="{% if invoice.balance_due > 0 %}text-danger{% else %}text-success{% endif %}">
+                        ${{ invoice.balance_due|floatformat:2 }}
+                    </strong></div>
+                </div>
+
+                {% if invoice.status in 'sent,overdue' and invoice.balance_due > 0 %}
+                <div class="payment-action">
+                    <a href="{% url 'client_portal:make_payment' invoice_id=invoice.id %}" class="btn btn-success w-100">
+                        <i class="fas fa-credit-card me-2"></i> Pay Now
+                    </a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Payment History -->
+        <div class="payment-section">
+            <div class="payment-header">Payment History</div>
+            <div class="payment-body p-0">
+                {% if payments %}
+                    {% for payment in payments %}
+                    <div class="payment-item">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div>
+                                <div>
+                                    <span class="payment-method">{{ payment.get_payment_method_display }}</span>
+                                </div>
+                                <div class="payment-date">
+                                    <i class="far fa-calendar-alt"></i> {{ payment.payment_date|date:"M d, Y" }}
+                                </div>
+                                {% if payment.transaction_id %}
+                                <div class="payment-transaction">
+                                    <small>Transaction ID: {{ payment.transaction_id }}</small>
+                                </div>
+                                {% endif %}
+                            </div>
+                            <div class="payment-amount">${{ payment.amount|floatformat:2 }}</div>
+                        </div>
+                        {% if payment.notes %}
+                        <div class="payment-notes mt-2">
+                            <small>{{ payment.notes }}</small>
+                        </div>
+                        {% endif %}
+                        <div class="mt-2">
+                            <a href="{% url 'client_portal:print_receipt' payment_id=payment.id %}" class="btn btn-sm btn-outline-primary">
+                                <i class="fas fa-receipt me-1"></i> View Receipt
+                            </a>
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="empty-state">
+                        <p>No payments recorded for this invoice.</p>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        {% if payment_form %}
+        <!-- Make a Payment -->
+        <div class="payment-section">
+            <div class="payment-header">Make a Payment</div>
+            <div class="payment-body">
+                <form method="post" action="{% url 'client_portal:make_payment' invoice_id=invoice.id %}">
+                    {% csrf_token %}
+
+                    <div class="mb-3">
+                        <label for="{{ payment_form.amount.id_for_label }}" class="form-label">Amount</label>
+                        <div class="input-group">
+                            <span class="input-group-text">$</span>
+                            {{ payment_form.amount }}
+                        </div>
+                        {% if payment_form.amount.errors %}
+                            <div class="text-danger mt-1">
+                                {{ payment_form.amount.errors }}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="{{ payment_form.payment_method.id_for_label }}" class="form-label">Payment Method</label>
+                        {{ payment_form.payment_method }}
+                        {% if payment_form.payment_method.errors %}
+                            <div class="text-danger mt-1">
+                                {{ payment_form.payment_method.errors }}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <button type="submit" class="btn btn-success w-100">
+                        <i class="fas fa-credit-card me-2"></i> Process Payment
+                    </button>
+                </form>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+
+{% block client_portal_js %}
+<script>
+    $(document).ready(function() {
+        // Optional: Add any JS for the invoice detail page here
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,326 @@
+{% extends 'client_portal/base.html' %}
+{% load static %}
+
+{% block client_portal_title %}Invoices - Client Portal{% endblock %}
+
+{% block breadcrumb_items %}
+<li class="breadcrumb-item active">Invoices</li>
+{% endblock %}
+
+{% block page_title %}My Invoices{% endblock %}
+
+{% block client_portal_css %}
+<style>
+    .invoice-card {
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+        margin-bottom: 30px;
+        overflow: hidden;
+    }
+
+    .invoice-summary {
+        padding: 25px;
+        border-bottom: 1px solid #e3e6f0;
+        background-color: #f8f9fc;
+    }
+
+    .summary-item {
+        text-align: center;
+        padding: 15px;
+    }
+
+    .summary-title {
+        font-size: 1rem;
+        color: #858796;
+        margin-bottom: 10px;
+    }
+
+    .summary-value {
+        font-size: 1.75rem;
+        font-weight: 700;
+    }
+
+    .summary-value.text-success {
+        color: #1cc88a;
+    }
+
+    .summary-value.text-danger {
+        color: #e74a3b;
+    }
+
+    .summary-value.text-primary {
+        color: var(--primary-color);
+    }
+
+    .summary-value.text-warning {
+        color: #f6c23e;
+    }
+
+    .invoices-filter {
+        margin-bottom: 20px;
+        padding: 20px;
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+    }
+
+    .filter-btn {
+        margin-right: 10px;
+        margin-bottom: 10px;
+    }
+
+    .invoice-item {
+        padding: 15px;
+        border-bottom: 1px solid #e3e6f0;
+        transition: all 0.3s ease;
+    }
+
+    .invoice-item:last-child {
+        border-bottom: none;
+    }
+
+    .invoice-item:hover {
+        background-color: var(--light-gray);
+    }
+
+    .invoice-number {
+        font-weight: 700;
+        margin-bottom: 5px;
+    }
+
+    .invoice-status {
+        display: inline-block;
+        padding: 3px 10px;
+        border-radius: 15px;
+        font-size: 0.75rem;
+        margin-bottom: 5px;
+    }
+
+    .status-paid {
+        background-color: rgba(28, 200, 138, 0.1);
+        color: #1cc88a;
+    }
+
+    .status-draft, .status-sent {
+        background-color: rgba(78, 115, 223, 0.1);
+        color: var(--primary-color);
+    }
+
+    .status-overdue {
+        background-color: rgba(231, 74, 59, 0.1);
+        color: #e74a3b;
+    }
+
+    .status-cancelled {
+        background-color: rgba(108, 117, 125, 0.1);
+        color: #6c757d;
+    }
+
+    .invoice-details {
+        color: #858796;
+        font-size: 0.9rem;
+    }
+
+    .invoice-amount {
+        font-weight: 700;
+        color: var(--text-color);
+    }
+
+    .empty-state {
+        text-align: center;
+        padding: 50px 20px;
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+    }
+
+    .empty-icon {
+        font-size: 4rem;
+        color: #d1d3e2;
+        margin-bottom: 20px;
+    }
+</style>
+{% endblock %}
+
+{% block client_portal_content %}
+<!-- Invoice Summary -->
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="invoice-card">
+            <div class="invoice-summary">
+                <div class="row">
+                    <div class="col-md-3 col-6">
+                        <div class="summary-item">
+                            <div class="summary-title">Total Invoiced</div>
+                            <div class="summary-value text-primary">${{ total_invoiced|floatformat:2 }}</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-6">
+                        <div class="summary-item">
+                            <div class="summary-title">Paid</div>
+                            <div class="summary-value text-success">${{ total_paid|floatformat:2 }}</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-6">
+                        <div class="summary-item">
+                            <div class="summary-title">Balance Due</div>
+                            <div class="summary-value {% if balance_due > 0 %}text-danger{% else %}text-success{% endif %}">
+                                ${{ balance_due|floatformat:2 }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-6">
+                        <div class="summary-item">
+                            <div class="summary-title">Pending</div>
+                            <div class="summary-value text-warning">
+                               {{ pending_invoices_count }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Invoice Filters -->
+<div class="row">
+    <div class="col-12">
+        <div class="invoices-filter">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h4>Filter Invoices</h4>
+                <div>
+                    <select id="invoices-sort" class="form-select">
+                        <option value="latest">Latest</option>
+                        <option value="oldest">Oldest</option>
+                        <option value="highest">Highest Amount</option>
+                        <option value="lowest">Lowest Amount</option>
+                    </select>
+                </div>
+            </div>
+            <div>
+                <button class="btn btn-outline-primary filter-btn active" data-filter="all">All</button>
+                <button class="btn btn-outline-primary filter-btn" data-filter="paid">Paid</button>
+                <button class="btn btn-outline-primary filter-btn" data-filter="unpaid">Unpaid</button>
+                <button class="btn btn-outline-primary filter-btn" data-filter="overdue">Overdue</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Invoices List -->
+<div class="row">
+    <div class="col-12">
+        <div class="invoice-card">
+            <div class="invoice-card-header p-3 border-bottom">
+                <h5 class="mb-0">Invoice History</h5>
+            </div>
+            <div class="invoice-card-body p-0">
+                {% if invoices %}
+                    {% for invoice in invoices %}
+                        <div class="invoice-item" data-status="{{ invoice.status }}">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h5 class="invoice-number">
+                                        <a href="{% url 'client_portal:invoice_detail' pk=invoice.id %}">Invoice #{{ invoice.invoice_number }}</a>
+                                    </h5>
+                                    <span class="invoice-status status-{{ invoice.status }}">{{ invoice.get_status_display }}</span>
+                                    <div class="invoice-details">
+                                        <div>
+                                            <i class="far fa-calendar-alt"></i> Issued: {{ invoice.issue_date|date:"M d, Y" }}
+                                            <span class="mx-2">|</span>
+                                            <i class="far fa-calendar-check"></i> Due: {{ invoice.due_date|date:"M d, Y" }}
+                                        </div>
+                                        {% if invoice.project %}
+                                            <div>
+                                                <i class="fas fa-project-diagram"></i> Project:
+                                                <a href="{% url 'client_portal:project_detail' pk=invoice.project.id %}">{{ invoice.project.title }}</a>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="d-flex align-items-center">
+                                    <div class="text-end me-3">
+                                        <div class="invoice-amount">${{ invoice.total|floatformat:2 }}</div>
+                                        {% if invoice.balance_due > 0 %}
+                                            <small class="text-danger">Balance: ${{ invoice.balance_due|floatformat:2 }}</small>
+                                        {% else %}
+                                            <small class="text-success">Paid in Full</small>
+                                        {% endif %}
+                                    </div>
+                                    <div>
+                                        <a href="{% url 'client_portal:invoice_detail' pk=invoice.id %}" class="btn btn-sm btn-primary">
+                                            <i class="fas fa-eye"></i> View
+                                        </a>
+                                        {% if invoice.status in 'sent,overdue' and invoice.balance_due > 0 %}
+                                            <a href="{% url 'client_portal:make_payment' invoice_id=invoice.id %}" class="btn btn-sm btn-success ms-2">
+                                                <i class="fas fa-credit-card"></i> Pay
+                                            </a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="text-center py-5">
+                        <p>No invoices found. Your invoices will appear here once they're created.</p>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Balance Due Call-to-Action -->
+{% if balance_due > 0 %}
+<div class="row">
+    <div class="col-12">
+        <div class="invoice-card p-4 text-center">
+            <h4>You have a balance due of ${{ balance_due|floatformat:2 }}</h4>
+            <p>Please make a payment to avoid service interruptions. We accept multiple payment methods.</p>
+            <a href="{% url 'client_portal:balance_due' %}" class="btn btn-primary">Make a Payment</a>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}
+
+{% block client_portal_js %}
+<script>
+    $(document).ready(function() {
+        // Invoice filtering
+        $('.filter-btn').on('click', function() {
+            // Update active filter button
+            $('.filter-btn').removeClass('active');
+            $(this).addClass('active');
+
+            const filter = $(this).data('filter');
+
+            if (filter === 'all') {
+                $('.invoice-item').show();
+            } else if (filter === 'paid') {
+                $('.invoice-item').hide();
+                $('.invoice-item[data-status="paid"]').show();
+            } else if (filter === 'unpaid') {
+                $('.invoice-item').hide();
+                $('.invoice-item[data-status="draft"]').show();
+                $('.invoice-item[data-status="sent"]').show();
+            } else if (filter === 'overdue') {
+                $('.invoice-item').hide();
+                $('.invoice-item[data-status="overdue"]').show();
+            }
+        });
+
+        // Invoice sorting
+        $('#invoices-sort').on('change', function() {
+            const sortOption = $(this).val();
+            let invoiceItems = $('.invoice-item').get();
+
+            // Implement sorting logic (would need to modify based on how your data is structured)
+            // This is just a placeholder
+        });
+    });
+</script>
+{% endblock %}

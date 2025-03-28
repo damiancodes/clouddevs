@@ -1,0 +1,291 @@
+{% extends 'client_portal/base.html' %}
+{% load static %}
+
+{% block client_portal_title %}Messages - Client Portal{% endblock %}
+
+{% block breadcrumb_items %}
+<li class="breadcrumb-item active">Messages</li>
+{% endblock %}
+
+{% block page_title %}Messages{% endblock %}
+
+{% block client_portal_css %}
+<style>
+    .messages-container {
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+        margin-bottom: 30px;
+        overflow: hidden;
+    }
+
+    .messages-header {
+        padding: 20px;
+        border-bottom: 1px solid #e3e6f0;
+        background-color: #f8f9fc;
+    }
+
+    .messages-body {
+        padding: 20px;
+        max-height: 600px;
+        overflow-y: auto;
+    }
+
+    .message-item {
+        padding: 15px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+        position: relative;
+    }
+
+    .message-from-client {
+        background-color: #e6f2ff;
+        margin-left: 60px;
+    }
+
+    .message-from-staff {
+        background-color: #f8f9fc;
+        margin-right: 60px;
+    }
+
+    .message-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        position: absolute;
+        top: 15px;
+    }
+
+    .client-avatar {
+        left: -50px;
+        background-color: #4e73df;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+    }
+
+    .staff-avatar {
+        right: -50px;
+        background-color: #1cc88a;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .message-header {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+    }
+
+    .message-sender {
+        font-weight: 700;
+    }
+
+    .message-date {
+        font-size: 0.85rem;
+        color: #858796;
+    }
+
+    .message-subject {
+        font-weight: 600;
+        margin-bottom: 10px;
+    }
+
+    .message-content {
+        white-space: pre-line;
+    }
+
+    .unread-badge {
+        display: inline-block;
+        padding: 3px 8px;
+        border-radius: 10px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        background-color: #e74a3b;
+        color: white;
+        margin-left: 10px;
+    }
+
+    .message-form {
+        margin-top: 30px;
+    }
+
+    .message-textarea {
+        resize: vertical;
+        min-height: 120px;
+    }
+
+    .no-messages {
+        text-align: center;
+        padding: 50px 20px;
+        color: #858796;
+    }
+
+    .no-messages-icon {
+        font-size: 4rem;
+        color: #d1d3e2;
+        margin-bottom: 20px;
+    }
+</style>
+{% endblock %}
+
+{% block client_portal_content %}
+<div class="row">
+    <div class="col-lg-8">
+        <!-- Messages Container -->
+        <div class="messages-container">
+            <div class="messages-header">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">Message History</h5>
+                </div>
+            </div>
+            <div class="messages-body">
+                {% if messages_list %}
+                    {% for message in messages_list %}
+                        <div class="message-item {% if message.is_from_client %}message-from-client{% else %}message-from-staff{% endif %}" id="message-{{ message.id }}">
+                            {% if message.is_from_client %}
+                                <div class="message-avatar client-avatar">
+                                    {{ client.full_name|slice:":1" }}
+                                </div>
+                            {% else %}
+                                <div class="message-avatar staff-avatar">
+                                    <i class="fas fa-headset"></i>
+                                </div>
+                            {% endif %}
+
+                            <div class="message-header">
+                                <div class="message-sender">
+                                    {% if message.is_from_client %}
+                                        You
+                                    {% else %}
+                                        CloudLink Support
+                                        {% if not message.is_read %}
+                                            <span class="unread-badge mark-read" data-message-id="{{ message.id }}">New</span>
+                                        {% endif %}
+                                    {% endif %}
+                                </div>
+                                <div class="message-date">{{ message.created_at|date:"M d, Y H:i" }}</div>
+                            </div>
+
+                            <div class="message-subject">{{ message.subject }}</div>
+                            <div class="message-content">{{ message.content }}</div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="no-messages">
+                        <div class="no-messages-icon">
+                            <i class="far fa-comments"></i>
+                        </div>
+                        <h4>No Messages</h4>
+                        <p>Your conversation history will appear here.</p>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Message Form -->
+        <div class="message-form">
+            <h5 class="mb-4">Send a Message</h5>
+            <form method="post" action="{% url 'client_portal:send_message' %}">
+                {% csrf_token %}
+
+                <div class="mb-3">
+                    <label for="{{ form.subject.id_for_label }}" class="form-label">Subject</label>
+                    {{ form.subject }}
+                    {% if form.subject.errors %}
+                        <div class="text-danger mt-1">
+                            {{ form.subject.errors }}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="mb-3">
+                    <label for="{{ form.content.id_for_label }}" class="form-label">Message</label>
+                    {{ form.content }}
+                    {% if form.content.errors %}
+                        <div class="text-danger mt-1">
+                            {{ form.content.errors }}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="text-end">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-paper-plane me-2"></i> Send Message
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="col-lg-4">
+        <!-- Help Resources -->
+        <div class="messages-container">
+            <div class="messages-header">
+                <h5 class="mb-0">Help & Resources</h5>
+            </div>
+            <div class="card-body">
+                <div class="mb-4">
+                    <h6 class="mb-2"><i class="fas fa-question-circle me-2"></i> Common Questions</h6>
+                    <p class="text-muted">Check our <a href="#">FAQ section</a> for answers to common questions.</p>
+                </div>
+                <div class="mb-4">
+                    <h6 class="mb-2"><i class="fas fa-book me-2"></i> Documentation</h6>
+                    <p class="text-muted">Browse our <a href="#">help documentation</a> for detailed guides.</p>
+                </div>
+                <div class="mb-4">
+                    <h6 class="mb-2"><i class="fas fa-phone-alt me-2"></i> Contact Support</h6>
+                    <p class="text-muted">Call us at (123) 456-7890 for urgent matters.</p>
+                </div>
+                <div class="mb-4">
+                    <h6 class="mb-2"><i class="fas fa-clock me-2"></i> Response Time</h6>
+                    <p class="text-muted">We typically respond to messages within 24 hours during business days.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Message Tips -->
+        <div class="messages-container mt-4">
+            <div class="messages-header">
+                <h5 class="mb-0">Tips for Faster Support</h5>
+            </div>
+            <div class="card-body">
+                <ul class="text-muted">
+                    <li class="mb-2">Include your project number if your message is about a specific project</li>
+                    <li class="mb-2">Be as detailed as possible in describing your issue or question</li>
+                    <li class="mb-2">Mention any troubleshooting steps you've already tried</li>
+                    <li class="mb-2">For technical issues, include screenshots if possible</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block client_portal_js %}
+<script>
+    $(document).ready(function() {
+        // Scroll to the bottom of the messages container on page load
+        const messagesBody = $('.messages-body');
+        messagesBody.scrollTop(messagesBody.prop('scrollHeight'));
+
+        // Mark messages as read when clicked on the "New" badge
+        $('.mark-read').on('click', function() {
+            const messageId = $(this).data('message-id');
+
+            $.ajax({
+                url: '{% url "client_portal:mark_message_read" message_id=0 %}'.replace('0', messageId),
+                type: 'GET',
+                success: function() {
+                    // Remove the unread badge
+                    $(this).fadeOut();
+                }.bind(this)
+            });
+        });
+    });
+</script>
+{% endblock %}

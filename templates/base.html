@@ -1,0 +1,173 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}CloudLink_Devs{% endblock %}</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    <!-- Theme CSS (for dark/light mode) -->
+    <link rel="stylesheet" href="{% static 'css/theme.css' %}">
+
+    {% block extra_css %}{% endblock %}
+</head>
+<body class="light-mode">
+    <!-- Header -->
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container">
+                <a class="navbar-brand" href="{% url 'core:home' %}">
+                    <img src="{% static 'images/logo.png' %}" alt="CloudLink_Devs Logo" height="40">
+                    CloudLink_Devs
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'core:home' %}">Home</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="servicesDropdown" role="button" data-bs-toggle="dropdown">
+                                Services
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="{% url 'services:web_development' %}">Web Development</a></li>
+                                <li><a class="dropdown-item" href="{% url 'services:app_development' %}">App Development</a></li>
+                                <li><a class="dropdown-item" href="{% url 'services:pos_systems' %}">POS Systems</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'portfolio:portfolio' %}">Portfolio</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'blog:blog_list' %}">Blog</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'quotes:service_estimator' %}">Estimator</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'core:about' %}">About</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'core:contact' %}">Contact</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'client_portal:login' %}">Client Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <button id="theme-toggle" class="btn btn-sm">
+                                <i class="fas fa-moon"></i>
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Chat Widget -->
+    <div class="chat-widget" id="chat-widget">
+        <div class="chat-icon" id="chat-icon">
+            <i class="fas fa-comment-dots"></i>
+        </div>
+        <div class="chat-container d-none" id="chat-container">
+            <div class="chat-header">
+                <h5>Chat with Us</h5>
+                <button class="close-btn" id="close-chat">×</button>
+            </div>
+            <div class="chat-messages" id="chat-messages">
+                <div class="message bot">
+                    <p>Hello! How can we help you today?</p>
+                </div>
+            </div>
+            <div class="chat-input">
+                <input type="text" id="user-message" placeholder="Type your message...">
+                <button id="send-message"><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-light py-5 mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h5>CloudLink_Devs</h5>
+                    <p>Providing web development, app development, and POS system solutions.</p>
+                    <div class="social-icons">
+                        <a href="#" class="text-light me-3"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="text-light me-3"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-light me-3"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" class="text-light"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="{% url 'core:home' %}" class="text-light">Home</a></li>
+                        <li><a href="{% url 'services:overview' %}" class="text-light">Services</a></li>
+                        <li><a href="{% url 'portfolio:portfolio' %}" class="text-light">Portfolio</a></li>
+                        <li><a href="{% url 'blog:blog_list' %}" class="text-light">Blog</a></li>
+                        <li><a href="{% url 'core:about' %}" class="text-light">About Us</a></li>
+                        <li><a href="{% url 'core:contact' %}" class="text-light">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5>Contact Us</h5>
+                    <address>
+                        <p><i class="fas fa-map-marker-alt me-2"></i> 123 Tech Street, Digital City</p>
+                        <p><i class="fas fa-phone me-2"></i> (123) 456-7890</p>
+                        <p><i class="fas fa-envelope me-2"></i> info@cloudlinkdevs.com</p>
+                    </address>
+                </div>
+            </div>
+            <hr class="my-4">
+            <div class="row">
+                <div class="col-md-6">
+                    <p>&copy; {% now "Y" %} CloudLink_Devs. All rights reserved.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <ul class="list-inline">
+                        <li class="list-inline-item"><a href="#" class="text-light">Privacy Policy</a></li>
+                        <li class="list-inline-item"><a href="#" class="text-light">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- jQuery (if needed) -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Custom JS -->
+    <script src="{% static 'js/main.js' %}"></script>
+
+    <!-- Theme Toggle JS -->
+    <script src="{% static 'js/theme-toggle.js' %}"></script>
+
+    <!-- Chat Widget JS -->
+    <script src="{% static 'js/chat-widget.js' %}"></script>
+
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

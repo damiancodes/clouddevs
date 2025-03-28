@@ -1,0 +1,341 @@
+{% extends "base.html" %}
+
+{% block title %}Contact Us - CloudLink_Devs{% endblock %}
+
+{% block extra_css %}
+<style>
+    .contact-header {
+        background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+        color: white;
+        padding: 60px 0;
+        margin-bottom: 50px;
+        text-align: center;
+    }
+
+    .contact-header h1 {
+        font-weight: 700;
+        margin-bottom: 15px;
+    }
+
+    .contact-info {
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+        padding: 30px;
+        height: 100%;
+    }
+
+    .contact-form {
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+        padding: 30px;
+    }
+
+    .contact-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .contact-item i {
+        font-size: 20px;
+        color: var(--primary-color);
+        margin-right: 15px;
+        width: 30px;
+        text-align: center;
+    }
+
+    .social-media {
+        margin-top: 30px;
+    }
+
+    .social-icons {
+        display: flex;
+        gap: 15px;
+    }
+
+    .social-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background-color: var(--light-gray);
+        color: var(--primary-color);
+        transition: all 0.3s ease;
+    }
+
+    .social-icon:hover {
+        background-color: var(--accent-color);
+        color: white;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .btn-primary {
+        background-color: var(--primary-color);
+        border: none;
+        padding: 10px 25px;
+        font-weight: 600;
+    }
+
+    .btn-primary:hover {
+        background-color: var(--accent-color);
+    }
+
+    .map-section {
+        margin: 70px 0;
+    }
+
+    .map-container {
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+    }
+
+    .map-placeholder {
+        height: 400px;
+        background-color: #eaecf4;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #5a5c69;
+    }
+
+    /* Form animation */
+    .form-control {
+        transition: all 0.3s ease;
+    }
+
+    .form-control:focus {
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 0.25rem rgba(0, 102, 204, 0.25);
+    }
+
+    /* For dark mode compatibility */
+    body.dark-mode .contact-info,
+    body.dark-mode .contact-form {
+        background-color: #2a2c3e;
+        color: #f8f9fc;
+    }
+
+    body.dark-mode .social-icon {
+        background-color: #3a3d52;
+        color: #f8f9fc;
+    }
+
+    body.dark-mode .social-icon:hover {
+        background-color: #4e73df;
+    }
+
+    body.dark-mode .map-placeholder {
+        background-color: #3a3d52;
+        color: #f8f9fc;
+    }
+
+    body.dark-mode .form-control {
+        background-color: #3a3d52;
+        border-color: #4e5269;
+        color: #f8f9fc;
+    }
+
+    /* Alert messages */
+    .alert {
+        border-radius: 10px;
+        margin-bottom: 30px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<section class="contact-header">
+    <div class="container">
+        <h1>Contact Us</h1>
+        <p>Have a project in mind? Let's discuss how CloudLink_Devs can help you.</p>
+    </div>
+</section>
+
+<section class="contact-content">
+    <div class="container">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <div class="row gy-4">
+            <div class="col-lg-5">
+                <div class="contact-info">
+                    <h2>Get in Touch</h2>
+                    <p>We'd love to hear from you. Fill out the form or use the contact information below to reach us.</p>
+
+                    <div class="contact-details mt-4">
+                        <div class="contact-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <p>123 Tech Street, Digital City</p>
+                        </div>
+
+                        <div class="contact-item">
+                            <i class="fas fa-phone"></i>
+                            <p>(123) 456-7890</p>
+                        </div>
+
+                        <div class="contact-item">
+                            <i class="fas fa-envelope"></i>
+                            <p>info@cloudlinkdevs.com</p>
+                        </div>
+
+                        <div class="contact-item">
+                            <i class="fas fa-clock"></i>
+                            <p>Monday - Friday: 9:00 AM - 6:00 PM</p>
+                        </div>
+                    </div>
+
+                    <div class="social-media">
+                        <h3>Connect With Us</h3>
+                        <div class="social-icons">
+                            <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                            <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                            <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                            <a href="#" class="social-icon"><i class="fab fa-github"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-7">
+                <div class="contact-form">
+                    <h2>Send Us a Message</h2>
+                    <p>Fill out the form below and we'll get back to you as soon as possible.</p>
+
+                    <form method="post" action="{% url 'core:contact_submit' %}" id="contactForm" class="mt-4">
+                        {% csrf_token %}
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="name">Your Name <span class="text-danger">*</span></label>
+                                    <input type="text" id="name" name="name" class="form-control" required>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="email">Email Address <span class="text-danger">*</span></label>
+                                    <input type="email" id="email" name="email" class="form-control" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="subject">Subject <span class="text-danger">*</span></label>
+                            <input type="text" id="subject" name="subject" class="form-control" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="message">Message <span class="text-danger">*</span></label>
+                            <textarea id="message" name="message" class="form-control" rows="5" required></textarea>
+                        </div>
+
+                        <div class="form-group form-check">
+                            <input type="checkbox" class="form-check-input" id="privacy" required>
+                            <label class="form-check-label" for="privacy">I agree to the <a href="#">privacy policy</a> <span class="text-danger">*</span></label>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary mt-3">
+                            <i class="fas fa-paper-plane me-2"></i>Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="map-section">
+    <div class="container">
+        <h2 class="text-center mb-4">Our Location</h2>
+        <div class="map-container">
+            <!-- Replace with actual Google Maps embed code -->
+            <div class="map-placeholder">
+                <p><i class="fas fa-map-marked-alt me-2"></i> Google Maps will be integrated here</p>
+            </div>
+
+            <!-- Uncomment and replace API_KEY when ready
+            <iframe
+                src="https://www.google.com/maps/embed/v1/place?key=YOUR_API_KEY&q=Space+Needle,Seattle+WA"
+                width="100%"
+                height="400"
+                style="border:0;"
+                allowfullscreen=""
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
+            -->
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const contactForm = document.getElementById('contactForm');
+
+        if (contactForm) {
+            contactForm.addEventListener('submit', function(e) {
+                const submitBtn = this.querySelector('button[type="submit"]');
+                const originalBtnText = submitBtn.innerHTML;
+
+                // Basic client-side validation
+                const name = document.getElementById('name').value.trim();
+                const email = document.getElementById('email').value.trim();
+                const subject = document.getElementById('subject').value.trim();
+                const message = document.getElementById('message').value.trim();
+
+                if (name === '' || email === '' || subject === '' || message === '') {
+                    e.preventDefault();
+                    alert('Please fill out all required fields');
+                    return false;
+                }
+
+                // Email validation
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(email)) {
+                    e.preventDefault();
+                    alert('Please enter a valid email address');
+                    return false;
+                }
+
+                // Show loading state
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Sending...';
+                submitBtn.disabled = true;
+
+                // Form will submit normally after validation passes
+                // The loading state will be cleared when the page reloads
+            });
+        }
+
+        // Apply micro-interactions
+        const formInputs = document.querySelectorAll('.form-control');
+
+        formInputs.forEach(input => {
+            input.addEventListener('focus', function() {
+                this.parentElement.classList.add('focused');
+            });
+
+            input.addEventListener('blur', function() {
+                this.parentElement.classList.remove('focused');
+            });
+        });
+    });
+</script>
+{% endblock %}

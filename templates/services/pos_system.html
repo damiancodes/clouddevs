@@ -1,0 +1,820 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}POS System Services - CloudLink_Devs{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* Service Header */
+    .service-header {
+        background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+        color: white;
+        padding: 80px 0;
+        text-align: center;
+    }
+
+    .service-header h1 {
+        font-weight: 800;
+        margin-bottom: 20px;
+    }
+
+    /* Main Content */
+    .service-intro {
+        padding: 80px 0;
+    }
+
+    .intro-image {
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    }
+
+    .intro-text h2 {
+        margin-bottom: 25px;
+        font-weight: 700;
+    }
+
+    /* Features Section */
+    .features-section {
+        padding: 80px 0;
+        background-color: var(--light-gray);
+    }
+
+    .feature-card {
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+        background-color: white;
+        height: 100%;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .feature-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 1rem 3rem rgba(58, 59, 69, 0.175);
+    }
+
+    .feature-icon {
+        width: 60px;
+        height: 60px;
+        background-color: var(--light-gray);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--accent-color);
+        font-size: 1.5rem;
+        margin-bottom: 20px;
+    }
+
+    /* Industries Section */
+    .industries-section {
+        padding: 80px 0;
+    }
+
+    .industry-card {
+        position: relative;
+        border-radius: 10px;
+        overflow: hidden;
+        margin-bottom: 30px;
+        height: 250px;
+    }
+
+    .industry-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+    }
+
+    .industry-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.7) 100%);
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        padding: 20px;
+        color: white;
+    }
+
+    .industry-card:hover .industry-image {
+        transform: scale(1.1);
+    }
+
+    .industry-overlay h3 {
+        margin-bottom: 10px;
+    }
+
+    /* Benefits Section */
+    .benefits-section {
+        padding: 80px 0;
+        background-color: var(--light-gray);
+    }
+
+    .benefit-item {
+        display: flex;
+        margin-bottom: 30px;
+    }
+
+    .benefit-icon {
+        width: 50px;
+        height: 50px;
+        background-color: var(--primary-color);
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.25rem;
+        margin-right: 20px;
+        flex-shrink: 0;
+    }
+
+    .benefit-content h4 {
+        margin-bottom: 10px;
+    }
+
+    /* Hardware Section */
+    .hardware-section {
+        padding: 80px 0;
+    }
+
+    .hardware-item {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    .hardware-icon {
+        font-size: 2.5rem;
+        color: var(--primary-color);
+        margin-bottom: 15px;
+    }
+
+    /* Comparison Section */
+    .comparison-section {
+        padding: 80px 0;
+        background-color: var(--light-gray);
+    }
+
+    .comparison-table {
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+        overflow: hidden;
+    }
+
+    .comparison-table th {
+        background-color: var(--primary-color);
+        color: white;
+        text-align: center;
+        padding: 15px;
+    }
+
+    .comparison-table th:first-child {
+        text-align: left;
+    }
+
+    .comparison-table td {
+        text-align: center;
+        padding: 15px;
+        border-bottom: 1px solid #eee;
+    }
+
+    .comparison-table td:first-child {
+        text-align: left;
+        font-weight: 600;
+    }
+
+    .comparison-table tr:last-child td {
+        border-bottom: none;
+    }
+
+    .comparison-check {
+        color: green;
+        font-size: 1.25rem;
+    }
+
+    .comparison-x {
+        color: red;
+        font-size: 1.25rem;
+    }
+
+    /* Projects Section */
+    .projects-section {
+        padding: 80px 0;
+    }
+
+    .project-card {
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+        margin-bottom: 30px;
+        background-color: white;
+        height: 100%;
+    }
+
+    .project-image {
+        height: 200px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .project-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+    }
+
+    .project-card:hover .project-image img {
+        transform: scale(1.1);
+    }
+
+    .project-info {
+        padding: 20px;
+    }
+
+    .project-info h4 {
+        margin-bottom: 10px;
+    }
+
+    /* CTA Section */
+    .cta-section {
+        padding: 80px 0;
+        background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+        color: white;
+        text-align: center;
+    }
+
+    .cta-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 1.5rem;
+    }
+
+    .cta-text {
+        max-width: 700px;
+        margin: 0 auto 2rem;
+        opacity: 0.9;
+    }
+
+    /* Dark mode adaptations */
+    body.dark-mode .feature-card,
+    body.dark-mode .project-card,
+    body.dark-mode .comparison-table {
+        background-color: #2a2c3e;
+    }
+
+    body.dark-mode .feature-icon {
+        background-color: #3a3d52;
+    }
+
+    body.dark-mode .features-section,
+    body.dark-mode .benefits-section,
+    body.dark-mode .comparison-section {
+        background-color: #222533;
+    }
+
+    body.dark-mode .comparison-table td {
+        border-color: #3a3d52;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Service Header -->
+<section class="service-header">
+    <div class="container">
+        <h1>Point of Sale (POS) Systems</h1>
+        <p class="lead">Custom POS solutions to streamline your business operations</p>
+    </div>
+</section>
+
+<!-- Service Intro -->
+<section class="service-intro">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 mb-4 mb-lg-0">
+                <div class="intro-image">
+                    <img src="{% static 'images/pos-system-intro.jpg' %}" alt="POS System" class="img-fluid">
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="intro-text">
+                    <h2>Modernize Your Business with a Custom POS System</h2>
+                    <p>In today's fast-paced business environment, an efficient point of sale (POS) system is essential for retail stores, restaurants, and other service-based businesses. At CloudLink_Devs, we develop customized POS solutions that streamline operations, improve customer experiences, and provide valuable business insights.</p>
+                    <p>Our POS systems are designed to meet the unique needs of your business, with features tailored to your industry and workflow. Whether you need a simple checkout solution or a comprehensive system with inventory management, customer tracking, and analytics, we have the expertise to deliver a solution that grows with your business.</p>
+                    <a href="{% url 'quotes:service_estimator' %}" class="btn btn-primary mt-3">Get a Free Quote</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="features-section">
+    <div class="container">
+        <div class="section-title text-center mb-5">
+            <h2>Key Features of Our POS Systems</h2>
+            <p>Comprehensive solutions to meet all your business needs</p>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-cash-register"></i>
+                    </div>
+                    <h3>Sales Processing</h3>
+                    <p>Fast and efficient checkout process with support for multiple payment methods.</p>
+                    <ul class="mt-3">
+                        <li>Credit/debit card processing</li>
+                        <li>Mobile payment support</li>
+                        <li>Cash management</li>
+                        <li>Receipt customization</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-boxes"></i>
+                    </div>
+                    <h3>Inventory Management</h3>
+                    <p>Track and manage your inventory in real-time to prevent stockouts and overstock situations.</p>
+                    <ul class="mt-3">
+                        <li>Real-time inventory tracking</li>
+                        <li>Automated reorder notifications</li>
+                        <li>Barcode scanning</li>
+                        <li>Supplier management</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>Customer Management</h3>
+                    <p>Build stronger customer relationships with detailed customer profiles and purchase history.</p>
+                    <ul class="mt-3">
+                        <li>Customer database</li>
+                        <li>Purchase history tracking</li>
+                        <li>Loyalty program integration</li>
+                        <li>Personalized marketing</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-bar"></i>
+                    </div>
+                    <h3>Reporting & Analytics</h3>
+                    <p>Gain valuable insights into your business performance with comprehensive reporting tools.</p>
+                    <ul class="mt-3">
+                        <li>Sales reports</li>
+                        <li>Inventory analysis</li>
+                        <li>Employee performance</li>
+                        <li>Custom report generation</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-user-shield"></i>
+                    </div>
+                    <h3>Employee Management</h3>
+                    <p>Manage employee schedules, permissions, and performance all in one system.</p>
+                    <ul class="mt-3">
+                        <li>Employee scheduling</li>
+                        <li>Time tracking</li>
+                        <li>Role-based permissions</li>
+                        <li>Performance monitoring</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-cloud"></i>
+                    </div>
+                    <h3>Cloud Integration</h3>
+                    <p>Access your business data from anywhere with secure cloud-based storage and synchronization.</p>
+                    <ul class="mt-3">
+                        <li>Real-time syncing</li>
+                        <li>Remote access</li>
+                        <li>Automatic backups</li>
+                        <li>Multi-location support</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Industries Section -->
+<section class="industries-section">
+    <div class="container">
+        <div class="section-title text-center mb-5">
+            <h2>POS Solutions for Every Industry</h2>
+            <p>Tailored systems for different business types</p>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="industry-card">
+                    <img src="{% static 'images/industry-retail.jpg' %}" alt="Retail" class="industry-image">
+                    <div class="industry-overlay">
+                        <h3>Retail</h3>
+                        <p>Streamline checkout, manage inventory, and enhance customer experiences for retail stores.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="industry-card">
+                    <img src="{% static 'images/industry-restaurant.jpg' %}" alt="Restaurant" class="industry-image">
+                    <div class="industry-overlay">
+                        <h3>Restaurant</h3>
+                        <p>Manage orders, tables, kitchen communication, and delivery for restaurants and cafes.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="industry-card">
+                    <img src="{% static 'images/industry-hospitality.jpg' %}" alt="Hospitality" class="industry-image">
+                    <div class="industry-overlay">
+                        <h3>Hospitality</h3>
+                        <p>Manage bookings, guest services, and amenities for hotels and hospitality businesses.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="industry-card">
+                    <img src="{% static 'images/industry-salon.jpg' %}" alt="Salon & Spa" class="industry-image">
+                    <div class="industry-overlay">
+                        <h3>Salon & Spa</h3>
+                        <p>Handle appointments, services, and customer management for beauty and wellness businesses.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="industry-card">
+                    <img src="{% static 'images/industry-healthcare.jpg' %}" alt="Healthcare" class="industry-image">
+                    <div class="industry-overlay">
+                        <h3>Healthcare</h3>
+                        <p>Manage patient appointments, billing, and healthcare services with HIPAA compliance.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="industry-card">
+                    <img src="{% static 'images/industry-retail-specialized.jpg' %}" alt="Specialized Retail" class="industry-image">
+                    <div class="industry-overlay">
+                        <h3>Specialized Retail</h3>
+                        <p>Custom solutions for specialty shops, such as bakeries, butchers, and craft stores.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Benefits Section -->
+<section class="benefits-section">
+    <div class="container">
+        <div class="section-title text-center mb-5">
+            <h2>Benefits of Our POS Systems</h2>
+            <p>How our solutions help your business grow</p>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="benefit-item">
+                    <div class="benefit-icon">
+                        <i class="fas fa-tachometer-alt"></i>
+                    </div>
+                    <div class="benefit-content">
+                        <h4>Increased Efficiency</h4>
+                        <p>Streamline your operations with faster checkout processes, automated inventory management, and simplified reporting, allowing your staff to focus on customer service.</p>
+                    </div>
+                </div>
+
+                <div class="benefit-item">
+                    <div class="benefit-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="benefit-content">
+                        <h4>Better Decision Making</h4>
+                        <p>Gain valuable insights into sales trends, inventory performance, and customer behavior with comprehensive reporting and analytics tools.</p>
+                    </div>
+                </div>
+
+                <div class="benefit-item">
+                    <div class="benefit-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="benefit-content">
+                        <h4>Enhanced Customer Experience</h4>
+                        <p>Provide faster service, personalized recommendations, and loyalty rewards to improve customer satisfaction and encourage repeat business.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="benefit-item">
+                    <div class="benefit-icon">
+                        <i class="fas fa-dollar-sign"></i>
+                    </div>
+                    <div class="benefit-content">
+                        <h4>Reduced Costs</h4>
+                        <p>Minimize inventory shrinkage, prevent over-ordering, and optimize staffing to reduce operational costs and increase profitability.</p>
+                    </div>
+                </div>
+
+                <div class="benefit-item">
+                    <div class="benefit-icon">
+                        <i class="fas fa-expand-arrows-alt"></i>
+                    </div>
+                    <div class="benefit-content">
+                        <h4>Scalability</h4>
+                        <p>Our systems grow with your business, supporting additional locations, expanded inventory, and new features without the need for complete system overhauls.</p>
+                    </div>
+                </div>
+
+                <div class="benefit-item">
+                    <div class="benefit-icon">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <div class="benefit-content">
+                        <h4>Security & Compliance</h4>
+                        <p>Protect your business and customer data with secure payment processing, user permissions, and compliance with industry regulations.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Hardware Section -->
+<section class="hardware-section">
+    <div class="container">
+        <div class="section-title text-center mb-5">
+            <h2>Compatible Hardware</h2>
+            <p>Our POS systems work with a variety of hardware options</p>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-3 col-md-4 col-6">
+                <div class="hardware-item">
+                    <div class="hardware-icon">
+                        <i class="fas fa-desktop"></i>
+                    </div>
+                    <h4>Touchscreen Terminals</h4>
+                    <p>User-friendly interfaces on responsive touchscreens</p>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-4 col-6">
+                <div class="hardware-item">
+                    <div class="hardware-icon">
+                        <i class="fas fa-print"></i>
+                    </div>
+                    <h4>Receipt Printers</h4>
+                    <p>Fast, reliable thermal and impact printers</p>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-4 col-6">
+                <div class="hardware-item">
+                    <div class="hardware-icon">
+                        <i class="fas fa-barcode"></i>
+                    </div>
+                    <h4>Barcode Scanners</h4>
+                    <p>Efficient scanning for faster checkout</p>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-4 col-6">
+                <div class="hardware-item">
+                    <div class="hardware-icon">
+                        <i class="far fa-credit-card"></i>
+                    </div>
+                    <h4>Card Readers</h4>
+                    <p>Secure payment processing for all card types</p>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-4 col-6">
+                <div class="hardware-item">
+                    <div class="hardware-icon">
+                        <i class="fas fa-cash-register"></i>
+                    </div>
+                    <h4>Cash Drawers</h4>
+                    <p>Secure storage for cash transactions</p>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-4 col-6">
+                <div class="hardware-item">
+                    <div class="hardware-icon">
+                        <i class="fas fa-tablet-alt"></i>
+                    </div>
+                    <h4>Mobile Devices</h4>
+                    <p>Tablets and smartphones for mobile POS</p>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-4 col-6">
+                <div class="hardware-item">
+                    <div class="hardware-icon">
+                        <i class="fas fa-weight"></i>
+                    </div>
+                    <h4>Scales</h4>
+                    <p>Integrated scales for weight-based pricing</p>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-4 col-6">
+                <div class="hardware-item">
+                    <div class="hardware-icon">
+                        <i class="fas fa-wifi"></i>
+                    </div>
+                    <h4>Networking Equipment</h4>
+                    <p>Reliable connectivity for all components</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Comparison Section -->
+<section class="comparison-section">
+    <div class="container">
+        <div class="section-title text-center mb-5">
+            <h2>How We Compare</h2>
+            <p>See why our custom POS solutions stand out from the competition</p>
+        </div>
+
+        <div class="comparison-table">
+            <table class="table table-responsive">
+                <thead>
+                    <tr>
+                        <th>Features</th>
+                        <th>CloudLink_Devs POS</th>
+                        <th>Generic POS Systems</th>
+                        <th>Other Custom Solutions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Industry-Specific Features</td>
+                        <td><i class="fas fa-check comparison-check"></i></td>
+                        <td><i class="fas fa-times comparison-x"></i></td>
+                        <td><i class="fas fa-check comparison-check"></i></td>
+                    </tr>
+                    <tr>
+                        <td>Customizable Workflow</td>
+                        <td><i class="fas fa-check comparison-check"></i></td>
+                        <td><i class="fas fa-times comparison-x"></i></td>
+                        <td><i class="fas fa-check comparison-check"></i></td>
+                    </tr>
+                    <tr>
+                        <td>Integration with Existing Systems</td>
+                        <td><i class="fas fa-check comparison-check"></i></td>
+                        <td><i class="fas fa-times comparison-x"></i></td>
+                        <td><i class="fas fa-check comparison-check"></i></td>
+                    </tr>
+                    <tr>
+                        <td>Ongoing Support & Updates</td>
+                        <td><i class="fas fa-check comparison-check"></i></td>
+                        <td><i class="fas fa-check comparison-check"></i></td>
+                        <td><i class="fas fa-times comparison-x"></i></td>
+                    </tr>
+                    <tr>
+                        <td>Affordable Pricing</td>
+                        <td><i class="fas fa-check comparison-check"></i></td>
+                        <td><i class="fas fa-check comparison-check"></i></td>
+                        <td><i class="fas fa-times comparison-x"></i></td>
+                    </tr>
+                    <tr>
+                        <td>No Monthly Fees</td>
+                        <td><i class="fas fa-check comparison-check"></i></td>
+                        <td><i class="fas fa-times comparison-x"></i></td>
+                        <td><i class="fas fa-times comparison-x"></i></td>
+                    </tr>
+                    <tr>
+                        <td>Hardware Flexibility</td>
+                        <td><i class="fas fa-check comparison-check"></i></td>
+                        <td><i class="fas fa-times comparison-x"></i></td>
+                        <td><i class="fas fa-check comparison-check"></i></td>
+                    </tr>
+                    <tr>
+                        <td>Dedicated Account Manager</td>
+                        <td><i class="fas fa-check comparison-check"></i></td>
+                        <td><i class="fas fa-times comparison-x"></i></td>
+                        <td><i class="fas fa-check comparison-check"></i></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+<!-- Projects Section -->
+<section class="projects-section">
+    <div class="container">
+        <div class="section-title text-center mb-5">
+            <h2>Our Recent POS Projects</h2>
+            <p>See how our POS solutions have helped businesses like yours</p>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="{% static 'images/project-pos-1.jpg' %}" alt="Restaurant POS">
+                    </div>
+                    <div class="project-info">
+                        <h4>Restaurant Management System</h4>
+                        <p>A comprehensive POS solution for a multi-location restaurant chain that integrated table management, kitchen display, and online ordering.</p>
+                        <a href="{% url 'portfolio:case_study' 7 %}" class="btn btn-sm btn-primary mt-2">View Case Study</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="{% static 'images/project-pos-2.jpg' %}" alt="Retail POS">
+                    </div>
+                    <div class="project-info">
+                        <h4>Retail Inventory System</h4>
+                        <p>A retail POS system with advanced inventory management, customer loyalty, and multi-store synchronization capabilities.</p>
+                        <a href="{% url 'portfolio:case_study' 8 %}" class="btn btn-sm btn-primary mt-2">View Case Study</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="{% static 'images/project-pos-3.jpg' %}" alt="Salon POS">
+                    </div>
+                    <div class="project-info">
+                        <h4>Salon & Spa Management</h4>
+                        <p>An appointment-based POS system for a beauty salon with staff scheduling, service management, and customer tracking.</p>
+                        <a href="{% url 'portfolio:case_study' 9 %}" class="btn btn-sm btn-primary mt-2">View Case Study</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center mt-4">
+            <a href="{% url 'portfolio:portfolio' %}" class="btn btn-primary">View All Projects</a>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta-section">
+    <div class="container">
+        <h2 class="cta-<h2 class="cta-title">Ready to Modernize Your Business?</h2>
+        <p class="cta-text">Contact us today for a free consultation and let's discuss how our POS system can help streamline your operations.</p>
+        <div class="cta-buttons">
+            <a href="{% url 'quotes:service_estimator' %}" class="btn btn-light btn-lg me-3">Get a Quote</a>
+            <a href="{% url 'core:contact' %}" class="btn btn-outline-light btn-lg">Contact Us</a>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Add animation classes on scroll
+        const animateElements = document.querySelectorAll('.feature-card, .industry-card, .benefit-item, .hardware-item, .project-card');
+
+        animateElements.forEach((element, index) => {
+            element.classList.add('animate-on-scroll');
+            element.dataset.animation = 'slide-up';
+            element.style.animationDelay = `${index * 0.1}s`;
+        });
+    });
+</script>
+{% endblock %}

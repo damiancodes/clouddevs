@@ -1,0 +1,880 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ post.title }} - CloudLink_Devs Blog{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* Blog Detail Header */
+    .blog-detail-header {
+        position: relative;
+        height: 500px;
+        color: white;
+        display: flex;
+        align-items: flex-end;
+    }
+
+    .blog-header-img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        z-index: -1;
+    }
+
+    .blog-header-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0.1) 100%);
+        z-index: -1;
+    }
+
+    .blog-header-content {
+        padding: 60px 0;
+        width: 100%;
+    }
+
+    .blog-title {
+        font-size: 2.5rem;
+        font-weight: 800;
+        margin-bottom: 20px;
+    }
+
+    .blog-meta {
+        display: flex;
+        flex-wrap: wrap;
+        margin-bottom: 15px;
+    }
+
+    .blog-meta-item {
+        margin-right: 30px;
+        display: flex;
+        align-items: center;
+    }
+
+    .blog-meta-item i {
+        margin-right: 10px;
+        font-size: 1.1rem;
+    }
+
+    .blog-categories {
+        margin-top: 20px;
+    }
+
+    .category-badge {
+        display: inline-block;
+        padding: 5px 15px;
+        background-color: rgba(255, 255, 255, 0.2);
+        border-radius: 20px;
+        font-size: 0.85rem;
+        margin-right: 10px;
+        color: white;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+    }
+
+    .category-badge:hover {
+        background-color: var(--primary-color);
+    }
+
+    /* Blog Content */
+    .blog-content-section {
+        padding: 80px 0;
+    }
+
+   .blog-content {
+        background-color: white;
+        padding: 40px;
+        border-radius: 10px;
+        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+        margin-bottom: 40px;
+    }
+
+    .blog-content img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 10px;
+        margin: 20px 0;
+    }
+
+    .blog-content h2, .blog-content h3, .blog-content h4 {
+        margin-top: 30px;
+        margin-bottom: 20px;
+        font-weight: 700;
+    }
+
+    .blog-content p {
+        margin-bottom: 20px;
+        line-height: 1.8;
+    }
+
+    .blog-content blockquote {
+        padding: 20px;
+        background-color: var(--light-gray);
+        border-left: 5px solid var(--primary-color);
+        margin: 20px 0;
+        font-style: italic;
+    }
+
+    .blog-content ul, .blog-content ol {
+        margin-bottom: 20px;
+        padding-left: 20px;
+    }
+
+    .blog-content li {
+        margin-bottom: 10px;
+    }
+
+    .blog-tags {
+        margin-top: 30px;
+    }
+
+    .tag-badge {
+        display: inline-block;
+        padding: 5px 15px;
+        background-color: var(--light-gray);
+        border-radius: 20px;
+        font-size: 0.85rem;
+        margin-right: 10px;
+        margin-bottom: 10px;
+        {#color: var(body-color);#}
+        text-decoration: none;
+        transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .tag-badge:hover {
+        background-color: var(--primary-color);
+        color: white;
+    }
+
+    /* Author Box */
+    .author-box {
+        display: flex;
+        background-color: var(--light-gray);
+        padding: 30px;
+        border-radius: 10px;
+        margin-bottom: 40px;
+    }
+
+    .author-avatar {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        overflow: hidden;
+        margin-right: 20px;
+    }
+
+    .author-avatar img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .author-info h4 {
+        font-size: 1.25rem;
+        font-weight: 700;
+        margin-bottom: 10px;
+    }
+
+    .author-bio {
+        margin-bottom: 15px;
+    }
+
+    .author-social a {
+        color: var(--text-color);
+        margin-right: 15px;
+        font-size: 1.1rem;
+        transition: color 0.3s ease;
+    }
+
+    .author-social a:hover {
+        color: var(--primary-color);
+    }
+
+    /* Comments Section */
+    .comments-section {
+        background-color: white;
+        padding: 40px;
+        border-radius: 10px;
+        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+        margin-bottom: 40px;
+    }
+
+    .comments-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin-bottom: 30px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #e3e6f0;
+    }
+
+    .comment {
+        margin-bottom: 30px;
+        padding-bottom: 30px;
+        border-bottom: 1px solid #e3e6f0;
+    }
+
+    .comment:last-child {
+        margin-bottom: 0;
+        padding-bottom: 0;
+        border-bottom: none;
+    }
+
+    .comment-header {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 15px;
+    }
+
+    .comment-author {
+        font-weight: 700;
+    }
+
+    .comment-date {
+        color: #858796;
+        font-size: 0.9rem;
+    }
+
+    .comment-content {
+        margin-bottom: 15px;
+    }
+
+    .comment-reply {
+        color: var(--primary-color);
+        font-weight: 600;
+        cursor: pointer;
+        transition: color 0.3s ease;
+    }
+
+    .comment-reply:hover {
+        color: var(--accent-color);
+    }
+
+    .reply {
+        margin-left: 50px;
+    }
+
+    /* Comment Form */
+    .comment-form {
+        background-color: white;
+        padding: 40px;
+        border-radius: 10px;
+        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+    }
+
+    .comment-form-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin-bottom: 30px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #e3e6f0;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-control {
+        border-radius: 5px;
+        border: 1px solid #d1d3e2;
+        padding: 10px 15px;
+    }
+
+    .form-control:focus {
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 0.25rem rgba(0, 102, 204, 0.25);
+    }
+
+    /* Related Posts */
+    .related-posts-section {
+        padding: 40px 0;
+    }
+
+    .related-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin-bottom: 30px;
+        text-align: center;
+    }
+
+    .related-post-card {
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+        margin-bottom: 30px;
+        background-color: white;
+        height: 100%;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .related-post-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 1rem 3rem rgba(58, 59, 69, 0.175);
+    }
+
+    .related-post-img {
+        height: 180px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .related-post-img img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+    }
+
+    .related-post-card:hover .related-post-img img {
+        transform: scale(1.1);
+    }
+
+    .related-post-content {
+        padding: 20px;
+    }
+
+    .related-post-title {
+        font-size: 1.1rem;
+        font-weight: 700;
+        margin-bottom: 10px;
+    }
+
+    .related-post-title a {
+        color: var(--text-color);
+        text-decoration: none;
+    }
+
+    .related-post-meta {
+        color: #858796;
+        font-size: 0.85rem;
+        margin-bottom: 10px;
+    }
+
+    /* Sidebar */
+    .blog-sidebar {
+        position: sticky;
+        top: 30px;
+    }
+
+    .sidebar-widget {
+        background-color: white;
+        border-radius: 10px;
+        padding: 25px;
+        margin-bottom: 30px;
+        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+    }
+
+    .sidebar-title {
+        font-size: 1.25rem;
+        font-weight: 700;
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #e3e6f0;
+    }
+
+    .search-form .form-control {
+        border-radius: 50px;
+        padding-left: 20px;
+    }
+
+    .search-form .btn {
+        border-radius: 50px;
+        padding: 10px 20px;
+    }
+
+    .category-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .category-list li {
+        margin-bottom: 10px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #e3e6f0;
+    }
+
+    .category-list li:last-child {
+        margin-bottom: 0;
+        padding-bottom: 0;
+        border-bottom: none;
+    }
+
+    .category-list a {
+        display: flex;
+        justify-content: space-between;
+      color: var(--body-color);
+
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+
+    .category-list a:hover {
+        color: var(--primary-color);
+    }
+
+    .category-count {
+        background-color: var(--light-gray);
+        color: var(--body-color);
+
+
+        padding: 2px 8px;
+        border-radius: 10px;
+        font-size: 0.8rem;
+    }
+
+    .recent-post {
+        display: flex;
+        margin-bottom: 15px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #e3e6f0;
+    }
+
+    .recent-post:last-child {
+        margin-bottom: 0;
+        padding-bottom: 0;
+        border-bottom: none;
+    }
+
+    .recent-post-img {
+        width: 60px;
+        height: 60px;
+        border-radius: 5px;
+        overflow: hidden;
+        margin-right: 15px;
+    }
+
+    .recent-post-img img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .recent-post-info h5 {
+        font-size: 0.95rem;
+        font-weight: 600;
+        margin-bottom: 5px;
+    }
+
+    .recent-post-info h5 a {
+        color: var(--text-color);
+        text-decoration: none;
+    }
+
+    .recent-post-info .post-date {
+        font-size: 0.8rem;
+        color: #858796;
+    }
+
+    .tag-cloud {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    /* Dark mode adaptations */
+    body.dark-mode .blog-content,
+    body.dark-mode .comments-section,
+    body.dark-mode .comment-form,
+    body.dark-mode .related-post-card,
+    body.dark-mode .sidebar-widget {
+        background-color: #2a2c3e;
+    }
+
+    body.dark-mode .blog-content h2,
+    body.dark-mode .blog-content h3,
+    body.dark-mode .blog-content h4,
+    body.dark-mode .comments-title,
+    body.dark-mode .comment-form-title,
+    body.dark-mode .related-title,
+    body.dark-mode .related-post-title a,
+    body.dark-mode .sidebar-title {
+        color: #f8f9fc;
+    }
+
+    body.dark-mode .blog-content blockquote {
+        background-color: #222533;
+    }
+
+    body.dark-mode .author-box {
+        background-color: #222533;
+    }
+
+    body.dark-mode .comments-title,
+    body.dark-mode .comment-form-title,
+    body.dark-mode .sidebar-title {
+        border-color: #3a3d52;
+    }
+
+    body.dark-mode .comment {
+        border-color: #3a3d52;
+    }
+
+    body.dark-mode .comment-date,
+    body.dark-mode .related-post-meta {
+        color: #c2c5d3;
+    }
+
+    body.dark-mode .tag-badge {
+        background-color: #3a3d52;
+        color: #f8f9fc;
+    }
+
+    body.dark-mode .form-control {
+        background-color: #3a3d52;
+        border-color: #3a3d52;
+        color: #f8f9fc;
+    }
+
+    body.dark-mode .category-list li {
+        border-color: #3a3d52;
+    }
+
+    body.dark-mode .category-list a {
+        color: #c2c5d3;
+    }
+
+    body.dark-mode .category-count {
+        background-color: #222533;
+    }
+
+    body.dark-mode .recent-post {
+        border-color: #3a3d52;
+    }
+
+    body.dark-mode .recent-post-info h5 a {
+        color: #f8f9fc;
+    }
+
+    body.dark-mode .recent-post-info .post-date {
+        color: #c2c5d3;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Blog Detail Header -->
+<section class="blog-detail-header">
+    {% if post.featured_image %}
+        <img src="{{ post.featured_image.url }}" alt="{{ post.title }}" class="blog-header-img">
+    {% else %}
+        <img src="{% static 'images/blog-placeholder.jpg' %}" alt="{{ post.title }}" class="blog-header-img">
+    {% endif %}
+    <div class="blog-header-overlay"></div>
+    <div class="container">
+        <div class="blog-header-content">
+            <h1 class="blog-title">{{ post.title }}</h1>
+            <div class="blog-meta">
+                <span class="blog-meta-item">
+                    <i class="far fa-user"></i> {{ post.author.get_full_name|default:post.author.username }}
+                </span>
+                <span class="blog-meta-item">
+                    <i class="far fa-calendar"></i> {{ post.published_at|date:"F d, Y" }}
+                </span>
+                <span class="blog-meta-item">
+                    <i class="far fa-clock"></i> {{ post.reading_time }} min read
+                </span>
+                <span class="blog-meta-item">
+                    <i class="far fa-eye"></i> {{ post.view_count }} views
+                </span>
+            </div>
+            <div class="blog-categories">
+                {% for category in post.categories.all %}
+                    <a href="{{ category.get_absolute_url }}" class="category-badge">{{ category.name }}</a>
+                {% endfor %}
+            </div>
+        </div>
+        </div>
+    </div>
+</section>
+
+<!-- Blog Content Section -->
+<section class="blog-content-section">
+    <div class="container">
+        <div class="row">
+            <!-- Main Content -->
+            <div class="col-lg-8">
+                <!-- Blog Content -->
+                <div class="blog-content">
+                    {{ post.content|safe }}
+
+                    <!-- Tags -->
+                    {% if post.tags.exists %}
+                        <div class="blog-tags">
+                            <strong><i class="fas fa-tags me-2"></i>Tags:</strong>
+                            {% for tag in post.tags.all %}
+                                <a href="{{ tag.get_absolute_url }}" class="tag-badge">{{ tag.name }}</a>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <!-- Author Box -->
+                <div class="author-box">
+                    <div class="author-avatar">
+                        {% if post.author.profile.avatar %}
+                            <img src="{{ post.author.profile.avatar.url }}" alt="{{ post.author.get_full_name|default:post.author.username }}">
+                        {% else %}
+                            <img src="{% static 'images/user-placeholder.jpg' %}" alt="{{ post.author.get_full_name|default:post.author.username }}">
+                        {% endif %}
+                    </div>
+                    <div class="author-info">
+                        <h4>{{ post.author.get_full_name|default:post.author.username }}</h4>
+                        <div class="author-bio">
+                            {% if post.author.profile.bio %}
+                                {{ post.author.profile.bio }}
+                            {% else %}
+                                A passionate writer at CloudLink_Devs.
+                            {% endif %}
+                        </div>
+                        <div class="author-social">
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                            <a href="#"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#"><i class="fab fa-github"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Comments Section -->
+                {% if comments %}
+                    <div class="comments-section">
+                        <h3 class="comments-title">Comments ({{ comment_count }})</h3>
+                        {% for comment in comments %}
+                            <div class="comment">
+                                <div class="comment-header">
+                                    <span class="comment-author">{{ comment.name }}</span>
+                                    <span class="comment-date">{{ comment.created_at|date:"F d, Y" }}</span>
+                                </div>
+                                <div class="comment-content">
+                                    <p>{{ comment.content }}</p>
+                                </div>
+                                <div class="comment-actions">
+                                    <span class="comment-reply" data-comment-id="{{ comment.id }}">Reply</span>
+                                </div>
+
+                                <!-- Reply Form (hidden by default) -->
+                                <div class="reply-form mb-3 mt-3 d-none" id="reply-form-{{ comment.id }}">
+                                    <form method="post" action="{% url 'blog:add_comment' post.slug %}">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="parent_id" value="{{ comment.id }}">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <input type="text" name="name" class="form-control" placeholder="Your Name" required>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <input type="email" name="email" class="form-control" placeholder="Your Email" required>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <textarea name="content" class="form-control" rows="3" placeholder="Your Reply" required></textarea>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Submit Reply</button>
+                                    </form>
+                                </div>
+
+                                <!-- Replies -->
+                                {% for reply in comment.replies.all %}
+                                    {% if reply.is_approved %}
+                                        <div class="reply">
+                                            <div class="comment-header">
+                                                <span class="comment-author">{{ reply.name }}</span>
+                                                <span class="comment-date">{{ reply.created_at|date:"F d, Y" }}</span>
+                                            </div>
+                                            <div class="comment-content">
+                                                <p>{{ reply.content }}</p>
+                                            </div>
+                                        </div>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+                <!-- Comment Form -->
+                <div class="comment-form">
+                    <h3 class="comment-form-title">Leave a Comment</h3>
+                    <form method="post" action="{% url 'blog:add_comment' post.slug %}">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="id_name">Name <span class="text-danger">*</span></label>
+                                    {{ comment_form.name }}
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="id_email">Email <span class="text-danger">*</span></label>
+                                    {{ comment_form.email }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="id_website">Website</label>
+                            {{ comment_form.website }}
+                        </div>
+                        <div class="form-group">
+                            <label for="id_content">Comment <span class="text-danger">*</span></label>
+                            {{ comment_form.content }}
+                        </div>
+                        <button type="submit" class="btn btn-primary">Post Comment</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Sidebar -->
+            <div class="col-lg-4">
+                <div class="blog-sidebar">
+                    <!-- Search Widget -->
+                    <div class="sidebar-widget">
+                        <h3 class="sidebar-title">Search</h3>
+                        <form action="{% url 'blog:blog_search' %}" method="get" class="search-form">
+                            {{ search_form.query }}
+                            <button type="submit" class="btn btn-primary w-100 mt-2">
+                                <i class="fas fa-search me-2"></i> Search
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- Categories Widget -->
+                    <div class="sidebar-widget">
+                        <h3 class="sidebar-title">Categories</h3>
+                        <ul class="category-list">
+                            {% for category in categories %}
+                                <li>
+                                    <a href="{{ category.get_absolute_url }}">
+                                        <span>{{ category.name }}</span>
+                                        <span class="category-count">{{ category.post_count }}</span>
+                                    </a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+
+                    <!-- Recent Posts Widget -->
+                    <div class="sidebar-widget">
+                        <h3 class="sidebar-title">Recent Posts</h3>
+                        {% for recent_post in recent_posts %}
+                            <div class="recent-post">
+                                <div class="recent-post-img">
+                                    {% if recent_post.featured_image %}
+                                        <img src="{{ recent_post.featured_image.url }}" alt="{{ recent_post.title }}">
+                                    {% else %}
+                                        <img src="{% static 'images/blog-placeholder.jpg' %}" alt="{{ recent_post.title }}">
+                                    {% endif %}
+                                </div>
+                                <div class="recent-post-info">
+                                    <h5><a href="{{ recent_post.get_absolute_url }}">{{ recent_post.title }}</a></h5>
+                                    <span class="post-date">{{ recent_post.published_at|date:"M d, Y" }}</span>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                    <!-- Tags Widget -->
+                    <div class="sidebar-widget">
+                        <h3 class="sidebar-title">Tags</h3>
+                        <div class="tag-cloud">
+                            {% for tag in tags %}
+                                <a href="{{ tag.get_absolute_url }}" class="tag-badge">{{ tag.name }}</a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Related Posts -->
+        {% if related_posts %}
+            <div class="related-posts-section">
+                <h3 class="related-title">Related Posts</h3>
+                <div class="row">
+                    {% for related in related_posts %}
+                        <div class="col-md-4">
+                            <div class="related-post-card">
+                                <div class="related-post-img">
+                                    {% if related.featured_image %}
+                                        <img src="{{ related.featured_image.url }}" alt="{{ related.title }}">
+                                    {% else %}
+                                        <img src="{% static 'images/blog-placeholder.jpg' %}" alt="{{ related.title }}">
+                                    {% endif %}
+                                </div>
+                                <div class="related-post-content">
+                                    <h3 class="related-post-title">
+                                        <a href="{{ related.get_absolute_url }}">{{ related.title }}</a>
+                                    </h3>
+                                    <div class="related-post-meta">
+                                        <span><i class="far fa-calendar me-1"></i> {{ related.published_at|date:"M d, Y" }}</span>
+                                    </div>
+                                    <a href="{{ related.get_absolute_url }}" class="btn btn-primary btn-sm">Read More</a>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Reply functionality
+        const replyLinks = document.querySelectorAll('.comment-reply');
+
+        replyLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                const commentId = this.dataset.commentId;
+                const replyForm = document.getElementById('reply-form-' + commentId);
+
+                // Toggle the reply form
+                if (replyForm.classList.contains('d-none')) {
+                    // Hide all other reply forms first
+                    document.querySelectorAll('.reply-form').forEach(form => {
+                        form.classList.add('d-none');
+                    });
+
+                    // Show this reply form
+                    replyForm.classList.remove('d-none');
+                } else {
+                    replyForm.classList.add('d-none');
+                }
+            });
+        });
+
+        // Social share functionality
+        const shareButtons = document.querySelectorAll('.social-share-btn');
+
+        shareButtons.forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+
+                const url = this.getAttribute('href');
+                window.open(url, 'share-window', 'height=450, width=550, top=' + (window.innerHeight / 2 - 225) + ', left=' + (window.innerWidth / 2 - 275));
+            });
+        });
+
+        // Add animation classes on scroll
+        const animateElements = document.querySelectorAll('.blog-content, .author-box, .comments-section, .comment-form, .related-post-card, .sidebar-widget');
+
+        animateElements.forEach((element, index) => {
+            element.classList.add('animate-on-scroll');
+            element.dataset.animation = 'slide-up';
+            element.style.animationDelay = `${index * 0.1}s`;
+        });
+    });
+</script>
+{% endblock %}
