@@ -1,0 +1,685 @@
+{% extends 'client_portal/base.html' %}
+{% load static %}
+
+{% block title %}Admin - Client: {{ client.full_name }}{% endblock %}
+
+{% block extra_css %}
+<style>
+    :root {
+        /* Using your established color scheme */
+        --beige-color: #f5eadb;
+        --amber-color: #c1954a;
+        --dark-amber: #9e7a39;
+        --light-amber: #d4b06a;
+        --off-white: #faf7f2;
+        --black: #212121;
+        --dark-gray: #333333;
+        --light-gray: #f0f0f0;
+    }
+
+    .client-header {
+        padding: 30px 0;
+        background-color: var(--beige-color);
+        margin-bottom: 30px;
+    }
+
+    .client-title {
+        margin-bottom: 10px;
+    }
+
+    .client-title h1 {
+        font-weight: 700;
+        margin-bottom: 10px;
+        color: var(--dark-gray);
+    }
+
+    .client-status {
+        display: inline-block;
+        padding: 5px 15px;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        margin-left: 10px;
+    }
+
+    .status-active {
+        background-color: rgba(28, 200, 138, 0.1);
+        color: #1cc88a;
+    }
+
+    .status-inactive {
+        background-color: rgba(231, 74, 59, 0.1);
+        color: #e74a3b;
+    }
+
+    .admin-card {
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+        margin-bottom: 30px;
+    }
+
+    .admin-card-header {
+        padding: 15px 20px;
+        border-bottom: 1px solid #e3e6f0;
+        font-weight: 700;
+        background-color: var(--beige-color);
+        border-radius: 10px 10px 0 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .admin-card-body {
+        padding: 20px;
+    }
+
+    .profile-detail {
+        margin-bottom: 20px;
+    }
+
+    .detail-label {
+        font-weight: 600;
+        color: var(--dark-gray);
+        margin-bottom: 5px;
+    }
+
+    .client-nav {
+        margin-bottom: 30px;
+    }
+
+    .client-nav .nav-link {
+        color: var(--dark-gray);
+        padding: 10px 15px;
+        border-radius: 5px;
+        transition: all 0.3s ease;
+    }
+
+    .client-nav .nav-link:hover {
+        background-color: var(--light-gray);
+    }
+
+    .client-nav .nav-link.active {
+        background-color: var(--amber-color);
+        color: white;
+    }
+
+    .tab-content {
+        padding-top: 20px;
+    }
+
+    .project-card, .invoice-card {
+        border: 1px solid #e3e6f0;
+        border-radius: 10px;
+        margin-bottom: 20px;
+        transition: all 0.3s ease;
+    }
+
+    .project-card:hover, .invoice-card:hover {
+        box-shadow: 0 0.5rem 1rem 0 rgba(58, 59, 69, 0.15);
+        transform: translateY(-5px);
+    }
+
+    .project-card-header, .invoice-card-header {
+        padding: 15px 20px;
+        border-bottom: 1px solid #e3e6f0;
+        background-color: var(--light-gray);
+        border-radius: 10px 10px 0 0;
+    }
+
+    .project-card-body, .invoice-card-body {
+        padding: 20px;
+    }
+
+    .project-status, .invoice-status {
+        display: inline-block;
+        padding: 3px 10px;
+        border-radius: 15px;
+        font-size: 0.75rem;
+        margin-left: 10px;
+    }
+
+    .status-planning, .status-sent {
+        background-color: rgba(193, 149, 74, 0.1);
+        color: var(--amber-color);
+    }
+
+    .status-in-progress {
+        background-color: rgba(54, 185, 204, 0.1);
+        color: #36b9cc;
+    }
+
+    .status-on-hold {
+        background-color: rgba(246, 194, 62, 0.1);
+        color: #f6c23e;
+    }
+
+    .status-completed, .status-paid {
+        background-color: rgba(28, 200, 138, 0.1);
+        color: #1cc88a;
+    }
+
+    .status-cancelled {
+        background-color: rgba(108, 117, 125, 0.1);
+        color: #6c757d;
+    }
+
+    .status-overdue {
+        background-color: rgba(231, 74, 59, 0.1);
+        color: #e74a3b;
+    }
+
+    .invoice-amount {
+        font-weight: 700;
+        font-size: 1.2rem;
+    }
+
+    .message-card {
+        border: 1px solid #e3e6f0;
+        border-radius: 10px;
+        margin-bottom: 15px;
+    }
+
+    .message-card-header {
+        padding: 15px;
+        border-bottom: 1px solid #e3e6f0;
+        background-color: var(--light-gray);
+        border-radius: 10px 10px 0 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .message-card-body {
+        padding: 15px;
+    }
+
+    .message-from {
+        font-weight: 600;
+        color: var(--dark-gray);
+    }
+
+    .message-date {
+        color: #858796;
+        font-size: 0.9rem;
+    }
+
+    .message-indicator {
+        display: inline-block;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        margin-right: 5px;
+    }
+
+    .message-from-client {
+        background-color: var(--amber-color);
+    }
+
+    .message-from-staff {
+        background-color: #36b9cc;
+    }
+
+    .message-unread {
+        font-weight: 700;
+    }
+
+    .summarize-numbers {
+        margin-bottom: 20px;
+    }
+
+    .number-item {
+        text-align: center;
+        padding: 15px;
+        background-color: var(--light-gray);
+        border-radius: 10px;
+        margin-bottom: 15px;
+    }
+
+    .number-value {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--dark-gray);
+    }
+
+    .number-label {
+        color: #858796;
+        font-size: 0.9rem;
+    }
+
+    /* Button styles */
+    .btn-primary {
+        background-color: var(--amber-color);
+        border-color: var(--amber-color);
+        color: white;
+    }
+
+    .btn-primary:hover {
+        background-color: var(--dark-amber);
+        border-color: var(--dark-amber);
+    }
+
+    .btn-outline-primary {
+        color: var(--amber-color);
+        border-color: var(--amber-color);
+    }
+
+    .btn-outline-primary:hover {
+        background-color: var(--amber-color);
+        border-color: var(--amber-color);
+        color: white;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Client Header -->
+<section class="client-header">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center">
+            <div class="client-title">
+                <h1>
+                    {{ client.full_name }}
+                    <span class="client-status {% if client.is_active %}status-active{% else %}status-inactive{% endif %}">
+                        {% if client.is_active %}Active{% else %}Inactive{% endif %}
+                    </span>
+                </h1>
+                <p>{{ client.company_name }}</p>
+            </div>
+            <div>
+                <a href="{% url 'admin:client_portal_client_change' client.id %}" class="btn btn-primary me-2">
+                    <i class="fas fa-edit me-1"></i> Edit Client
+                </a>
+                <a href="{% url 'client_portal:admin_clients' %}" class="btn btn-outline-primary">
+                    <i class="fas fa-arrow-left me-1"></i> Back to Clients
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Client Content -->
+<section class="client-content">
+    <div class="container">
+        <div class="row">
+            <!-- Left Column: Client Info -->
+            <div class="col-lg-4">
+                <!-- Client Profile -->
+                <div class="admin-card">
+                    <div class="admin-card-header">Client Profile</div>
+                    <div class="admin-card-body">
+                        <div class="profile-detail">
+                            <div class="detail-label">Full Name</div>
+                            <div>{{ client.full_name }}</div>
+                        </div>
+                        <div class="profile-detail">
+                            <div class="detail-label">Company</div>
+                            <div>{{ client.company_name|default:"Not provided" }}</div>
+                        </div>
+                        <div class="profile-detail">
+                            <div class="detail-label">Email</div>
+                            <div>{{ client.user.email }}</div>
+                        </div>
+                        <div class="profile-detail">
+                            <div class="detail-label">Phone</div>
+                            <div>{{ client.phone|default:"Not provided" }}</div>
+                        </div>
+                        <div class="profile-detail">
+                            <div class="detail-label">Address</div>
+                            <div>{{ client.address|default:"Not provided"|linebreaks }}</div>
+                        </div>
+                        <div class="profile-detail">
+                            <div class="detail-label">Website</div>
+                            <div>{{ client.website|default:"Not provided" }}</div>
+                        </div>
+                        <div class="profile-detail">
+                            <div class="detail-label">Joined</div>
+                            <div>{{ client.created_at|date:"F d, Y" }}</div>
+                        </div>
+                        <div class="profile-detail">
+                            <div class="detail-label">Last Updated</div>
+                            <div>{{ client.updated_at|date:"F d, Y" }}</div>
+                        </div>
+                        <div class="profile-detail">
+                            <div class="detail-label">Status</div>
+                            <div>
+                                <span class="client-status {% if client.is_active %}status-active{% else %}status-inactive{% endif %}">
+                                    {% if client.is_active %}Active{% else %}Inactive{% endif %}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Financial Summary -->
+                <div class="admin-card">
+                    <div class="admin-card-header">Financial Summary</div>
+                    <div class="admin-card-body">
+                        <div class="summarize-numbers">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="number-item">
+                                        <div class="number-value">${{ total_invoiced|floatformat:2 }}</div>
+                                        <div class="number-label">Total Invoiced</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="number-item">
+                                        <div class="number-value">${{ total_paid|floatformat:2 }}</div>
+                                        <div class="number-label">Total Paid</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="number-item">
+                                        <div class="number-value">${{ balance_due|floatformat:2 }}</div>
+                                        <div class="number-label">Balance Due</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="number-item">
+                                        <div class="number-value">{{ invoices|length }}</div>
+                                        <div class="number-label">Invoices</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="d-grid gap-2 mt-4">
+                            <a href="{% url 'client_portal:admin_create_invoice' %}?client={{ client.id }}" class="btn btn-primary">
+                                <i class="fas fa-file-invoice-dollar me-2"></i> Create Invoice
+                            </a>
+                            <a href="{% url 'client_portal:admin_record_payment' %}?client={{ client.id }}" class="btn btn-outline-primary">
+                                <i class="fas fa-money-bill-wave me-2"></i> Record Payment
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="admin-card">
+                    <div class="admin-card-header">Quick Actions</div>
+                    <div class="admin-card-body">
+                        <div class="d-grid gap-2">
+                            <a href="{% url 'client_portal:admin_create_project' %}?client={{ client.id }}" class="btn btn-primary">
+                                <i class="fas fa-folder-plus me-2"></i> Add New Project
+                            </a>
+                            <button type="button" class="btn btn-outline-primary" class="btn btn-outline-primary">
+                                <i class="fas fa-envelope me-2"></i> Send Message
+                            </button>
+                            <a href="{% url 'admin:auth_user_change' client.user.id %}" class="btn btn-outline-primary">
+                                <i class="fas fa-user-cog me-2"></i> Manage User Account
+                            </a>
+                            {% if client.is_active %}
+                            <button type="button" class="btn btn-outline-danger">
+                                <i class="fas fa-user-times me-2"></i> Deactivate Client
+                            </button>
+                            {% else %}
+                            <button type="button" class="btn btn-outline-success">
+                                <i class="fas fa-user-check me-2"></i> Activate Client
+                            </button>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: Tabs with Projects, Invoices and Messages -->
+            <div class="col-lg-8">
+                <!-- Navigation Tabs -->
+                <ul class="nav nav-pills client-nav" id="clientTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="projects-tab" data-bs-toggle="tab" data-bs-target="#projects" type="button" role="tab" aria-controls="projects" aria-selected="true">
+                            Projects ({{ projects|length }})
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="invoices-tab" data-bs-toggle="tab" data-bs-target="#invoices" type="button" role="tab" aria-controls="invoices" aria-selected="false">
+                            Invoices ({{ invoices|length }})
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="messages-tab" data-bs-toggle="tab" data-bs-target="#messages" type="button" role="tab" aria-controls="messages" aria-selected="false">
+                            Messages ({{ messages|length }})
+                        </button>
+                    </li>
+                </ul>
+
+                <!-- Tab Content -->
+                <div class="tab-content" id="clientTabContent">
+                    <!-- Projects Tab -->
+                    <div class="tab-pane fade show active" id="projects" role="tabpanel" aria-labelledby="projects-tab">
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <h4>Client Projects</h4>
+                            <a href="{% url 'client_portal:admin_create_project' %}?client={{ client.id }}" class="btn btn-primary">
+                                <i class="fas fa-plus me-2"></i> Add Project
+                            </a>
+                        </div>
+
+                        {% if projects %}
+                            {% for project in projects %}
+                            <div class="project-card">
+                                <div class="project-card-header d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h5 class="mb-0">{{ project.title }}</h5>
+                                        <span class="project-status status-{{ project.status }}">{{ project.get_status_display }}</span>
+                                    </div>
+                                    <div>
+                                        <span class="badge bg-primary">{{ project.completion_percentage }}% Complete</span>
+                                    </div>
+                                </div>
+                                <div class="project-card-body">
+                                    <div class="row mb-3">
+                                        <div class="col-md-6">
+                                            <div class="detail-label">Start Date</div>
+                                            <div>{{ project.start_date|date:"M d, Y" }}</div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="detail-label">End Date</div>
+                                            <div>{{ project.end_date|date:"M d, Y"|default:"Not set" }}</div>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="col-md-6">
+                                            <div class="detail-label">Budget</div>
+                                            <div>${{ project.budget|floatformat:2 }}</div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="detail-label">Tasks</div>
+                                            <div>{{ project.tasks.count }} ({{ project.tasks.filter(is_completed=True)|length }} Completed)</div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <div class="detail-label">Description</div>
+                                        <div>{{ project.description|truncatewords:30 }}</div>
+                                    </div>
+                                    <div class="d-flex justify-content-between">
+                                        <div>
+                                            <a href="{% url 'client_portal:project_detail' pk=project.id %}" class="btn btn-primary">
+                                                <i class="fas fa-eye me-1"></i> View Details
+                                            </a>
+                                        </div>
+                                        <div>
+                                            <a href="{% url 'admin:client_portal_project_change' project.id %}" class="btn btn-outline-primary me-2">
+                                                <i class="fas fa-edit me-1"></i> Edit
+                                            </a>
+                                            <a href="{% url 'client_portal:admin_create_invoice' %}?project={{ project.id }}" class="btn btn-outline-primary">
+                                                <i class="fas fa-file-invoice-dollar me-1"></i> Invoice
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        {% else %}
+                            <div class="alert alert-info">
+                                No projects found for this client. Use the "Add Project" button to create one.
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Invoices Tab -->
+                    <div class="tab-pane fade" id="invoices" role="tabpanel" aria-labelledby="invoices-tab">
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <h4>Client Invoices</h4>
+                            <a href="{% url 'client_portal:admin_create_invoice' %}?client={{ client.id }}" class="btn btn-primary">
+                                <i class="fas fa-plus me-2"></i> Create Invoice
+                            </a>
+                        </div>
+
+                        {% if invoices %}
+                            {% for invoice in invoices %}
+                            <div class="invoice-card">
+                                <div class="invoice-card-header d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h5 class="mb-0">Invoice #{{ invoice.invoice_number }}</h5>
+                                        <span class="invoice-status status-{{ invoice.status }}">{{ invoice.get_status_display }}</span>
+                                    </div>
+                                    <div class="invoice-amount">
+                                        ${{ invoice.total|floatformat:2 }}
+                                    </div>
+                                </div>
+                                <div class="invoice-card-body">
+                                    <div class="row mb-3">
+                                        <div class="col-md-4">
+                                            <div class="detail-label">Issue Date</div>
+                                            <div>{{ invoice.issue_date|date:"M d, Y" }}</div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="detail-label">Due Date</div>
+                                            <div>{{ invoice.due_date|date:"M d, Y" }}</div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="detail-label">Project</div>
+                                            <div>{{ invoice.project.title|default:"No Project" }}</div>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="col-md-4">
+                                            <div class="detail-label">Amount Paid</div>
+                                            <div>${{ invoice.amount_paid|floatformat:2 }}</div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="detail-label">Balance Due</div>
+                                            <div>${{ invoice.balance_due|floatformat:2 }}</div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="detail-label">Items</div>
+                                            <div>{{ invoice.items.count }} items</div>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-between">
+                                        <div>
+                                            <a href="{% url 'client_portal:invoice_detail' pk=invoice.id %}" class="btn btn-primary">
+                                                <i class="fas fa-eye me-1"></i> View Details
+                                            </a>
+                                        </div>
+                                        <div>
+                                            <a href="{% url 'admin:client_portal_invoice_change' invoice.id %}" class="btn btn-outline-primary me-2">
+                                                <i class="fas fa-edit me-1"></i> Edit
+                                            </a>
+                                            <a href="{% url 'client_portal:admin_record_payment' %}?invoice={{ invoice.id }}" class="btn btn-outline-primary">
+                                                <i class="fas fa-money-bill-wave me-1"></i> Record Payment
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        {% else %}
+                            <div class="alert alert-info">
+                                No invoices found for this client. Use the "Create Invoice" button to create one.
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Messages Tab -->
+                    <div class="tab-pane fade" id="messages" role="tabpanel" aria-labelledby="messages-tab">
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <h4>Client Messages</h4>
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#sendMessageModal">
+                                <i class="fas fa-paper-plane me-2"></i> Send Message
+                            </button>
+                        </div>
+
+                        {% if messages %}
+                            {% for message in messages %}
+                            <div class="message-card">
+                                <div class="message-card-header">
+                                    <div>
+                                        <span class="message-indicator message-from-{% if message.is_from_client %}client{% else %}staff{% endif %}"></span>
+                                        <span class="message-from">
+                                            {% if message.is_from_client %}From Client{% else %}From Staff{% endif %}
+                                        </span>
+                                        {% if not message.is_read %}
+                                        <span class="badge bg-danger ms-2">Unread</span>
+                                        {% endif %}
+                                    </div>
+                                    <div class="message-date">{{ message.created_at|date:"M d, Y g:i A" }}</div>
+                                </div>
+                                <div class="message-card-body">
+                                    <h5 class="{% if not message.is_read %}message-unread{% endif %}">{{ message.subject }}</h5>
+                                    <p>{{ message.content }}</p>
+                                    {% if message.is_from_client and not message.is_read %}
+                                    <div class="text-end">
+                                        <a href="{% url 'client_portal:mark_message_read' message_id=message.id %}" class="btn btn-sm btn-primary">
+                                            <i class="fas fa-check me-1"></i> Mark as Read
+                                        </a>
+                                    </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            {% endfor %}
+                        {% else %}
+                            <div class="alert alert-info">
+                                No messages found for this client. Use the "Send Message" button to start a conversation.
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Send Message Modal -->
+<div class="modal fade" id="sendMessageModal" tabindex="-1" aria-labelledby="sendMessageModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="sendMessageModalLabel">Send Message to {{ client.full_name }}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="{% url 'client_portal:send_message' %}" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="client_id" value="{{ client.id }}">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="subject" class="form-label">Subject</label>
+                        <input type="text" class="form-control" id="subject" name="subject" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="content" class="form-label">Message</label>
+                        <textarea class="form-control" id="content" name="content" rows="5" required></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Send Message</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    $(document).ready(function() {
+        // Initialize tooltips
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl)
+        });
+    });
+</script>
+{% endblock %}

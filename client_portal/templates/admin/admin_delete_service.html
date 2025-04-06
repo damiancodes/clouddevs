@@ -1,0 +1,75 @@
+{% extends "client_portal/base.html" %}
+{% load static %}
+
+{% block title %}Delete Service | Admin Panel{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Delete Service: {{ service.name }}</h1>
+        <a href="{% url 'client_portal:admin_services' %}" class="d-none d-sm-inline-block btn btn-secondary shadow-sm">
+            <i class="fas fa-arrow-left fa-sm text-white-50"></i> Back to Services
+        </a>
+    </div>
+
+    <!-- Delete Service Confirmation -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Confirm Deletion</h6>
+        </div>
+        <div class="card-body">
+            <div class="alert alert-danger">
+                <h4 class="alert-heading">Warning!</h4>
+                <p>You are about to delete the service "<strong>{{ service.name }}</strong>".</p>
+                <p>This action cannot be undone and will remove all associated features and data.</p>
+                <hr>
+                <p class="mb-0">Are you sure you want to proceed?</p>
+            </div>
+
+            <div class="card mb-4">
+                <div class="card-header">
+                    Service Details
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p><strong>Name:</strong> {{ service.name }}</p>
+                            <p><strong>Type:</strong> {{ service.get_service_type_display }}</p>
+                            <p><strong>Status:</strong> 
+                                {% if service.is_active %}
+                                    <span class="badge badge-success">Active</span>
+                                {% else %}
+                                    <span class="badge badge-secondary">Inactive</span>
+                                {% endif %}
+                            </p>
+                        </div>
+                        <div class="col-md-6">
+                            <p><strong>Created:</strong> {{ service.created_at|date:"M d, Y" }}</p>
+                            <p><strong>Updated:</strong> {{ service.updated_at|date:"M d, Y" }}</p>
+                            <p><strong>Features:</strong> {{ service.service_features.count }}</p>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-12">
+                            <p><strong>Description:</strong> {{ service.short_description }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <form method="post">
+                {% csrf_token %}
+                <div class="text-center">
+                    <a href="{% url 'client_portal:admin_services' %}" class="btn btn-secondary">
+                        <i class="fas fa-times"></i> Cancel
+                    </a>
+                    <button type="submit" class="btn btn-danger">
+                        <i class="fas fa-trash"></i> Delete Service
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,67 @@
+{% extends 'client_portal/emails/base_email.html' %}
+
+{% block email_title %}New Invoice #{{ invoice.invoice_number }} - CloudLink_Devs{% endblock %}
+
+{% block email_content %}
+<tr>
+    <td style="padding: 20px; text-align: left; color: #333333;">
+        <h2 style="margin-bottom: 20px; color: #c1954a;">New Invoice</h2>
+        
+        <p>Hello {{ client.full_name }},</p>
+        
+        <p>A new invoice has been created for your account. Here are the details:</p>
+        
+        <table width="100%" cellpadding="10" cellspacing="0" style="background-color: #f8f9fc; border-radius: 5px; margin: 20px 0;">
+            <tr>
+                <td colspan="2" style="text-align: center; padding: 20px;">
+                    <h3 style="color: #c1954a; margin: 0; font-size: 24px;">${{ invoice.total }}</h3>
+                    <p style="margin: 10px 0 0 0;">Invoice Total</p>
+                </td>
+            </tr>
+            <tr>
+                <td width="50%" style="border-top: 1px solid #e3e6f0;"><strong>Invoice Number:</strong></td>
+                <td width="50%" style="border-top: 1px solid #e3e6f0;">{{ invoice.invoice_number }}</td>
+            </tr>
+            <tr>
+                <td><strong>Issue Date:</strong></td>
+                <td>{{ invoice.issue_date }}</td>
+            </tr>
+            <tr>
+                <td><strong>Due Date:</strong></td>
+                <td>{{ invoice.due_date }}</td>
+            </tr>
+            {% if invoice.project %}
+            <tr>
+                <td><strong>Project:</strong></td>
+                <td>{{ invoice.project.title }}</td>
+            </tr>
+            {% endif %}
+            <tr>
+                <td><strong>Status:</strong></td>
+                <td>{{ invoice.get_status_display }}</td>
+            </tr>
+        </table>
+        
+        <table cellspacing="0" cellpadding="0" border="0" width="100%" style="margin-bottom: 20px;">
+            <tr>
+                <td align="center">
+                    <table cellspacing="0" cellpadding="0" border="0">
+                        <tr>
+                            <td style="border-radius: 5px; background-color: #c1954a; color: #ffffff; padding: 10px 25px;">
+                                <a href="{{ view_invoice_url }}" target="_blank" style="color: #ffffff; text-decoration: none; display: inline-block; font-family: Arial, sans-serif; font-size: 16px; font-weight: bold;">View Invoice</a>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        
+        <p>Please log in to your client portal to view the detailed invoice and make a payment. If you have any questions about this invoice, please don't hesitate to contact our support team.</p>
+        
+        <p>
+            Thank you for your business!<br/>
+            The CloudLink_Devs Team
+        </p>
+    </td>
+</tr>
+{% endblock %}

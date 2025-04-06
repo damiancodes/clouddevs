@@ -1,0 +1,49 @@
+{% extends 'client_portal/emails/base_email.html' %}
+
+{% block email_title %}Welcome to CloudLink_Devs!{% endblock %}
+
+{% block email_content %}
+<tr>
+    <td style="padding: 20px; text-align: left; color: #333333;">
+        <h2 style="margin-bottom: 20px; color: #c1954a;">Welcome to CloudLink_Devs!</h2>
+        
+        <p>Hello {{ user.first_name|default:user.username }},</p>
+        
+        <p>Thank you for registering with CloudLink_Devs! We're excited to work with you on your web development, app development, and POS system projects.</p>
+        
+        <p>Your account has been successfully created and you can now access our client portal using the credentials you provided during registration.</p>
+        
+        <p>Here's what you can do in your client portal:</p>
+        
+        <ul style="margin-bottom: 20px;">
+            <li>View and manage your projects</li>
+            <li>Review and pay invoices</li>
+            <li>Communicate with our team</li>
+            <li>Update your profile information</li>
+        </ul>
+        
+        <table cellspacing="0" cellpadding="0" border="0" width="100%" style="margin-bottom: 20px;">
+            <tr>
+                <td align="center">
+                    <table cellspacing="0" cellpadding="0" border="0">
+                        <tr>
+                            <td style="border-radius: 5px; background-color: #c1954a; color: #ffffff; padding: 10px 25px;">
+                                <a href="{{ login_url }}" target="_blank" style="color: #ffffff; text-decoration: none; display: inline-block; font-family: Arial, sans-serif; font-size: 16px; font-weight: bold;">Login to Your Account</a>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        
+        <p>If you have any questions or need assistance, please don't hesitate to contact our support team at <a href="mailto:support@cloudlinkdevs.com" style="color: #c1954a;">support@cloudlinkdevs.com</a> or call us at (123) 456-7890.</p>
+        
+        <p>We look forward to helping you bring your digital ideas to life!</p>
+        
+        <p>
+            Best regards,<br/>
+            The CloudLink_Devs Team
+        </p>
+    </td>
+</tr>
+{% endblock %}

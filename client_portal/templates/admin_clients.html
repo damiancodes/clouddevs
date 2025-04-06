@@ -1,0 +1,419 @@
+{% extends 'client_portal/base.html' %}
+{% load static %}
+
+{% block title %}Admin - Clients Management{% endblock %}
+
+{% block extra_css %}
+<style>
+    :root {
+        /* Using your established color scheme */
+        --beige-color: #f5eadb;
+        --amber-color: #c1954a;
+        --dark-amber: #9e7a39;
+        --light-amber: #d4b06a;
+        --off-white: #faf7f2;
+        --black: #212121;
+        --dark-gray: #333333;
+        --light-gray: #f0f0f0;
+    }
+
+    .admin-header {
+        padding: 30px 0;
+        background-color: var(--beige-color);
+        margin-bottom: 30px;
+    }
+
+    .admin-title {
+        margin-bottom: 20px;
+    }
+
+    .admin-title h1 {
+        font-weight: 700;
+        margin-bottom: 10px;
+        color: var(--dark-gray);
+    }
+
+    .client-card {
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+        margin-bottom: 20px;
+        transition: all 0.3s ease;
+    }
+
+    .client-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 0.5rem 2rem 0 rgba(58, 59, 69, 0.25);
+    }
+
+    .client-header {
+        padding: 20px;
+        border-bottom: 1px solid #e3e6f0;
+        background-color: var(--beige-color);
+        border-radius: 10px 10px 0 0;
+    }
+
+    .client-name {
+        font-weight: 700;
+        font-size: 1.2rem;
+        margin-bottom: 5px;
+    }
+
+    .client-company {
+        color: var(--dark-gray);
+    }
+
+    .client-status {
+        display: inline-block;
+        padding: 3px 10px;
+        border-radius: 15px;
+        font-size: 0.75rem;
+        margin-left: 10px;
+    }
+
+    .status-active {
+        background-color: rgba(28, 200, 138, 0.1);
+        color: #1cc88a;
+    }
+
+    .status-inactive {
+        background-color: rgba(231, 74, 59, 0.1);
+        color: #e74a3b;
+    }
+
+    .client-body {
+        padding: 20px;
+    }
+
+    .client-info {
+        margin-bottom: 15px;
+    }
+
+    .client-info-label {
+        font-weight: 600;
+        color: var(--dark-gray);
+    }
+
+    .client-stats {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        margin-bottom: 15px;
+    }
+
+    .client-stat {
+        text-align: center;
+        padding: 10px;
+        flex: 1;
+        min-width: 100px;
+        background-color: var(--light-gray);
+        border-radius: 5px;
+        margin: 0 5px 10px;
+    }
+
+    .client-stat-value {
+        font-weight: 700;
+        font-size: 1.2rem;
+        color: var(--amber-color);
+    }
+
+    .client-stat-label {
+        font-size: 0.85rem;
+        color: var(--dark-gray);
+    }
+
+    .client-buttons {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .filter-section {
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+        margin-bottom: 30px;
+        padding: 20px;
+    }
+
+    .admin-card {
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+        margin-bottom: 30px;
+    }
+
+    .admin-card-header {
+        padding: 15px 20px;
+        border-bottom: 1px solid #e3e6f0;
+        font-weight: 700;
+        background-color: var(--beige-color);
+        border-radius: 10px 10px 0 0;
+    }
+
+    .admin-card-body {
+        padding: 20px;
+    }
+
+    /* Button styles */
+    .btn-primary {
+        background-color: var(--amber-color);
+        border-color: var(--amber-color);
+        color: white;
+    }
+
+    .btn-primary:hover {
+        background-color: var(--dark-amber);
+        border-color: var(--dark-amber);
+    }
+
+    .btn-outline-primary {
+        color: var(--amber-color);
+        border-color: var(--amber-color);
+    }
+
+    .btn-outline-primary:hover {
+        background-color: var(--amber-color);
+        border-color: var(--amber-color);
+        color: white;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Admin Header -->
+<section class="admin-header">
+    <div class="container">
+        <div class="admin-title">
+            <h1>Client Management</h1>
+            <p>Manage all client accounts, projects, and invoices.</p>
+        </div>
+
+        <div class="row">
+            <!-- Total Clients -->
+            <div class="col-md-3">
+                <div class="stats-card">
+                    <div class="stats-card-header">
+                        <div class="stats-card-icon primary-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h5 class="stats-card-title">Total Clients</h5>
+                    </div>
+                    <div class="stats-card-value">{{ clients|length }}</div>
+                    <div class="stats-card-text">Registered clients</div>
+                </div>
+            </div>
+
+            <!-- Active Clients -->
+            <div class="col-md-3">
+                <div class="stats-card">
+                    <div class="stats-card-header">
+                        <div class="stats-card-icon success-icon">
+                            <i class="fas fa-user-check"></i>
+                        </div>
+                        <h5 class="stats-card-title">Active</h5>
+                    </div>
+                <div class="stats-card-value">{{ active_clients_count }}</div>
+                    <div class="stats-card-text">Active client accounts</div>
+                </div>
+            </div>
+
+            <!-- Total Projects -->
+            <div class="col-md-3">
+                <div class="stats-card">
+                    <div class="stats-card-header">
+                        <div class="stats-card-icon warning-icon">
+                            <i class="fas fa-project-diagram"></i>
+                        </div>
+                        <h5 class="stats-card-title">Projects</h5>
+                    </div>
+                    <div class="stats-card-value">{{ total_projects }}</div>
+                    <div class="stats-card-text">Across all clients</div>
+                </div>
+            </div>
+
+            <!-- Total Revenue -->
+            <div class="col-md-3">
+                <div class="stats-card">
+                    <div class="stats-card-header">
+                        <div class="stats-card-icon danger-icon">
+                            <i class="fas fa-dollar-sign"></i>
+                        </div>
+                        <h5 class="stats-card-title">Total Revenue</h5>
+                    </div>
+                    <div class="stats-card-value">${{ total_paid|floatformat:2 }}</div>
+                    <div class="stats-card-text">
+                        <a href="{% url 'client_portal:admin_financial_summary' %}">View details</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Admin Content -->
+<section class="admin-content">
+    <div class="container">
+        <!-- Filters and Actions -->
+        <div class="row mb-4">
+            <div class="col-md-8">
+                <div class="filter-section">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5 class="mb-0">Filter Clients</h5>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <select id="status-filter" class="form-select">
+                                <option value="all">All Statuses</option>
+                                <option value="active">Active</option>
+                                <option value="inactive">Inactive</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <select id="sort-filter" class="form-select">
+                                <option value="name">Sort by Name</option>
+                                <option value="date">Sort by Date Added</option>
+                                <option value="projects">Sort by Projects</option>
+                                <option value="revenue">Sort by Revenue</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="input-group">
+                                <input type="text" id="search-clients" class="form-control" placeholder="Search clients...">
+                                <button class="btn btn-primary" type="button">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="admin-card">
+                    <div class="admin-card-header">Quick Actions</div>
+                    <div class="admin-card-body">
+                        <div class="d-grid gap-2">
+                            <a href="{% url 'admin:client_portal_client_add' %}" class="btn btn-primary">
+                                <i class="fas fa-user-plus me-2"></i> Add New Client
+                            </a>
+                            <a href="{% url 'client_portal:admin_create_project' %}" class="btn btn-outline-primary">
+                                <i class="fas fa-folder-plus me-2"></i> Create Project
+                            </a>
+                            <a href="{% url 'client_portal:admin_create_invoice' %}" class="btn btn-outline-primary">
+                                <i class="fas fa-file-invoice-dollar me-2"></i> Create Invoice
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Client List -->
+        <div class="row">
+            {% for client in clients %}
+            <div class="col-md-6">
+                <div class="client-card">
+                    <div class="client-header d-flex justify-content-between align-items-center">
+                        <div>
+                            <div class="client-name">{{ client.full_name }}</div>
+                            <div class="client-company">{{ client.company_name }}</div>
+                        </div>
+                        <div>
+                            <span class="client-status {% if client.is_active %}status-active{% else %}status-inactive{% endif %}">
+                                {% if client.is_active %}Active{% else %}Inactive{% endif %}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="client-body">
+                        <div class="client-info row">
+                            <div class="col-md-6 mb-2">
+                                <div class="client-info-label">Email:</div>
+                                <div>{{ client.user.email }}</div>
+                            </div>
+                            <div class="col-md-6 mb-2">
+                                <div class="client-info-label">Phone:</div>
+                                <div>{{ client.phone|default:"Not provided" }}</div>
+                            </div>
+                            <div class="col-md-6 mb-2">
+                                <div class="client-info-label">Joined:</div>
+                                <div>{{ client.created_at|date:"M d, Y" }}</div>
+                            </div>
+                            <div class="col-md-6 mb-2">
+                                <div class="client-info-label">Last Updated:</div>
+                                <div>{{ client.updated_at|date:"M d, Y" }}</div>
+                            </div>
+                        </div>
+
+                        <div class="client-stats">
+                            <div class="client-stat">
+                                <div class="client-stat-value">{{ client.active_projects_count }}</div>
+                                <div class="client-stat-label">Active Projects</div>
+                            </div>
+                            <div class="client-stat">
+                                <div class="client-stat-value">{{ client.completed_projects_count }}</div>
+                                <div class="client-stat-label">Completed</div>
+                            </div>
+                            <div class="client-stat">
+                                <div class="client-stat-value">${{ client.total_due|floatformat:0 }}</div>
+                                <div class="client-stat-label">Balance Due</div>
+                            </div>
+                        </div>
+
+                        <div class="client-buttons">
+                            <a href="{% url 'client_portal:admin_client_detail' client_id=client.id %}" class="btn btn-primary">
+                                <i class="fas fa-eye me-2"></i> View Details
+                            </a>
+                            <a href="{% url 'admin:client_portal_client_change' client.id %}" class="btn btn-outline-primary">
+                                <i class="fas fa-edit me-2"></i> Edit
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-12">
+                <div class="alert alert-info">
+                    No clients found. Click "Add New Client" to create one.
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    $(document).ready(function() {
+        // Status filter
+        $('#status-filter').on('change', function() {
+            const filter = $(this).val();
+
+            if (filter === 'all') {
+                $('.client-card').show();
+            } else if (filter === 'active') {
+                $('.client-card').hide();
+                $('.client-card .status-active').closest('.client-card').show();
+            } else if (filter === 'inactive') {
+                $('.client-card').hide();
+                $('.client-card .status-inactive').closest('.client-card').show();
+            }
+        });
+
+        // Search functionality
+        $('#search-clients').on('keyup', function() {
+            const searchTerm = $(this).val().toLowerCase();
+
+            $('.client-card').each(function() {
+                const clientName = $(this).find('.client-name').text().toLowerCase();
+                const clientCompany = $(this).find('.client-company').text().toLowerCase();
+
+                if (clientName.includes(searchTerm) || clientCompany.includes(searchTerm)) {
+                    $(this).show();
+                } else {
+                    $(this).hide();
+                }
+            });
+        });
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,134 @@
+{% extends 'client_portal/base.html' %}
+
+{% block title %}Financial Summary{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="mb-4">Financial Summary</h1>
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <div class="card-header">Overall Financial Overview</div>
+                <div class="card-body">
+                    <p>Total Invoiced: ${{ total_invoiced|floatformat:2 }}</p>
+                    <p>Total Paid: ${{ total_paid|floatformat:2 }}</p>
+                    <p>Balance Due: ${{ balance_due|floatformat:2 }}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <div class="card-header">Payment Methods</div>
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Method</th>
+                                <th>Total Amount</th>
+                                <th>Transactions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for method in payment_methods %}
+                            <tr>
+                                <td>{{ method.payment_method }}</td>
+                                <td>${{ method.total_amount|floatformat:2 }}</td>
+                                <td>{{ method.transaction_count }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <div class="card-header">Invoice Status</div>
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Status</th>
+                                <th>Total Amount</th>
+                                <th>Count</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for status in invoice_status %}
+                            <tr>
+                                <td>{{ status.status }}</td>
+                                <td>${{ status.total_amount|floatformat:2 }}</td>
+                                <td>{{ status.count }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">Recent Payments</div>
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Invoice</th>
+                                <th>Amount</th>
+                                <th>Method</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for payment in recent_payments %}
+                            <tr>
+                                <td>{{ payment.payment_date }}</td>
+                                <td>{{ payment.invoice.invoice_number }}</td>
+                                <td>${{ payment.amount|floatformat:2 }}</td>
+                                <td>{{ payment.payment_method }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">Recent Invoices</div>
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Number</th>
+                                <th>Client</th>
+                                <th>Total</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for invoice in recent_invoices %}
+                            <tr>
+                                <td>{{ invoice.issue_date }}</td>
+                                <td>{{ invoice.invoice_number }}</td>
+                                <td>{{ invoice.client.full_name }}</td>
+                                <td>${{ invoice.total|floatformat:2 }}</td>
+                                <td>{{ invoice.status }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

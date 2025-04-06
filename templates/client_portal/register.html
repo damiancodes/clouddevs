@@ -1,3 +1,4 @@
+
 {% extends 'base.html' %}
 {% load static %}
 
@@ -5,8 +6,21 @@
 
 {% block extra_css %}
 <style>
+    :root {
+        /* Using your established color scheme */
+        --beige-color: #f5eadb;
+        --amber-color: #c1954a;
+        --dark-amber: #9e7a39;
+        --light-amber: #d4b06a;
+        --off-white: #faf7f2;
+        --black: #212121;
+        --dark-gray: #333333;
+        --light-gray: #f0f0f0;
+    }
+
     .register-container {
         padding: 60px 0;
+        background-color: var(--off-white);
     }
 
     .register-card {
@@ -19,7 +33,7 @@
     }
 
     .register-header {
-        background-color: var(--primary-color);
+        background-color: var(--amber-color);
         color: white;
         padding: 30px;
         text-align: center;
@@ -48,12 +62,21 @@
     .form-control {
         border-radius: 5px;
         padding: 12px;
+        border: 1px solid #d1d1d1;
+        background-color: white;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
+
+    .form-control:focus {
+        border-color: var(--light-amber);
+        box-shadow: 0 0 0 0.25rem rgba(193, 149, 74, 0.25);
+        background-color: white;
     }
 
     .btn-register {
         width: 100%;
         padding: 12px;
-        background-color: var(--primary-color);
+        background-color: var(--amber-color);
         border: none;
         border-radius: 5px;
         color: white;
@@ -62,7 +85,7 @@
     }
 
     .btn-register:hover {
-        background-color: var(--primary-dark);
+        background-color: var(--dark-amber);
     }
 
     .register-icon {
@@ -73,8 +96,65 @@
 
     .help-text {
         font-size: 0.85rem;
-        color: #6c757d;
+        color: var(--dark-gray);
         margin-top: 0.25rem;
+    }
+
+    /* Link color updates */
+    .register-footer a,
+    .form-check-label a {
+        color: var(--amber-color);
+        transition: color 0.2s ease;
+    }
+
+    .register-footer a:hover,
+    .form-check-label a:hover {
+        color: var(--dark-amber);
+    }
+
+    /* Form validation colors */
+    .text-danger {
+        color: #dc3545;
+    }
+
+    /* Dark mode adjustments */
+    body.dark-mode .register-container {
+        background-color: var(--black);
+    }
+
+    body.dark-mode .register-card {
+        background-color: var(--dark-gray);
+        box-shadow: 0 0.15rem 1.75rem 0 rgba(0, 0, 0, 0.3);
+    }
+
+    body.dark-mode .register-body,
+    body.dark-mode .form-control {
+        color: white;
+    }
+
+    body.dark-mode .form-control {
+        background-color: #444;
+        border-color: #555;
+        color: white;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    body.dark-mode .form-control:focus {
+        background-color: #555;
+        border-color: var(--amber-color);
+    }
+
+    body.dark-mode .register-footer {
+        background-color: #222;
+        border-top: 1px solid #444;
+    }
+
+    body.dark-mode .help-text {
+        color: #aaa;
+    }
+
+    body.dark-mode .form-check-label {
+        color: white;
     }
 </style>
 {% endblock %}
@@ -106,7 +186,7 @@
                         <h4 class="mb-4">Account Information</h4>
 
                         <div class="form-group">
-                            <label for="{{ form.username.id_for_label }}" class="form-label">Username*</label>
+                            <label for="{{ form.username.id_for_label }}" class="form-label"><strong>Username*</strong></label>
                             {{ form.username }}
                             {% if form.username.errors %}
                                 <div class="text-danger mt-1">
@@ -117,7 +197,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="{{ form.email.id_for_label }}" class="form-label">Email Address*</label>
+                            <label for="{{ form.email.id_for_label }}" class="form-label"><strong>Email Address*</strong></label>
                             {{ form.email }}
                             {% if form.email.errors %}
                                 <div class="text-danger mt-1">
@@ -127,7 +207,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="{{ form.password1.id_for_label }}" class="form-label">Password*</label>
+                            <label for="{{ form.password1.id_for_label }}" class="form-label"><strong>Password*</strong></label>
                             {{ form.password1 }}
                             {% if form.password1.errors %}
                                 <div class="text-danger mt-1">
@@ -138,7 +218,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="{{ form.password2.id_for_label }}" class="form-label">Confirm Password*</label>
+                            <label for="{{ form.password2.id_for_label }}" class="form-label"><strong>Confirm Password*</strong></label>
                             {{ form.password2 }}
                             {% if form.password2.errors %}
                                 <div class="text-danger mt-1">
@@ -153,7 +233,7 @@
                         <h4 class="mb-4">Personal Information</h4>
 
                         <div class="form-group">
-                            <label for="{{ form.first_name.id_for_label }}" class="form-label">First Name*</label>
+                            <label for="{{ form.first_name.id_for_label }}" class="form-label"><strong>First Name*</strong></label>
                             {{ form.first_name }}
                             {% if form.first_name.errors %}
                                 <div class="text-danger mt-1">
@@ -163,7 +243,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="{{ form.last_name.id_for_label }}" class="form-label">Last Name*</label>
+                            <label for="{{ form.last_name.id_for_label }}" class="form-label"><strong>Last Name*</strong></label>
                             {{ form.last_name }}
                             {% if form.last_name.errors %}
                                 <div class="text-danger mt-1">

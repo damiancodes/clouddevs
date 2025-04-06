@@ -5,10 +5,21 @@
 
 {% block extra_css %}
 <style>
+    :root {
+        --beige-color: #f5eadb;
+        --amber-color: #c1954a;
+        --dark-amber: #9e7a39;
+        --light-amber: #d4b06a;
+        --off-white: #faf7f2;
+        --black: #212121;
+        --dark-gray: #333333;
+        --light-gray: #f0f0f0;
+    }
+
     /* Portfolio Header */
     .portfolio-header {
-        background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
-        color: white;
+        background: var(--beige-color);
+        color: var(--black);
         padding: 80px 0;
         text-align: center;
     }
@@ -16,12 +27,17 @@
     .portfolio-header h1 {
         font-weight: 800;
         margin-bottom: 20px;
+        color: var(--black);
+    }
+
+    .portfolio-header p {
+        color: var(--dark-gray);
     }
 
     /* Filter Section */
     .filter-section {
         padding: 30px 0;
-        background-color: var(--light-gray);
+        background-color: var(--off-white);
     }
 
     .filter-btn {
@@ -29,20 +45,21 @@
         margin: 5px;
         border-radius: 30px;
         background-color: white;
-        color: var(--text-color);
+        color: var(--black);
         border: 1px solid #ddd;
         transition: all 0.3s ease;
     }
 
     .filter-btn:hover, .filter-btn.active {
-        background-color: var(--primary-color);
+        background-color: var(--amber-color);
         color: white;
-        border-color: var(--primary-color);
+        border-color: var(--amber-color);
     }
 
     /* Projects Grid */
     .projects-section {
         padding: 80px 0;
+        background-color: var(--off-white);
     }
 
     .project-card {
@@ -81,7 +98,7 @@
         position: absolute;
         top: 15px;
         right: 15px;
-        background-color: var(--primary-color);
+        background-color: var(--amber-color);
         color: white;
         padding: 5px 15px;
         border-radius: 20px;
@@ -97,10 +114,11 @@
     .project-info h3 {
         margin-bottom: 10px;
         font-weight: 700;
+        color: var(--black);
     }
 
     .project-info p {
-        color: var(--body-color);
+        color: var(--dark-gray);
         margin-bottom: 20px;
     }
 
@@ -109,7 +127,7 @@
         justify-content: space-between;
         align-items: center;
         margin-top: 20px;
-        color: var(--body-color);
+        color: var(--dark-gray);
         font-size: 0.9rem;
     }
 
@@ -125,13 +143,14 @@
         padding: 4px 10px;
         background-color: var(--light-gray);
         border-radius: 15px;
+        color: var(--dark-gray);
     }
 
     /* CTA Section */
     .cta-section {
         padding: 80px 0;
-       background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
-        color: white;
+        background: var(--beige-color);
+        color: var(--black);
         text-align: center;
     }
 
@@ -139,12 +158,34 @@
         font-size: 2.5rem;
         font-weight: 700;
         margin-bottom: 1.5rem;
+        color: var(--black);
     }
 
     .cta-text {
         max-width: 700px;
         margin: 0 auto 2rem;
-        opacity: 0.9;
+        color: var(--dark-gray);
+    }
+
+    .cta-buttons .btn-primary {
+        background-color: var(--amber-color);
+        border-color: var(--amber-color);
+        color: white;
+    }
+
+    .cta-buttons .btn-primary:hover {
+        background-color: var(--dark-amber);
+        border-color: var(--dark-amber);
+    }
+
+    .cta-buttons .btn-outline-primary {
+        color: var(--amber-color);
+        border-color: var(--amber-color);
+    }
+
+    .cta-buttons .btn-outline-primary:hover {
+        background-color: var(--amber-color);
+        color: white;
     }
 
     /* Pagination */
@@ -156,7 +197,7 @@
 
     .pagination .page-item .page-link {
         padding: 10px 15px;
-        color: var(--primary-color);
+        color: var(--amber-color);
         background-color: white;
         border: 1px solid #ddd;
         margin: 0 5px;
@@ -166,9 +207,9 @@
 
     .pagination .page-item.active .page-link,
     .pagination .page-item .page-link:hover {
-        background-color: var(--primary-color);
+        background-color: var(--amber-color);
         color: white;
-        border-color: var(--primary-color);
+        border-color: var(--amber-color);
     }
 
     /* No results */
@@ -184,51 +225,126 @@
         display: block;
     }
 
+    /* Button Styles */
+    .btn-primary {
+        background-color: var(--amber-color);
+        border-color: var(--amber-color);
+        color: white;
+    }
+
+    .btn-primary:hover {
+        background-color: var(--dark-amber);
+        border-color: var(--dark-amber);
+    }
+
+    .btn-light {
+        background-color: white;
+        color: var(--black);
+        border-color: white;
+    }
+
+    .btn-light:hover {
+        background-color: var(--off-white);
+        color: var(--black);
+    }
+
+    .btn-outline-light {
+        color: var(--black);
+        border-color: var(--black);
+    }
+
+    .btn-outline-light:hover {
+        background-color: var(--black);
+        color: white;
+        border-color: var(--black);
+    }
+
+    /* Animations */
+    .animate-on-scroll {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: all 0.7s ease-out;
+    }
+
+    .animate-on-scroll.visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
     /* Dark mode adaptations */
+    body.dark-mode .portfolio-header {
+        background-color: var(--dark-gray);
+        color: var(--off-white);
+    }
+
+    body.dark-mode .portfolio-header h1,
+    body.dark-mode .portfolio-header p {
+        color: var(--off-white);
+    }
+
     body.dark-mode .filter-btn {
-        background-color: #2a2c3e;
+        background-color: var(--dark-gray);
         border-color: #3a3d52;
-        color: #f8f9fc;
+        color: var(--off-white);
     }
 
     body.dark-mode .filter-btn:hover,
     body.dark-mode .filter-btn.active {
-        background-color: var(--primary-color);
-        border-color: var(--primary-color);
+        background-color: var(--amber-color);
+        border-color: var(--amber-color);
     }
 
     body.dark-mode .project-card {
-        background-color: #2a2c3e;
+        background-color: var(--dark-gray);
+    }
+
+    body.dark-mode .project-info h3 {
+        color: var(--off-white);
     }
 
     body.dark-mode .project-info p,
     body.dark-mode .project-meta {
-        color: #c2c5d3;
+        color: #e2e8f0;
     }
 
     body.dark-mode .tech-badge {
         background-color: #3a3d52;
-        color: #f8f9fc;
+        color: var(--off-white);
     }
 
-    body.dark-mode .filter-section {
+    body.dark-mode .filter-section,
+    body.dark-mode .projects-section {
         background-color: #222533;
     }
 
     body.dark-mode .pagination .page-item .page-link {
-        background-color: #2a2c3e;
-        color: #f8f9fc;
+        background-color: var(--dark-gray);
+        color: var(--off-white);
         border-color: #3a3d52;
     }
 
     body.dark-mode .pagination .page-item.active .page-link,
     body.dark-mode .pagination .page-item .page-link:hover {
-        background-color: var(--primary-color);
-        border-color: var(--primary-color);
+        background-color: var(--amber-color);
+        border-color: var(--amber-color);
     }
 
     body.dark-mode .no-results i {
         color: #3a3d52;
+    }
+
+    body.dark-mode .cta-section {
+        background-color: var(--dark-gray);
+    }
+
+    body.dark-mode .cta-title,
+    body.dark-mode .cta-text {
+        color: var(--off-white);
+    }
+
+    body.dark-mode .btn-outline-light {
+        color: white;
+        border-color: white;
     }
 </style>
 {% endblock %}
@@ -267,7 +383,7 @@
             <div class="row">
                 {% for project in projects %}
                     <div class="col-lg-4 col-md-6 mb-4">
-                        <div class="project-card">
+                        <div class="project-card animate-on-scroll">
                             <div class="project-image">
                                 <img src="{{ project.featured_image.url }}" alt="{{ project.title }}">
                                 {% with category=project.categories.first %}
@@ -353,7 +469,7 @@
         <h2 class="cta-title">Ready to Start Your Project?</h2>
         <p class="cta-text">Contact us today for a free consultation and let's bring your ideas to life.</p>
         <div class="cta-buttons">
-            <a href="{% url 'quotes:service_estimator' %}" class="btn btn-light btn-lg me-3">Get a Quote</a>
+            <a href="{% url 'quotes:service_estimator' %}" class="btn btn-primary btn-lg me-3">Get a Quote</a>
             <a href="{% url 'core:contact' %}" class="btn btn-outline-light btn-lg">Contact Us</a>
         </div>
     </div>
@@ -364,13 +480,33 @@
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         // Add animation classes on scroll
-        const animateElements = document.querySelectorAll('.project-card');
+        const animateElements = document.querySelectorAll('.animate-on-scroll');
 
+        const isInViewport = (element) => {
+            const rect = element.getBoundingClientRect();
+            return (
+                rect.top <= (window.innerHeight || document.documentElement.clientHeight) * 0.85
+            );
+        };
+
+        const checkVisibility = () => {
+            animateElements.forEach((element) => {
+                if (isInViewport(element)) {
+                    element.classList.add('visible');
+                }
+            });
+        };
+
+        // Set initial animation delays
         animateElements.forEach((element, index) => {
-            element.classList.add('animate-on-scroll');
-            element.dataset.animation = 'slide-up';
-            element.style.animationDelay = `${index * 0.1}s`;
+            element.style.transitionDelay = `${(index % 3) * 0.1}s`;
         });
+
+        // Check on load
+        checkVisibility();
+
+        // Check on scroll
+        window.addEventListener('scroll', checkVisibility);
     });
 </script>
 {% endblock %}

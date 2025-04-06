@@ -5,9 +5,21 @@
 
 {% block extra_css %}
 <style>
+    :root {
+        /* Using your established color scheme */
+        --beige-color: #f5eadb;
+        --amber-color: #c1954a;
+        --dark-amber: #9e7a39;
+        --light-amber: #d4b06a;
+        --off-white: #faf7f2;
+        --black: #212121;
+        --dark-gray: #333333;
+        --light-gray: #f0f0f0;
+    }
+
     /* Case Study Header */
     .case-study-header {
-        background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+        background: linear-gradient(135deg, var(--amber-color) 0%, var(--dark-amber) 100%);
         color: white;
         padding: 80px 0;
     }
@@ -56,7 +68,7 @@
     }
 
     .case-section:nth-child(even) {
-        background-color: var(--light-gray);
+        background-color: var(--beige-color);
     }
 
     .section-title {
@@ -72,7 +84,7 @@
         left: 0;
         width: 50px;
         height: 3px;
-        background-color: var(--primary-color);
+        background-color: var(--amber-color);
     }
 
     /* Gallery Section */
@@ -95,7 +107,7 @@
     /* Testimonial Section */
     .testimonial-section {
         padding: 80px 0;
-        background-color: var(--light-gray);
+        background-color: var(--beige-color);
     }
 
     .testimonial-card {
@@ -113,7 +125,7 @@
         position: absolute;
         top: 20px;
         left: 20px;
-        color: #f2f3f5;
+        color: var(--beige-color);
         font-family: Georgia, serif;
         z-index: 0;
     }
@@ -171,7 +183,7 @@
     /* Related Projects */
     .related-projects {
         padding: 80px 0;
-        background-color: var(--light-gray);
+        background-color: var(--beige-color);
     }
 
     .related-card {
@@ -217,7 +229,7 @@
     /* CTA Section */
     .cta-section {
         padding: 80px 0;
-        background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+        background: linear-gradient(135deg, var(--amber-color) 0%, var(--dark-amber) 100%);
         color: white;
         text-align: center;
     }
@@ -247,19 +259,31 @@
         align-items: center;
         padding: 10px 20px;
         background-color: white;
-        color: var(--primary-color);
+        color: var(--amber-color);
         border-radius: 30px;
         transition: all 0.3s ease;
         text-decoration: none;
     }
 
     .project-link:hover {
-        background-color: var(--primary-color);
+        background-color: var(--light-amber);
         color: white;
     }
 
     .project-link i {
         margin-right: 10px;
+    }
+
+    /* Button styling */
+    .btn-primary {
+        background-color: var(--amber-color);
+        border-color: var(--amber-color);
+        color: white;
+    }
+
+    .btn-primary:hover {
+        background-color: var(--dark-amber);
+        border-color: var(--dark-amber);
     }
 
     /* Dark mode adaptations */
@@ -284,11 +308,12 @@
 
     body.dark-mode .project-link {
         background-color: #3a3d52;
-        color: #f8f9fc;
+        color: var(--light-amber);
     }
 
     body.dark-mode .project-link:hover {
-        background-color: var(--primary-color);
+        background-color: var(--amber-color);
+        color: white;
     }
 </style>
 {% endblock %}

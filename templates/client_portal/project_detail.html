@@ -13,6 +13,18 @@
 
 {% block client_portal_css %}
 <style>
+    :root {
+        /* Using your established color scheme */
+        --beige-color: #f5eadb;
+        --amber-color: #c1954a;
+        --dark-amber: #9e7a39;
+        --light-amber: #d4b06a;
+        --off-white: #faf7f2;
+        --black: #212121;
+        --dark-gray: #333333;
+        --light-gray: #f0f0f0;
+    }
+
     .project-header {
         background-color: white;
         border-radius: 10px;
@@ -30,8 +42,8 @@
     }
 
     .status-planning {
-        background-color: rgba(78, 115, 223, 0.1);
-        color: var(--primary-color);
+        background-color: rgba(193, 149, 74, 0.1);
+        color: var(--amber-color);
     }
 
     .status-in_progress {
@@ -82,7 +94,7 @@
         padding: 15px 20px;
         border-bottom: 1px solid #e3e6f0;
         font-weight: 700;
-        background-color: #f8f9fc;
+        background-color: var(--beige-color);
     }
 
     .section-body {
@@ -202,6 +214,16 @@
         margin-bottom: 5px;
     }
 
+    .invoice-number a {
+        color: var(--dark-gray);
+        text-decoration: none;
+    }
+
+    .invoice-number a:hover {
+        color: var(--amber-color);
+        text-decoration: none;
+    }
+
     .invoice-status {
         display: inline-block;
         padding: 3px 10px;
@@ -220,11 +242,12 @@
         width: 35px;
         height: 35px;
         border-radius: 50%;
-        background-color: var(--light-gray);
+        background-color: var(--beige-color);
         display: flex;
         align-items: center;
         justify-content: center;
         margin-right: 10px;
+        color: var(--amber-color);
     }
 
     .metadata-label {
@@ -247,7 +270,7 @@
     }
 
     .file-icon.doc {
-        color: #4e73df;
+        color: var(--amber-color);
     }
 
     .file-icon.other {
@@ -256,6 +279,49 @@
 
     .tab-content {
         padding-top: 20px;
+    }
+
+    /* Nav tabs */
+    .nav-tabs .nav-link {
+        color: var(--dark-gray);
+        border: none;
+        border-bottom: 2px solid transparent;
+        padding: 0.75rem 1rem;
+    }
+
+    .nav-tabs .nav-link:hover {
+        border-color: transparent;
+        color: var(--amber-color);
+    }
+
+    .nav-tabs .nav-link.active {
+        color: var(--amber-color);
+        background-color: transparent;
+        border-color: transparent;
+        border-bottom: 2px solid var(--amber-color);
+    }
+
+    /* Button styling */
+    .btn-outline-primary {
+        color: var(--amber-color);
+        border-color: var(--amber-color);
+    }
+
+    .btn-outline-primary:hover {
+        background-color: var(--amber-color);
+        border-color: var(--amber-color);
+        color: white;
+    }
+
+    .btn-primary {
+        background-color: var(--amber-color);
+        border-color: var(--amber-color);
+        color: white;
+    }
+
+    .btn-primary:hover {
+        background-color: var(--dark-amber);
+        border-color: var(--dark-amber);
     }
 </style>
 {% endblock %}

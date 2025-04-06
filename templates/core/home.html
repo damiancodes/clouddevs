@@ -1,427 +1,971 @@
+{##}
 {#{% extends "base.html" %}#}
 {#{% load static %}#}
-{##}
 {##}
 {#{% block title %}CloudLink_Devs - Web & App Development Solutions{% endblock %}#}
 {##}
 {#{% block extra_css %}#}
 {#<style>#}
-{#    /* Hero Section */#}
+{#    :root {#}
+{#        --beige-color: #f5eadb;#}
+{#        --amber-color: #c1954a;#}
+{#        --dark-amber: #9e7a39;#}
+{#        --light-amber: #d4b06a;#}
+{#        --off-white: #faf7f2;#}
+{#        --black: #212121;#}
+{#        --dark-gray: #333333;#}
+{#        --light-gray: #f0f0f0;#}
+{#    }#}
+{##}
+{#    /* Hero Section with Carousel Background */#}
 {#    .hero-section {#}
-{#        background: linear-gradient(135deg, #4e73df 0%, #36b9cc 100%);#}
-{#        color: white;#}
-{#        padding: 100px 0;#}
 {#        position: relative;#}
+{#        min-height: 100vh;#}
+{#        color: white;#}
 {#        overflow: hidden;#}
 {#    }#}
-{#    #}
-{#    .hero-content {#}
-{#        position: relative;#}
-{#        z-index: 2;#}
+{##}
+{#    .hero-carousel {#}
+{#        position: absolute;#}
+{#        top: 0;#}
+{#        left: 0;#}
+{#        width: 100%;#}
+{#        height: 100%;#}
+{#        z-index: 0;#}
 {#    }#}
-{#    #}
+{##}
+{#    .hero-carousel .carousel,#}
+{#    .hero-carousel .carousel-inner,#}
+{#    .hero-carousel .carousel-item {#}
+{#        height: 100%;#}
+{#    }#}
+{##}
+{#    .hero-carousel .carousel-item img {#}
+{#        width: 100%;#}
+{#        height: 100%;#}
+{#        object-fit: cover;#}
+{#        filter: brightness(0.7);#}
+{#    }#}
+{##}
+{#    .hero-container {#}
+{#        position: relative;#}
+{#        z-index: 1;#}
+{#        padding: 150px 0;#}
+{#    }#}
+{##}
+{#    .hero-content {#}
+{#        max-width: 700px;#}
+{#    }#}
+{##}
 {#    .hero-title {#}
-{#        font-size: 3rem;#}
+{#        font-size: 3.5rem;#}
 {#        font-weight: 800;#}
 {#        margin-bottom: 1.5rem;#}
+{#        line-height: 1.2;#}
+{#        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);#}
 {#    }#}
-{#    #}
+{##}
 {#    .hero-subtitle {#}
 {#        font-size: 1.25rem;#}
 {#        margin-bottom: 2rem;#}
-{#        opacity: 0.9;#}
+{#        opacity: 0.95;#}
+{#        line-height: 1.6;#}
+{#        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);#}
 {#    }#}
-{#    #}
+{##}
 {#    .hero-buttons .btn {#}
 {#        margin-right: 1rem;#}
-{#        padding: 0.75rem 1.5rem;#}
+{#        margin-bottom: 1rem;#}
+{#        padding: 0.75rem 1.75rem;#}
 {#        font-weight: 600;#}
+{#        border-radius: 0.375rem;#}
 {#    }#}
-{#    #}
-{#    .hero-image {#}
-{#        animation: float 6s ease-in-out infinite;#}
+{##}
+{#    /* Dark overlay for carousel */#}
+{#    .carousel-overlay {#}
+{#        position: absolute;#}
+{#        top: 0;#}
+{#        left: 0;#}
+{#        width: 100%;#}
+{#        height: 100%;#}
+{#        background: rgba(0, 0, 0, 0.4);#}
+{#        z-index: 1;#}
 {#    }#}
-{#    #}
-{#    /* Services Section */#}
+{##}
+{#    /* Button styling with amber colors */#}
+{#    .btn-primary {#}
+{#        background-color: var(--amber-color);#}
+{#        border-color: var(--amber-color);#}
+{#        color: white;#}
+{#    }#}
+{##}
+{#    .btn-primary:hover {#}
+{#        background-color: var(--dark-amber);#}
+{#        border-color: var(--dark-amber);#}
+{#    }#}
+{##}
+{#    .btn-light {#}
+{#        background-color: var(--off-white);#}
+{#        color: var(--black);#}
+{#        border-color: var(--off-white);#}
+{#    }#}
+{##}
+{#    .btn-light:hover {#}
+{#        background-color: white;#}
+{#        color: var(--black);#}
+{#    }#}
+{##}
+{#    .btn-outline-light {#}
+{#        color: white;#}
+{#        border-color: rgba(255, 255, 255, 0.6);#}
+{#    }#}
+{##}
+{#    .btn-outline-amber {#}
+{#        color: var(--amber-color);#}
+{#        border-color: var(--amber-color);#}
+{#        background-color: transparent;#}
+{#        font-weight: 500;#}
+{#    }#}
+{##}
+{#    .btn-outline-amber:hover {#}
+{#        background-color: var(--amber-color);#}
+{#        color: white;#}
+{#    }#}
+{##}
+{#    /* Services Section with Background */#}
 {#    .services-section {#}
-{#        padding: 80px 0;#}
+{#        padding: 100px 0;#}
+{#        position: relative;#}
+{#        background-color: var(--beige-color);#}
+{#        color: var(--black);#}
 {#    }#}
-{#    #}
+{##}
+{#    .services-section::before {#}
+{#        content: "";#}
+{#        position: absolute;#}
+{#        top: 0;#}
+{#        left: 0;#}
+{#        width: 100%;#}
+{#        height: 100%;#}
+{#        background: rgba(245, 234, 219, 0.8);#}
+{#        z-index: 1;#}
+{#    }#}
+{##}
+{#    .services-section .container {#}
+{#        position: relative;#}
+{#        z-index: 2;#}
+{#    }#}
+{##}
+{#    .services-section .section-title h2 {#}
+{#        color: var(--black);#}
+{#    }#}
+{##}
+{#    .services-section .section-title p {#}
+{#        color: var(--dark-gray);#}
+{#    }#}
+{##}
 {#    .section-title {#}
 {#        text-align: center;#}
-{#        margin-bottom: 3rem;#}
+{#        margin-bottom: 4rem;#}
 {#    }#}
-{#    #}
+{##}
 {#    .section-title h2 {#}
-{#        font-weight: 700;#}
+{#        font-weight: 800;#}
 {#        margin-bottom: 1rem;#}
-{#        color: #333;#}
+{#        font-size: 2.5rem;#}
 {#    }#}
-{#    #}
+{##}
+{#    .section-title p {#}
+{#        max-width: 600px;#}
+{#        margin: 0 auto;#}
+{#        font-size: 1.1rem;#}
+{#    }#}
+{##}
+{#    /* New Service Card Style */#}
 {#    .service-card {#}
-{#        padding: 30px;#}
-{#        text-align: center;#}
 {#        border-radius: 10px;#}
-{#        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);#}
+{#        overflow: hidden;#}
+{#        background-color: white;#}
+{#        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);#}
+{#        margin-bottom: 30px;#}
 {#        transition: all 0.3s ease;#}
 {#        height: 100%;#}
-{#        background-color: white;#}
 {#    }#}
-{#    #}
+{##}
 {#    .service-card:hover {#}
 {#        transform: translateY(-10px);#}
-{#        box-shadow: 0 1rem 3rem rgba(58, 59, 69, 0.175);#}
+{#        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);#}
 {#    }#}
-{#    #}
-{#    .service-icon {#}
-{#        width: 80px;#}
-{#        height: 80px;#}
-{#        margin: 0 auto 20px;#}
-{#        background-color: #f8f9fc;#}
-{#        border-radius: 50%;#}
-{#        display: flex;#}
-{#        align-items: center;#}
-{#        justify-content: center;#}
-{#        color: #4e73df;#}
-{#        font-size: 2rem;#}
+{##}
+{#    .service-image {#}
+{#        height: 200px;#}
+{#        overflow: hidden;#}
 {#    }#}
-{#    #}
-{#    /* Features Section */#}
+{##}
+{#    .service-image img {#}
+{#        width: 100%;#}
+{#        height: 100%;#}
+{#        object-fit: cover;#}
+{#        transition: transform 0.5s ease;#}
+{#    }#}
+{##}
+{#    .service-card:hover .service-image img {#}
+{#        transform: scale(1.05);#}
+{#    }#}
+{##}
+{#    .service-content {#}
+{#        padding: 25px;#}
+{#    }#}
+{##}
+{#    .service-content h3 {#}
+{#        font-weight: 700;#}
+{#        margin-bottom: 15px;#}
+{#        font-size: 1.4rem;#}
+{#        color: var(--black);#}
+{#    }#}
+{##}
+{#    .service-content p {#}
+{#        color: var(--dark-gray);#}
+{#        margin-bottom: 20px;#}
+{#        font-size: 1rem;#}
+{#        line-height: 1.6;#}
+{#    }#}
+{##}
+{#    .service-content .btn {#}
+{#        padding: 8px 20px;#}
+{#        font-weight: 500;#}
+{#    }#}
+{##}
+{#    /* Features Section with Blended Background */#}
 {#    .features-section {#}
-{#        padding: 80px 0;#}
-{#        background-color: #f8f9fc;#}
+{#        padding: 100px 0;#}
+{#        position: relative;#}
+{#        background: linear-gradient(to bottom, var(--amber-color) 0%, var(--beige-color) 100%);#}
+{#        color: white;#}
 {#    }#}
-{#    #}
-{#    .feature-item {#}
+{##}
+{#    .features-section::before {#}
+{#        content: "";#}
+{#        position: absolute;#}
+{#        top: 0;#}
+{#        left: 0;#}
+{#        width: 100%;#}
+{#        height: 100%;#}
+{#        background: rgba(0, 0, 0, 0.1);#}
+{#        z-index: 1;#}
+{#    }#}
+{##}
+{#    .features-section .container {#}
+{#        position: relative;#}
+{#        z-index: 2;#}
+{#    }#}
+{##}
+{#    .features-section .section-title h2 {#}
+{#        color: white;#}
+{#    }#}
+{##}
+{#    .features-section .section-title p {#}
+{#        color: rgba(255, 255, 255, 0.9);#}
+{#    }#}
+{##}
+{#    /* Feature Card with Flip */#}
+{#    .feature-card {#}
+{#        perspective: 1000px;#}
+{#        height: 100%;#}
+{#        min-height: 300px;#}
 {#        margin-bottom: 30px;#}
 {#    }#}
-{#    #}
+{##}
+{#    .feature-card-inner {#}
+{#        position: relative;#}
+{#        width: 100%;#}
+{#        height: 100%;#}
+{#        text-align: left;#}
+{#        transition: transform 0.6s;#}
+{#        transform-style: preserve-3d;#}
+{#        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);#}
+{#        border-radius: 10px;#}
+{#    }#}
+{##}
+{#    .feature-card:hover .feature-card-inner {#}
+{#        transform: rotateY(180deg);#}
+{#    }#}
+{##}
+{#    .feature-card-front, .feature-card-back {#}
+{#        position: absolute;#}
+{#        width: 100%;#}
+{#        height: 100%;#}
+{#        -webkit-backface-visibility: hidden;#}
+{#        backface-visibility: hidden;#}
+{#        border-radius: 10px;#}
+{#        overflow: hidden;#}
+{#    }#}
+{##}
+{#    .feature-card-front {#}
+{#        background-color: white;#}
+{#    }#}
+{##}
+{#    .feature-image {#}
+{#        height: 160px;#}
+{#        overflow: hidden;#}
+{#    }#}
+{##}
+{#    .feature-image img {#}
+{#        width: 100%;#}
+{#        height: 100%;#}
+{#        object-fit: cover;#}
+{#    }#}
+{##}
+{#    .feature-content {#}
+{#        padding: 20px;#}
+{#    }#}
+{##}
+{#    .feature-content h4 {#}
+{#        font-weight: 700;#}
+{#        margin-bottom: 10px;#}
+{#        font-size: 1.2rem;#}
+{#        color: var(--black);#}
+{#    }#}
+{##}
+{#    .feature-content p {#}
+{#        color: var(--dark-gray);#}
+{#        font-size: 0.95rem;#}
+{#        line-height: 1.5;#}
+{#        margin-bottom: 0;#}
+{#    }#}
+{##}
+{#    .feature-card-back {#}
+{#        background-color: white;#}
+{#        color: var(--black);#}
+{#        transform: rotateY(180deg);#}
+{#        display: flex;#}
+{#        flex-direction: column;#}
+{#        justify-content: center;#}
+{#        align-items: center;#}
+{#        padding: 30px;#}
+{#        text-align: center;#}
+{#    }#}
+{##}
 {#    .feature-icon {#}
-{#        width: 60px;#}
-{#        height: 60px;#}
-{#        background-color: #4e73df;#}
+{#        width: 50px;#}
+{#        height: 50px;#}
+{#        background-color: var(--amber-color);#}
 {#        color: white;#}
-{#        border-radius: 50%;#}
+{#        border-radius: 12px;#}
 {#        display: flex;#}
 {#        align-items: center;#}
 {#        justify-content: center;#}
-{#        font-size: 1.5rem;#}
-{#        margin-bottom: 20px;#}
+{#        font-size: 1.2rem;#}
+{#        margin: 0 auto 15px;#}
 {#    }#}
-{#    #}
+{##}
+{#    .feature-card-back h4 {#}
+{#        font-weight: 700;#}
+{#        margin-bottom: 15px;#}
+{#        font-size: 1.2rem;#}
+{#        color: var(--black);#}
+{#    }#}
+{##}
+{#    .feature-card-back p {#}
+{#        margin-bottom: 20px;#}
+{#        color: var(--dark-gray);#}
+{#    }#}
+{##}
+{#    .feature-stat {#}
+{#        font-size: 2.5rem;#}
+{#        font-weight: 800;#}
+{#        margin-bottom: 15px;#}
+{#        color: var(--amber-color);#}
+{#    }#}
+{##}
 {#    /* CTA Section */#}
 {#    .cta-section {#}
-{#        padding: 80px 0;#}
-{#        background: linear-gradient(135deg, #4e73df 0%, #36b9cc 100%);#}
-{#        color: white;#}
-{#        text-align: center;#}
+{#        padding: 100px 0;#}
+{#        background-color: var(--beige-color);#}
+{#        color: var(--black);#}
+{#        position: relative;#}
+{#        overflow: hidden;#}
 {#    }#}
-{#    #}
+{##}
+{#    .cta-section::before {#}
+{#        content: "";#}
+{#        position: absolute;#}
+{#        top: 0;#}
+{#        left: 0;#}
+{#        width: 100%;#}
+{#        height: 100%;#}
+{#        background-color: rgba(245, 234, 219, 0.85);#}
+{#        z-index: 1;#}
+{#    }#}
+{##}
+{#    .cta-container {#}
+{#        position: relative;#}
+{#        z-index: 2;#}
+{#    }#}
+{##}
 {#    .cta-title {#}
 {#        font-size: 2.5rem;#}
-{#        font-weight: 700;#}
+{#        font-weight: 800;#}
 {#        margin-bottom: 1.5rem;#}
+{#        text-align: center;#}
+{#        color: var(--black);#}
 {#    }#}
-{#    #}
+{##}
 {#    .cta-text {#}
 {#        max-width: 700px;#}
 {#        margin: 0 auto 2rem;#}
-{#        opacity: 0.9;#}
+{#        font-size: 1.1rem;#}
+{#        line-height: 1.6;#}
+{#        text-align: center;#}
+{#        color: var(--dark-gray);#}
 {#    }#}
-{#    #}
-{#    /* Testimonials Section */#}
-{#    .testimonials-section {#}
-{#        padding: 80px 0;#}
+{##}
+{#    .cta-button-container {#}
+{#        text-align: center;#}
+{#        margin-bottom: 3rem;#}
 {#    }#}
-{#    #}
-{#    .testimonial-card {#}
-{#        background-color: white;#}
+{##}
+{#    .cta-card {#}
 {#        border-radius: 10px;#}
-{#        padding: 30px;#}
-{#        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);#}
+{#        overflow: hidden;#}
+{#        background-color: white;#}
+{#        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);#}
 {#        margin-bottom: 30px;#}
+{#        transition: all 0.3s ease;#}
 {#        height: 100%;#}
 {#    }#}
-{#    #}
+{##}
+{#    .cta-card:hover {#}
+{#        transform: translateY(-10px);#}
+{#        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);#}
+{#    }#}
+{##}
+{#    .cta-image {#}
+{#        height: 180px;#}
+{#        overflow: hidden;#}
+{#    }#}
+{##}
+{#    .cta-image img {#}
+{#        width: 100%;#}
+{#        height: 100%;#}
+{#        object-fit: cover;#}
+{#        transition: transform 0.5s ease;#}
+{#    }#}
+{##}
+{#    .cta-card:hover .cta-image img {#}
+{#        transform: scale(1.05);#}
+{#    }#}
+{##}
+{#    .cta-content {#}
+{#        padding: 20px;#}
+{#    }#}
+{##}
+{#    .cta-content h5 {#}
+{#        font-weight: 700;#}
+{#        margin-bottom: 10px;#}
+{#        font-size: 1.2rem;#}
+{#        color: var(--black);#}
+{#    }#}
+{##}
+{#    .cta-content p {#}
+{#        color: var(--dark-gray);#}
+{#        margin-bottom: 15px;#}
+{#        font-size: 0.95rem;#}
+{#        line-height: 1.5;#}
+{#    }#}
+{##}
+{#    .cta-content .btn {#}
+{#        padding: 8px 20px;#}
+{#        font-weight: 500;#}
+{#    }#}
+{##}
+{#    /* Testimonials Section */#}
+{#    .testimonials-section {#}
+{#        padding: 100px 0;#}
+{#        background-color: var(--off-white);#}
+{#    }#}
+{##}
+{#    .testimonial-card {#}
+{#        background-color: white;#}
+{#        border-radius: 0.75rem;#}
+{#        padding: 35px;#}
+{#        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);#}
+{#        margin-bottom: 30px;#}
+{#        height: 100%;#}
+{#        transition: all 0.3s ease;#}
+{#    }#}
+{##}
+{#    .testimonial-card:hover {#}
+{#        transform: translateY(-10px);#}
+{#        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);#}
+{#    }#}
+{##}
 {#    .testimonial-content {#}
 {#        font-style: italic;#}
 {#        margin-bottom: 20px;#}
 {#        position: relative;#}
+{#        font-size: 1.05rem;#}
+{#        line-height: 1.6;#}
+{#        color: var(--dark-gray);#}
 {#    }#}
-{#    #}
+{##}
 {#    .testimonial-content:before {#}
 {#        content: '"';#}
 {#        font-size: 4rem;#}
 {#        position: absolute;#}
 {#        top: -20px;#}
 {#        left: -15px;#}
-{#        color: #f2f3f5;#}
+{#        color: var(--beige-color);#}
 {#        z-index: -1;#}
+{#        font-family: Georgia, serif;#}
 {#    }#}
-{#    #}
+{##}
 {#    .testimonial-author {#}
 {#        display: flex;#}
 {#        align-items: center;#}
 {#    }#}
-{#    #}
+{##}
 {#    .testimonial-avatar {#}
 {#        width: 50px;#}
 {#        height: 50px;#}
 {#        border-radius: 50%;#}
 {#        margin-right: 15px;#}
-{#        background-color: #f2f3f5;#}
+{#        background-color: var(--beige-color);#}
 {#        display: flex;#}
 {#        align-items: center;#}
 {#        justify-content: center;#}
+{#        color: var(--amber-color);#}
 {#    }#}
-{#    #}
+{##}
 {#    .testimonial-info h5 {#}
 {#        margin-bottom: 0;#}
+{#        font-weight: 700;#}
+{#        color: var(--black);#}
 {#    }#}
-{#    #}
+{##}
 {#    .testimonial-info p {#}
-{#        color: #858796;#}
+{#        color: var(--dark-gray);#}
 {#        margin-bottom: 0;#}
 {#    }#}
-{#    #}
+{##}
 {#    /* Recent Work Section */#}
 {#    .recent-work-section {#}
-{#        padding: 80px 0;#}
-{#        background-color: #f8f9fc;#}
+{#        padding: 100px 0;#}
+{#        background-color: var(--beige-color);#}
 {#    }#}
-{#    #}
+{##}
 {#    .work-card {#}
-{#        border-radius: 10px;#}
+{#        border-radius: 0.75rem;#}
 {#        overflow: hidden;#}
-{#        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);#}
+{#        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);#}
 {#        margin-bottom: 30px;#}
 {#        background-color: white;#}
+{#        transition: all 0.3s ease;#}
 {#    }#}
-{#    #}
+{##}
+{#    .work-card:hover {#}
+{#        transform: translateY(-10px);#}
+{#        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);#}
+{#    }#}
+{##}
 {#    .work-image {#}
 {#        position: relative;#}
 {#        overflow: hidden;#}
 {#        height: 200px;#}
 {#    }#}
-{#    #}
+{##}
+{#    .work-image img {#}
+{#        object-fit: cover;#}
+{#        width: 100%;#}
+{#        height: 100%;#}
+{#        transition: transform 0.5s ease;#}
+{#    }#}
+{##}
+{#    .work-card:hover .work-image img {#}
+{#        transform: scale(1.05);#}
+{#    }#}
+{##}
 {#    .work-image .work-overlay {#}
 {#        position: absolute;#}
 {#        top: 0;#}
 {#        left: 0;#}
 {#        width: 100%;#}
 {#        height: 100%;#}
-{#        background-color: rgba(78, 115, 223, 0.7);#}
+{#        background-color: rgba(193, 149, 74, 0.7);#}
 {#        display: flex;#}
 {#        align-items: center;#}
 {#        justify-content: center;#}
 {#        opacity: 0;#}
 {#        transition: all 0.3s ease;#}
 {#    }#}
-{#    #}
+{##}
 {#    .work-image:hover .work-overlay {#}
 {#        opacity: 1;#}
 {#    }#}
-{#    #}
+{##}
 {#    .work-image .btn {#}
 {#        transform: translateY(20px);#}
 {#        transition: all 0.3s ease;#}
+{#        padding: 0.5rem 1.25rem;#}
+{#        font-weight: 600;#}
 {#    }#}
-{#    #}
+{##}
 {#    .work-image:hover .btn {#}
 {#        transform: translateY(0);#}
 {#    }#}
-{#    #}
+{##}
 {#    .work-info {#}
 {#        padding: 20px;#}
 {#    }#}
-{#    #}
+{##}
 {#    .work-info h5 {#}
-{#        margin-bottom: 10px;#}
+{#        margin-bottom: 8px;#}
+{#        font-weight: 700;#}
+{#        color: var(--black);#}
 {#    }#}
-{#    #}
+{##}
+{#    .work-info p {#}
+{#        color: var(--dark-gray);#}
+{#        margin-bottom: 0;#}
+{#    }#}
+{##}
+{#    /* Trusted By Section */#}
+{#    .trusted-by-section {#}
+{#        padding: 60px 0;#}
+{#        background-color: white;#}
+{#    }#}
+{##}
+{#    .trusted-by-title {#}
+{#        font-size: 0.875rem;#}
+{#        font-weight: 600;#}
+{#        letter-spacing: 2px;#}
+{#        text-transform: uppercase;#}
+{#        color: var(--dark-gray);#}
+{#        margin-bottom: 2rem;#}
+{#        text-align: center;#}
+{#    }#}
+{##}
+{#    .partner-logo {#}
+{#        opacity: 0.8;#}
+{#        transition: opacity 0.3s ease;#}
+{#        max-height: 40px;#}
+{#        margin: 0 auto;#}
+{#    }#}
+{##}
+{#    .partner-logo:hover {#}
+{#        opacity: 1;#}
+{#    }#}
+{##}
 {#    /* Animations */#}
-{#    @keyframes float {#}
-{#        0% {#}
-{#            transform: translateY(0px);#}
+{#    .animate-on-scroll {#}
+{#        opacity: 0;#}
+{#        transform: translateY(30px);#}
+{#        transition: all 0.7s ease-out;#}
+{#    }#}
+{##}
+{#    .animate-on-scroll.visible {#}
+{#        opacity: 1;#}
+{#        transform: translateY(0);#}
+{#    }#}
+{##}
+{#    /* Media Queries */#}
+{#    @media (max-width: 768px) {#}
+{#        .hero-title {#}
+{#            font-size: 2.5rem;#}
 {#        }#}
-{#        50% {#}
-{#            transform: translateY(-20px);#}
+{##}
+{#        .hero-container {#}
+{#            padding: 100px 0;#}
 {#        }#}
-{#        100% {#}
-{#            transform: translateY(0px);#}
+{##}
+{#        .feature-card {#}
+{#            min-height: 280px;#}
 {#        }#}
-{#    }#}
-{#    #}
-{#    /* Dark mode adaptations */#}
-{#    body.dark-mode .service-card,#}
-{#    body.dark-mode .testimonial-card,#}
-{#    body.dark-mode .work-card {#}
-{#        background-color: #2a2c3e;#}
-{#        color: #f8f9fc;#}
-{#    }#}
-{#    #}
-{#    body.dark-mode .service-icon {#}
-{#        background-color: #3a3d52;#}
-{#        color: #4e73df;#}
-{#    }#}
-{#    #}
-{#    body.dark-mode .section-title h2,#}
-{#    body.dark-mode .testimonial-info h5 {#}
-{#        color: #f8f9fc;#}
-{#    }#}
-{#    #}
-{#    body.dark-mode .features-section,#}
-{#    body.dark-mode .recent-work-section {#}
-{#        background-color: #222533;#}
+{##}
+{#        .cta-image-card {#}
+{#            margin-bottom: 20px;#}
+{#        }#}
 {#    }#}
 {#</style>#}
 {#{% endblock %}#}
 {##}
 {#{% block content %}#}
-{#<!-- Hero Section -->#}
+{#<!-- Hero Section with Carousel Background -->#}
 {#<section class="hero-section">#}
-{#    <div class="container">#}
-{#        <div class="row align-items-center">#}
-{#            <div class="col-lg-6 hero-content">#}
-{#                <h1 class="hero-title">Web & App Solutions for Your Business</h1>#}
-{#                <p class="hero-subtitle">We build custom web applications, mobile apps, and POS systems to help your business thrive in the digital world.</p>#}
-{#                <div class="hero-buttons">#}
-{#                    <a href="{% url 'quotes:service_estimator' %}" class="btn btn-light btn-lg">Get a Quote</a>#}
-{#                    <a href="{% url 'portfolio:portfolio' %}" class="btn btn-outline-light btn-lg">View Our Work</a>#}
+{#    <!-- Carousel Background -->#}
+{#    <div class="hero-carousel">#}
+{#        <div id="heroCarousel" class="carousel slide" data-bs-ride="carousel">#}
+{#            <div class="carousel-inner">#}
+{#                <div class="carousel-item active" data-bs-interval="5000">#}
+{#                    <img src="{% static 'images/homepage5.jpg' %}" class="d-block" alt="Web Development">#}
+{#                </div>#}
+{#                <div class="carousel-item" data-bs-interval="5000">#}
+{#                    <img src="{% static 'images/homepage2.jpg' %}" class="d-block" alt="App Development">#}
+{#                </div>#}
+{#                <div class="carousel-item" data-bs-interval="5000">#}
+{#                    <img src="{% static 'images/homepage3.jpg' %}" class="d-block" alt="POS Systems">#}
+{#                </div>#}
+{#                <div class="carousel-item" data-bs-interval="5000">#}
+{#                    <img src="{% static 'images/homepage4.jpg' %}" class="d-block" alt="Cloud Solutions">#}
 {#                </div>#}
 {#            </div>#}
-{#            <div class="col-lg-6 d-none d-lg-block">#}
-{#                <div class="hero-image text-center">#}
-{#                  <img src="{% static 'images/hero.png' %}" alt="CloudLink_Devs Solutions" class="img-fluid">#}
+{#        </div>#}
+{#        <!-- Dark overlay -->#}
+{#        <div class="carousel-overlay"></div>#}
+{#    </div>#}
+{##}
+{#    <!-- Hero Content -->#}
+{#    <div class="hero-container">#}
+{#        <div class="container">#}
+{#            <div class="row">#}
+{#                <div class="col-lg-8 hero-content">#}
+{#                    <h1 class="hero-title">Web & App Solutions for Your Business</h1>#}
+{#                    <p class="hero-subtitle">We build custom web applications, mobile apps, and POS systems to help your business thrive in the digital world.</p>#}
+{#                    <div class="hero-buttons">#}
+{#                        <a href="{% url 'quotes:service_estimator' %}" class="btn btn-primary btn-lg">Get a Quote</a>#}
+{#                        <a href="{% url 'portfolio:portfolio' %}" class="btn btn-outline-light btn-lg">View Our Work</a>#}
+{#                    </div>#}
 {#                </div>#}
 {#            </div>#}
 {#        </div>#}
 {#    </div>#}
 {#</section>#}
 {##}
-{#<!-- Services Section -->#}
+{#<!-- Trusted By Section -->#}
+{#<section class="trusted-by-section">#}
+{#    <div class="container">#}
+{#        <h3 class="trusted-by-title">TRUSTED BY THE MOST EXCITING PROJECTS</h3>#}
+{#        <div class="row align-items-center justify-content-center">#}
+{#            <div class="col-4 col-md-2 mb-4 mb-md-0">#}
+{#                <img src="{% static 'images/audi-7.svg' %}" alt="Partner Logo" class="img-fluid partner-logo">#}
+{#            </div>#}
+{#            <div class="col-4 col-md-2 mb-4 mb-md-0">#}
+{#                <img src="{% static 'images/andela(1).svg' %}" alt="Partner Logo" class="img-fluid partner-logo">#}
+{#            </div>#}
+{#            <div class="col-4 col-md-2 mb-4 mb-md-0">#}
+{#                <img src="{% static 'images/google-1-1.svg' %}" alt="Partner Logo" class="img-fluid partner-logo">#}
+{#            </div>#}
+{#            <div class="col-4 col-md-2 mb-4 mb-md-0">#}
+{#                <img src="{% static 'images/kra.png' %}" alt="Partner Logo" class="img-fluid partner-logo">#}
+{#            </div>#}
+{#            <div class="col-4 col-md-2 mb-4 mb-md-0">#}
+{#                <img src="{% static 'images/MPESA.png' %}" alt="Partner Logo" class="img-fluid partner-logo">#}
+{#            </div>#}
+{#        </div>#}
+{#        <p class="mt-4 text-center" style="color: #6b7280; font-size: 0.875rem;">AND MANY MORE</p>#}
+{#    </div>#}
+{#</section>#}
+{##}
+{#<!-- Services Section with New Card Style -->#}
 {#<section class="services-section">#}
 {#    <div class="container">#}
 {#        <div class="section-title">#}
 {#            <h2>Our Services</h2>#}
 {#            <p>We offer comprehensive development solutions to meet your business needs</p>#}
 {#        </div>#}
-{#        #}
+{##}
 {#        <div class="row">#}
 {#            <div class="col-md-4 mb-4">#}
-{#                <div class="service-card">#}
-{#                    <div class="service-icon">#}
-{#                        <i class="fas fa-laptop-code"></i>#}
+{#                <div class="service-card animate-on-scroll">#}
+{#                    <div class="service-image">#}
+{#                        <img src="{% static 'images/webdev.jpg' %}" alt="Web Development">#}
 {#                    </div>#}
-{#                    <h3>Web Development</h3>#}
-{#                    <p>Custom websites and web applications built with modern technologies to meet your business needs.</p>#}
-{#                    <a href="{% url 'services:web_development' %}" class="btn btn-sm btn-primary mt-3">Learn More</a>#}
+{#                    <div class="service-content">#}
+{#                        <h3>Web Development</h3>#}
+{#                        <p>Custom websites and web applications built with modern technologies to meet your business needs.</p>#}
+{#                        <a href="{% url 'services:web_development' %}" class="btn btn-outline-amber">Explore Opportunities</a>#}
+{#                    </div>#}
 {#                </div>#}
 {#            </div>#}
-{#            #}
+{##}
 {#            <div class="col-md-4 mb-4">#}
-{#                <div class="service-card">#}
-{#                    <div class="service-icon">#}
-{#                        <i class="fas fa-mobile-alt"></i>#}
+{#                <div class="service-card animate-on-scroll">#}
+{#                    <div class="service-image">#}
+{#                        <img src="{% static 'images/appdev.jpg' %}" alt="App Development">#}
 {#                    </div>#}
-{#                    <h3>App Development</h3>#}
-{#                    <p>Native and cross-platform mobile applications for iOS and Android to reach your customers anywhere.</p>#}
-{#                    <a href="{% url 'services:app_development' %}" class="btn btn-sm btn-primary mt-3">Learn More</a>#}
+{#                    <div class="service-content">#}
+{#                        <h3>App Development</h3>#}
+{#                        <p>Native and cross-platform mobile applications for iOS and Android to reach your customers anywhere.</p>#}
+{#                        <a href="{% url 'services:app_development' %}" class="btn btn-outline-amber">Explore Opportunities</a>#}
+{#                    </div>#}
 {#                </div>#}
 {#            </div>#}
-{#            #}
+{##}
 {#            <div class="col-md-4 mb-4">#}
-{#                <div class="service-card">#}
-{#                    <div class="service-icon">#}
-{#                        <i class="fas fa-cash-register"></i>#}
+{#                <div class="service-card animate-on-scroll">#}
+{#                    <div class="service-image">#}
+{#                        <img src="{% static 'images/possytem.jpg' %}" alt="POS Systems">#}
 {#                    </div>#}
-{#                    <h3>POS Systems</h3>#}
-{#                    <p>Customized point-of-sale solutions for retail, restaurants, and other businesses to streamline operations.</p>#}
-{#                    <a href="{% url 'services:pos_systems' %}" class="btn btn-sm btn-primary mt-3">Learn More</a>#}
+{#                    <div class="service-content">#}
+{#                        <h3>POS Systems</h3>#}
+{#                        <p>Customized point-of-sale solutions for retail, restaurants, and other businesses to streamline operations.</p>#}
+{#                        <a href="{% url 'services:pos_systems' %}" class="btn btn-outline-amber">Explore Opportunities</a>#}
+{#                    </div>#}
 {#                </div>#}
 {#            </div>#}
 {#        </div>#}
 {#    </div>#}
 {#</section>#}
 {##}
-{#<!-- Features Section -->#}
+{#<!-- Features Section with Flip Cards - Only 4 Cards -->#}
 {#<section class="features-section">#}
 {#    <div class="container">#}
 {#        <div class="section-title">#}
 {#            <h2>Why Choose Us</h2>#}
 {#            <p>What makes CloudLink_Devs the right partner for your digital journey</p>#}
 {#        </div>#}
-{#        #}
+{##}
 {#        <div class="row">#}
-{#            <div class="col-lg-4">#}
-{#                <div class="feature-item">#}
-{#                    <div class="feature-icon">#}
-{#                        <i class="fas fa-code"></i>#}
+{#            <div class="col-md-6 col-lg-3 mb-4">#}
+{#                <div class="feature-card animate-on-scroll">#}
+{#                    <div class="feature-card-inner">#}
+{#                        <div class="feature-card-front">#}
+{#                            <div class="feature-image">#}
+{#                                <img src="{% static 'images/webdev.jpg' %}" alt="Clean Code">#}
+{#                            </div>#}
+{#                            <div class="feature-content">#}
+{#                                <h4>Clean Code</h4>#}
+{#                                <p>Well-documented, maintainable code following best practices</p>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                        <div class="feature-card-back">#}
+{#                            <div class="feature-icon">#}
+{#                                <i class="fas fa-code"></i>#}
+{#                            </div>#}
+{#                            <div class="feature-stat">98%</div>#}
+{#                            <h4>Code Quality</h4>#}
+{#                            <p>Our code passes rigorous quality tests, ensuring reliability and scalability for your business.</p>#}
+{#                        </div>#}
 {#                    </div>#}
-{#                    <h4>Clean Code</h4>#}
-{#                    <p>We write maintainable, well-documented code following best practices to ensure long-term success.</p>#}
 {#                </div>#}
 {#            </div>#}
-{#            #}
-{#            <div class="col-lg-4">#}
-{#                <div class="feature-item">#}
-{#                    <div class="feature-icon">#}
-{#                        <i class="fas fa-rocket"></i>#}
+{##}
+{#            <div class="col-md-6 col-lg-3 mb-4">#}
+{#                <div class="feature-card animate-on-scroll">#}
+{#                    <div class="feature-card-inner">#}
+{#                        <div class="feature-card-front">#}
+{#                            <div class="feature-image">#}
+{#                                <img src="{% static 'images/services.png' %}" alt="Fast Delivery">#}
+{#                            </div>#}
+{#                            <div class="feature-content">#}
+{#                                <h4>Fast Delivery</h4>#}
+{#                                <p>Agile methodologies to deliver your project on time</p>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                        <div class="feature-card-back">#}
+{#                            <div class="feature-icon">#}
+{#                                <i class="fas fa-rocket"></i>#}
+{#                            </div>#}
+{#                            <div class="feature-stat">25%</div>#}
+{#                            <h4>Faster Delivery</h4>#}
+{#                            <p>Our agile approach delivers projects 25% faster than industry standards without sacrificing quality.</p>#}
+{#                        </div>#}
 {#                    </div>#}
-{#                    <h4>Fast Delivery</h4>#}
-{#                    <p>We follow agile methodologies to deliver your project on time without compromising quality.</p>#}
 {#                </div>#}
 {#            </div>#}
-{#            #}
-{#            <div class="col-lg-4">#}
-{#                <div class="feature-item">#}
-{#                    <div class="feature-icon">#}
-{#                        <i class="fas fa-headset"></i>#}
+{##}
+{#            <div class="col-md-6 col-lg-3 mb-4">#}
+{#                <div class="feature-card animate-on-scroll">#}
+{#                    <div class="feature-card-inner">#}
+{#                        <div class="feature-card-front">#}
+{#                            <div class="feature-image">#}
+{#                                <img src="{% static 'images/fast.jpg' %}" alt="24/7 Support">#}
+{#                            </div>#}
+{#                            <div class="feature-content">#}
+{#                                <h4>24/7 Support</h4>#}
+{#                                <p>Always available to help with issues or questions</p>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                        <div class="feature-card-back">#}
+{#                            <div class="feature-icon">#}
+{#                                <i class="fas fa-headset"></i>#}
+{#                            </div>#}
+{#                            <div class="feature-stat">15min</div>#}
+{#                            <h4>Response Time</h4>#}
+{#                            <p>Our support team responds to critical issues within 15 minutes, 24/7/365.</p>#}
+{#                        </div>#}
 {#                    </div>#}
-{#                    <h4>24/7 Support</h4>#}
-{#                    <p>Our dedicated support team is always available to help you with any issues or questions.</p>#}
 {#                </div>#}
 {#            </div>#}
-{#            #}
-{#            <div class="col-lg-4">#}
-{#                <div class="feature-item">#}
-{#                    <div class="feature-icon">#}
-{#                        <i class="fas fa-shield-alt"></i>#}
+{##}
+{#            <div class="col-md-6 col-lg-3 mb-4">#}
+{#                <div class="feature-card animate-on-scroll">#}
+{#                    <div class="feature-card-inner">#}
+{#                        <div class="feature-card-front">#}
+{#                            <div class="feature-image">#}
+{#                                <img src="{% static 'images/testimony1.jpg' %}" alt="Security Focus">#}
+{#                            </div>#}
+{#                            <div class="feature-content">#}
+{#                                <h4>Security Focus</h4>#}
+{#                                <p>Robust security measures to protect your data</p>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                        <div class="feature-card-back">#}
+{#                            <div class="feature-icon">#}
+{#                                <i class="fas fa-shield-alt"></i>#}
+{#                            </div>#}
+{#                            <div class="feature-stat">100%</div>#}
+{#                            <h4>Compliance Rate</h4>#}
+{#                            <p>All our solutions comply with industry security standards and best practices.</p>#}
+{#                        </div>#}
 {#                    </div>#}
-{#                    <h4>Security Focus</h4>#}
-{#                    <p>We implement robust security measures to protect your data and applications from threats.</p>#}
-{#                </div>#}
-{#            </div>#}
-{#            #}
-{#            <div class="col-lg-4">#}
-{#                <div class="feature-item">#}
-{#                    <div class="feature-icon">#}
-{#                        <i class="fas fa-tachometer-alt"></i>#}
-{#                    </div>#}
-{#                    <h4>Optimized Performance</h4>#}
-{#                    <p>Our solutions are designed for speed and efficiency to provide the best user experience.</p>#}
-{#                </div>#}
-{#            </div>#}
-{#            #}
-{#            <div class="col-lg-4">#}
-{#                <div class="feature-item">#}
-{#                    <div class="feature-icon">#}
-{#                        <i class="fas fa-sync"></i>#}
-{#                    </div>#}
-{#                    <h4>Regular Updates</h4>#}
-{#                    <p>We provide ongoing maintenance and updates to keep your systems running smoothly.</p>#}
 {#                </div>#}
 {#            </div>#}
 {#        </div>#}
 {#    </div>#}
 {#</section>#}
 {##}
-{#<!-- CTA Section -->#}
-{#<section class="cta-section">#}
-{#    <div class="container">#}
-{#        <h2 class="cta-title">Ready to Start Your Project?</h2>#}
-{#        <p class="cta-text">Contact us today for a free consultation and let's bring your ideas to life. Our team is ready to help you transform your business.</p>#}
-{#        <a href="{% url 'quotes:service_estimator' %}" class="btn btn-light btn-lg">Get a Free Quote</a>#}
+{#<!-- New CTA Section with Cards like Services -->#}
+{#<section class="cta-section" style="background-image: url('{% static 'images/testmony2.jpg' %}');">#}
+{#    <div class="container cta-container">#}
+{#        <div class="row justify-content-center">#}
+{#            <div class="col-lg-8">#}
+{#                <h2 class="cta-title">Ready to Start Your Project?</h2>#}
+{#                <p class="cta-text">Contact us today for a free consultation and let's bring your ideas to life. Our team is ready to help you transform your business.</p>#}
+{#                <div class="cta-button-container">#}
+{#                    <a href="{% url 'quotes:service_estimator' %}" class="btn btn-primary btn-lg">Get a Free Quote</a>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{##}
+{#        <div class="row">#}
+{#            <div class="col-md-4 mb-4">#}
+{#                <div class="cta-card animate-on-scroll">#}
+{#                    <div class="cta-image">#}
+{#                        <img src="{% static 'images/Nairobi.jpg' %}" alt="Web Project">#}
+{#                    </div>#}
+{#                    <div class="cta-content">#}
+{#                        <h5>Web Projects</h5>#}
+{#                        <p>Custom websites and web applications designed to meet your specific business requirements and goals.</p>#}
+{#                        <a href="{% url 'services:web_development' %}" class="btn btn-outline-amber">Explore Opportunities</a>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{#            <div class="col-md-4 mb-4">#}
+{#                <div class="cta-card animate-on-scroll">#}
+{#                    <div class="cta-image">#}
+{#                        <img src="{% static 'images/homepage4.jpg' %}" alt="App Project">#}
+{#                    </div>#}
+{#                    <div class="cta-content">#}
+{#                        <h5>Mobile Solutions</h5>#}
+{#                        <p>iOS and Android applications that connect you with your audience on all mobile devices.</p>#}
+{#                        <a href="{% url 'services:app_development' %}" class="btn btn-outline-amber">Explore Opportunities</a>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{#            <div class="col-md-4 mb-4">#}
+{#                <div class="cta-card animate-on-scroll">#}
+{#                    <div class="cta-image">#}
+{#                        <img src="{% static 'images/testmony2.jpg' %}" alt="POS Project">#}
+{#                    </div>#}
+{#                    <div class="cta-content">#}
+{#                        <h5>POS Systems</h5>#}
+{#                        <p>Streamlined business operations with our tailored point-of-sale solutions for all industries.</p>#}
+{#                        <a href="{% url 'services:pos_systems' %}" class="btn btn-outline-amber">Explore Opportunities</a>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
 {#    </div>#}
 {#</section>#}
 {##}
@@ -432,10 +976,10 @@
 {#            <h2>What Our Clients Say</h2>#}
 {#            <p>Testimonials from businesses we've helped succeed</p>#}
 {#        </div>#}
-{#        #}
+{##}
 {#        <div class="row">#}
 {#            <div class="col-md-4 mb-4">#}
-{#                <div class="testimonial-card">#}
+{#                <div class="testimonial-card animate-on-scroll">#}
 {#                    <div class="testimonial-content">#}
 {#                        <p>CloudLink_Devs transformed our business with a custom web application that streamlined our operations. Their team was professional and delivered beyond our expectations.</p>#}
 {#                    </div>#}
@@ -450,9 +994,9 @@
 {#                    </div>#}
 {#                </div>#}
 {#            </div>#}
-{#            #}
+{##}
 {#            <div class="col-md-4 mb-4">#}
-{#                <div class="testimonial-card">#}
+{#                <div class="testimonial-card animate-on-scroll">#}
 {#                    <div class="testimonial-content">#}
 {#                        <p>The mobile app developed by CloudLink_Devs helped us increase customer engagement by 200%. Their attention to detail and commitment to quality is impressive.</p>#}
 {#                    </div>#}
@@ -467,9 +1011,9 @@
 {#                    </div>#}
 {#                </div>#}
 {#            </div>#}
-{#            #}
+{##}
 {#            <div class="col-md-4 mb-4">#}
-{#                <div class="testimonial-card">#}
+{#                <div class="testimonial-card animate-on-scroll">#}
 {#                    <div class="testimonial-content">#}
 {#                        <p>Our new POS system has made managing our restaurant so much easier. The team at CloudLink_Devs understood our needs perfectly and delivered a solution that works flawlessly.</p>#}
 {#                    </div>#}
@@ -495,14 +1039,14 @@
 {#            <h2>Recent Projects</h2>#}
 {#            <p>Some of our latest work for clients across different industries</p>#}
 {#        </div>#}
-{#        #}
+{##}
 {#        <div class="row">#}
 {#            <div class="col-md-4 mb-4">#}
-{#                <div class="work-card">#}
+{#                <div class="work-card animate-on-scroll">#}
 {#                    <div class="work-image">#}
-{#                        <img src="{% static 'images/project-placeholder.jpg' %}" alt="Project 1" class="img-fluid">#}
+{#                        <img src="{% static 'images/ecommerce.jpg' %}" alt="Project 1" class="img-fluid">#}
 {#                        <div class="work-overlay">#}
-{#                            <a href="{% url 'portfolio:case_study' 1 %}" class="btn btn-light">View Project</a>#}
+{#                            <a href="#" class="btn btn-light">View Project</a>#}
 {#                        </div>#}
 {#                    </div>#}
 {#                    <div class="work-info">#}
@@ -511,13 +1055,13 @@
 {#                    </div>#}
 {#                </div>#}
 {#            </div>#}
-{#            #}
+{##}
 {#            <div class="col-md-4 mb-4">#}
-{#                <div class="work-card">#}
+{#                <div class="work-card animate-on-scroll">#}
 {#                    <div class="work-image">#}
-{#                        <img src="{% static 'images/project-placeholder.jpg' %}" alt="Project 2" class="img-fluid">#}
+{#                        <img src="{% static 'images/deliverapp.jpg' %}" alt="Project 2" class="img-fluid">#}
 {#                        <div class="work-overlay">#}
-{#                            <a href="{% url 'portfolio:case_study' 2 %}" class="btn btn-light">View Project</a>#}
+{#                            <a href="#" class="btn btn-light">View Project</a>#}
 {#                        </div>#}
 {#                    </div>#}
 {#                    <div class="work-info">#}
@@ -526,13 +1070,13 @@
 {#                    </div>#}
 {#                </div>#}
 {#            </div>#}
-{#            #}
+{##}
 {#            <div class="col-md-4 mb-4">#}
-{#                <div class="work-card">#}
+{#                <div class="work-card animate-on-scroll">#}
 {#                    <div class="work-image">#}
-{#                        <img src="{% static 'images/project-placeholder.jpg' %}" alt="Project 3" class="img-fluid">#}
+{#                        <img src="{% static 'images/pos5.jpg' %}" alt="Project 3" class="img-fluid">#}
 {#                        <div class="work-overlay">#}
-{#                            <a href="{% url 'portfolio:case_study' 3 %}" class="btn btn-light">View Project</a>#}
+{#                            <a href="#" class="btn btn-light">View Project</a>#}
 {#                        </div>#}
 {#                    </div>#}
 {#                    <div class="work-info">#}
@@ -542,7 +1086,7 @@
 {#                </div>#}
 {#            </div>#}
 {#        </div>#}
-{#        #}
+{##}
 {#        <div class="text-center mt-4">#}
 {#            <a href="{% url 'portfolio:portfolio' %}" class="btn btn-primary">View All Projects</a>#}
 {#        </div>#}
@@ -553,220 +1097,531 @@
 {#{% block extra_js %}#}
 {#<script>#}
 {#    document.addEventListener('DOMContentLoaded', function() {#}
-{#        // Add animation classes on scroll#}
-{#        const animateElements = document.querySelectorAll('.service-card, .feature-item, .testimonial-card, .work-card');#}
-{#        #}
-{#        animateElements.forEach((element, index) => {#}
-{#            element.classList.add('animate-on-scroll');#}
-{#            element.dataset.animation = 'slide-up';#}
-{#            element.style.animationDelay = `${index * 0.1}s`;#}
+{#        // Fix for carousel not moving automatically#}
+{#        var myCarousel = new bootstrap.Carousel(document.getElementById('heroCarousel'), {#}
+{#            interval: 5000,#}
+{#            ride: 'carousel',#}
+{#            wrap: true#}
 {#        });#}
+{##}
+{#        // Force the carousel to start#}
+{#        setTimeout(function() {#}
+{#            myCarousel.cycle();#}
+{#        }, 1000);#}
+{##}
+{#        // Add animation classes on scroll#}
+{#        const animateElements = document.querySelectorAll('.animate-on-scroll');#}
+{##}
+{#        const isInViewport = (element) => {#}
+{#            const rect = element.getBoundingClientRect();#}
+{#            return (#}
+{#                rect.top <= (window.innerHeight || document.documentElement.clientHeight) * 0.85#}
+{#            );#}
+{#        };#}
+{##}
+{#        const checkVisibility = () => {#}
+{#            animateElements.forEach((element) => {#}
+{#                if (isInViewport(element)) {#}
+{#                    element.classList.add('visible');#}
+{#                }#}
+{#            });#}
+{#        };#}
+{##}
+{#        // Set initial animation delays#}
+{#        animateElements.forEach((element, index) => {#}
+{#            element.style.transitionDelay = `${(index % 3) * 0.1}s`;#}
+{#        });#}
+{##}
+{#        // Check on load#}
+{#        checkVisibility();#}
+{##}
+{#        // Check on scroll#}
+{#        window.addEventListener('scroll', checkVisibility);#}
 {#    });#}
 {#</script>#}
 {#{% endblock %}#}
 
+
 {% extends "base.html" %}
+{% load static %}
 
 {% block title %}CloudLink_Devs - Web & App Development Solutions{% endblock %}
 
 {% block extra_css %}
 <style>
-    /* Hero Section */
+    :root {
+        --beige-color: #f5eadb;
+        --amber-color: #c1954a;
+        --dark-amber: #9e7a39;
+        --light-amber: #d4b06a;
+        --off-white: #faf7f2;
+        --black: #212121;
+        --dark-gray: #333333;
+        --light-gray: #f0f0f0;
+    }
+
+    /* Hero Section with Carousel Background */
     .hero-section {
-        background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
-        color: white;
-        padding: 100px 0;
         position: relative;
+        min-height: 100vh;
+        color: white;
         overflow: hidden;
     }
 
-    .hero-content {
+    .hero-carousel {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 0;
+    }
+
+    .hero-carousel .carousel,
+    .hero-carousel .carousel-inner,
+    .hero-carousel .carousel-item {
+        height: 100%;
+    }
+
+    .hero-carousel .carousel-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        filter: brightness(0.7);
+    }
+
+    .hero-container {
         position: relative;
-        z-index: 2;
+        z-index: 1;
+        padding: 150px 0;
+    }
+
+    .hero-content {
+        max-width: 700px;
     }
 
     .hero-title {
-        font-size: 3rem;
+        font-size: 3.5rem;
         font-weight: 800;
         margin-bottom: 1.5rem;
+        line-height: 1.2;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
     }
 
     .hero-subtitle {
         font-size: 1.25rem;
         margin-bottom: 2rem;
-        opacity: 0.9;
+        opacity: 0.95;
+        line-height: 1.6;
+        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
     }
 
     .hero-buttons .btn {
         margin-right: 1rem;
-        padding: 0.75rem 1.5rem;
+        margin-bottom: 1rem;
+        padding: 0.75rem 1.75rem;
         font-weight: 600;
+        border-radius: 0.375rem;
     }
 
-    .hero-image {
-        animation: float 6s ease-in-out infinite;
+    /* Dark overlay for carousel */
+    .carousel-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.4);
+        z-index: 1;
     }
 
-    /* Services Section */
+    /* Button styling with amber colors */
+    .btn-primary {
+        background-color: var(--amber-color);
+        border-color: var(--amber-color);
+        color: white;
+    }
+
+    .btn-primary:hover {
+        background-color: var(--dark-amber);
+        border-color: var(--dark-amber);
+    }
+
+    .btn-light {
+        background-color: var(--off-white);
+        color: var(--black);
+        border-color: var(--off-white);
+    }
+
+    .btn-light:hover {
+        background-color: white;
+        color: var(--black);
+    }
+
+    .btn-outline-light {
+        color: white;
+        border-color: rgba(255, 255, 255, 0.6);
+    }
+
+    .btn-outline-amber {
+        color: var(--amber-color);
+        border-color: var(--amber-color);
+        background-color: transparent;
+        font-weight: 600; /* Increased font weight for bolder text */
+        display: inline-block; /* Fixed width issues */
+        width: auto;
+        padding: 8px 20px;
+        text-align: center;
+        font-size: 0.95rem;
+    }
+
+    .btn-outline-amber:hover {
+        background-color: var(--amber-color);
+        color: white;
+    }
+
+    /* Services Section with Background */
     .services-section {
-        padding: 80px 0;
+        padding: 100px 0;
+        position: relative;
+        color: var(--black);
+        background-image: url('{% static "images/testmony2.jpg" %}');
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+    }
+
+    .services-section::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(245, 234, 219, 0.9);
+        z-index: 1;
+    }
+
+    .services-section .container {
+        position: relative;
+        z-index: 2;
+    }
+
+    .services-section .section-title h2 {
+        color: var(--black);
+    }
+
+    .services-section .section-title p {
+        color: var(--dark-gray);
     }
 
     .section-title {
         text-align: center;
-        margin-bottom: 3rem;
+        margin-bottom: 4rem;
     }
 
     .section-title h2 {
-        font-weight: 700;
+        font-weight: 800;
         margin-bottom: 1rem;
-        color: #333;
+        font-size: 2.5rem;
     }
 
+    .section-title p {
+        max-width: 600px;
+        margin: 0 auto;
+        font-size: 1.1rem;
+    }
+
+    /* Updated Service Card Style */
     .service-card {
-        padding: 30px;
-        text-align: center;
-        border-radius: 10px;
-        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+        border-radius: 12px;
+        overflow: hidden;
+        background-color: white;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        margin-bottom: 30px;
         transition: all 0.3s ease;
         height: 100%;
-        background-color: white;
+        display: flex;
+        flex-direction: column;
     }
 
     .service-card:hover {
         transform: translateY(-10px);
-        box-shadow: 0 1rem 3rem rgba(58, 59, 69, 0.175);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
     }
 
-    .service-icon {
-        width: 80px;
-        height: 80px;
-        margin: 0 auto 20px;
-        background-color: var(--light-gray);
-        border-radius: 50%;
+    .service-image {
+        height: 240px;
+        overflow: hidden;
+    }
+
+    .service-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+    }
+
+    .service-card:hover .service-image img {
+        transform: scale(1.05);
+    }
+
+    .service-content {
+        padding: 25px;
+        flex-grow: 1;
         display: flex;
-        align-items: center;
-        justify-content: center;
-        color: var(--accent-color);
-        font-size: 2rem;
+        flex-direction: column;
     }
 
-    /* Features Section */
+    .service-content h3 {
+        font-weight: 700;
+        margin-bottom: 15px;
+        font-size: 1.4rem;
+        color: var(--black);
+    }
+
+    .service-content p {
+        color: var(--dark-gray);
+        margin-bottom: 20px;
+        font-size: 1rem;
+        line-height: 1.6;
+        flex-grow: 1;
+    }
+
+    .service-content .btn {
+        align-self: flex-start; /* Aligns button to the left and prevents stretching */
+    }
+
+    /* Features Section with Blended Background */
     .features-section {
-        padding: 80px 0;
-        background-color: var(--light-gray);
+        padding: 100px 0;
+        position: relative;
+        background: linear-gradient(to bottom, var(--amber-color) 0%, var(--beige-color) 100%);
+        color: white;
     }
 
-    .feature-item {
+    .features-section::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.1);
+        z-index: 1;
+    }
+
+    .features-section .container {
+        position: relative;
+        z-index: 2;
+    }
+
+    .features-section .section-title h2 {
+        color: white;
+    }
+
+    .features-section .section-title p {
+        color: rgba(255, 255, 255, 0.9);
+    }
+
+    /* Updated Feature Card with Flip */
+    .feature-card {
+        perspective: 1000px;
+        height: 100%;
+        min-height: 340px;
         margin-bottom: 30px;
     }
 
+    .feature-card-inner {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        text-align: left;
+        transition: transform 0.6s;
+        transform-style: preserve-3d;
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        border-radius: 12px;
+    }
+
+    .feature-card:hover .feature-card-inner {
+        transform: rotateY(180deg);
+    }
+
+    .feature-card-front, .feature-card-back {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+        border-radius: 12px;
+        overflow: hidden;
+    }
+
+    .feature-card-front {
+        background-color: white;
+    }
+
+    .feature-image {
+        height: 190px;
+        overflow: hidden;
+    }
+
+    .feature-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .feature-content {
+        padding: 20px;
+    }
+
+    .feature-content h4 {
+        font-weight: 700;
+        margin-bottom: 10px;
+        font-size: 1.2rem;
+        color: var(--black);
+    }
+
+    .feature-content p {
+        color: var(--dark-gray);
+        font-size: 0.95rem;
+        line-height: 1.5;
+        margin-bottom: 0;
+    }
+
+    .feature-card-back {
+        background-color: white;
+        color: var(--black);
+        transform: rotateY(180deg);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 30px;
+        text-align: center;
+        border-radius: 12px; /* Ensuring rounded edges for back of cards */
+    }
+
     .feature-icon {
-        width: 60px;
-        height: 60px;
-        background-color: var(--primary-color);
+        width: 50px;
+        height: 50px;
+        background-color: var(--amber-color);
         color: white;
-        border-radius: 50%;
+        border-radius: 12px;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 1.5rem;
-        margin-bottom: 20px;
+        font-size: 1.2rem;
+        margin: 0 auto 15px;
     }
 
-    /* CTA Section */
+    .feature-card-back h4 {
+        font-weight: 700;
+        margin-bottom: 15px;
+        font-size: 1.2rem;
+        color: var(--black);
+    }
+
+    .feature-card-back p {
+        margin-bottom: 20px;
+        color: var(--dark-gray);
+    }
+
+    .feature-stat {
+        font-size: 2.5rem;
+        font-weight: 800;
+        margin-bottom: 15px;
+        color: var(--amber-color);
+    }
+
+    /* CTA Section - Simplified without cards */
     .cta-section {
-        padding: 80px 0;
-        background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
-        color: white;
-        text-align: center;
+        padding: 100px 0;
+        color: var(--black);
+        position: relative;
+        overflow: hidden;
+        background-image: url('{% static "images/testmony2.jpg" %}');
+        background-size: cover;
+        background-position: center;
+    }
+
+    .cta-section::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(245, 234, 219, 0.85);
+        z-index: 1;
+    }
+
+    .cta-container {
+        position: relative;
+        z-index: 2;
     }
 
     .cta-title {
         font-size: 2.5rem;
-        font-weight: 700;
+        font-weight: 800;
         margin-bottom: 1.5rem;
+        text-align: center;
+        color: var(--black);
     }
 
     .cta-text {
         max-width: 700px;
         margin: 0 auto 2rem;
-        opacity: 0.9;
+        font-size: 1.1rem;
+        line-height: 1.6;
+        text-align: center;
+        color: var(--dark-gray);
     }
 
-    /* Testimonials Section */
-    .testimonials-section {
-        padding: 80px 0;
-    }
-
-    .testimonial-card {
-        background-color: white;
-        border-radius: 10px;
-        padding: 30px;
-        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
-        margin-bottom: 30px;
-        height: 100%;
-    }
-
-    .testimonial-content {
-        font-style: italic;
-        margin-bottom: 20px;
-        position: relative;
-    }
-
-    .testimonial-content:before {
-        content: '"';
-        font-size: 4rem;
-        position: absolute;
-        top: -20px;
-        left: -15px;
-        color: #f2f3f5;
-        z-index: -1;
-    }
-
-    .testimonial-author {
-        display: flex;
-        align-items: center;
-    }
-
-    .testimonial-avatar {
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
-        margin-right: 15px;
-        background-color: #f2f3f5;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .testimonial-info h5 {
-        margin-bottom: 0;
-    }
-
-    .testimonial-info p {
-        color: #858796;
-        margin-bottom: 0;
+    .cta-button-container {
+        text-align: center;
     }
 
     /* Recent Work Section */
     .recent-work-section {
-        padding: 80px 0;
-        background-color: var(--light-gray);
+        padding: 100px 0;
+        background-color: var(--beige-color);
     }
 
+    /* Updated Work Card */
     .work-card {
-        border-radius: 10px;
+        border-radius: 12px;
         overflow: hidden;
-        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
         margin-bottom: 30px;
         background-color: white;
+        transition: all 0.3s ease;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .work-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
     }
 
     .work-image {
         position: relative;
         overflow: hidden;
-        height: 200px;
+        height: 230px;
+    }
+
+    .work-image img {
+        object-fit: cover;
+        width: 100%;
+        height: 100%;
+        transition: transform 0.5s ease;
+    }
+
+    .work-card:hover .work-image img {
+        transform: scale(1.05);
     }
 
     .work-image .work-overlay {
@@ -775,7 +1630,7 @@
         left: 0;
         width: 100%;
         height: 100%;
-        background-color: rgba(0, 102, 204, 0.7);
+        background-color: rgba(193, 149, 74, 0.7);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -790,6 +1645,8 @@
     .work-image .btn {
         transform: translateY(20px);
         transition: all 0.3s ease;
+        padding: 0.5rem 1.25rem;
+        font-weight: 600;
     }
 
     .work-image:hover .btn {
@@ -798,73 +1655,177 @@
 
     .work-info {
         padding: 20px;
+        flex-grow: 1;
     }
 
     .work-info h5 {
-        margin-bottom: 10px;
+        margin-bottom: 8px;
+        font-weight: 700;
+        color: var(--black);
+    }
+
+    .work-info p {
+        color: var(--dark-gray);
+        margin-bottom: 0;
+    }
+
+    /* Trusted By Section */
+    .trusted-by-section {
+        padding: 60px 0;
+        background-color: white;
+    }
+
+    .trusted-by-title {
+        font-size: 0.875rem;
+        font-weight: 600;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: var(--dark-gray);
+        margin-bottom: 2rem;
+        text-align: center;
+    }
+
+    .partner-logo {
+        opacity: 0.8;
+        transition: opacity 0.3s ease;
+        max-height: 40px;
+        margin: 0 auto;
+    }
+
+    .partner-logo:hover {
+        opacity: 1;
     }
 
     /* Animations */
-    @keyframes float {
-        0% {
-            transform: translateY(0px);
+    .animate-on-scroll {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: all 0.7s ease-out;
+    }
+
+    .animate-on-scroll.visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    /* Optimizing carousel images for mobile */
+    @media (max-width: 768px) {
+        .hero-title {
+            font-size: 2.5rem;
         }
-        50% {
-            transform: translateY(-20px);
+
+        .hero-container {
+            padding: 100px 0;
         }
-        100% {
-            transform: translateY(0px);
+
+        .feature-card {
+            min-height: 320px;
+        }
+
+        .hero-carousel .carousel-item {
+            height: 100vh;
+        }
+
+        .hero-carousel .carousel-item img {
+            object-position: center; /* Center the focus point of the image */
+        }
+
+        .service-image, .work-image {
+            height: 200px;  /* Slightly reduced height on mobile but still preserving image */
+        }
+
+        .feature-image {
+            height: 170px;
         }
     }
 
-    /* Dark mode adaptations */
-    body.dark-mode .service-card,
-    body.dark-mode .testimonial-card,
-    body.dark-mode .work-card {
-        background-color: #2a2c3e;
-        color: #f8f9fc;
-    }
+    @media (max-width: 576px) {
+        .hero-title {
+            font-size: 2rem;
+        }
 
-    body.dark-mode .service-icon {
-        background-color: #3a3d52;
-        color: #4e73df;
-    }
+        .hero-subtitle {
+            font-size: 1rem;
+        }
 
-    body.dark-mode .section-title h2,
-    body.dark-mode .testimonial-info h5 {
-        color: #f8f9fc;
-    }
-
-    body.dark-mode .features-section,
-    body.dark-mode .recent-work-section {
-        background-color: #222533;
+        .hero-buttons .btn {
+            display: block;
+            width: 100%;
+            margin-right: 0;
+            margin-bottom: 1rem;
+        }
     }
 </style>
 {% endblock %}
 
 {% block content %}
-<!-- Hero Section -->
+<!-- Hero Section with Carousel Background -->
 <section class="hero-section">
-    <div class="container">
-        <div class="row align-items-center">
-            <div class="col-lg-6 hero-content">
-                <h1 class="hero-title">Web & App Solutions for Your Business</h1>
-                <p class="hero-subtitle">We build custom web applications, mobile apps, and POS systems to help your business thrive in the digital world.</p>
-                <div class="hero-buttons">
-                    <a href="{% url 'quotes:service_estimator' %}" class="btn btn-light btn-lg">Get a Quote</a>
-                    <a href="{% url 'portfolio:portfolio' %}" class="btn btn-outline-light btn-lg">View Our Work</a>
+    <!-- Carousel Background -->
+    <div class="hero-carousel">
+        <div id="heroCarousel" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active" data-bs-interval="5000">
+                    <img src="{% static 'images/homepage5.jpg' %}" class="d-block" alt="Web Development">
+                </div>
+                <div class="carousel-item" data-bs-interval="5000">
+                    <img src="{% static 'images/homepage2.jpg' %}" class="d-block" alt="App Development">
+                </div>
+                <div class="carousel-item" data-bs-interval="5000">
+                    <img src="{% static 'images/homepage3.jpg' %}" class="d-block" alt="POS Systems">
+                </div>
+                <div class="carousel-item" data-bs-interval="5000">
+                    <img src="{% static 'images/homepage4.jpg' %}" class="d-block" alt="Cloud Solutions">
                 </div>
             </div>
-            <div class="col-lg-6 d-none d-lg-block">
-                <div class="hero-image text-center">
-{#                    <img src="{% static 'images/hero-illustration.png' %}" alt="CloudLink_Devs Solutions" class="img-fluid">#}
+        </div>
+        <!-- Dark overlay -->
+        <div class="carousel-overlay"></div>
+    </div>
+
+    <!-- Hero Content -->
+    <div class="hero-container">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 hero-content">
+                    <h1 class="hero-title">Web & App Solutions for Your Business</h1>
+                    <p class="hero-subtitle">We build custom web applications, mobile apps, and POS systems to help your business thrive in the digital world.</p>
+                    <div class="hero-buttons">
+                        <a href="{% url 'quotes:service_estimator' %}" class="btn btn-primary btn-lg">Get a Quote</a>
+                        <a href="{% url 'portfolio:portfolio' %}" class="btn btn-outline-light btn-lg">View Our Work</a>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-<!-- Services Section -->
+<!-- Trusted By Section -->
+<section class="trusted-by-section">
+    <div class="container">
+        <h3 class="trusted-by-title">TRUSTED BY THE MOST EXCITING PROJECTS</h3>
+        <div class="row align-items-center justify-content-center">
+            <div class="col-4 col-md-2 mb-4 mb-md-0">
+                <img src="{% static 'images/audi-7.svg' %}" alt="Partner Logo" class="img-fluid partner-logo">
+            </div>
+            <div class="col-4 col-md-2 mb-4 mb-md-0">
+                <img src="{% static 'images/andela(1).svg' %}" alt="Partner Logo" class="img-fluid partner-logo">
+            </div>
+            <div class="col-4 col-md-2 mb-4 mb-md-0">
+                <img src="{% static 'images/google-1-1.svg' %}" alt="Partner Logo" class="img-fluid partner-logo">
+            </div>
+            <div class="col-4 col-md-2 mb-4 mb-md-0">
+                <img src="{% static 'images/kra.png' %}" alt="Partner Logo" class="img-fluid partner-logo">
+            </div>
+            <div class="col-4 col-md-2 mb-4 mb-md-0">
+                <img src="{% static 'images/MPESA.png' %}" alt="Partner Logo" class="img-fluid partner-logo">
+            </div>
+        </div>
+        <p class="mt-4 text-center" style="color: #6b7280; font-size: 0.875rem;">AND MANY MORE</p>
+    </div>
+</section>
+
+<!-- Services Section with Background Image and Overlay -->
 <section class="services-section">
     <div class="container">
         <div class="section-title">
@@ -874,42 +1835,48 @@
 
         <div class="row">
             <div class="col-md-4 mb-4">
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-laptop-code"></i>
+                <div class="service-card animate-on-scroll">
+                    <div class="service-image">
+                        <img src="{% static 'images/webdev.jpg' %}" alt="Web Development">
                     </div>
-                    <h3>Web Development</h3>
-                    <p>Custom websites and web applications built with modern technologies to meet your business needs.</p>
-                    <a href="{% url 'services:web_development' %}" class="btn btn-sm btn-primary mt-3">Learn More</a>
+                    <div class="service-content">
+                        <h3>Web Development</h3>
+                        <p>Custom websites and web applications built with modern technologies to meet your business needs.</p>
+                        <a href="{% url 'services:web_development' %}" class="btn btn-outline-amber">Explore Opportunities</a>
+                    </div>
                 </div>
             </div>
 
             <div class="col-md-4 mb-4">
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-mobile-alt"></i>
+                <div class="service-card animate-on-scroll">
+                    <div class="service-image">
+                        <img src="{% static 'images/appdev.jpg' %}" alt="App Development">
                     </div>
-                    <h3>App Development</h3>
-                    <p>Native and cross-platform mobile applications for iOS and Android to reach your customers anywhere.</p>
-                    <a href="{% url 'services:app_development' %}" class="btn btn-sm btn-primary mt-3">Learn More</a>
+                    <div class="service-content">
+                        <h3>App Development</h3>
+                        <p>Native and cross-platform mobile applications for iOS and Android to reach your customers anywhere.</p>
+                        <a href="{% url 'services:app_development' %}" class="btn btn-outline-amber">Explore Opportunities</a>
+                    </div>
                 </div>
             </div>
 
             <div class="col-md-4 mb-4">
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-cash-register"></i>
+                <div class="service-card animate-on-scroll">
+                    <div class="service-image">
+                        <img src="{% static 'images/possytem.jpg' %}" alt="POS Systems">
                     </div>
-                    <h3>POS Systems</h3>
-                    <p>Customized point-of-sale solutions for retail, restaurants, and other businesses to streamline operations.</p>
-                    <a href="{% url 'services:pos_systems' %}" class="btn btn-sm btn-primary mt-3">Learn More</a>
+                    <div class="service-content">
+                        <h3>POS Systems</h3>
+                        <p>Customized point-of-sale solutions for retail, restaurants, and other businesses to streamline operations.</p>
+                        <a href="{% url 'services:pos_systems' %}" class="btn btn-outline-amber">Explore Opportunities</a>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-<!-- Features Section -->
+<!-- Features Section with Flip Cards -->
 <section class="features-section">
     <div class="container">
         <div class="section-title">
@@ -918,135 +1885,114 @@
         </div>
 
         <div class="row">
-            <div class="col-lg-4">
-                <div class="feature-item">
-                    <div class="feature-icon">
-                        <i class="fas fa-code"></i>
+            <div class="col-md-6 col-lg-3 mb-4">
+                <div class="feature-card animate-on-scroll">
+                    <div class="feature-card-inner">
+                        <div class="feature-card-front">
+                            <div class="feature-image">
+                                <img src="{% static 'images/webdev.jpg' %}" alt="Clean Code">
+                            </div>
+                            <div class="feature-content">
+                                <h4>Clean Code</h4>
+                                <p>Well-documented, maintainable code following best practices</p>
+                            </div>
+                        </div>
+                        <div class="feature-card-back">
+                            <div class="feature-icon">
+                                <i class="fas fa-code"></i>
+                            </div>
+                            <div class="feature-stat">98%</div>
+                            <h4>Code Quality</h4>
+                            <p>Our code passes rigorous quality tests, ensuring reliability and scalability for your business.</p>
+                        </div>
                     </div>
-                    <h4>Clean Code</h4>
-                    <p>We write maintainable, well-documented code following best practices to ensure long-term success.</p>
                 </div>
             </div>
 
-            <div class="col-lg-4">
-                <div class="feature-item">
-                    <div class="feature-icon">
-                        <i class="fas fa-rocket"></i>
+            <div class="col-md-6 col-lg-3 mb-4">
+                <div class="feature-card animate-on-scroll">
+                    <div class="feature-card-inner">
+                        <div class="feature-card-front">
+                            <div class="feature-image">
+                                <img src="{% static 'images/services.png' %}" alt="Fast Delivery">
+                            </div>
+                            <div class="feature-content">
+                                <h4>Fast Delivery</h4>
+                                <p>Agile methodologies to deliver your project on time</p>
+                            </div>
+                        </div>
+                        <div class="feature-card-back">
+                            <div class="feature-icon">
+                                <i class="fas fa-rocket"></i>
+                            </div>
+                            <div class="feature-stat">25%</div>
+                            <h4>Faster Delivery</h4>
+                            <p>Our agile approach delivers projects 25% faster than industry standards without sacrificing quality.</p>
+                        </div>
                     </div>
-                    <h4>Fast Delivery</h4>
-                    <p>We follow agile methodologies to deliver your project on time without compromising quality.</p>
                 </div>
             </div>
 
-            <div class="col-lg-4">
-                <div class="feature-item">
-                    <div class="feature-icon">
-                        <i class="fas fa-headset"></i>
+            <div class="col-md-6 col-lg-3 mb-4">
+                <div class="feature-card animate-on-scroll">
+                    <div class="feature-card-inner">
+                        <div class="feature-card-front">
+                            <div class="feature-image">
+                                <img src="{% static 'images/fast.jpg' %}" alt="24/7 Support">
+                            </div>
+                            <div class="feature-content">
+                                <h4>24/7 Support</h4>
+                                <p>Always available to help with issues or questions</p>
+                            </div>
+                        </div>
+                        <div class="feature-card-back">
+                            <div class="feature-icon">
+                                <i class="fas fa-headset"></i>
+                            </div>
+                            <div class="feature-stat">15min</div>
+                            <h4>Response Time</h4>
+                            <p>Our support team responds to critical issues within 15 minutes, 24/7/365.</p>
+                        </div>
                     </div>
-                    <h4>24/7 Support</h4>
-                    <p>Our dedicated support team is always available to help you with any issues or questions.</p>
                 </div>
             </div>
 
-            <div class="col-lg-4">
-                <div class="feature-item">
-                    <div class="feature-icon">
-                        <i class="fas fa-shield-alt"></i>
+            <div class="col-md-6 col-lg-3 mb-4">
+                <div class="feature-card animate-on-scroll">
+                    <div class="feature-card-inner">
+                        <div class="feature-card-front">
+                            <div class="feature-image">
+                                <img src="{% static 'images/testimony1.jpg' %}" alt="Security Focus">
+                            </div>
+                            <div class="feature-content">
+                                <h4>Security Focus</h4>
+                                <p>Robust security measures to protect your data</p>
+                            </div>
+                        </div>
+                        <div class="feature-card-back">
+                            <div class="feature-icon">
+                                <i class="fas fa-shield-alt"></i>
+                            </div>
+                            <div class="feature-stat">100%</div>
+                            <h4>Compliance Rate</h4>
+                            <p>All our solutions comply with industry security standards and best practices.</p>
+                        </div>
                     </div>
-                    <h4>Security Focus</h4>
-                    <p>We implement robust security measures to protect your data and applications from threats.</p>
-                </div>
-            </div>
-
-            <div class="col-lg-4">
-                <div class="feature-item">
-                    <div class="feature-icon">
-                        <i class="fas fa-tachometer-alt"></i>
-                    </div>
-                    <h4>Optimized Performance</h4>
-                    <p>Our solutions are designed for speed and efficiency to provide the best user experience.</p>
-                </div>
-            </div>
-
-            <div class="col-lg-4">
-                <div class="feature-item">
-                    <div class="feature-icon">
-                        <i class="fas fa-sync"></i>
-                    </div>
-                    <h4>Regular Updates</h4>
-                    <p>We provide ongoing maintenance and updates to keep your systems running smoothly.</p>
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-<!-- CTA Section -->
+<!-- Simplified CTA Section without cards -->
 <section class="cta-section">
-    <div class="container">
-        <h2 class="cta-title">Ready to Start Your Project?</h2>
-        <p class="cta-text">Contact us today for a free consultation and let's bring your ideas to life. Our team is ready to help you transform your business.</p>
-        <a href="{% url 'quotes:service_estimator' %}" class="btn btn-light btn-lg">Get a Free Quote</a>
-    </div>
-</section>
-
-<!-- Testimonials Section -->
-<section class="testimonials-section">
-    <div class="container">
-        <div class="section-title">
-            <h2>What Our Clients Say</h2>
-            <p>Testimonials from businesses we've helped succeed</p>
-        </div>
-
-        <div class="row">
-            <div class="col-md-4 mb-4">
-                <div class="testimonial-card">
-                    <div class="testimonial-content">
-                        <p>CloudLink_Devs transformed our business with a custom web application that streamlined our operations. Their team was professional and delivered beyond our expectations.</p>
-                    </div>
-                    <div class="testimonial-author">
-                        <div class="testimonial-avatar">
-                            <i class="fas fa-user"></i>
-                        </div>
-                        <div class="testimonial-info">
-                            <h5>John Smith</h5>
-                            <p>CEO, TechSolutions Inc.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-4 mb-4">
-                <div class="testimonial-card">
-                    <div class="testimonial-content">
-                        <p>The mobile app developed by CloudLink_Devs helped us increase customer engagement by 200%. Their attention to detail and commitment to quality is impressive.</p>
-                    </div>
-                    <div class="testimonial-author">
-                        <div class="testimonial-avatar">
-                            <i class="fas fa-user"></i>
-                        </div>
-                        <div class="testimonial-info">
-                            <h5>Sarah Johnson</h5>
-                            <p>Marketing Director, GrowFast</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-4 mb-4">
-                <div class="testimonial-card">
-                    <div class="testimonial-content">
-                        <p>Our new POS system has made managing our restaurant so much easier. The team at CloudLink_Devs understood our needs perfectly and delivered a solution that works flawlessly.</p>
-                    </div>
-                    <div class="testimonial-author">
-                        <div class="testimonial-avatar">
-                            <i class="fas fa-user"></i>
-                        </div>
-                        <div class="testimonial-info">
-                            <h5>Michael Rodriguez</h5>
-                            <p>Owner, Taste of Italy</p>
-                        </div>
-                    </div>
+    <div class="container cta-container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <h2 class="cta-title">Ready to Start Your Project?</h2>
+                <p class="cta-text">Contact us today for a free consultation and let's bring your ideas to life. Our team is ready to help you transform your business.</p>
+                <div class="cta-button-container">
+                    <a href="{% url 'quotes:service_estimator' %}" class="btn btn-primary btn-lg">Get a Free Quote</a>
                 </div>
             </div>
         </div>
@@ -1063,11 +2009,11 @@
 
         <div class="row">
             <div class="col-md-4 mb-4">
-                <div class="work-card">
+                <div class="work-card animate-on-scroll">
                     <div class="work-image">
-{#                        <img src="{% static 'images/project-placeholder.jpg' %}" alt="Project 1" class="img-fluid">#}
+                        <img src="{% static 'images/ecommerce.jpg' %}" alt="Project 1" class="img-fluid">
                         <div class="work-overlay">
-{#                            <a href="{% url 'portfolio:case_study' 1 %}" class="btn btn-light">View Project</a>#}
+                            <a href="#" class="btn btn-light">View Project</a>
                         </div>
                     </div>
                     <div class="work-info">
@@ -1078,11 +2024,11 @@
             </div>
 
             <div class="col-md-4 mb-4">
-                <div class="work-card">
+                <div class="work-card animate-on-scroll">
                     <div class="work-image">
-{#                        <img src="{% static 'images/project-placeholder.jpg' %}" alt="Project 2" class="img-fluid">#}
+                        <img src="{% static 'images/deliverapp.jpg' %}" alt="Project 2" class="img-fluid">
                         <div class="work-overlay">
-{#                            <a href="{% url 'portfolio:case_study' 2 %}" class="btn btn-light">View Project</a>#}
+                            <a href="#" class="btn btn-light">View Project</a>
                         </div>
                     </div>
                     <div class="work-info">
@@ -1093,11 +2039,11 @@
             </div>
 
             <div class="col-md-4 mb-4">
-                <div class="work-card">
+                <div class="work-card animate-on-scroll">
                     <div class="work-image">
-{#                        <img src="{% static 'images/project-placeholder.jpg' %}" alt="Project 3" class="img-fluid">#}
+                        <img src="{% static 'images/pos5.jpg' %}" alt="Project 3" class="img-fluid">
                         <div class="work-overlay">
-{#                            <a href="{% url 'portfolio:case_study' 3 %}" class="btn btn-light">View Project</a>#}
+                            <a href="#" class="btn btn-light">View Project</a>
                         </div>
                     </div>
                     <div class="work-info">
@@ -1112,19 +2058,73 @@
             <a href="{% url 'portfolio:portfolio' %}" class="btn btn-primary">View All Projects</a>
         </div>
     </div>
-</section>
+    </section>
 {% endblock %}
 
 {% block extra_js %}
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Add animation classes on scroll
-        const animateElements = document.querySelectorAll('.service-card, .feature-item, .testimonial-card, .work-card');
+        // Fix for carousel not moving automatically
+        var myCarousel = new bootstrap.Carousel(document.getElementById('heroCarousel'), {
+            interval: 5000,
+            ride: 'carousel',
+            wrap: true
+        });
 
+        // Force the carousel to start
+        setTimeout(function() {
+            myCarousel.cycle();
+        }, 1000);
+
+        // Add animation classes on scroll
+        const animateElements = document.querySelectorAll('.animate-on-scroll');
+
+        const isInViewport = (element) => {
+            const rect = element.getBoundingClientRect();
+            return (
+                rect.top <= (window.innerHeight || document.documentElement.clientHeight) * 0.85
+            );
+        };
+
+        const checkVisibility = () => {
+            animateElements.forEach((element) => {
+                if (isInViewport(element)) {
+                    element.classList.add('visible');
+                }
+            });
+        };
+
+        // Set initial animation delays
         animateElements.forEach((element, index) => {
-            element.classList.add('animate-on-scroll');
-            element.dataset.animation = 'slide-up';
-            element.style.animationDelay = `${index * 0.1}s`;
+            element.style.transitionDelay = `${(index % 3) * 0.1}s`;
+        });
+
+        // Check on load
+        checkVisibility();
+
+        // Check on scroll
+        window.addEventListener('scroll', checkVisibility);
+
+        // Sticky header implementation
+        const navbar = document.querySelector('.navbar');
+        const navbarOffset = navbar.offsetTop;
+
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > navbarOffset + 50) {
+                navbar.classList.add('navbar-sticky');
+
+                // Add subtle animation to nav items
+                document.querySelectorAll('.navbar-nav .nav-item').forEach((item, index) => {
+                    item.style.transitionDelay = `${index * 0.05}s`;
+                });
+            } else {
+                navbar.classList.remove('navbar-sticky');
+
+                // Reset transition delays
+                document.querySelectorAll('.navbar-nav .nav-item').forEach((item) => {
+                    item.style.transitionDelay = '0s';
+                });
+            }
         });
     });
 </script>

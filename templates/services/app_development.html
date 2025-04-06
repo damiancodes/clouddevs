@@ -1,3 +1,4 @@
+
 {% extends "base.html" %}
 {% load static %}
 
@@ -5,9 +6,20 @@
 
 {% block extra_css %}
 <style>
+    :root {
+        --beige-color: #f5eadb;
+        --amber-color: #c1954a;
+        --dark-amber: #9e7a39;
+        --light-amber: #d4b06a;
+        --off-white: #faf7f2;
+        --black: #212121;
+        --dark-gray: #333333;
+        --light-gray: #f0f0f0;
+    }
+
     /* Service Header */
     .service-header {
-        background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+        background: linear-gradient(135deg, var(--amber-color) 0%, var(--dark-amber) 100%);
         color: white;
         padding: 80px 0;
         text-align: center;
@@ -21,89 +33,218 @@
     /* Main Content */
     .service-intro {
         padding: 80px 0;
+        background-color: var(--off-white);
+    }
+
+    .intro-card {
+        border-radius: 12px;
+        overflow: hidden;
+        height: 100%;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        background-color: white;
+        transition: all 0.3s ease;
+    }
+
+    .intro-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
     }
 
     .intro-image {
-        border-radius: 10px;
+        height: 100%;
+        width: 100%;
         overflow: hidden;
-        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    }
+
+    .intro-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+    }
+
+    .intro-card:hover .intro-image img {
+        transform: scale(1.05);
+    }
+
+    .intro-text {
+        padding: 30px;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
     }
 
     .intro-text h2 {
-        margin-bottom: 25px;
+        margin-bottom: 20px;
         font-weight: 700;
+        color: var(--black);
+        font-size: 2rem;
     }
 
-    /* Features Section */
+    .intro-text p {
+        color: var(--dark-gray);
+        margin-bottom: 25px;
+        font-size: 1.1rem;
+    }
+
+    .intro-text .btn {
+        align-self: flex-start;
+        background-color: var(--amber-color);
+        border-color: var(--amber-color);
+        padding: 10px 25px;
+        font-weight: 600;
+    }
+
+    .intro-text .btn:hover {
+        background-color: var(--dark-amber);
+        border-color: var(--dark-amber);
+    }
+
+    /* Service Cards - New Style */
     .features-section {
         padding: 80px 0;
-        background-color: var(--light-gray);
+        background-color: white;
     }
 
     .feature-card {
-        padding: 30px;
-        border-radius: 10px;
-        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+        border-radius: 12px;
+        overflow: hidden;
         background-color: white;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+        margin-bottom: 30px;
+        transition: all 0.3s ease;
         height: 100%;
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 
     .feature-card:hover {
         transform: translateY(-10px);
-        box-shadow: 0 1rem 3rem rgba(58, 59, 69, 0.175);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
     }
 
-    .feature-icon {
-        width: 60px;
-        height: 60px;
-        background-color: var(--light-gray);
-        border-radius: 50%;
+    .service-image {
+        height: 200px;
+        overflow: hidden;
+    }
+
+    .service-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+    }
+
+    .feature-card:hover .service-image img {
+        transform: scale(1.05);
+    }
+
+    .feature-content {
+        padding: 25px;
+    }
+
+    .feature-content h3 {
+        font-weight: 700;
+        margin-bottom: 15px;
+        font-size: 1.4rem;
+        color: var(--amber-color);
+    }
+
+    .feature-content p {
+        color: var(--dark-gray);
+        margin-bottom: 20px;
+        font-size: 1rem;
+        line-height: 1.6;
+    }
+
+    .feature-content .btn {
+        padding: 8px 20px;
+        font-weight: 500;
+        background-color: var(--amber-color);
+        border-color: var(--amber-color);
+        color: white;
+    }
+
+    .feature-content .btn:hover {
+        background-color: var(--dark-amber);
+        border-color: var(--dark-amber);
+    }
+
+    /* Technologies Section - Horizontal Icons */
+    .platforms-section {
+        padding: 80px 0;
+        background-color: var(--beige-color);
+    }
+
+    .tech-container {
+        text-align: center;
+        margin-top: 40px;
+    }
+
+    .tech-icons {
         display: flex;
-        align-items: center;
+        flex-wrap: wrap;
         justify-content: center;
-        color: var(--accent-color);
-        font-size: 1.5rem;
+        gap: 30px;
+        margin: 30px 0;
+    }
+
+    .tech-icon-item {
+        text-align: center;
+        transition: all 0.3s ease;
         margin-bottom: 20px;
     }
 
-    /* Platforms Section */
-    .platforms-section {
-        padding: 80px 0;
+    .tech-icon-item:hover {
+        transform: translateY(-10px);
     }
 
-    .platform-card {
-        text-align: center;
-        padding: 30px;
-        margin-bottom: 30px;
+    .tech-icon-image {
+        width: 70px;
+        height: 70px;
+        margin: 0 auto 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .tech-icon-image img {
+        max-width: 100%;
+        max-height: 100%;
+    }
+
+    .tech-icon-name {
+        font-weight: 600;
+        font-size: 0.9rem;
+        color: var(--dark-gray);
     }
 
     .platform-icon {
         font-size: 3rem;
-        color: var(--primary-color);
-        margin-bottom: 20px;
-    }
-
-    .platform-content h3 {
+        color: var(--amber-color);
         margin-bottom: 15px;
     }
 
     /* Process Section */
     .process-section {
         padding: 80px 0;
-        background-color: var(--light-gray);
+        background-color: white;
     }
 
     .process-step {
         text-align: center;
         padding: 30px;
         position: relative;
+        transition: all 0.3s ease;
+    }
+
+    .process-step:hover {
+        transform: translateY(-10px);
     }
 
     .step-number {
         width: 50px;
         height: 50px;
-        background-color: var(--primary-color);
+        background-color: var(--amber-color);
         color: white;
         border-radius: 50%;
         display: flex;
@@ -120,7 +261,7 @@
         right: -15px;
         width: 30px;
         height: 2px;
-        background-color: var(--primary-color);
+        background-color: var(--amber-color);
         z-index: 1;
     }
 
@@ -131,8 +272,8 @@
         top: -4px;
         width: 10px;
         height: 10px;
-        border-top: 2px solid var(--primary-color);
-        border-right: 2px solid var(--primary-color);
+        border-top: 2px solid var(--amber-color);
+        border-right: 2px solid var(--amber-color);
         transform: rotate(45deg);
     }
 
@@ -141,49 +282,10 @@
         display: none;
     }
 
-    /* Projects Section */
-    .projects-section {
-        padding: 80px 0;
-    }
-
-    .project-card {
-        border-radius: 10px;
-        overflow: hidden;
-        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
-        margin-bottom: 30px;
-        background-color: white;
-        height: 100%;
-    }
-
-    .project-image {
-        height: 200px;
-        position: relative;
-        overflow: hidden;
-    }
-
-    .project-image img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        transition: transform 0.3s ease;
-    }
-
-    .project-card:hover .project-image img {
-        transform: scale(1.1);
-    }
-
-    .project-info {
-        padding: 20px;
-    }
-
-    .project-info h4 {
-        margin-bottom: 10px;
-    }
-
     /* FAQ Section */
     .faq-section {
         padding: 80px 0;
-        background-color: var(--light-gray);
+        background-color: var(--off-white);
     }
 
     .accordion-item {
@@ -200,7 +302,7 @@
     }
 
     .accordion-button:not(.collapsed) {
-        color: var(--primary-color);
+        color: var(--amber-color);
         background-color: white;
     }
 
@@ -212,7 +314,7 @@
     /* CTA Section */
     .cta-section {
         padding: 80px 0;
-        background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+        background: linear-gradient(135deg, var(--amber-color) 0%, var(--dark-amber) 100%);
         color: white;
         text-align: center;
     }
@@ -229,20 +331,38 @@
         opacity: 0.9;
     }
 
-    /* Dark mode adaptations */
-    body.dark-mode .feature-card,
-    body.dark-mode .project-card {
-        background-color: #2a2c3e;
+    .cta-buttons .btn-light {
+        background-color: white;
+        color: var(--amber-color);
     }
 
-    body.dark-mode .feature-icon {
-        background-color: #3a3d52;
+    .cta-buttons .btn-light:hover {
+        background-color: #f8f9fa;
+        color: var(--dark-amber);
+    }
+
+    .cta-buttons .btn-outline-light:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    /* Dark mode adaptations */
+    body.dark-mode .intro-card,
+    body.dark-mode .feature-card {
+        background-color: var(--dark-gray);
+    }
+
+    body.dark-mode .service-intro,
+    body.dark-mode .faq-section {
+        background-color: #222533;
+    }
+
+    body.dark-mode .platforms-section {
+        background-color: #2c2c3d;
     }
 
     body.dark-mode .features-section,
-    body.dark-mode .process-section,
-    body.dark-mode .faq-section {
-        background-color: #222533;
+    body.dark-mode .process-section {
+        background-color: #1a1c25;
     }
 
     body.dark-mode .accordion-button {
@@ -251,13 +371,35 @@
     }
 
     body.dark-mode .accordion-button:not(.collapsed) {
-        color: var(--accent-color);
+        color: var(--light-amber);
         background-color: #2a2c3e;
     }
 
     body.dark-mode .accordion-body {
         background-color: #2a2c3e;
         color: #f8f9fc;
+    }
+
+    body.dark-mode .tech-icon-name {
+        color: #e0e0e0;
+    }
+
+    body.dark-mode .feature-content h3 {
+        color: var(--light-amber);
+    }
+
+    body.dark-mode .feature-content p,
+    body.dark-mode .intro-text p {
+        color: #e0e0e0;
+    }
+
+    body.dark-mode .intro-text h2,
+    body.dark-mode .process-step h4 {
+        color: white;
+    }
+
+    body.dark-mode .process-step {
+        color: #e0e0e0;
     }
 </style>
 {% endblock %}
@@ -271,21 +413,24 @@
     </div>
 </section>
 
-<!-- Service Intro -->
+<!-- Service Intro with Full-Width Image Card -->
 <section class="service-intro">
     <div class="container">
-        <div class="row align-items-center">
+        <div class="row g-4">
             <div class="col-lg-6 mb-4 mb-lg-0">
-                <div class="intro-image">
-                    <img src="{% static 'images/app-development-intro.jpg' %}" alt="App Development" class="img-fluid">
+                <div class="intro-card">
+                    <div class="intro-image">
+                        <img src="{% static 'images/homepage2.jpg' %}" alt="App Development">
+                    </div>
                 </div>
             </div>
             <div class="col-lg-6">
-                <div class="intro-text">
-                    <h2>Transform Your Business with a Custom Mobile App</h2>
-                    <p>In today's mobile-first world, having a custom mobile application can be a game-changer for your business. At CloudLink_Devs, we create native and cross-platform mobile apps that help businesses engage with customers, streamline operations, and drive growth.</p>
-                    <p>Our experienced team of mobile developers works closely with you to understand your business needs and develop a mobile app that delivers exceptional user experiences across all devices. From concept to launch and beyond, we provide comprehensive mobile app development services that bring your ideas to life.</p>
-                    <a href="{% url 'quotes:service_estimator' %}" class="btn btn-primary mt-3">Get a Free Quote</a>
+                <div class="intro-card">
+                    <div class="intro-text">
+                        <h2>Transform Your Business with a Custom Mobile App</h2>
+                        <p>We create powerful, custom mobile applications designed to engage your customers and drive business growth in today's mobile-first world.</p>
+                        <a href="{% url 'quotes:service_estimator' %}" class="btn btn-primary">Get a Free Quote</a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -300,107 +445,50 @@
             <p>End-to-end mobile app development solutions</p>
         </div>
 
-        <div class="row">
-            <div class="col-lg-4 col-md-6 mb-4">
+        <div class="row g-4">
+            <div class="col-lg-4 col-md-6">
                 <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fab fa-android"></i>
+                    <div class="service-image">
+                        <img src="{% static 'images/homepage4.jpg' %}" alt="Android App Development">
                     </div>
-                    <h3>Android App Development</h3>
-                    <p>Custom Android applications that work flawlessly across all Android devices and versions.</p>
-                    <ul class="mt-3">
-                        <li>Native Android development</li>
-                        <li>Material Design implementation</li>
-                        <li>Google Play Store publishing</li>
-                        <li>Android app optimization</li>
-                    </ul>
+                    <div class="feature-content">
+                        <h3>Android App Development</h3>
+                        <p>Custom Android applications that work flawlessly across all Android devices and versions, from smartphones to tablets and specialized hardware.</p>
+                        <a href="{% url 'quotes:service_estimator' %}" class="btn">Learn more</a>
+                    </div>
                 </div>
             </div>
 
-            <div class="col-lg-4 col-md-6 mb-4">
+            <div class="col-lg-4 col-md-6">
                 <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fab fa-apple"></i>
+                    <div class="service-image">
+                        <img src="{% static 'images/homepage4.jpg' %}" alt="iOS App Development">
                     </div>
-                    <h3>iOS App Development</h3>
-                    <p>Elegant iOS applications that provide exceptional user experiences on iPhone and iPad.</p>
-                    <ul class="mt-3">
-                        <li>Native iOS development</li>
-                        <li>Apple Human Interface Guidelines</li>
-                        <li>App Store submission</li>
-                        <li>iOS app optimization</li>
-                    </ul>
+                    <div class="feature-content">
+                        <h3>iOS App Development</h3>
+                        <p>Elegant iOS applications that provide exceptional user experiences on iPhone and iPad, following Apple's design guidelines for intuitive navigation.</p>
+                        <a href="{% url 'quotes:service_estimator' %}" class="btn">Learn more</a>
+                    </div>
                 </div>
             </div>
 
-            <div class="col-lg-4 col-md-6 mb-4">
+            <div class="col-lg-4 col-md-6">
                 <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-mobile-alt"></i>
+                    <div class="service-image">
+                        <img src="{% static 'images/homepage3.jpg' %}" alt="Cross-Platform Development">
                     </div>
-                    <h3>Cross-Platform Development</h3>
-                    <p>Cost-effective solutions that work on both iOS and Android from a single codebase.</p>
-                    <ul class="mt-3">
-                        <li>React Native development</li>
-                        <li>Flutter development</li>
-                        <li>Code reusability</li>
-                        <li>Faster time-to-market</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="col-lg-4 col-md-6 mb-4">
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-palette"></i>
+                    <div class="feature-content">
+                        <h3>Cross-Platform Development</h3>
+                        <p>Cost-effective solutions that work on both iOS and Android from a single codebase, reducing development time while maintaining quality user experiences.</p>
+                        <a href="{% url 'quotes:service_estimator' %}" class="btn">Learn more</a>
                     </div>
-                    <h3>UI/UX Design</h3>
-                    <p>Intuitive and engaging user interfaces that enhance the overall app experience.</p>
-                    <ul class="mt-3">
-                        <li>User-centered design</li>
-                        <li>Wireframing and prototyping</li>
-                        <li>Interactive animations</li>
-                        <li>User testing</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="col-lg-4 col-md-6 mb-4">
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-cloud"></i>
-                    </div>
-                    <h3>Backend Development</h3>
-                    <p>Scalable server-side solutions that power your mobile application.</p>
-                    <ul class="mt-3">
-                        <li>API development</li>
-                        <li>Database design</li>
-                        <li>Cloud integration</li>
-                        <li>Security implementation</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="col-lg-4 col-md-6 mb-4">
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-tools"></i>
-                    </div>
-                    <h3>App Maintenance & Support</h3>
-                    <p>Ongoing support and updates to keep your app running smoothly.</p>
-                    <ul class="mt-3">
-                        <li>Bug fixes and updates</li>
-                        <li>Performance optimization</li>
-                        <li>Feature enhancements</li>
-                        <li>Platform compatibility updates</li>
-                    </ul>
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-<!-- Platforms Section -->
+<<!-- Platforms Section with Horizontal Icons -->
 <section class="platforms-section">
     <div class="container">
         <div class="section-title text-center mb-5">
@@ -408,52 +496,42 @@
             <p>The tools and frameworks we use for mobile app development</p>
         </div>
 
-        <div class="row">
-            <div class="col-md-3 col-6">
-                <div class="platform-card">
-                    <div class="platform-icon">
-                        <i class="fab fa-android"></i>
+        <div class="tech-container">
+            <div class="tech-icons">
+                <div class="tech-icon-item">
+                    <div class="tech-icon-image">
+                        <img src="{% static 'images/tech/android-logomark.svg' %}" alt="Android">
                     </div>
-                    <div class="platform-content">
-                        <h3>Android</h3>
-                        <p>Java, Kotlin</p>
+{#                    <div class="tech-icon-name">Android</div>#}
+                </div>
+                <div class="tech-icon-item">
+                    <div class="tech-icon-image">
+                        <img src="{% static 'images/tech/apple-ios.svg' %}" alt="iOS">
                     </div>
+{#                    <div class="tech-icon-name">iOS</div>#}
+                </div>
+                <div class="tech-icon-item">
+                    <div class="tech-icon-image">
+                        <img src="{% static 'images/tech/react-native-1.svg' %}" alt="React Native">
+                    </div>
+{#                    <div class="tech-icon-name">React Native</div>#}
+                </div>
+                <div class="tech-icon-item">
+                    <div class="tech-icon-image">
+                        <img src="{% static 'images/tech/flutter-logo.svg' %}" alt="Flutter">
+                    </div>
+{#                    <div class="tech-icon-name">Flutter</div>#}
                 </div>
             </div>
 
-            <div class="col-md-3 col-6">
-                <div class="platform-card">
-                    <div class="platform-icon">
-                        <i class="fab fa-apple"></i>
+            <div class="tech-icons">
+                <div class="tech-icon-item">
+                    <div class="tech-icon-image">
+                        <img src="{% static 'images/tech/dot-net-core-7.svg' %}" alt="Java">
                     </div>
-                    <div class="platform-content">
-                        <h3>iOS</h3>
-                        <p>Swift, Objective-C</p>
-                    </div>
-                </div>
-            </div>
+{#                    <div class="tech-icon-name">Java</div>#}
 
-            <div class="col-md-3 col-6">
-                <div class="platform-card">
-                    <div class="platform-icon">
-                        <i class="fab fa-react"></i>
-                    </div>
-                    <div class="platform-content">
-                        <h3>React Native</h3>
-                        <p>Cross-platform</p>
-                    </div>
-                </div>
-            </div>
 
-            <div class="col-md-3 col-6">
-                <div class="platform-card">
-                    <div class="platform-icon">
-                        <i class="fas fa-code"></i>
-                    </div>
-                    <div class="platform-content">
-                        <h3>Flutter</h3>
-                        <p>Cross-platform</p>
-                    </div>
                 </div>
             </div>
         </div>
@@ -503,61 +581,6 @@
                     <p>We help you publish your app to the stores and provide ongoing maintenance and support.</p>
                 </div>
             </div>
-        </div>
-    </div>
-</section>
-
-<!-- Projects Section -->
-<section class="projects-section">
-    <div class="container">
-        <div class="section-title text-center mb-5">
-            <h2>Our Recent App Projects</h2>
-            <p>Some of our successful mobile app development case studies</p>
-        </div>
-
-        <div class="row">
-            <div class="col-lg-4 col-md-6 mb-4">
-                <div class="project-card">
-                    <div class="project-image">
-                    <img src="{% static 'images/project-app-1.jpg' %}" alt="Food Delivery App">
-                    </div>
-                    <div class="project-info">
-                        <h4>Food Delivery App</h4>
-                        <p>A custom food delivery application for a restaurant chain that increased online orders by 65%.</p>
-                    <a href="{% url 'portfolio:case_study' 4 %}" class="btn btn-sm btn-primary mt-2">View Case Study</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-lg-4 col-md-6 mb-4">
-                <div class="project-card">
-                    <div class="project-image">
-                        <img src="{% static 'images/project-app-2.jpg' %}" alt="Fitness Tracking App">
-                    </div>
-                    <div class="project-info">
-                        <h4>Fitness Tracking App</h4>
-                        <p>A comprehensive fitness tracking application with personalized workout plans and progress tracking.</p>
-                    <a href="{% url 'portfolio:case_study' 5 %}" class="btn btn-sm btn-primary mt-2">View Case Study</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-lg-4 col-md-6 mb-4">
-                <div class="project-card">
-                    <div class="project-image">
-                    <img src="{% static 'images/project-app-3.jpg' %}" alt="E-commerce App">
-                    </div>
-                    <div class="project-info">
-                        <h4>E-commerce App</h4>
-                        <p>A mobile shopping application for a fashion retailer with AR try-on features and personalized recommendations.</p>
-                       <a href="{% url 'portfolio:case_study' 6 %}" class="btn btn-sm btn-primary mt-2">View Case Study</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="text-center mt-4">
-           <a href="{% url 'portfolio:portfolio' %}" class="btn btn-primary">View All Projects</a>#}
         </div>
     </div>
 </section>
@@ -656,13 +679,49 @@
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         // Add animation classes on scroll
-        const animateElements = document.querySelectorAll('.feature-card, .platform-card, .process-step, .project-card');
+        const animateElements = document.querySelectorAll('.feature-card, .tech-icon-item, .process-step, .intro-card');
 
+        const isInViewport = (element) => {
+            const rect = element.getBoundingClientRect();
+            return (
+                rect.top <= (window.innerHeight || document.documentElement.clientHeight) * 0.85
+            );
+        };
+
+        const checkVisibility = () => {
+            animateElements.forEach((element) => {
+                if (isInViewport(element)) {
+                    element.classList.add('animate-on-scroll');
+                    element.classList.add('visible');
+                }
+            });
+        };
+
+        // Set initial animation delays
         animateElements.forEach((element, index) => {
-            element.classList.add('animate-on-scroll');
-            element.dataset.animation = 'slide-up';
-            element.style.animationDelay = `${index * 0.1}s`;
+            element.style.transitionDelay = `${(index % 3) * 0.1}s`;
         });
+
+        // Add these CSS classes
+        const style = document.createElement('style');
+        style.textContent = `
+            .animate-on-scroll {
+                opacity: 0;
+                transform: translateY(30px);
+                transition: all 0.7s ease-out;
+            }
+            .animate-on-scroll.visible {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Check on load
+        checkVisibility();
+
+        // Check on scroll
+        window.addEventListener('scroll', checkVisibility);
     });
 </script>
 {% endblock %}

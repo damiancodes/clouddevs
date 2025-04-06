@@ -1,0 +1,59 @@
+{% extends "client_portal/base.html" %}
+{% load static %}
+
+{% block title %}Delete Feature | Admin Panel{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Delete Feature: {{ feature.title }}</h1>
+        <a href="{% url 'client_portal:admin_edit_service' service.id %}" class="d-none d-sm-inline-block btn btn-secondary shadow-sm">
+            <i class="fas fa-arrow-left fa-sm text-white-50"></i> Back to Service
+        </a>
+    </div>
+
+    <!-- Delete Feature Confirmation -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Confirm Deletion</h6>
+        </div>
+        <div class="card-body">
+            <div class="alert alert-danger">
+                <h4 class="alert-heading">Warning!</h4>
+                <p>You are about to delete the feature "<strong>{{ feature.title }}</strong>" from service "<strong>{{ service.name }}</strong>".</p>
+                <p>This action cannot be undone.</p>
+                <hr>
+                <p class="mb-0">Are you sure you want to proceed?</p>
+            </div>
+
+            <div class="card mb-4">
+                <div class="card-header">
+                    Feature Details
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <p><strong>Title:</strong> {{ feature.title }}</p>
+                            <p><strong>Description:</strong> {{ feature.description }}</p>
+                            <p><strong>Icon:</strong> <i class="{{ feature.icon }}"></i> {{ feature.icon }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <form method="post">
+                {% csrf_token %}
+                <div class="text-center">
+                    <a href="{% url 'client_portal:admin_edit_service' service.id %}" class="btn btn-secondary">
+                        <i class="fas fa-times"></i> Cancel
+                    </a>
+                    <button type="submit" class="btn btn-danger">
+                        <i class="fas fa-trash"></i> Delete Feature
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

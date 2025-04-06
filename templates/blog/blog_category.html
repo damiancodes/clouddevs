@@ -5,9 +5,21 @@
 
 {% block extra_css %}
 <style>
+    :root {
+        /* Using your established color scheme */
+        --beige-color: #f5eadb;
+        --amber-color: #c1954a;
+        --dark-amber: #9e7a39;
+        --light-amber: #d4b06a;
+        --off-white: #faf7f2;
+        --black: #212121;
+        --dark-gray: #333333;
+        --light-gray: #f0f0f0;
+    }
+
     /* Blog Header */
     .blog-header {
-        background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+        background: linear-gradient(135deg, var(--amber-color) 0%, var(--dark-amber) 100%);
         color: white;
         padding: 80px 0;
         text-align: center;
@@ -67,8 +79,12 @@
     }
 
     .blog-post-title a {
-        color: var(--text-color);
+        color: var(--dark-gray);
         text-decoration: none;
+    }
+
+    .blog-post-title a:hover {
+        color: var(--amber-color);
     }
 
     .blog-post-meta {
@@ -79,8 +95,9 @@
 
     .blog-post-excerpt {
         margin-bottom: 20px;
-        color: var(--body-color);
+        color: var(--dark-gray);
     }
+
     .blog-post-categories {
         margin-top: 15px;
     }
@@ -88,17 +105,17 @@
     .category-badge {
         display: inline-block;
         padding: 3px 10px;
-        background-color: var(--light-gray);
+        background-color: var(--beige-color);
         border-radius: 15px;
         font-size: 0.75rem;
         margin-right: 5px;
-        color: var(--body-color);
+        color: var(--dark-gray);
         text-decoration: none;
         transition: background-color 0.3s ease, color 0.3s ease;
     }
 
     .category-badge:hover {
-        background-color: var(--primary-color);
+        background-color: var(--amber-color);
         color: white;
     }
 
@@ -122,11 +139,17 @@
         margin-bottom: 20px;
         padding-bottom: 10px;
         border-bottom: 1px solid #e3e6f0;
+        color: var(--dark-gray);
     }
 
     .search-form .form-control {
         border-radius: 50px;
         padding-left: 20px;
+    }
+
+    .search-form .form-control:focus {
+        border-color: var(--light-amber);
+        box-shadow: 0 0 0 0.25rem rgba(193, 149, 74, 0.25);
     }
 
     .search-form .btn {
@@ -152,21 +175,26 @@
         border-bottom: none;
     }
 
+    .category-list li.active a {
+        color: var(--amber-color);
+        font-weight: 600;
+    }
+
     .category-list a {
         display: flex;
         justify-content: space-between;
-        color: var(--body-color);
+        color: var(--dark-gray);
         text-decoration: none;
         transition: color 0.3s ease;
     }
 
     .category-list a:hover {
-        color: var(--primary-color);
+        color: var(--amber-color);
     }
 
     .category-count {
-        background-color: var(--light-gray);
-        color: var(--body-color);
+        background-color: var(--beige-color);
+        color: var(--dark-gray);
         padding: 2px 8px;
         border-radius: 10px;
         font-size: 0.8rem;
@@ -206,8 +234,12 @@
     }
 
     .recent-post-info h5 a {
-        color: var(--text-color);
+        color: var(--dark-gray);
         text-decoration: none;
+    }
+
+    .recent-post-info h5 a:hover {
+        color: var(--amber-color);
     }
 
     .recent-post-info .post-date {
@@ -223,16 +255,16 @@
 
     .tag-badge {
         padding: 5px 15px;
-        background-color: var(--light-gray);
+        background-color: var(--beige-color);
         border-radius: 20px;
         font-size: 0.8rem;
-        color: var(--body-color);
+        color: var(--dark-gray);
         text-decoration: none;
         transition: background-color 0.3s ease, color 0.3s ease;
     }
 
     .tag-badge:hover {
-        background-color: var(--primary-color);
+        background-color: var(--amber-color);
         color: white;
     }
 
@@ -245,7 +277,7 @@
 
     .pagination .page-item .page-link {
         padding: 10px 15px;
-        color: var(--primary-color);
+        color: var(--amber-color);
         background-color: white;
         border: 1px solid #e3e6f0;
         margin: 0 5px;
@@ -255,9 +287,21 @@
 
     .pagination .page-item.active .page-link,
     .pagination .page-item .page-link:hover {
-        background-color: var(--primary-color);
+        background-color: var(--amber-color);
         color: white;
-        border-color: var(--primary-color);
+        border-color: var(--amber-color);
+    }
+
+    /* Button styling */
+    .btn-primary {
+        background-color: var(--amber-color);
+        border-color: var(--amber-color);
+        color: white;
+    }
+
+    .btn-primary:hover {
+        background-color: var(--dark-amber);
+        border-color: var(--dark-amber);
     }
 
     /* Dark mode adaptations */
@@ -282,6 +326,7 @@
 
     body.dark-mode .sidebar-title {
         border-color: #3a3d52;
+        color: #f8f9fc;
     }
 
     body.dark-mode .category-list li {
@@ -292,8 +337,9 @@
         color: #c2c5d3;
     }
 
-    body.dark-mode .category-list a:hover {
-        color: var(--primary-color);
+    body.dark-mode .category-list a:hover,
+    body.dark-mode .category-list li.active a {
+        color: var(--light-amber);
     }
 
     body.dark-mode .category-count {
@@ -309,6 +355,10 @@
         color: #f8f9fc;
     }
 
+    body.dark-mode .recent-post-info h5 a:hover {
+        color: var(--light-amber);
+    }
+
     body.dark-mode .recent-post-info .post-date {
         color: #c2c5d3;
     }
@@ -318,10 +368,21 @@
         color: #f8f9fc;
     }
 
+    body.dark-mode .tag-badge:hover {
+        background-color: var(--amber-color);
+    }
+
     body.dark-mode .pagination .page-item .page-link {
         background-color: #2a2c3e;
-        color: #f8f9fc;
+        color: var(--light-amber);
         border-color: #3a3d52;
+    }
+
+    body.dark-mode .pagination .page-item .page-link:hover,
+    body.dark-mode .pagination .page-item.active .page-link {
+        background-color: var(--amber-color);
+        color: white;
+        border-color: var(--amber-color);
     }
 </style>
 {% endblock %}

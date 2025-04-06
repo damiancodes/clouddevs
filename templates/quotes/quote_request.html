@@ -5,9 +5,21 @@
 
 {% block extra_css %}
 <style>
+    :root {
+        /* Using your established color scheme */
+        --beige-color: #f5eadb;
+        --amber-color: #c1954a;
+        --dark-amber: #9e7a39;
+        --light-amber: #d4b06a;
+        --off-white: #faf7f2;
+        --black: #212121;
+        --dark-gray: #333333;
+        --light-gray: #f0f0f0;
+    }
+
     /* Quote Header */
     .quote-header {
-        background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+        background: linear-gradient(135deg, var(--amber-color) 0%, var(--dark-amber) 100%);
         color: white;
         padding: 80px 0;
         text-align: center;
@@ -33,7 +45,7 @@
 
     .quote-card-header {
         padding: 20px;
-        background-color: #f8f9fc;
+        background-color: var(--beige-color);
         border-bottom: 1px solid #e3e6f0;
     }
 
@@ -81,8 +93,8 @@
     }
 
     .form-control:focus {
-        border-color: var(--primary-color);
-        box-shadow: 0 0 0 0.25rem rgba(0, 102, 204, 0.25);
+        border-color: var(--light-amber);
+        box-shadow: 0 0 0 0.25rem rgba(193, 149, 74, 0.25);
     }
 
     .form-text {
@@ -116,9 +128,10 @@
 
     .feature-card:hover {
         box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+        border-color: var(--amber-color);
     }
 
-    .feature-header {.feature-header {
+    .feature-header {
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -130,7 +143,7 @@
 
     .feature-price {
         font-weight: 600;
-        color: var(--primary-color);
+        color: var(--amber-color);
     }
 
     .feature-description {
@@ -151,7 +164,7 @@
         padding: 12px 30px;
         font-size: 1rem;
         font-weight: 600;
-        background-color: var(--primary-color);
+        background-color: var(--amber-color);
         border: none;
         border-radius: 5px;
         color: white;
@@ -159,14 +172,14 @@
     }
 
     .submit-button:hover {
-        background-color: var(--accent-color);
+        background-color: var(--dark-amber);
     }
 
     /* Information panel */
     .info-panel {
         border-radius: 10px;
         padding: 30px;
-        background-color: #f8f9fc;
+        background-color: var(--beige-color);
         height: 100%;
     }
 
@@ -174,6 +187,7 @@
         font-size: 1.25rem;
         font-weight: 700;
         margin-bottom: 20px;
+        color: var(--dark-gray);
     }
 
     .info-item {
@@ -184,7 +198,7 @@
     .info-icon {
         width: 40px;
         height: 40px;
-        background-color: var(--primary-color);
+        background-color: var(--amber-color);
         color: white;
         border-radius: 50%;
         display: flex;
@@ -199,6 +213,24 @@
         font-size: 1rem;
         font-weight: 700;
         margin-bottom: 5px;
+        color: var(--dark-gray);
+    }
+
+    .info-content p {
+        color: #6c757d;
+    }
+
+    /* Select box styling */
+    select.form-control {
+        appearance: none;
+        background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 0.75rem center;
+        background-size: 16px 12px;
+    }
+
+    select.form-control:focus {
+        background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='none' stroke='%23c1954a' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3E%3C/svg%3E");
     }
 
     /* Dark mode adaptations */
@@ -228,6 +260,18 @@
 
     body.dark-mode .feature-card {
         border-color: #3a3d52;
+    }
+
+    body.dark-mode .feature-card:hover {
+        border-color: var(--amber-color);
+    }
+
+    body.dark-mode .info-content h4 {
+        color: #f8f9fc;
+    }
+
+    body.dark-mode .info-content p {
+        color: #c2c5d3;
     }
 </style>
 {% endblock %}

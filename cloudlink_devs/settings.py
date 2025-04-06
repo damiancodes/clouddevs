@@ -53,7 +53,6 @@ INSTALLED_APPS = [
     'blog',
     'quotes',
 ]
-
 # URL Configuration
 ROOT_URLCONF = 'cloudlink_devs.urls'
 
@@ -68,6 +67,9 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
+# In settings.py
+LOGIN_URL = '/client/login/'  # Points to your custom login view
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -80,10 +82,35 @@ MIDDLEWARE = [
 
 
 
+# TEMPLATES = [
+#     {
+#         'BACKEND': 'django.template.backends.django.DjangoTemplates',
+#         #
+#         'DIRS': [
+#             os.path.join(BASE_DIR, 'templates'),  # Add this line if not already present
+#             os.path.join(BASE_DIR, 'client_portal', 'templates'),
+#         ],
+#         'APP_DIRS': True,
+#         'OPTIONS': {
+#             'context_processors': [
+#                 'django.template.context_processors.debug',
+#                 'django.template.context_processors.request',
+#                 'django.contrib.auth.context_processors.auth',
+#                 'django.contrib.messages.context_processors.messages',
+#             ],
+#         },
+#     },
+# ]
+
+import os
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        'DIRS': [
+            os.path.join(BASE_DIR, 'templates'),  # Project root templates
+            os.path.join(BASE_DIR, 'client_portal', 'templates'),  # App-specific templates
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -95,6 +122,7 @@ TEMPLATES = [
         },
     },
 ]
+
 
 WSGI_APPLICATION = 'cloudlink_devs.wsgi.application'
 
@@ -111,17 +139,28 @@ WSGI_APPLICATION = 'cloudlink_devs.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'cloud',       # Your database name
+        'NAME': 'cloud',
         'USER': 'root',        # Change this if you have another MySQL user
-        'PASSWORD': '',  # Replace with your actual MySQL password
-        'HOST': 'localhost',   # Use '127.0.0.1' if localhost doesn't work
-        'PORT': '3306',        # Default MySQL port
+        'PASSWORD': '',
+        'HOST': 'localhost',
+        'PORT': '3306',
         'OPTIONS': {
             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"
         }
     }
 }
 
+
+
+# Email settings
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.your-email-provider.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'jamhimira@gmail.com'
+EMAIL_HOST_PASSWORD = ' xsvy vjls fknj keap'
+DEFAULT_FROM_EMAIL = 'CloudLink_Devs <info@cloudlinkdevs.com>'
+SITE_URL = 'https://www.cloudlinkdevs.com'  # or http://localhost:8000 for development
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators

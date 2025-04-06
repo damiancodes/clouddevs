@@ -1,0 +1,354 @@
+{% extends 'client_portal/base.html' %}
+{% load static %}
+
+{% block title %}Admin - Record Payment{% endblock %}
+
+{% block extra_css %}
+<style>
+    :root {
+        /* Using your established color scheme */
+        --beige-color: #f5eadb;
+        --amber-color: #c1954a;
+        --dark-amber: #9e7a39;
+        --light-amber: #d4b06a;
+        --off-white: #faf7f2;
+        --black: #212121;
+        --dark-gray: #333333;
+        --light-gray: #f0f0f0;
+    }
+
+    .admin-header {
+        padding: 30px 0;
+        background-color: var(--beige-color);
+        margin-bottom: 30px;
+    }
+
+    .admin-title h1 {
+        font-weight: 700;
+        margin-bottom: 10px;
+        color: var(--dark-gray);
+    }
+
+    .form-card {
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+        margin-bottom: 30px;
+    }
+
+    .form-card-header {
+        padding: 20px;
+        border-bottom: 1px solid #e3e6f0;
+        background-color: var(--beige-color);
+        border-radius: 10px 10px 0 0;
+    }
+
+    .form-card-header h5 {
+        margin-bottom: 0;
+        font-weight: 700;
+    }
+
+    .form-card-body {
+        padding: 20px;
+    }
+
+    .invoice-details {
+        padding: 20px;
+        border-radius: 10px;
+        background-color: var(--light-gray);
+        margin-bottom: 20px;
+    }
+
+    .invoice-detail-row {
+        margin-bottom: 10px;
+    }
+
+    .invoice-detail-label {
+        font-weight: 600;
+        margin-bottom: 5px;
+    }
+
+    .invoice-detail-value {
+        font-size: 1.1rem;
+    }
+
+    .invoice-total {
+        font-size: 1.2rem;
+        font-weight: 700;
+    }
+
+    .invoice-balance {
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: #e74a3b;
+    }
+
+    .invoice-status {
+        display: inline-block;
+        padding: 3px 10px;
+        border-radius: 15px;
+        font-size: 0.75rem;
+    }
+
+    .status-sent {
+        background-color: rgba(193, 149, 74, 0.1);
+        color: var(--amber-color);
+    }
+
+    .status-overdue {
+        background-color: rgba(231, 74, 59, 0.1);
+        color: #e74a3b;
+    }
+
+    .form-buttons {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 30px;
+    }
+
+    /* Button styles */
+    .btn-primary {
+        background-color: var(--amber-color);
+        border-color: var(--amber-color);
+        color: white;
+    }
+
+    .btn-primary:hover {
+        background-color: var(--dark-amber);
+        border-color: var(--dark-amber);
+    }
+
+    .btn-outline-primary {
+        color: var(--amber-color);
+        border-color: var(--amber-color);
+    }
+
+    .btn-outline-primary:hover {
+        background-color: var(--amber-color);
+        border-color: var(--amber-color);
+        color: white;
+    }
+
+    .form-control.is-invalid {
+        border-color: #e74a3b;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Admin Header -->
+<section class="admin-header">
+    <div class="container">
+        <div class="admin-title">
+            <h1>Record Payment</h1>
+            <p>Record a payment for a client invoice.</p>
+        </div>
+    </div>
+</section>
+
+<!-- Payment Form -->
+<section class="admin-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <form id="paymentForm" method="post" action="{% url 'client_portal:admin_record_payment' %}">
+                    {% csrf_token %}
+
+                    <!-- Invoice Selection -->
+                    <div class="form-card mb-4">
+                        <div class="form-card-header">
+                            <h5>Select Invoice</h5>
+                        </div>
+                        <div class="form-card-body">
+                            <div class="mb-4">
+                                <label for="invoice" class="form-label">Invoice *</label>
+                                <select class="form-select" id="invoice" name="invoice" required>
+                                    <option value="">Select Invoice</option>
+                                    {% for invoice in invoices %}
+                                        <option value="{{ invoice.id }}" data-client="{{ invoice.client.full_name }}" data-amount="{{ invoice.balance_due }}" {% if request.GET.invoice == invoice.id|stringformat:"i" %}selected{% endif %}>
+                                            #{{ invoice.invoice_number }} - {{ invoice.client.full_name }} - ${{ invoice.balance_due|floatformat:2 }}
+                                        </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                            <div id="invoiceDetails" class="invoice-details" style="display: none;">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="invoice-detail-row">
+                                            <div class="invoice-detail-label">Invoice Number</div>
+                                            <div class="invoice-detail-value" id="detailInvoiceNumber"></div>
+                                        </div>
+                                        <div class="invoice-detail-row">
+                                            <div class="invoice-detail-label">Client</div>
+                                            <div class="invoice-detail-value" id="detailClient"></div>
+                                        </div>
+                                        <div class="invoice-detail-row">
+                                            <div class="invoice-detail-label">Status</div>
+                                            <div id="detailStatus"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="invoice-detail-row">
+                                            <div class="invoice-detail-label">Issue Date</div>
+                                            <div class="invoice-detail-value" id="detailIssueDate"></div>
+                                        </div>
+                                        <div class="invoice-detail-row">
+                                            <div class="invoice-detail-label">Due Date</div>
+                                            <div class="invoice-detail-value" id="detailDueDate"></div>
+                                        </div>
+                                        <div class="invoice-detail-row">
+                                            <div class="invoice-detail-label">Total Amount</div>
+                                            <div class="invoice-total" id="detailTotal"></div>
+                                        </div>
+                                        <div class="invoice-detail-row">
+                                            <div class="invoice-detail-label">Balance Due</div>
+                                            <div class="invoice-balance" id="detailBalance"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Payment Details -->
+                    <div class="form-card mb-4">
+                        <div class="form-card-header">
+                            <h5>Payment Details</h5>
+                        </div>
+                        <div class="form-card-body">
+                            <div class="mb-3">
+                                <label for="amount" class="form-label">Payment Amount *</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">$</span>
+                                    <input type="number" class="form-control" id="amount" name="amount" step="0.01" min="0.01" required>
+                                </div>
+                                <div id="amountFeedback" class="invalid-feedback">
+                                    Payment amount cannot exceed the balance due.
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="payment_method" class="form-label">Payment Method *</label>
+                                <select class="form-select" id="payment_method" name="payment_method" required>
+                                    {% for method_code, method_name in payment_methods %}
+                                        <option value="{{ method_code }}">{{ method_name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="payment_date" class="form-label">Payment Date *</label>
+                                <input type="date" class="form-control" id="payment_date" name="payment_date" value="{{ today|date:'Y-m-d' }}" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="transaction_id" class="form-label">Transaction ID (Optional)</label>
+                                <input type="text" class="form-control" id="transaction_id" name="transaction_id" placeholder="Enter transaction ID">
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="notes" class="form-label">Notes (Optional)</label>
+                                <textarea class="form-control" id="notes" name="notes" rows="3" placeholder="Add any notes about this payment"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Submit Buttons -->
+                    <div class="form-buttons">
+                        <button type="button" class="btn btn-outline-primary" onclick="window.history.back();">
+                            <i class="fas fa-arrow-left me-2"></i> Cancel
+                        </button>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save me-2"></i> Record Payment
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    $(document).ready(function() {
+        // Handle invoice selection
+        $('#invoice').on('change', function() {
+            const invoiceId = $(this).val();
+
+            if (invoiceId) {
+                // In a real implementation, you'd fetch the invoice details via AJAX
+                // For now, we'll simulate this using data attributes
+                const option = $(this).find('option:selected');
+                const client = option.data('client');
+                const balance = option.data('amount');
+
+                // Here we would normally populate with actual data from AJAX
+                $('#detailInvoiceNumber').text(option.text().split(' - ')[0]);
+                $('#detailClient').text(client);
+                $('#detailStatus').html('<span class="invoice-status status-sent">Unpaid</span>');
+                $('#detailIssueDate').text('--/--/----'); // Would come from AJAX
+                $('#detailDueDate').text('--/--/----'); // Would come from AJAX
+                $('#detailTotal').text('$' + balance.toFixed(2)); // Would come from AJAX
+                $('#detailBalance').text('$' + balance.toFixed(2));
+
+                // Set the default payment amount to the balance due
+                $('#amount').val(balance.toFixed(2));
+
+                // Show the invoice details section
+                $('#invoiceDetails').show();
+            } else {
+                // Hide the invoice details if no invoice is selected
+                $('#invoiceDetails').hide();
+                $('#amount').val('');
+            }
+        });
+
+        // Trigger the change event if an invoice is pre-selected (from URL parameter)
+        if ($('#invoice').val()) {
+            $('#invoice').trigger('change');
+        }
+
+        // Validate payment amount
+        $('#amount').on('input', function() {
+            const amount = parseFloat($(this).val()) || 0;
+            const option = $('#invoice').find('option:selected');
+            const balance = option.data('amount') || 0;
+
+            if (amount > balance) {
+                $(this).addClass('is-invalid');
+                $('#amountFeedback').show();
+            } else {
+                $(this).removeClass('is-invalid');
+                $('#amountFeedback').hide();
+            }
+        });
+
+        // Form validation
+        $('#paymentForm').on('submit', function(e) {
+            const invoiceId = $('#invoice').val();
+            if (!invoiceId) {
+                e.preventDefault();
+                alert('Please select an invoice.');
+                return false;
+            }
+
+            const amount = parseFloat($('#amount').val()) || 0;
+            if (amount <= 0) {
+                e.preventDefault();
+                alert('Please enter a valid payment amount.');
+                return false;
+            }
+
+            const option = $('#invoice').find('option:selected');
+            const balance = option.data('amount') || 0;
+            if (amount > balance) {
+                e.preventDefault();
+                alert('Payment amount cannot exceed the balance due.');
+                return false;
+            }
+        });
+    });
+</script>
+{% endblock %}

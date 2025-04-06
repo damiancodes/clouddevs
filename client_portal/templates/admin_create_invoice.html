@@ -1,0 +1,476 @@
+{% extends 'client_portal/base.html' %}
+{% load static %}
+
+{% block title %}Admin - Create New Invoice{% endblock %}
+
+{% block extra_css %}
+<style>
+    :root {
+        /* Using your established color scheme */
+        --beige-color: #f5eadb;
+        --amber-color: #c1954a;
+        --dark-amber: #9e7a39;
+        --light-amber: #d4b06a;
+        --off-white: #faf7f2;
+        --black: #212121;
+        --dark-gray: #333333;
+        --light-gray: #f0f0f0;
+    }
+
+    .admin-header {
+        padding: 30px 0;
+        background-color: var(--beige-color);
+        margin-bottom: 30px;
+    }
+
+    .admin-title {
+        margin-bottom: 20px;
+    }
+
+    .admin-title h1 {
+        font-weight: 700;
+        margin-bottom: 10px;
+        color: var(--dark-gray);
+    }
+
+    .form-card {
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+        margin-bottom: 30px;
+    }
+
+    .form-card-header {
+        padding: 20px;
+        border-bottom: 1px solid #e3e6f0;
+        background-color: var(--beige-color);
+        border-radius: 10px 10px 0 0;
+    }
+
+    .form-card-header h5 {
+        margin-bottom: 0;
+        font-weight: 700;
+    }
+
+    .form-card-body {
+        padding: 20px;
+    }
+
+    .form-section {
+        margin-bottom: 30px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid #e3e6f0;
+    }
+
+    .form-section:last-child {
+        margin-bottom: 0;
+        padding-bottom: 0;
+        border-bottom: none;
+    }
+
+    .form-section-title {
+        margin-bottom: 20px;
+        font-weight: 700;
+        color: var(--dark-gray);
+    }
+
+    .invoice-items-table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    .invoice-items-table th {
+        background-color: var(--light-gray);
+        padding: 10px;
+        text-align: left;
+    }
+
+    .invoice-items-table td {
+        padding: 10px;
+        border-bottom: 1px solid #e3e6f0;
+    }
+
+    .invoice-items-table tr:last-child td {
+        border-bottom: none;
+    }
+
+    .invoice-totals {
+        margin-top: 20px;
+    }
+
+    .invoice-total-row {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+    }
+
+    .invoice-total-label {
+        font-weight: 600;
+    }
+
+    .invoice-total-value {
+        width: 120px;
+        text-align: right;
+    }
+
+    .item-row {
+        margin-bottom: 10px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #e3e6f0;
+    }
+
+    .item-row:last-child {
+        margin-bottom: 0;
+        padding-bottom: 0;
+        border-bottom: none;
+    }
+
+    .form-buttons {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 30px;
+    }
+
+    /* Button styles */
+    .btn-primary {
+        background-color: var(--amber-color);
+        border-color: var(--amber-color);
+        color: white;
+    }
+
+    .btn-primary:hover {
+        background-color: var(--dark-amber);
+        border-color: var(--dark-amber);
+    }
+
+    .btn-outline-primary {
+        color: var(--amber-color);
+        border-color: var(--amber-color);
+    }
+
+    .btn-outline-primary:hover {
+        background-color: var(--amber-color);
+        border-color: var(--amber-color);
+        color: white;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Admin Header -->
+<section class="admin-header">
+    <div class="container">
+        <div class="admin-title">
+            <h1>Create New Invoice</h1>
+            <p>Create a new invoice for a client.</p>
+        </div>
+    </div>
+</section>
+
+<!-- Invoice Form -->
+<section class="admin-content">
+    <div class="container">
+        <form id="invoiceForm" method="post" action="{% url 'client_portal:admin_create_invoice' %}">
+            {% csrf_token %}
+            <div class="row">
+                <!-- Invoice Details Column -->
+                <div class="col-lg-8">
+                    <!-- Client and Basic Info -->
+                    <div class="form-card mb-4">
+                        <div class="form-card-header">
+                            <h5>Invoice Information</h5>
+                        </div>
+                        <div class="form-card-body">
+                            <div class="form-section">
+                                <h6 class="form-section-title">Client & Project</h6>
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <label for="client" class="form-label">Client *</label>
+                                        <select class="form-select" id="client" name="client" required>
+                                            <option value="">Select Client</option>
+                                            {% for client in clients %}
+                                                <option value="{{ client.id }}" {% if request.GET.client == client.id|stringformat:"i" %}selected{% endif %}>
+                                                    {{ client.full_name }} {% if client.company_name %}({{ client.company_name }}){% endif %}
+                                                </option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="project" class="form-label">Project (Optional)</label>
+                                        <select class="form-select" id="project" name="project">
+                                            <option value="">No Project</option>
+                                            {% for project in projects %}
+                                                <option value="{{ project.id }}" {% if request.GET.project == project.id|stringformat:"i" %}selected{% endif %}>
+                                                    {{ project.title }}
+                                                </option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-section">
+                                <h6 class="form-section-title">Invoice Details</h6>
+                                <div class="row mb-3">
+                                    <div class="col-md-4">
+                                        <label for="invoice_number" class="form-label">Invoice Number *</label>
+                                        <input type="text" class="form-control" id="invoice_number" name="invoice_number" value="{{ next_invoice_number }}" required>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="issue_date" class="form-label">Issue Date *</label>
+                                        <input type="date" class="form-control" id="issue_date" name="issue_date" value="{{ today|date:'Y-m-d' }}" required>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="due_date" class="form-label">Due Date *</label>
+                                        <input type="date" class="form-control" id="due_date" name="due_date" value="{{ due_date|date:'Y-m-d' }}" required>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Invoice Items -->
+                    <div class="form-card">
+                        <div class="form-card-header">
+                            <h5>Invoice Items</h5>
+                        </div>
+                        <div class="form-card-body">
+                            <div id="invoiceItems">
+                                <div class="item-row" id="item-1">
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <label for="item_description_1" class="form-label">Description *</label>
+                                            <input type="text" class="form-control item-description" id="item_description_1" name="item_description" required>
+                                        </div>
+                                        <div class="col-md-2 mb-3">
+                                            <label for="item_quantity_1" class="form-label">Quantity *</label>
+                                            <input type="number" class="form-control item-quantity" id="item_quantity_1" name="item_quantity" value="1" min="1" step="0.01" required>
+                                        </div>
+                                        <div class="col-md-3 mb-3">
+                                            <label for="item_price_1" class="form-label">Unit Price *</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text">$</span>
+                                                <input type="number" class="form-control item-price" id="item_price_1" name="item_price" value="0.00" min="0" step="0.01" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-1 mb-3 d-flex align-items-end">
+                                            <button type="button" class="btn btn-outline-danger btn-sm remove-item" style="display: none;">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="text-center mt-3">
+                                <button type="button" id="addItemBtn" class="btn btn-outline-primary">
+                                    <i class="fas fa-plus me-2"></i> Add Item
+                                </button>
+                            </div>
+
+                            <div class="invoice-totals mt-4">
+                                <div class="row">
+                                    <div class="col-md-6"></div>
+                                    <div class="col-md-6">
+                                        <div class="invoice-total-row">
+                                            <div class="invoice-total-label">Subtotal:</div>
+                                            <div class="invoice-total-value" id="subtotalValue">$0.00</div>
+                                            <input type="hidden" id="subtotal" name="subtotal" value="0">
+                                        </div>
+                                        <div class="invoice-total-row">
+                                            <div class="invoice-total-label">Tax Rate (%):</div>
+                                            <div class="invoice-total-value">
+                                                <input type="number" class="form-control form-control-sm" id="tax_rate" name="tax_rate" value="0" min="0" step="0.01">
+                                            </div>
+                                        </div>
+                                        <div class="invoice-total-row">
+                                            <div class="invoice-total-label">Tax Amount:</div>
+                                            <div class="invoice-total-value" id="taxValue">$0.00</div>
+                                        </div>
+                                        <div class="invoice-total-row">
+                                            <div class="invoice-total-label">Discount:</div>
+                                            <div class="invoice-total-value">
+                                                <div class="input-group input-group-sm">
+                                                    <span class="input-group-text">$</span>
+                                                    <input type="number" class="form-control form-control-sm" id="discount" name="discount" value="0" min="0" step="0.01">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="invoice-total-row">
+                                            <div class="invoice-total-label"><strong>Total:</strong></div>
+                                            <div class="invoice-total-value"><strong id="totalValue">$0.00</strong></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Additional Options Column -->
+                <div class="col-lg-4">
+                    <!-- Invoice Options -->
+                    <div class="form-card mb-4">
+                        <div class="form-card-header">
+                            <h5>Invoice Options</h5>
+                        </div>
+                        <div class="form-card-body">
+                            <div class="mb-3">
+                                <label for="status" class="form-label">Status</label>
+                                <select class="form-select" id="status" name="status">
+                                    <option value="draft">Draft</option>
+                                    <option value="sent">Sent</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="notes" class="form-label">Notes (Optional)</label>
+                                <textarea class="form-control" id="notes" name="notes" rows="4" placeholder="Enter any notes or payment instructions..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Preview & Submit -->
+                    <div class="form-card">
+                        <div class="form-card-header">
+                            <h5>Preview & Submit</h5>
+                        </div>
+                        <div class="form-card-body">
+                            <p>Review your invoice information before submitting. All required fields must be filled out.</p>
+                            <div class="form-buttons">
+                                <button type="button" class="btn btn-outline-primary" onclick="window.history.back();">
+                                    <i class="fas fa-arrow-left me-2"></i> Cancel
+                                </button>
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-save me-2"></i> Create Invoice
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    $(document).ready(function() {
+        // Initialize client dependency
+        $('#client').on('change', function() {
+            updateProjectDropdown();
+        });
+
+        function updateProjectDropdown() {
+            const clientId = $('#client').val();
+            // In a real implementation, you would make an AJAX call to get projects for this client
+            // For now, we'll just filter the existing dropdown
+            $('#project option').each(function() {
+                // This is a simplified approach - in production you'd need proper backend filtering
+                if ($(this).val() === '') {
+                    // Always show "No Project" option
+                    $(this).show();
+                } else {
+                    // In a real implementation, check if this project belongs to selected client
+                    // $(this).toggle($(this).data('client-id') === clientId);
+                }
+            });
+        }
+
+        // Handle adding invoice items
+        let itemCount = 1;
+
+        $('#addItemBtn').on('click', function() {
+            itemCount++;
+            const newItem = $('#item-1').clone();
+            newItem.attr('id', 'item-' + itemCount);newItem.attr('id', 'item-' + itemCount);
+
+            // Update IDs and names for the new item
+            newItem.find('.item-description').attr('id', 'item_description_' + itemCount).val('');
+            newItem.find('.item-quantity').attr('id', 'item_quantity_' + itemCount).val(1);
+            newItem.find('.item-price').attr('id', 'item_price_' + itemCount).val(0);
+
+            // Show remove button for all items except the first one
+            newItem.find('.remove-item').show();
+
+            // Add the new item to the list
+            $('#invoiceItems').append(newItem);
+
+            // Re-bind event handlers for calculation
+            bindCalculationEvents();
+        });
+
+        // Handle removing invoice items
+        $(document).on('click', '.remove-item', function() {
+            $(this).closest('.item-row').remove();
+            calculateTotals();
+        });
+
+        // Bind calculation events to all input fields
+        function bindCalculationEvents() {
+            $('.item-quantity, .item-price, #tax_rate, #discount').off('input').on('input', function() {
+                calculateTotals();
+            });
+        }
+
+        // Calculate invoice totals
+        function calculateTotals() {
+            let subtotal = 0;
+
+            // Calculate subtotal
+            $('.item-row').each(function() {
+                const quantity = parseFloat($(this).find('.item-quantity').val()) || 0;
+                const price = parseFloat($(this).find('.item-price').val()) || 0;
+                subtotal += quantity * price;
+            });
+
+            // Update subtotal
+            $('#subtotalValue').text('$' + subtotal.toFixed(2));
+            $('#subtotal').val(subtotal.toFixed(2));
+
+            // Calculate tax
+            const taxRate = parseFloat($('#tax_rate').val()) || 0;
+            const taxAmount = (subtotal * taxRate) / 100;
+            $('#taxValue').text('$' + taxAmount.toFixed(2));
+
+            // Calculate total
+            const discount = parseFloat($('#discount').val()) || 0;
+            const total = subtotal + taxAmount - discount;
+            $('#totalValue').text('$' + total.toFixed(2));
+        }
+
+        // Initialize calculation
+        bindCalculationEvents();
+        calculateTotals();
+
+        // Form validation
+        $('#invoiceForm').on('submit', function(e) {
+            const clientId = $('#client').val();
+            if (!clientId) {
+                e.preventDefault();
+                alert('Please select a client.');
+                return false;
+            }
+
+            // Check if at least one item is filled out properly
+            let validItems = false;
+            $('.item-row').each(function() {
+                const description = $(this).find('.item-description').val();
+                const quantity = parseFloat($(this).find('.item-quantity').val()) || 0;
+                const price = parseFloat($(this).find('.item-price').val()) || 0;
+
+                if (description && quantity > 0 && price > 0) {
+                    validItems = true;
+                }
+            });
+
+            if (!validItems) {
+                e.preventDefault();
+                alert('Please add at least one item with a valid description, quantity, and price.');
+                return false;
+            }
+        });
+    });
+</script>
+{% endblock %}

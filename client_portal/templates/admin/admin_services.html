@@ -1,0 +1,599 @@
+{% extends 'client_portal/base.html' %}
+{% load static %}
+
+<!-- At the top of your admin_services.html -->
+<div style="background:red; color:white; padding:10px;">
+  ADMIN SERVICES TEMPLATE LOADED
+</div>
+{% block title %}Admin - Services Management{% endblock %}
+
+{% block extra_css %}
+<style>
+    :root {
+        /* Using your established color scheme */
+        --beige-color: #f5eadb;
+        --amber-color: #c1954a;
+        --dark-amber: #9e7a39;
+        --light-amber: #d4b06a;
+        --off-white: #faf7f2;
+        --black: #212121;
+        --dark-gray: #333333;
+        --light-gray: #f0f0f0;
+    }
+
+    .admin-header {
+        padding: 30px 0;
+        background-color: var(--beige-color);
+        margin-bottom: 30px;
+    }
+
+    .admin-title h1 {
+        font-weight: 700;
+        margin-bottom: 10px;
+        color: var(--dark-gray);
+    }
+
+    .service-card {
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+        margin-bottom: 20px;
+        transition: all 0.3s ease;
+    }
+
+    .service-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 0.5rem 2rem 0 rgba(58, 59, 69, 0.25);
+    }
+
+    .service-card-header {
+        padding: 20px;
+        border-bottom: 1px solid #e3e6f0;
+        background-color: var(--beige-color);
+        border-radius: 10px 10px 0 0;
+        position: relative;
+    }
+
+    .service-card-tools {
+        position: absolute;
+        right: 20px;
+        top: 20px;
+    }
+
+    .service-card-body {
+        padding: 20px;
+    }
+
+    .form-card {
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+        margin-bottom: 30px;
+    }
+
+    .form-card-header {
+        padding: 20px;
+        border-bottom: 1px solid #e3e6f0;
+        background-color: var(--beige-color);
+        border-radius: 10px 10px 0 0;
+    }
+
+    .form-card-header h5 {
+        margin-bottom: 0;
+        font-weight: 700;
+    }
+
+    .form-card-body {
+        padding: 20px;
+    }
+
+    .service-name {
+        font-size: 1.2rem;
+        font-weight: 700;
+        margin-bottom: 5px;
+    }
+
+    .service-description {
+        color: var(--dark-gray);
+        margin-bottom: 15px;
+    }
+
+    .service-price {
+        font-weight: 700;
+        font-size: 1.3rem;
+        color: var(--amber-color);
+    }
+
+    .service-features {
+        margin-top: 15px;
+    }
+
+    .service-feature-item {
+        margin-bottom: 5px;
+    }
+
+    .status-active {
+        display: inline-block;
+        padding: 3px 10px;
+        border-radius: 15px;
+        font-size: 0.75rem;
+        background-color: rgba(28, 200, 138, 0.1);
+        color: #1cc88a;
+    }
+    
+    .status-inactive {
+        display: inline-block;
+        padding: 3px 10px;
+        border-radius: 15px;
+        font-size: 0.75rem;
+        background-color: rgba(231, 74, 59, 0.1);
+        color: #e74a3b;
+    }
+
+    .btn-primary {
+        background-color: var(--amber-color);
+        border-color: var(--amber-color);
+        color: white;
+    }
+
+    .btn-primary:hover {
+        background-color: var(--dark-amber);
+        border-color: var(--dark-amber);
+    }
+
+    .btn-outline-primary {
+        color: var(--amber-color);
+        border-color: var(--amber-color);
+    }
+
+    .btn-outline-primary:hover {
+        background-color: var(--amber-color);
+        border-color: var(--amber-color);
+        color: white;
+    }
+
+    .price-tier-section {
+        margin-top: 15px;
+        padding-top: 15px;
+        border-top: 1px solid #e3e6f0;
+    }
+    
+    .price-tier-label {
+        font-weight: 600;
+        margin-bottom: 5px;
+    }
+    
+    .price-tier-price {
+        font-size: 1.1rem;
+        color: var(--amber-color);
+        font-weight: 700;
+    }
+    
+    .price-tier-description {
+        font-size: 0.9rem;
+        color: var(--dark-gray);
+    }
+    
+    .feature-list {
+        margin-top: 15px;
+    }
+    
+    .feature-list-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 5px;
+    }
+    
+    .feature-check {
+        color: #1cc88a;
+        margin-right: 10px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Admin Header -->
+<section class="admin-header">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center">
+            <div class="admin-title">
+                <h1>Services Management</h1>
+                <p>Manage your service offerings and pricing.</p>
+            </div>
+            <div>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addServiceModal">
+                    <i class="fas fa-plus me-2"></i> Add New Service
+                </button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Services List -->
+<section class="admin-content">
+    <div class="container">
+        <div class="row">
+            <!-- Service Categories -->
+            <div class="col-lg-4">
+                <div class="form-card mb-4">
+                    <div class="form-card-header">
+                        <h5>Service Categories</h5>
+                    </div>
+                    <div class="form-card-body">
+                        <div class="list-group">
+                            <a href="#" class="list-group-item list-group-item-action active">
+                                All Services
+                            </a>
+                            <a href="#" class="list-group-item list-group-item-action">
+                                Web Development
+                            </a>
+                            <a href="#" class="list-group-item list-group-item-action">
+                                App Development
+                            </a>
+                            <a href="#" class="list-group-item list-group-item-action">
+                                POS Systems
+                            </a>
+                            <a href="#" class="list-group-item list-group-item-action">
+                                Maintenance & Support
+                            </a>
+                        </div>
+                        
+                        <div class="d-grid gap-2 mt-3">
+                            <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#addCategoryModal">
+                                <i class="fas fa-plus me-2"></i> Add Category
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-card">
+                    <div class="form-card-header">
+                        <h5>Quick Actions</h5>
+                    </div>
+                    <div class="form-card-body">
+                        <div class="d-grid gap-2">
+                            <a href="{% url 'client_portal:admin_clients' %}" class="btn btn-outline-primary">
+                                <i class="fas fa-users me-2"></i> Manage Clients
+                            </a>
+                            <a href="{% url 'client_portal:admin_create_invoice' %}" class="btn btn-outline-primary">
+                                <i class="fas fa-file-invoice-dollar me-2"></i> Create Invoice
+                            </a>
+                            <a href="{% url 'client_portal:dashboard' %}" class="btn btn-outline-primary">
+                                <i class="fas fa-tachometer-alt me-2"></i> Dashboard
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Services -->
+            <div class="col-lg-8">
+                <!-- Web Development Services -->
+                <h4 class="mb-3">Web Development Services</h4>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="service-card">
+                            <div class="service-card-header">
+                                <div class="service-card-tools">
+                                    <button class="btn btn-sm btn-outline-primary">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="btn btn-sm btn-outline-danger">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                                <div class="service-name">Basic Website</div>
+                                <span class="status-active">Active</span>
+                            </div>
+                            <div class="service-card-body">
+                                <div class="service-description">
+                                    Simple website with up to 5 pages, responsive design, and basic SEO.
+                                </div>
+                                
+                                <div class="price-tier-section">
+                                    <div class="price-tier-label">Silver Package</div>
+                                    <div class="price-tier-price">$999</div>
+                                    <div class="price-tier-description">Basic features, 1 month support</div>
+                                </div>
+                                
+                                <div class="price-tier-section">
+                                    <div class="price-tier-label">Gold Package</div>
+                                    <div class="price-tier-price">$1,499</div>
+                                    <div class="price-tier-description">Premium features, 3 months support</div>
+                                </div>
+                                
+                                <div class="feature-list">
+                                    <div class="feature-list-item">
+                                        <i class="fas fa-check feature-check"></i>
+                                        <span>Responsive Design</span>
+                                    </div>
+                                    <div class="feature-list-item">
+                                        <i class="fas fa-check feature-check"></i>
+                                        <span>Contact Form</span>
+                                    </div>
+                                    <div class="feature-list-item">
+                                        <i class="fas fa-check feature-check"></i>
+                                        <span>Basic SEO</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <div class="service-card">
+                            <div class="service-card-header">
+                                <div class="service-card-tools">
+                                    <button class="btn btn-sm btn-outline-primary">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="btn btn-sm btn-outline-danger">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                                <div class="service-name">E-Commerce Website</div>
+                                <span class="status-active">Active</span>
+                            </div>
+                            <div class="service-card-body">
+                                <div class="service-description">
+                                    Fully-featured online store with product management, payment processing, and customer accounts.
+                                </div>
+                                
+                                <div class="price-tier-section">
+                                    <div class="price-tier-label">Silver Package</div>
+                                    <div class="price-tier-price">$2,499</div>
+                                    <div class="price-tier-description">Up to 50 products, basic features</div>
+                                </div>
+                                
+                                <div class="price-tier-section">
+                                    <div class="price-tier-label">Gold Package</div>
+                                    <div class="price-tier-price">$3,999</div>
+                                    <div class="price-tier-description">Unlimited products, premium features</div>
+                                </div>
+                                
+                                <div class="feature-list">
+                                    <div class="feature-list-item">
+                                        <i class="fas fa-check feature-check"></i>
+                                        <span>Product Management</span>
+                                    </div>
+                                    <div class="feature-list-item">
+                                        <i class="fas fa-check feature-check"></i>
+                                        <span>Secure Checkout</span>
+                                    </div>
+                                    <div class="feature-list-item">
+                                        <i class="fas fa-check feature-check"></i>
+                                        <span>Customer Accounts</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- App Development Services -->
+                <h4 class="mb-3 mt-4">App Development Services</h4>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="service-card">
+                            <div class="service-card-header">
+                                <div class="service-card-tools">
+                                    <button class="btn btn-sm btn-outline-primary">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="btn btn-sm btn-outline-danger">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                                <div class="service-name">Mobile App (iOS/Android)</div>
+                                <span class="status-active">Active</span>
+                            </div>
+                            <div class="service-card-body">
+                                <div class="service-description">
+                                    Cross-platform mobile application for iOS and Android devices.
+                                </div>
+                                
+                                <div class="price-tier-section">
+                                    <div class="price-tier-label">Standard Package</div>
+                                    <div class="price-tier-price">$4,999</div>
+                                    <div class="price-tier-description">Basic functionality, 3 months support</div>
+                                </div>
+                                
+                                <div class="price-tier-section">
+                                    <div class="price-tier-label">Premium Package</div>
+                                    <div class="price-tier-price">$8,999</div>
+                                    <div class="price-tier-description">Advanced features, 6 months support</div>
+                                </div>
+                                
+                                <div class="feature-list">
+                                    <div class="feature-list-item">
+                                        <i class="fas fa-check feature-check"></i>
+                                        <span>Cross-platform (iOS & Android)</span>
+                                    </div>
+                                    <div class="feature-list-item">
+                                        <i class="fas fa-check feature-check"></i>
+                                        <span>User Authentication</span>
+                                    </div>
+                                    <div class="feature-list-item">
+                                        <i class="fas fa-check feature-check"></i>
+                                        <span>Cloud Database</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Add Service Modal -->
+<div class="modal fade" id="addServiceModal" tabindex="-1" aria-labelledby="addServiceModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addServiceModalLabel">Add New Service</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="#" method="post">
+                {% csrf_token %}
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="serviceName" class="form-label">Service Name *</label>
+                        <input type="text" class="form-control" id="serviceName" name="service_name" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="serviceCategory" class="form-label">Category *</label>
+                        <select class="form-select" id="serviceCategory" name="category" required>
+                            <option value="">Select Category</option>
+                            <option value="web_development">Web Development</option>
+                            <option value="app_development">App Development</option>
+                            <option value="pos_systems">POS Systems</option>
+                            <option value="maintenance">Maintenance & Support</option>
+                        </select>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="serviceDescription" class="form-label">Description *</label>
+                        <textarea class="form-control" id="serviceDescription" name="description" rows="3" required></textarea>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Status</label>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="status" id="statusActive" value="active" checked>
+                            <label class="form-check-label" for="statusActive">
+                                Active
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="status" id="statusInactive" value="inactive">
+                            <label class="form-check-label" for="statusInactive">
+                                Inactive
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <hr>
+                    
+                    <h5 class="mb-3">Price Tiers</h5>
+                    
+                    <div id="priceTiers">
+                        <div class="price-tier mb-3 p-3 border rounded">
+                            <div class="row mb-2">
+                                <div class="col-md-6">
+                                    <label class="form-label">Tier Name *</label>
+                                    <input type="text" class="form-control" name="tier_name[]" placeholder="e.g. Silver Package" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Price (USD) *</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text">$</span>
+                                        <input type="number" class="form-control" name="tier_price[]" min="0" step="0.01" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mb-2">
+                                <label class="form-label">Description</label>
+                                <input type="text" class="form-control" name="tier_description[]" placeholder="Brief description of this tier">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <button type="button" id="addTierBtn" class="btn btn-outline-primary">
+                            <i class="fas fa-plus me-2"></i> Add Another Price Tier
+                        </button>
+                    </div>
+                    
+                    <hr>
+                    
+                    <h5 class="mb-3">Features</h5>
+                    
+                    <div id="serviceFeatures">
+                        <div class="feature-item mb-2">
+                            <div class="input-group">
+                                <input type="text" class="form-control" name="feature[]" placeholder="e.g. Responsive Design">
+                                <button type="button" class="btn btn-outline-danger remove-feature">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <button type="button" id="addFeatureBtn" class="btn btn-outline-primary">
+                            <i class="fas fa-plus me-2"></i> Add Feature
+                        </button>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save Service</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Add Category Modal -->
+<div class="modal fade" id="addCategoryModal" tabindex="-1" aria-labelledby="addCategoryModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addCategoryModalLabel">Add New Category</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="#" method="post">
+                {% csrf_token %}
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="categoryName" class="form-label">Category Name *</label>
+                        <input type="text" class="form-control" id="categoryName" name="category_name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="categoryDescription" class="form-label">Description</label>
+                        <textarea class="form-control" id="categoryDescription" name="description" rows="3"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save Category</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    $(document).ready(function() {
+        // Add Price Tier
+        $('#addTierBtn').on('click', function() {
+            const newTier = $('#priceTiers .price-tier').first().clone();
+            newTier.find('input').val('');
+            $('#priceTiers').append(newTier);
+        });
+        
+        // Add Feature
+        $('#addFeatureBtn').on('click', function() {
+            const newFeature = $('#serviceFeatures .feature-item').first().clone();
+            newFeature.find('input').val('');
+            $('#serviceFeatures').append(newFeature);
+        });
+        
+        // Remove Feature
+        $(document).on('click', '.remove-feature', function() {
+            // Don't remove if it's the only feature
+            if ($('#serviceFeatures .feature-item').length > 1) {
+                $(this).closest('.feature-item').remove();
+            } else {
+                // Just clear the input
+                $(this).closest('.feature-item').find('input').val('');
+            }
+        });
+    });
+</script>
+{% endblock %}

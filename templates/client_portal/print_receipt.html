@@ -1,245 +1,364 @@
 {% extends 'client_portal/base.html' %}
 {% load static %}
 
-{% block client_portal_title %}Payment Receipt - Client Portal{% endblock %}
+{% block title %}Receipt #{{ payment.id }} - CloudLink_Devs{% endblock %}
 
-{% block breadcrumb_items %}
-<li class="breadcrumb-item"><a href="{% url 'client_portal:invoices' %}">Invoices</a></li>
-<li class="breadcrumb-item"><a href="{% url 'client_portal:invoice_detail' pk=payment.invoice.id %}">Invoice #{{ payment.invoice.invoice_number }}</a></li>
-<li class="breadcrumb-item active">Payment Receipt</li>
-{% endblock %}
-
-{% block page_title %}Payment Receipt{% endblock %}
-
-{% block client_portal_css %}
+{% block extra_css %}
 <style>
+    :root {
+        /* Using your established color scheme */
+        --beige-color: #f5eadb;
+        --amber-color: #c1954a;
+        --dark-amber: #9e7a39;
+        --light-amber: #d4b06a;
+        --off-white: #faf7f2;
+        --black: #212121;
+        --dark-gray: #333333;
+        --light-gray: #f0f0f0;
+    }
+    
+    body {
+        background-color: #f8f9fc;
+    }
+    
     .receipt-container {
         background-color: white;
         border-radius: 10px;
         box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
-        margin-bottom: 30px;
-        padding: 30px;
+        margin: 30px auto;
+        max-width: 800px;
     }
     
     .receipt-header {
+        padding: 30px;
+        border-bottom: 1px solid #e3e6f0;
         text-align: center;
-        margin-bottom: 30px;
+    }
+    
+    .receipt-logo {
+        margin-bottom: 20px;
     }
     
     .receipt-title {
-        font-size: 1.5rem;
+        font-size: 2rem;
         font-weight: 700;
-        margin-bottom: 5px;
+        margin-bottom: 10px;
+        color: var(--amber-color);
     }
     
     .receipt-subtitle {
-        color: #858796;
+        color: var(--dark-gray);
+        font-size: 1.1rem;
     }
     
-    .company-info {
-        margin-bottom: 30px;
-        display: flex;
-        justify-content: space-between;
+    .receipt-body {
+        padding: 30px;
     }
     
-    .company-logo {
-        text-align: center;
-    }
-    
-    .company-details {
-        text-align: right;
-    }
-    
-    .client-info {
-        display: flex;
-        justify-content: space-between;
+    .receipt-section {
         margin-bottom: 30px;
     }
     
-    .payment-info {
-        margin-bottom: 30px;
-    }
-    
-    .payment-details {
-        display: flex;
-        justify-content: space-between;
-        padding: 10px 0;
-        border-bottom: 1px solid #e3e6f0;
-    }
-    
-    .payment-details:last-child {
-        border-bottom: none;
-    }
-    
-    .payment-label {
-        font-weight: 600;
-    }
-    
-    .payment-amount {
+    .receipt-section-title {
         font-weight: 700;
-        font-size: 1.2rem;
+        margin-bottom: 15px;
+        color: var(--dark-gray);
+        border-bottom: 1px solid #e3e6f0;
+        padding-bottom: 10px;
+    }
+    
+    .receipt-row {
+        display: flex;
+        margin-bottom: 10px;
+    }
+    
+    .receipt-label {
+        font-weight: 600;
+        width: 200px;
+    }
+    
+    .receipt-value {
+        flex: 1;
     }
     
     .receipt-footer {
+        padding: 20px 30px;
+        border-top: 1px solid #e3e6f0;
         text-align: center;
-        margin-top: 40px;
         color: #858796;
         font-size: 0.9rem;
     }
     
-    .receipt-actions {
+    .payment-info {
+        background-color: var(--off-white);
+        padding: 20px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+    }
+    
+    .payment-amount {
+        font-size: 2rem;
+        font-weight: 700;
+        color: var(--amber-color);
+        margin-bottom: 10px;
+        text-align: center;
+    }
+    
+    .payment-method {
+        display: inline-block;
+        padding: 5px 15px;
+        border-radius: 20px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        background-color: rgba(193, 149, 74, 0.1);
+        color: var(--amber-color);
+    }
+    
+    .action-buttons {
         margin-top: 30px;
         text-align: center;
     }
     
-    .receipt-notes {
-        margin-top: 30px;
-        padding-top: 20px;
-        border-top: 1px solid #e3e6f0;
+    .btn-primary {
+        background-color: var(--amber-color);
+        border-color: var(--amber-color);
+        color: white;
     }
     
-    .receipt-barcode {
-        text-align: center;
-        margin-top: 20px;
+    .btn-primary:hover {
+        background-color: var(--dark-amber);
+        border-color: var(--dark-amber);
     }
     
+    .btn-outline-primary {
+        color: var(--amber-color);
+        border-color: var(--amber-color);
+    }
+    
+    .btn-outline-primary:hover {
+        background-color: var(--amber-color);
+        border-color: var(--amber-color);
+        color: white;
+    }
+    
+    /* Print-specific styling */
     @media print {
         body {
-            background-color: white !important;
-        }
-        
-        .no-print, .receipt-actions, .breadcrumb, .page-title {
-            display: none !important;
+            background-color: white;
         }
         
         .receipt-container {
-            box-shadow: none !important;
-            padding: 0 !important;
+            box-shadow: none;
+            margin: 0;
+            max-width: 100%;
         }
         
-        .container {
-            max-width: 100% !important;
-            width: 100% !important;
+        .action-buttons {
+            display: none;
+        }
+        
+        .navbar, footer {
+            display: none;
         }
     }
 </style>
 {% endblock %}
 
-{% block client_portal_content %}
-<div class="row">
-    <div class="col-lg-8 mx-auto">
-        <div class="receipt-container">
-            <!-- Receipt Header -->
-            <div class="receipt-header">
-                <h2 class="receipt-title">PAYMENT RECEIPT</h2>
-                <p class="receipt-subtitle">Thank you for your payment</p>
+{% block content %}
+<div class="receipt-container">
+    <div class="receipt-header">
+        <div class="receipt-logo">
+            <img src="{% static 'images/logo.png' %}" alt="CloudLink_Devs Logo" height="60">
+        </div>
+        <div class="receipt-title">Payment Receipt</div>
+        <div class="receipt-subtitle">Receipt #{{ payment.id }}</div>
+    </div>
+    
+    <div class="receipt-body">
+        <div class="payment-info">
+            <div class="payment-amount">${{ payment.amount|floatformat:2 }}</div>
+            <div class="text-center mb-3">
+                <span class="payment-method">{{ payment.get_payment_method_display }}</span>
             </div>
-            
-            <!-- Company and Client Info -->
-            <div class="company-info">
-                <div class="company-logo">
-                    <h4>CloudLink_Devs</h4>
-                    <img src="{% static 'images/logo.png' %}" alt="CloudLink_Devs Logo" height="60">
-                </div>
-                <div class="company-details">
-                    <p>CloudLink_Devs</p>
-                    <p>123 Tech Street</p>
-                    <p>Digital City</p>
-                    <p>contact@cloudlinkdevs.com</p>
-                    <p>(123) 456-7890</p>
-                </div>
+            <div class="text-center">
+                <strong>Date:</strong> {{ payment.payment_date|date:"F d, Y" }}
             </div>
-            
-            <div class="client-info">
-                <div>
-                    <h5>Billed To:</h5>
-                    <p>{{ client.full_name }}</p>
-                    {% if client.company_name %}
-                        <p>{{ client.company_name }}</p>
-                    {% endif %}
-                    {% if client.address %}
-                        <p>{{ client.address }}</p>
-                    {% endif %}
-                    <p>{{ client.user.email }}</p>
-                    {% if client.phone %}
-                        <p>{{ client.phone }}</p>
-                    {% endif %}
-                </div>
-                <div>
-                    <h5>Receipt Details:</h5>
-                    <p><strong>Receipt Number:</strong> R-{{ payment.id }}</p>
-                    <p><strong>Payment Date:</strong> {{ payment.payment_date|date:"F d, Y" }}</p>
-                    <p><strong>Invoice Number:</strong> {{ payment.invoice.invoice_number }}</p>
-                    <p><strong>Payment Method:</strong> {{ payment.get_payment_method_display }}</p>
-                    {% if payment.transaction_id %}
-                        <p><strong>Transaction ID:</strong> {{ payment.transaction_id }}</p>
-                    {% endif %}
-                </div>
+        </div>
+
+        <div class="receipt-section">
+            <h5 class="receipt-section-title">Client Information</h5>
+            <div class="receipt-row">
+                <div class="receipt-label">Name:</div>
+                <div class="receipt-value">{{ client.full_name }}</div>
             </div>
-            
-            <!-- Payment Information -->
-            <div class="payment-info">
-                <h5 class="mb-3">Payment Summary</h5>
-                <div class="payment-details">
-                    <div class="payment-label">Invoice Total:</div>
-                    <div>${{ payment.invoice.total|floatformat:2 }}</div>
-                </div>
-                <div class="payment-details">
-                    <div class="payment-label">Previous Payments:</div>
-                    <div>${{ payment.invoice.amount_paid|subtract:payment.amount|floatformat:2 }}</div>
-                </div>
-                <div class="payment-details">
-                    <div class="payment-label">This Payment:</div>
-                    <div class="payment-amount">${{ payment.amount|floatformat:2 }}</div>
-                </div>
-                <div class="payment-details">
-                    <div class="payment-label">Remaining Balance:</div>
-                    <div>${{ payment.invoice.balance_due|floatformat:2 }}</div>
-                </div>
+            <div class="receipt-row">
+                <div class="receipt-label">Company:</div>
+                <div class="receipt-value">{{ client.company_name|default:"N/A" }}</div>
             </div>
-            
-            {% if payment.notes %}
-            <!-- Payment Notes -->
-            <div class="receipt-notes">
-                <h5>Notes</h5>
-                <p>{{ payment.notes|linebreaks }}</p>
+            <div class="receipt-row">
+                <div class="receipt-label">Email:</div>
+                <div class="receipt-value">{{ client.user.email }}</div>
+            </div>
+        </div>
+
+        <div class="receipt-section">
+            <h5 class="receipt-section-title">Invoice Details</h5>
+            <div class="receipt-row">
+                <div class="receipt-label">Invoice Number:</div>
+                <div class="receipt-value">{{ invoice.invoice_number }}</div>
+            </div>
+            <div class="receipt-row">
+                <div class="receipt-label">Issue Date:</div>
+                <div class="receipt-value">{{ invoice.issue_date|date:"F d, Y" }}</div>
+            </div>
+            <div class="receipt-row">
+                <div class="receipt-label">Due Date:</div>
+                <div class="receipt-value">{{ invoice.due_date|date:"F d, Y" }}</div>
+            </div>
+            <div class="receipt-row">
+                <div class="receipt-label">Status:</div>
+                <div class="receipt-value">{{ invoice.get_status_display }}</div>
+            </div>
+            {% if invoice.project %}
+            <div class="receipt-row">
+                <div class="receipt-label">Project:</div>
+                <div class="receipt-value">{{ invoice.project.title }}</div>
             </div>
             {% endif %}
-            
-            <!-- Receipt Footer -->
-            <div class="receipt-footer">
-                <p>This receipt was automatically generated and is valid without a signature.</p>
-                <p>If you have any questions, please contact our finance department.</p>
+        </div>
+
+        <div class="receipt-section">
+            <h5 class="receipt-section-title">Payment Details</h5>
+            <div class="receipt-row">
+                <div class="receipt-label">Amount Paid:</div>
+                <div class="receipt-value">${{ payment.amount|floatformat:2 }}</div>
             </div>
-            
-            <div class="receipt-barcode">
-                <svg id="barcode"></svg>
+            <div class="receipt-row">
+                <div class="receipt-label">Payment Method:</div>
+                <div class="receipt-value">{{ payment.get_payment_method_display }}</div>
             </div>
-            
-            <!-- Receipt Actions -->
-            <div class="receipt-actions no-print">
-                <button class="btn btn-primary me-2" onclick="window.print()">
-                    <i class="fas fa-print me-2"></i> Print Receipt
-                </button>
-                <a href="{% url 'client_portal:invoice_detail' pk=payment.invoice.id %}" class="btn btn-outline-secondary">
-                    <i class="fas fa-arrow-left me-2"></i> Back to Invoice
-                </a>
+            <div class="receipt-row">
+                <div class="receipt-label">Payment Date:</div>
+                <div class="receipt-value">{{ payment.payment_date|date:"F d, Y" }}</div>
             </div>
+            {% if payment.transaction_id %}
+            <div class="receipt-row">
+                <div class="receipt-label">Transaction ID:</div>
+                <div class="receipt-value">{{ payment.transaction_id }}</div>
+            </div>
+            {% endif %}
+            <div class="receipt-row">
+                <div class="receipt-label">Invoice Total:</div>
+                <div class="receipt-value">${{ invoice.total|floatformat:2 }}</div>
+            </div>
+            <div class="receipt-row">
+                <div class="receipt-label">Balance Remaining:</div>
+                <div class="receipt-value">${{ invoice.balance_due|floatformat:2 }}</div>
+            </div>
+        </div>
+
+        {% if payment.notes %}
+        <div class="receipt-section">
+            <h5 class="receipt-section-title">Notes</h5>
+            <p>{{ payment.notes }}</p>
+        </div>
+        {% endif %}
+
+        <div class="action-buttons">
+            <button onclick="window.print()" class="btn btn-primary me-2">
+                <i class="fas fa-print me-2"></i> Print Receipt
+            </button>
+            <a href="#" id="emailReceiptBtn" class="btn btn-outline-primary me-2">
+                <i class="fas fa-envelope me-2"></i> Email Receipt
+            </a>
+            <a href="{% url 'client_portal:invoice_detail' pk=invoice.id %}" class="btn btn-outline-primary">
+                <i class="fas fa-arrow-left me-2"></i> Back to Invoice
+            </a>
+        </div>
+    </div>
+
+    <div class="receipt-footer">
+        <p>This is an official receipt for your payment to CloudLink_Devs.</p>
+        <p>Thank you for your business!</p>
+        <p>&copy; {% now "Y" %} CloudLink_Devs. All rights reserved.</p>
+    </div>
+</div>
+
+<!-- Email Receipt Modal -->
+<div class="modal fade" id="emailReceiptModal" tabindex="-1" aria-labelledby="emailReceiptModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="emailReceiptModalLabel">Email Receipt</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="emailReceiptForm" action="{% url 'client_portal:email_receipt' payment_id=payment.id %}" method="post">
+                {% csrf_token %}
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="emailAddress" class="form-label">Email Address</label>
+                        <input type="email" class="form-control" id="emailAddress" name="email" value="{{ client.user.email }}" required>
+                        <div class="form-text">The receipt will be sent to this email address.</div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="additionalMessage" class="form-label">Additional Message (Optional)</label>
+                        <textarea class="form-control" id="additionalMessage" name="message" rows="3" placeholder="Add a personal message to include with the receipt..."></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-paper-plane me-2"></i> Send Receipt
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
 {% endblock %}
 
-{% block client_portal_js %}
-<script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+{% block extra_js %}
 <script>
     $(document).ready(function() {
-        // Generate barcode
-        JsBarcode("#barcode", "R{{ payment.id }}{{ payment.invoice.invoice_number }}", {
-            format: "CODE128",
-            width: 2,
-            height: 50,
-            displayValue: false
+        // Handle email receipt button
+        $('#emailReceiptBtn').on('click', function(e) {
+            e.preventDefault();
+            $('#emailReceiptModal').modal('show');
+        });
+
+        // Handle form submission for emailing receipt
+        $('#emailReceiptForm').on('submit', function(e) {
+            e.preventDefault();
+
+            const form = $(this);
+            const submitBtn = form.find('button[type="submit"]');
+            const formData = form.serialize();
+
+            // Disable button and show loading state
+            submitBtn.html('<i class="fas fa-spinner fa-spin me-2"></i> Sending...').prop('disabled', true);
+
+            // Send AJAX request to email receipt
+            $.ajax({
+                url: form.attr('action'),
+                type: 'POST',
+                data: formData,
+                success: function(response) {
+                    // Close modal
+                    $('#emailReceiptModal').modal('hide');
+
+                    // Show success message
+                    alert('Receipt has been sent successfully to ' + $('#emailAddress').val());
+                },
+                error: function(xhr, status, error) {
+                    // Show error message
+                    alert('Failed to send receipt. Please try again later.');
+                },
+                complete: function() {
+                    // Reset button state
+                    submitBtn.html('<i class="fas fa-paper-plane me-2"></i> Send Receipt').prop('disabled', false);
+                }
+            });
         });
     });
 </script>

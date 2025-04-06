@@ -12,6 +12,18 @@
 
 {% block client_portal_css %}
 <style>
+    :root {
+        /* Using your established color scheme */
+        --beige-color: #f5eadb;
+        --amber-color: #c1954a;
+        --dark-amber: #9e7a39;
+        --light-amber: #d4b06a;
+        --off-white: #faf7f2;
+        --black: #212121;
+        --dark-gray: #333333;
+        --light-gray: #f0f0f0;
+    }
+
     .balance-card {
         background-color: white;
         border-radius: 10px;
@@ -22,7 +34,7 @@
 
     .balance-header {
         padding: 25px;
-        background-color: var(--primary-color);
+        background-color: var(--amber-color);
         color: white;
         text-align: center;
     }
@@ -52,7 +64,7 @@
     }
 
     .payment-option:hover {
-        border-color: var(--primary-color);
+        border-color: var(--amber-color);
         transform: translateY(-5px);
         box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
     }
@@ -60,7 +72,7 @@
     .payment-icon {
         font-size: 2rem;
         margin-bottom: 15px;
-        color: var(--primary-color);
+        color: var(--amber-color);
     }
 
     .payment-title {
@@ -105,6 +117,15 @@
         margin-bottom: 5px;
     }
 
+    .invoice-number a {
+        color: var(--dark-gray);
+        text-decoration: none;
+    }
+
+    .invoice-number a:hover {
+        color: var(--amber-color);
+    }
+
     .invoice-status {
         display: inline-block;
         padding: 3px 10px;
@@ -119,8 +140,8 @@
     }
 
     .status-draft, .status-sent {
-        background-color: rgba(78, 115, 223, 0.1);
-        color: var(--primary-color);
+        background-color: rgba(193, 149, 74, 0.1);
+        color: var(--amber-color);
     }
 
     .status-overdue {
@@ -138,9 +159,19 @@
         font-size: 0.9rem;
     }
 
+    .invoice-details a {
+        color: var(--amber-color);
+        text-decoration: none;
+    }
+
+    .invoice-details a:hover {
+        color: var(--dark-amber);
+        text-decoration: underline;
+    }
+
     .invoice-amount {
         font-weight: 700;
-        color: var(--text-color);
+        color: var(--dark-gray);
     }
 
     .payment-instructions {
@@ -159,6 +190,16 @@
         margin-bottom: 10px;
     }
 
+    .payment-instructions a {
+        color: var(--amber-color);
+        text-decoration: none;
+    }
+
+    .payment-instructions a:hover {
+        color: var(--dark-amber);
+        text-decoration: underline;
+    }
+
     .alert-overdue {
         background-color: rgba(231, 74, 59, 0.1);
         color: #e74a3b;
@@ -167,6 +208,17 @@
 
     .alert-overdue i {
         margin-right: 10px;
+    }
+
+    .btn-primary {
+        background-color: var(--amber-color);
+        border-color: var(--amber-color);
+        color: white;
+    }
+
+    .btn-primary:hover {
+        background-color: var(--dark-amber);
+        border-color: var(--dark-amber);
     }
 </style>
 {% endblock %}

@@ -15,26 +15,24 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 # cloudlink_devs/urls.py
-
-from django.contrib import admin
+from django.contrib import admin  # Keep this import for the default admin site
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
-from client_portal.admin import admin_site
 
 urlpatterns = [
-    path('admin/', admin_site.urls),
+    path('admin/', admin.site.urls),  # Keep just one admin path
+    path('accounts/', include('django.contrib.auth.urls')),  # Django auth views
     path('', include('core.urls')),  # Core app handles the main pages
     path('services/', include('services.urls')),
     path('portfolio/', include('portfolio.urls')),
     path('blog/', include('blog.urls')),
     path('quotes/', include('quotes.urls')),
     path('chat/', include('chatbot.urls')),
-    path('client/', include('client_portal.urls')),
+    path('client/', include('client_portal.urls')),  # Keep just one client path
 ]
 
 # Serve media files in development
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-

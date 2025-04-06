@@ -1,0 +1,429 @@
+{% extends "client_portal/base.html" %}
+{% load static %}
+
+{% block title %}Edit Service | Admin Panel{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Edit Service: {{ service.name }}</h1>
+        <a href="{% url 'client_portal:admin_services' %}" class="d-none d-sm-inline-block btn btn-secondary shadow-sm">
+            <i class="fas fa-arrow-left fa-sm text-white-50"></i> Back to Services
+        </a>
+    </div>
+
+    <!-- Messages -->
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{% if message.tags == 'error' %}danger{% else %}{{ message.tags }}{% endif %} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <!-- Service Form -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Service Information</h6>
+        </div>
+        <div class="card-body">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                {% if form.non_field_errors %}
+                    <div class="alert alert-danger">
+                        {% for error in form.non_field_errors %}
+                            {{ error }}
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+                <div class="form-group row">
+                    <label for="{{ form.name.id_for_label }}" class="col-sm-3 col-form-label">Service Name</label>
+                    <div class="col-sm-9">
+                        {{ form.name }}
+                        {% if form.name.errors %}
+                            <div class="invalid-feedback d-block">
+                                {% for error in form.name.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="{{ form.service_type.id_for_label }}" class="col-sm-3 col-form-label">Service Type</label>
+                    <div class="col-sm-9">
+                        {{ form.service_type }}
+                        {% if form.service_type.errors %}
+                            <div class="invalid-feedback d-block">
+                                {% for error in form.service_type.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="{{ form.short_description.id_for_label }}" class="col-sm-3 col-form-label">Short Description</label>
+                    <div class="col-sm-9">
+                        {{ form.short_description }}
+                        {% if form.short_description.errors %}
+                            <div class="invalid-feedback d-block">
+                                {% for error in form.short_description.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                        <small class="form-text text-muted">Brief summary displayed in listings (max 200 characters)</small>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="{{ form.description.id_for_label }}" class="col-sm-3 col-form-label">Full Description</label>
+                    <div class="col-sm-9">
+                        {{ form.description }}
+                        {% if form.description.errors %}
+                            <div class="invalid-feedback d-block">
+                                {% for error in form.description.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                        <small class="form-text text-muted">Detailed description of the service</small>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="{{ form.features.id_for_label }}" class="col-sm-3 col-form-label">Features</label>
+                    <div class="col-sm-9">
+                        {{ form.features }}
+                        {% if form.features.errors %}
+                            <div class="invalid-feedback d-block">
+                                {% for error in form.features.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                        <small class="form-text text-muted">List the main features of this service</small>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="{{ form.icon.id_for_label }}" class="col-sm-3 col-form-label">Icon</label>
+                    <div class="col-sm-9">
+                        {{ form.icon }}
+                        {% if form.icon.errors %}
+                            <div class="invalid-feedback d-block">
+                                {% for error in form.icon.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                        <small class="form-text text-muted">Font Awesome icon class (e.g., fas fa-code)</small>
+                        <div class="mt-2">
+                            <span id="icon-preview" class="mr-2"></span> Icon Preview
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="{{ form.image.id_for_label }}" class="col-sm-3 col-form-label">Image</label>
+                    <div class="col-sm-9">
+                        {% if service.image %}
+                            <div class="mb-3">
+                                <img src="{{ service.image.url }}" alt="{{ service.name }}" class="img-thumbnail" style="max-height: 100px;">
+                            </div>
+                        {% endif %}
+                        {{ form.image }}
+                        {% if form.image.errors %}
+                            <div class="invalid-feedback d-block">
+                                {% for error in form.image.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                        <small class="form-text text-muted">Upload a new image to replace the current one (leave empty to keep current image)</small>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="{{ form.is_active.id_for_label }}" class="col-sm-3 col-form-label">Status</label>
+                    <div class="col-sm-9">
+                        <div class="custom-control custom-switch">
+                            {{ form.is_active }}
+                            <label class="custom-control-label" for="{{ form.is_active.id_for_label }}">
+                                Active (display on website)
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-sm-9 offset-sm-3">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save"></i> Update Service
+                        </button>
+                        <a href="{% url 'client_portal:admin_services' %}" class="btn btn-secondary">Cancel</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Service Features -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+            <h6 class="m-0 font-weight-bold text-primary">Service Features</h6>
+            <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addFeatureModal">
+                <i class="fas fa-plus fa-sm"></i> Add Feature
+            </button>
+        </div>
+        <div class="card-body">
+            {% if service.service_features.all %}
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th width="40%">Title</th>
+                                <th width="40%">Description</th>
+                                <th width="20%">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for feature in service.service_features.all %}
+                                <tr>
+                                    <td>
+                                        <i class="{{ feature.icon }} mr-2"></i> {{ feature.title }}
+                                    </td>
+                                    <td>{{ feature.description }}</td>
+                                    <td>
+                                        <button type="button" class="btn btn-sm btn-info edit-feature-btn"
+                                                data-id="{{ feature.id }}"
+                                                data-title="{{ feature.title }}"
+                                                data-description="{{ feature.description }}"
+                                                data-icon="{{ feature.icon }}">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-sm btn-danger delete-feature-btn"
+                                                data-id="{{ feature.id }}"
+                                                data-title="{{ feature.title }}">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <div class="text-center py-4">
+                    <p class="mb-0">No features added yet.</p>
+                    <button type="button" class="btn btn-primary mt-3" data-toggle="modal" data-target="#addFeatureModal">
+                        <i class="fas fa-plus"></i> Add First Feature
+                    </button>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<!-- Add Feature Modal -->
+<div class="modal fade" id="addFeatureModal" tabindex="-1" role="dialog" aria-labelledby="addFeatureModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addFeatureModalLabel">Add Service Feature</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="addFeatureForm" method="post" action="{% url 'client_portal:admin_add_feature' service.id %}">
+                <div class="modal-body">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="feature-title">Title</label>
+                        <input type="text" class="form-control" id="feature-title" name="title" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="feature-description">Description</label>
+                        <textarea class="form-control" id="feature-description" name="description" rows="3" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="feature-icon">Icon (Font Awesome class)</label>
+                        <input type="text" class="form-control" id="feature-icon" name="icon" placeholder="fas fa-check">
+                        <div class="mt-2">
+                            <span id="feature-icon-preview" class="mr-2"></span> Icon Preview
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Add Feature</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Feature Modal -->
+<div class="modal fade" id="editFeatureModal" tabindex="-1" role="dialog" aria-labelledby="editFeatureModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editFeatureModalLabel">Edit Service Feature</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="editFeatureForm" method="post">
+                <div class="modal-body">
+                    {% csrf_token %}
+                    <input type="hidden" id="edit-feature-id" name="feature_id">
+                    <div class="form-group">
+                        <label for="edit-feature-title">Title</label>
+                        <input type="text" class="form-control" id="edit-feature-title" name="title" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-feature-description">Description</label>
+                        <textarea class="form-control" id="edit-feature-description" name="description" rows="3" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-feature-icon">Icon (Font Awesome class)</label><input type="text" class="form-control" id="edit-feature-icon" name="icon" placeholder="fas fa-check">
+                        <div class="mt-2">
+                            <span id="edit-feature-icon-preview" class="mr-2"></span> Icon Preview
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Update Feature</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Feature Modal -->
+<div class="modal fade" id="deleteFeatureModal" tabindex="-1" role="dialog" aria-labelledby="deleteFeatureModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteFeatureModalLabel">Delete Feature</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="deleteFeatureForm" method="post">
+                <div class="modal-body">
+                    {% csrf_token %}
+                    <p>Are you sure you want to delete the feature "<span id="delete-feature-title"></span>"?</p>
+                    <p class="text-danger">This action cannot be undone.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-danger">Delete Feature</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    $(document).ready(function() {
+        // Add Bootstrap form classes if not already added by form definition
+        $('input[type="text"], input[type="email"], textarea, select').addClass('form-control');
+        $('input[type="file"]').addClass('form-control-file');
+        $('input[type="checkbox"]').addClass('custom-control-input');
+
+        // Icon preview functionality for service icon
+        function updateIconPreview() {
+            const iconClass = $("#{{ form.icon.id_for_label }}").val();
+            if (iconClass) {
+                $("#icon-preview").html(`<i class="${iconClass}"></i>`);
+            } else {
+                $("#icon-preview").html('');
+            }
+        }
+
+        $("#{{ form.icon.id_for_label }}").on('input', updateIconPreview);
+
+        // Initialize service icon preview
+        updateIconPreview();
+
+        // Feature icon preview
+        function updateFeatureIconPreview() {
+            const iconClass = $("#feature-icon").val();
+            if (iconClass) {
+                $("#feature-icon-preview").html(`<i class="${iconClass}"></i>`);
+            } else {
+                $("#feature-icon-preview").html('');
+            }
+        }
+
+        $("#feature-icon").on('input', updateFeatureIconPreview);
+
+        // Edit feature icon preview
+        function updateEditFeatureIconPreview() {
+            const iconClass = $("#edit-feature-icon").val();
+            if (iconClass) {
+                $("#edit-feature-icon-preview").html(`<i class="${iconClass}"></i>`);
+            } else {
+                $("#edit-feature-icon-preview").html('');
+            }
+        }
+
+        $("#edit-feature-icon").on('input', updateEditFeatureIconPreview);
+
+        // Handle edit feature button clicks
+        $(".edit-feature-btn").click(function() {
+            const featureId = $(this).data('id');
+            const title = $(this).data('title');
+            const description = $(this).data('description');
+            const icon = $(this).data('icon');
+
+            // Set form action
+            $("#editFeatureForm").attr('action', `/client_portal/admin/features/edit/${featureId}/`);
+
+            // Populate form fields
+            $("#edit-feature-id").val(featureId);
+            $("#edit-feature-title").val(title);
+            $("#edit-feature-description").val(description);
+            $("#edit-feature-icon").val(icon);
+
+            // Update icon preview
+            if (icon) {
+                $("#edit-feature-icon-preview").html(`<i class="${icon}"></i>`);
+            } else {
+                $("#edit-feature-icon-preview").html('');
+            }
+
+            // Show modal
+            $("#editFeatureModal").modal('show');
+        });
+
+        // Handle delete feature button clicks
+        $(".delete-feature-btn").click(function() {
+            const featureId = $(this).data('id');
+            const title = $(this).data('title');
+
+            // Set form action
+            $("#deleteFeatureForm").attr('action', `/client_portal/admin/features/delete/${featureId}/`);
+
+            // Set feature title in confirmation message
+            $("#delete-feature-title").text(title);
+
+            // Show modal
+            $("#deleteFeatureModal").modal('show');
+        });
+    });
+</script>
+{% endblock %}

@@ -4,8 +4,19 @@
 
 {% block extra_css %}
 <style>
+    :root {
+        --beige-color: #f5eadb;
+        --amber-color: #c1954a;
+        --dark-amber: #9e7a39;
+        --light-amber: #d4b06a;
+        --off-white: #faf7f2;
+        --black: #212121;
+        --dark-gray: #333333;
+        --light-gray: #f0f0f0;
+    }
+
     .contact-header {
-        background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+        background: var(--amber-color);
         color: white;
         padding: 60px 0;
         margin-bottom: 50px;
@@ -13,14 +24,14 @@
     }
 
     .contact-header h1 {
-        font-weight: 700;
+        font-weight: 800;
         margin-bottom: 15px;
     }
 
     .contact-info {
         background-color: white;
         border-radius: 10px;
-        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+        box-shadow: 0 0.15rem 1.75rem 0 rgba(0, 0, 0, 0.1);
         padding: 30px;
         height: 100%;
     }
@@ -28,7 +39,7 @@
     .contact-form {
         background-color: white;
         border-radius: 10px;
-        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+        box-shadow: 0 0.15rem 1.75rem 0 rgba(0, 0, 0, 0.1);
         padding: 30px;
     }
 
@@ -40,7 +51,7 @@
 
     .contact-item i {
         font-size: 20px;
-        color: var(--primary-color);
+        color: var(--amber-color);
         margin-right: 15px;
         width: 30px;
         text-align: center;
@@ -63,12 +74,12 @@
         height: 40px;
         border-radius: 50%;
         background-color: var(--light-gray);
-        color: var(--primary-color);
+        color: var(--amber-color);
         transition: all 0.3s ease;
     }
 
     .social-icon:hover {
-        background-color: var(--accent-color);
+        background-color: var(--amber-color);
         color: white;
     }
 
@@ -77,14 +88,14 @@
     }
 
     .btn-primary {
-        background-color: var(--primary-color);
+        background-color: var(--amber-color);
         border: none;
         padding: 10px 25px;
         font-weight: 600;
     }
 
     .btn-primary:hover {
-        background-color: var(--accent-color);
+        background-color: var(--dark-amber);
     }
 
     .map-section {
@@ -94,59 +105,98 @@
     .map-container {
         border-radius: 10px;
         overflow: hidden;
-        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+        box-shadow: 0 0.15rem 1.75rem 0 rgba(0, 0, 0, 0.1);
     }
 
     .map-placeholder {
         height: 400px;
-        background-color: #eaecf4;
+        background-color: var(--beige-color);
         display: flex;
         align-items: center;
         justify-content: center;
-        color: #5a5c69;
+        color: var(--dark-gray);
     }
 
     /* Form animation */
     .form-control {
         transition: all 0.3s ease;
+        border-color: #ced4da;
     }
 
     .form-control:focus {
-        border-color: var(--primary-color);
-        box-shadow: 0 0 0 0.25rem rgba(0, 102, 204, 0.25);
+        border-color: var(--amber-color);
+        box-shadow: 0 0 0 0.25rem rgba(193, 149, 74, 0.25);
     }
 
-    /* For dark mode compatibility */
+    /* WhatsApp section styling */
+    .whatsapp-section {
+        padding: 50px 0;
+        animation: fadeInUp 0.8s ease-out;
+    }
+
+    .whatsapp-cta .btn {
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .whatsapp-cta .btn:hover {
+        background-color: var(--dark-amber) !important;
+        transform: translateY(-3px);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translate3d(0, 30px, 0);
+        }
+        to {
+            opacity: 1;
+            transform: translate3d(0, 0, 0);
+        }
+    }
+
+    /* Dark mode compatibility */
     body.dark-mode .contact-info,
-    body.dark-mode .contact-form {
-        background-color: #2a2c3e;
-        color: #f8f9fc;
+    body.dark-mode .contact-form,
+    body.dark-mode .whatsapp-cta {
+        background-color: var(--dark-gray);
+        color: var(--off-white);
     }
 
     body.dark-mode .social-icon {
         background-color: #3a3d52;
-        color: #f8f9fc;
+        color: var(--light-amber);
     }
 
     body.dark-mode .social-icon:hover {
-        background-color: #4e73df;
+        background-color: var(--amber-color);
     }
 
     body.dark-mode .map-placeholder {
         background-color: #3a3d52;
-        color: #f8f9fc;
+        color: var(--off-white);
     }
 
     body.dark-mode .form-control {
         background-color: #3a3d52;
         border-color: #4e5269;
-        color: #f8f9fc;
+        color: var(--off-white);
+    }
+
+    body.dark-mode .form-check-label {
+        color: var(--off-white);
     }
 
     /* Alert messages */
     .alert {
         border-radius: 10px;
         margin-bottom: 30px;
+    }
+
+    .page-section {
+        background-color: var(--off-white);
+        padding-bottom: 50px;
     }
 </style>
 {% endblock %}
@@ -159,7 +209,7 @@
     </div>
 </section>
 
-<section class="contact-content">
+<section class="page-section contact-content">
     <div class="container">
         {% if messages %}
             {% for message in messages %}
@@ -185,6 +235,12 @@
                         <div class="contact-item">
                             <i class="fas fa-phone"></i>
                             <p>(123) 456-7890</p>
+                        </div>
+
+                        <!-- New WhatsApp Contact Item -->
+                        <div class="contact-item">
+                            <i class="fab fa-whatsapp"></i>
+                            <p>Chat with us on WhatsApp: <a href="https://wa.me/254795471321" target="_blank" rel="noopener noreferrer" style="color: var(--amber-color);">(123) 456-7890</a></p>
                         </div>
 
                         <div class="contact-item">
@@ -247,13 +303,30 @@
 
                         <div class="form-group form-check">
                             <input type="checkbox" class="form-check-input" id="privacy" required>
-                            <label class="form-check-label" for="privacy">I agree to the <a href="#">privacy policy</a> <span class="text-danger">*</span></label>
+                            <label class="form-check-label" for="privacy">I agree to the <a href="#" style="color: var(--amber-color);">privacy policy</a> <span class="text-danger">*</span></label>
                         </div>
 
                         <button type="submit" class="btn btn-primary mt-3">
                             <i class="fas fa-paper-plane me-2"></i>Send Message
                         </button>
                     </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- New WhatsApp CTA Section -->
+<section class="whatsapp-section">
+    <div class="container">
+        <div class="whatsapp-cta text-center p-4" style="background-color: white; border-radius: 10px; box-shadow: 0 0.15rem 1.75rem 0 rgba(0, 0, 0, 0.1);">
+            <div class="row align-items-center justify-content-center">
+                <div class="col-md-8">
+                    <h2 class="mb-3">Need an Immediate Response?</h2>
+                    <p class="mb-4">Chat with our team directly on WhatsApp for quick inquiries about our services or to discuss your project in real-time.</p>
+                    <a href="https://wa.me/254795471321" target="_blank" rel="noopener noreferrer" class="btn btn-lg px-4 py-3" style="background-color: var(--amber-color); color: white; font-weight: 600; border-radius: 8px;">
+                        <i class="fab fa-whatsapp me-2" style="font-size: 1.2em;"></i> Start WhatsApp Chat
+                    </a>
                 </div>
             </div>
         </div>

@@ -1,3 +1,436 @@
+{#{% extends "base.html" %}#}
+{#{% load static %}#}
+{##}
+{#{% block title %}About Us - CloudLink_Devs{% endblock %}#}
+{##}
+{#{% block extra_css %}#}
+{#<style>#}
+{#    /* About Header */#}
+{#    .about-header {#}
+{#        background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);#}
+{#        color: white;#}
+{#        padding: 80px 0;#}
+{#        text-align: center;#}
+{#    }#}
+{##}
+{#    .about-header h1 {#}
+{#        font-weight: 800;#}
+{#        margin-bottom: 20px;#}
+{#    }#}
+{##}
+{#    /* About Content */#}
+{#    .about-content {#}
+{#        padding: 80px 0;#}
+{#    }#}
+{##}
+{#    .about-image {#}
+{#        border-radius: 10px;#}
+{#        overflow: hidden;#}
+{#        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);#}
+{#    }#}
+{##}
+{#    .about-text h2 {#}
+{#        margin-bottom: 25px;#}
+{#        font-weight: 700;#}
+{#    }#}
+{##}
+{#    /* Mission & Vision */#}
+{#    .mission-vision {#}
+{#        padding: 80px 0;#}
+{#        background-color: var(--light-gray);#}
+{#    }#}
+{##}
+{#    .mission-card, .vision-card {#}
+{#        padding: 40px;#}
+{#        border-radius: 10px;#}
+{#        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);#}
+{#        height: 100%;#}
+{#        background-color: white;#}
+{#    }#}
+{##}
+{#    .card-icon {#}
+{#        font-size: 3rem;#}
+{#        color: var(--accent-color);#}
+{#        margin-bottom: 20px;#}
+{#    }#}
+{##}
+{#    /* Team Section */#}
+{#    .team-section {#}
+{#        padding: 80px 0;#}
+{#    }#}
+{##}
+{#    .team-card {#}
+{#        border-radius: 10px;#}
+{#        overflow: hidden;#}
+{#        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);#}
+{#        margin-bottom: 30px;#}
+{#        background-color: white;#}
+{#    }#}
+{##}
+{#    .team-image {#}
+{#        position: relative;#}
+{#        overflow: hidden;#}
+{#    }#}
+{##}
+{#    .team-image img {#}
+{#        transition: all 0.3s ease;#}
+{#    }#}
+{##}
+{#    .team-card:hover .team-image img {#}
+{#        transform: scale(1.05);#}
+{#    }#}
+{##}
+{#    .team-info {#}
+{#        padding: 20px;#}
+{#        text-align: center;#}
+{#    }#}
+{##}
+{#    .team-info h4 {#}
+{#        margin-bottom: 5px;#}
+{#    }#}
+{##}
+{#    .team-info p {#}
+{#        color: #858796;#}
+{#        margin-bottom: 15px;#}
+{#    }#}
+{##}
+{#    .team-social {#}
+{#        display: flex;#}
+{#        justify-content: center;#}
+{#        gap: 10px;#}
+{#    }#}
+{##}
+{#    .social-link {#}
+{#        width: 35px;#}
+{#        height: 35px;#}
+{#        display: flex;#}
+{#        align-items: center;#}
+{#        justify-content: center;#}
+{#        background-color: var(--light-gray);#}
+{#        color: var(--primary-color);#}
+{#        border-radius: 50%;#}
+{#        transition: all 0.3s ease;#}
+{#    }#}
+{##}
+{#    .social-link:hover {#}
+{#        background-color: var(--accent-color);#}
+{#        color: white;#}
+{#    }#}
+{##}
+{#    /* Timeline */#}
+{#    .timeline-section {#}
+{#        padding: 80px 0;#}
+{#        background-color: var(--light-gray);#}
+{#    }#}
+{##}
+{#    .timeline {#}
+{#        position: relative;#}
+{#        padding-left: 30px;#}
+{#    }#}
+{##}
+{#    .timeline:before {#}
+{#        content: "";#}
+{#        position: absolute;#}
+{#        height: 100%;#}
+{#        width: 3px;#}
+{#        background-color: var(--primary-color);#}
+{#        left: 0;#}
+{#        top: 0;#}
+{#    }#}
+{##}
+{#    .timeline-item {#}
+{#        position: relative;#}
+{#        margin-bottom: 50px;#}
+{#    }#}
+{##}
+{#    .timeline-item:last-child {#}
+{#        margin-bottom: 0;#}
+{#    }#}
+{##}
+{#    .timeline-item:before {#}
+{#        content: "";#}
+{#        position: absolute;#}
+{#        width: 15px;#}
+{#        height: 15px;#}
+{#        border-radius: 50%;#}
+{#        background-color: var(--primary-color);#}
+{#        left: -36px;#}
+{#        top: 5px;#}
+{#    }#}
+{##}
+{#    .timeline-date {#}
+{#        font-weight: 700;#}
+{#        color: var(--accent-color);#}
+{#        margin-bottom: 10px;#}
+{#    }#}
+{##}
+{#    /* CTA Section */#}
+{#    .cta-section {#}
+{#        padding: 80px 0;#}
+{#        background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);#}
+{#        color: white;#}
+{#        text-align: center;#}
+{#    }#}
+{##}
+{#    .cta-title {#}
+{#        font-size: 2.5rem;#}
+{#        font-weight: 700;#}
+{#        margin-bottom: 1.5rem;#}
+{#    }#}
+{##}
+{#    .cta-text {#}
+{#        max-width: 700px;#}
+{#        margin: 0 auto 2rem;#}
+{#        opacity: 0.9;#}
+{#    }#}
+{##}
+{#    /* Dark mode adaptations */#}
+{#    body.dark-mode .mission-card,#}
+{#    body.dark-mode .vision-card,#}
+{#    body.dark-mode .team-card {#}
+{#        background-color: #2a2c3e;#}
+{#        color: #f8f9fc;#}
+{#    }#}
+{##}
+{#    body.dark-mode .mission-vision,#}
+{#    body.dark-mode .timeline-section {#}
+{#        background-color: #222533;#}
+{#    }#}
+{##}
+{#    body.dark-mode .social-link {#}
+{#        background-color: #3a3d52;#}
+{#    }#}
+{##}
+{#    body.dark-mode .timeline-date {#}
+{#        color: var(--accent-color);#}
+{#    }#}
+{#    #}
+{#    body.dark-mode .team-info p {#}
+{#        color: #c2c5d3;#}
+{#    }#}
+{#</style>#}
+{#{% endblock %}#}
+{##}
+{#{% block content %}#}
+{#<!-- About Header -->#}
+{#<section class="about-header">#}
+{#    <div class="container">#}
+{#        <h1>About CloudLink_Devs</h1>#}
+{#        <p class="lead">Learn more about our team, our values, and our journey in creating digital solutions</p>#}
+{#    </div>#}
+{#</section>#}
+{##}
+{#<!-- About Content -->#}
+{#<section class="about-content">#}
+{#    <div class="container">#}
+{#        <div class="row align-items-center">#}
+{#            <div class="col-lg-6 mb-4 mb-lg-0">#}
+{#                <div class="about-image">#}
+{#                    <img src="{% static 'images/about-image.jpg' %}" alt="CloudLink_Devs Team" class="img-fluid">#}
+{#                </div>#}
+{#            </div>#}
+{#            <div class="col-lg-6">#}
+{#                <div class="about-text">#}
+{#                    <h2>Who We Are</h2>#}
+{#                    <p>CloudLink_Devs is a team of passionate developers, designers, and digital strategists dedicated to helping businesses succeed in the digital world. We specialize in creating custom web applications, mobile apps, and POS systems that are tailored to meet the unique needs of our clients.</p>#}
+{#                    <p>Founded in 2020, we've worked with businesses of all sizes across multiple industries, from startups to established enterprises. Our approach combines technical expertise with a deep understanding of business needs to deliver solutions that drive growth and improve efficiency.</p>#}
+{#                    <p>At CloudLink_Devs, we believe in building long-term relationships with our clients. We don't just deliver a product and walk away – we partner with you to ensure your digital solutions continue to evolve and adapt to your changing business needs.</p>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
+{#</section>#}
+{##}
+{#<!-- Mission & Vision -->#}
+{#<section class="mission-vision">#}
+{#    <div class="container">#}
+{#        <div class="section-title text-center mb-5">#}
+{#            <h2>Our Mission & Vision</h2>#}
+{#            <p>The core principles that guide our work</p>#}
+{#        </div>#}
+{#        #}
+{#        <div class="row">#}
+{#            <div class="col-md-6 mb-4 mb-md-0">#}
+{#                <div class="mission-card">#}
+{#                    <div class="card-icon">#}
+{#                        <i class="fas fa-bullseye"></i>#}
+{#                    </div>#}
+{#                    <h3>Our Mission</h3>#}
+{#                    <p>To empower businesses with innovative digital solutions that solve real problems, enhance efficiency, and drive sustainable growth.</p>#}
+{#                    <p>We are committed to delivering high-quality, customized technologies that meet the unique needs of each client while providing exceptional service and support throughout the entire development journey.</p>#}
+{#                </div>#}
+{#            </div>#}
+{#            #}
+{#            <div class="col-md-6">#}
+{#                <div class="vision-card">#}
+{#                    <div class="card-icon">#}
+{#                        <i class="fas fa-eye"></i>#}
+{#                    </div>#}
+{#                    <h3>Our Vision</h3>#}
+{#                    <p>To become the most trusted technology partner for businesses seeking digital transformation, recognized for our technical excellence, client-focused approach, and sustainable solutions.</p>#}
+{#                    <p>We envision a world where businesses of all sizes have access to powerful, tailored digital tools that level the playing field and create opportunities for growth and innovation.</p>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
+{#</section>#}
+{##}
+{#<!-- Team Section -->#}
+{#<section class="team-section">#}
+{#    <div class="container">#}
+{#        <div class="section-title text-center mb-5">#}
+{#            <h2>Meet Our Team</h2>#}
+{#            <p>The talented people behind CloudLink_Devs</p>#}
+{#        </div>#}
+{#        #}
+{#        <div class="row">#}
+{#            <div class="col-lg-3 col-md-6 mb-4">#}
+{#                <div class="team-card">#}
+{#                    <div class="team-image">#}
+{#                        <img src="{% static 'images/team-placeholder.jpg' %}" alt="Team Member" class="img-fluid">#}
+{#                    </div>#}
+{#                    <div class="team-info">#}
+{#                        <h4>John Doe</h4>#}
+{#                        <p>Founder & CEO</p>#}
+{#                        <div class="team-social">#}
+{#                            <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>#}
+{#                            <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>#}
+{#                            <a href="#" class="social-link"><i class="fab fa-github"></i></a>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{#            #}
+{#            <div class="col-lg-3 col-md-6 mb-4">#}
+{#                <div class="team-card">#}
+{#                    <div class="team-image">#}
+{#                        <img src="{% static 'images/team-placeholder.jpg' %}" alt="Team Member" class="img-fluid">#}
+{#                    </div>#}
+{#                    <div class="team-info">#}
+{#                        <h4>Jane Smith</h4>#}
+{#                        <p>Lead Developer</p>#}
+{#                        <div class="team-social">#}
+{#                            <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>#}
+{#                            <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>#}
+{#                            <a href="#" class="social-link"><i class="fab fa-github"></i></a>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{#            #}
+{#            <div class="col-lg-3 col-md-6 mb-4">#}
+{#                <div class="team-card">#}
+{#                    <div class="team-image">#}
+{#                        <img src="{% static 'images/team-placeholder.jpg' %}" alt="Team Member" class="img-fluid">#}
+{#                    </div>#}
+{#                    <div class="team-info">#}
+{#                        <h4>Michael Johnson</h4>#}
+{#                        <p>UI/UX Designer</p>#}
+{#                        <div class="team-social">#}
+{#                            <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>#}
+{#                            <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>#}
+{#                            <a href="#" class="social-link"><i class="fab fa-dribbble"></i></a>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{#            #}
+{#            <div class="col-lg-3 col-md-6 mb-4">#}
+{#                <div class="team-card">#}
+{#                    <div class="team-image">#}
+{#                        <img src="{% static 'images/team-placeholder.jpg' %}" alt="Team Member" class="img-fluid">#}
+{#                    </div>#}
+{#                    <div class="team-info">#}
+{#                        <h4>Sarah Williams</h4>#}
+{#                        <p>Project Manager</p>#}
+{#                        <div class="team-social">#}
+{#                            <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>#}
+{#                            <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>#}
+{#                            <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
+{#</section>#}
+{##}
+{#<!-- Timeline Section -->#}
+{#<section class="timeline-section">#}
+{#    <div class="container">#}
+{#        <div class="section-title text-center mb-5">#}
+{#            <h2>Our Journey</h2>#}
+{#            <p>Key milestones in the CloudLink_Devs story</p>#}
+{#        </div>#}
+{#        #}
+{#        <div class="timeline">#}
+{#            <div class="timeline-item">#}
+{#                <div class="timeline-date">2020</div>#}
+{#                <h4>Company Founded</h4>#}
+{#                <p>CloudLink_Devs was established with a focus on creating custom web solutions for small businesses.</p>#}
+{#            </div>#}
+{#            #}
+{#            <div class="timeline-item">#}
+{#                <div class="timeline-date">2021</div>#}
+{#                <h4>Expansion to Mobile Development</h4>#}
+{#                <p>Added mobile app development services to meet growing client demand for cross-platform solutions.</p>#}
+{#            </div>#}
+{#            #}
+{#            <div class="timeline-item">#}
+{#                <div class="timeline-date">2022</div>#}
+{#                <h4>POS Systems Launch</h4>#}
+{#                <p>Introduced specialized POS system development for retail and restaurant businesses.</p>#}
+{#            </div>#}
+{#            #}
+{#            <div class="timeline-item">#}
+{#                <div class="timeline-date">2023</div>#}
+{#                <h4>Team Growth</h4>#}
+{#                <p>Expanded our team to include specialized developers, designers, and project managers.</p>#}
+{#            </div>#}
+{#            #}
+{#            <div class="timeline-item">#}
+{#                <div class="timeline-date">2024</div>#}
+{#                <h4>New Office Opening</h4>#}
+{#                <p>Opened our new headquarters with dedicated spaces for development, client meetings, and collaboration.</p>#}
+{#            </div>#}
+{#            #}
+{#            <div class="timeline-item">#}
+{#                <div class="timeline-date">2025</div>#}
+{#                <h4>Looking Forward</h4>#}
+{#                <p>Continuing to innovate and expand our services to meet the evolving needs of our clients.</p>#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
+{#</section>#}
+{##}
+{#<!-- CTA Section -->#}
+{#<section class="cta-section">#}
+{#    <div class="container">#}
+{#        <h2 class="cta-title">Ready to Work With Us?</h2>#}
+{#        <p class="cta-text">Let's discuss how we can help take your business to the next level with our custom development solutions.</p>#}
+{#        <div class="cta-buttons">#}
+{#            <a href="{% url 'quotes:service_estimator' %}" class="btn btn-light btn-lg me-3">Get a Quote</a>#}
+{#            <a href="{% url 'core:contact' %}" class="btn btn-outline-light btn-lg">Contact Us</a>#}
+{#        </div>#}
+{#    </div>#}
+{#</section>#}
+{#{% endblock %}#}
+{##}
+{#{% block extra_js %}#}
+{#<script>#}
+{#    document.addEventListener('DOMContentLoaded', function() {#}
+{#        // Add animation classes on scroll#}
+{#        const animateElements = document.querySelectorAll('.mission-card, .vision-card, .team-card, .timeline-item');#}
+{#        #}
+{#        animateElements.forEach((element, index) => {#}
+{#            element.classList.add('animate-on-scroll');#}
+{#            element.dataset.animation = 'slide-up';#}
+{#            element.style.animationDelay = `${index * 0.1}s`;#}
+{#        });#}
+{#    });#}
+{#</script>#}
+{#{% endblock %}#}
+
 {% extends "base.html" %}
 {% load static %}
 
@@ -5,10 +438,21 @@
 
 {% block extra_css %}
 <style>
+    :root {
+        --beige-color: #f5eadb;
+        --amber-color: #c1954a;
+        --dark-amber: #9e7a39;
+        --light-amber: #d4b06a;
+        --off-white: #faf7f2;
+        --black: #212121;
+        --dark-gray: #333333;
+        --light-gray: #f0f0f0;
+    }
+
     /* About Header */
     .about-header {
-        background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
-        color: white;
+        background: var(--beige-color);
+        color: var(--black);
         padding: 80px 0;
         text-align: center;
     }
@@ -16,6 +460,11 @@
     .about-header h1 {
         font-weight: 800;
         margin-bottom: 20px;
+        color: var(--black);
+    }
+
+    .about-header p {
+        color: var(--dark-gray);
     }
 
     /* About Content */
@@ -32,25 +481,115 @@
     .about-text h2 {
         margin-bottom: 25px;
         font-weight: 700;
+        color: var(--black);
+    }
+
+    /* Card for Who We Are */
+    .who-we-are-card {
+        border-radius: 10px;
+        overflow: hidden;
+        background-color: white;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        margin-bottom: 30px;
+        height: 100%;
+    }
+
+    .who-we-are-image {
+        height: 250px;
+        overflow: hidden;
+    }
+
+    .who-we-are-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+    }
+
+    .who-we-are-card:hover .who-we-are-image img {
+        transform: scale(1.05);
+    }
+
+    .who-we-are-content {
+        padding: 25px;
+    }
+
+    .who-we-are-content h3 {
+        font-weight: 700;
+        margin-bottom: 15px;
+        font-size: 1.4rem;
+        color: var(--black);
+    }
+
+    .who-we-are-content p {
+        color: var(--dark-gray);
+        margin-bottom: 20px;
+        font-size: 1rem;
+        line-height: 1.6;
+    }
+
+    .who-we-are-content .btn {
+        padding: 8px 20px;
+        font-weight: 500;
     }
 
     /* Mission & Vision */
     .mission-vision {
         padding: 80px 0;
-        background-color: var(--light-gray);
+        background-color: var(--off-white);
     }
 
     .mission-card, .vision-card {
-        padding: 40px;
         border-radius: 10px;
-        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
-        height: 100%;
+        overflow: hidden;
         background-color: white;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        height: 100%;
+        transition: all 0.3s ease;
+    }
+
+    .mission-card:hover, .vision-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+    }
+
+    .mission-image, .vision-image {
+        height: 200px;
+        overflow: hidden;
+    }
+
+    .mission-image img, .vision-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+    }
+
+    .mission-card:hover .mission-image img,
+    .vision-card:hover .vision-image img {
+        transform: scale(1.05);
+    }
+
+    .mission-content, .vision-content {
+        padding: 25px;
+    }
+
+    .mission-content h3, .vision-content h3 {
+        font-weight: 700;
+        margin-bottom: 15px;
+        font-size: 1.4rem;
+        color: var(--black);
+    }
+
+    .mission-content p, .vision-content p {
+        color: var(--dark-gray);
+        margin-bottom: 10px;
+        line-height: 1.6;
     }
 
     .card-icon {
         font-size: 3rem;
-        color: var(--accent-color);
+        color: var(--amber-color);
         margin-bottom: 20px;
     }
 
@@ -87,11 +626,13 @@
 
     .team-info h4 {
         margin-bottom: 5px;
+        color: var(--black);
     }
 
     .team-info p {
-        color: #858796;
+        color: var(--amber-color);
         margin-bottom: 15px;
+        font-weight: 500;
     }
 
     .team-social {
@@ -107,20 +648,20 @@
         align-items: center;
         justify-content: center;
         background-color: var(--light-gray);
-        color: var(--primary-color);
+        color: var(--amber-color);
         border-radius: 50%;
         transition: all 0.3s ease;
     }
 
     .social-link:hover {
-        background-color: var(--accent-color);
+        background-color: var(--amber-color);
         color: white;
     }
 
     /* Timeline */
     .timeline-section {
         padding: 80px 0;
-        background-color: var(--light-gray);
+        background-color: var(--off-white);
     }
 
     .timeline {
@@ -133,7 +674,7 @@
         position: absolute;
         height: 100%;
         width: 3px;
-        background-color: var(--primary-color);
+        background-color: var(--amber-color);
         left: 0;
         top: 0;
     }
@@ -153,22 +694,26 @@
         width: 15px;
         height: 15px;
         border-radius: 50%;
-        background-color: var(--primary-color);
+        background-color: var(--amber-color);
         left: -36px;
         top: 5px;
     }
 
     .timeline-date {
         font-weight: 700;
-        color: var(--accent-color);
+        color: var(--amber-color);
         margin-bottom: 10px;
+    }
+
+    .timeline-item h4 {
+        color: var(--black);
     }
 
     /* CTA Section */
     .cta-section {
         padding: 80px 0;
-        background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
-        color: white;
+        background: var(--beige-color);
+        color: var(--black);
         text-align: center;
     }
 
@@ -176,20 +721,80 @@
         font-size: 2.5rem;
         font-weight: 700;
         margin-bottom: 1.5rem;
+        color: var(--black);
     }
 
     .cta-text {
         max-width: 700px;
         margin: 0 auto 2rem;
-        opacity: 0.9;
+        color: var(--dark-gray);
+    }
+
+    .btn-primary {
+        background-color: var(--amber-color);
+        border-color: var(--amber-color);
+    }
+
+    .btn-primary:hover {
+        background-color: var(--dark-amber);
+        border-color: var(--dark-amber);
+    }
+
+    .btn-outline-primary {
+        color: var(--amber-color);
+        border-color: var(--amber-color);
+    }
+
+    .btn-outline-primary:hover {
+        background-color: var(--amber-color);
+        border-color: var(--amber-color);
+    }
+
+    /* Section Titles */
+    .section-title {
+        margin-bottom: 40px;
+    }
+
+    .section-title h2 {
+        font-weight: 700;
+        color: var(--black);
+        position: relative;
+        display: inline-block;
+        margin-bottom: 15px;
+    }
+
+    .section-title h2:after {
+        content: '';
+        position: absolute;
+        bottom: -10px;
+        left: 0;
+        width: 50px;
+        height: 3px;
+        background-color: var(--amber-color);
+    }
+
+    .section-title.text-center h2:after {
+        left: 50%;
+        transform: translateX(-50%);
     }
 
     /* Dark mode adaptations */
+    body.dark-mode .about-header {
+        background-color: var(--dark-gray);
+        color: var(--off-white);
+    }
+
+    body.dark-mode .about-header h1,
+    body.dark-mode .about-header p {
+        color: var(--off-white);
+    }
+
     body.dark-mode .mission-card,
     body.dark-mode .vision-card,
-    body.dark-mode .team-card {
-        background-color: #2a2c3e;
-        color: #f8f9fc;
+    body.dark-mode .team-card,
+    body.dark-mode .who-we-are-card {
+        background-color: var(--dark-gray);
+        color: var(--off-white);
     }
 
     body.dark-mode .mission-vision,
@@ -202,11 +807,46 @@
     }
 
     body.dark-mode .timeline-date {
-        color: var(--accent-color);
+        color: var(--light-amber);
     }
-    
+
     body.dark-mode .team-info p {
-        color: #c2c5d3;
+        color: var(--light-amber);
+    }
+
+    body.dark-mode .about-text h2,
+    body.dark-mode .mission-content h3,
+    body.dark-mode .vision-content h3,
+    body.dark-mode .who-we-are-content h3,
+    body.dark-mode .team-info h4,
+    body.dark-mode .timeline-item h4,
+    body.dark-mode .cta-title {
+        color: var(--off-white);
+    }
+
+    body.dark-mode .about-text p,
+    body.dark-mode .mission-content p,
+    body.dark-mode .vision-content p,
+    body.dark-mode .who-we-are-content p,
+    body.dark-mode .timeline-item p,
+    body.dark-mode .cta-text {
+        color: #e2e8f0;
+    }
+
+    body.dark-mode .cta-section {
+        background-color: var(--dark-gray);
+    }
+
+    /* Animations */
+    .animate-on-scroll {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: all 0.7s ease-out;
+    }
+
+    .animate-on-scroll.visible {
+        opacity: 1;
+        transform: translateY(0);
     }
 </style>
 {% endblock %}
@@ -225,13 +865,20 @@
     <div class="container">
         <div class="row align-items-center">
             <div class="col-lg-6 mb-4 mb-lg-0">
-                <div class="about-image">
-                    <img src="{% static 'images/about-image.jpg' %}" alt="CloudLink_Devs Team" class="img-fluid">
+                <div class="who-we-are-card animate-on-scroll">
+                    <div class="who-we-are-image">
+                        <img src="{% static 'images/services2.jpg' %}" alt="CloudLink_Devs Team">
+                    </div>
+                    <div class="who-we-are-content">
+                        <h3>Who We Are</h3>
+                        <p>CloudLink_Devs is a team of passionate developers, designers, and digital strategists dedicated to helping businesses succeed in the digital world.</p>
+                        <a href="{% url 'core:home' %}" class="btn btn-outline-primary">Back to Home</a>
+                    </div>
                 </div>
             </div>
             <div class="col-lg-6">
                 <div class="about-text">
-                    <h2>Who We Are</h2>
+                    <h2>Our Story</h2>
                     <p>CloudLink_Devs is a team of passionate developers, designers, and digital strategists dedicated to helping businesses succeed in the digital world. We specialize in creating custom web applications, mobile apps, and POS systems that are tailored to meet the unique needs of our clients.</p>
                     <p>Founded in 2020, we've worked with businesses of all sizes across multiple industries, from startups to established enterprises. Our approach combines technical expertise with a deep understanding of business needs to deliver solutions that drive growth and improve efficiency.</p>
                     <p>At CloudLink_Devs, we believe in building long-term relationships with our clients. We don't just deliver a product and walk away – we partner with you to ensure your digital solutions continue to evolve and adapt to your changing business needs.</p>
@@ -248,27 +895,31 @@
             <h2>Our Mission & Vision</h2>
             <p>The core principles that guide our work</p>
         </div>
-        
+
         <div class="row">
             <div class="col-md-6 mb-4 mb-md-0">
-                <div class="mission-card">
-                    <div class="card-icon">
-                        <i class="fas fa-bullseye"></i>
+                <div class="mission-card animate-on-scroll">
+                    <div class="mission-image">
+                        <img src="{% static 'images/services.png' %}" alt="Our Mission">
                     </div>
-                    <h3>Our Mission</h3>
-                    <p>To empower businesses with innovative digital solutions that solve real problems, enhance efficiency, and drive sustainable growth.</p>
-                    <p>We are committed to delivering high-quality, customized technologies that meet the unique needs of each client while providing exceptional service and support throughout the entire development journey.</p>
+                    <div class="mission-content">
+                        <h3>Our Mission</h3>
+                        <p>To empower businesses with innovative digital solutions that solve real problems, enhance efficiency, and drive sustainable growth.</p>
+                        <p>We are committed to delivering high-quality, customized technologies that meet the unique needs of each client while providing exceptional service and support throughout the entire development journey.</p>
+                    </div>
                 </div>
             </div>
-            
+
             <div class="col-md-6">
-                <div class="vision-card">
-                    <div class="card-icon">
-                        <i class="fas fa-eye"></i>
+                <div class="vision-card animate-on-scroll">
+                    <div class="vision-image">
+                        <img src="{% static 'images/homepage5.jpg' %}" alt="Our Vision">
                     </div>
-                    <h3>Our Vision</h3>
-                    <p>To become the most trusted technology partner for businesses seeking digital transformation, recognized for our technical excellence, client-focused approach, and sustainable solutions.</p>
-                    <p>We envision a world where businesses of all sizes have access to powerful, tailored digital tools that level the playing field and create opportunities for growth and innovation.</p>
+                    <div class="vision-content">
+                        <h3>Our Vision</h3>
+                        <p>To become the most trusted technology partner for businesses seeking digital transformation, recognized for our technical excellence, client-focused approach, and sustainable solutions.</p>
+                        <p>We envision a world where businesses of all sizes have access to powerful, tailored digital tools that level the playing field and create opportunities for growth and innovation.</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -282,12 +933,12 @@
             <h2>Meet Our Team</h2>
             <p>The talented people behind CloudLink_Devs</p>
         </div>
-        
+
         <div class="row">
             <div class="col-lg-3 col-md-6 mb-4">
-                <div class="team-card">
+                <div class="team-card animate-on-scroll">
                     <div class="team-image">
-                        <img src="{% static 'images/team-placeholder.jpg' %}" alt="Team Member" class="img-fluid">
+                        <img src="{% static 'images/' %}" alt="Team Member" class="img-fluid">
                     </div>
                     <div class="team-info">
                         <h4>John Doe</h4>
@@ -300,11 +951,11 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="col-lg-3 col-md-6 mb-4">
-                <div class="team-card">
+                <div class="team-card animate-on-scroll">
                     <div class="team-image">
-                        <img src="{% static 'images/team-placeholder.jpg' %}" alt="Team Member" class="img-fluid">
+                        <img src="{% static 'images/leaddev.jpg' %}" alt="Team Member" class="img-fluid">
                     </div>
                     <div class="team-info">
                         <h4>Jane Smith</h4>
@@ -317,11 +968,11 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="col-lg-3 col-md-6 mb-4">
-                <div class="team-card">
+                <div class="team-card animate-on-scroll">
                     <div class="team-image">
-                        <img src="{% static 'images/team-placeholder.jpg' %}" alt="Team Member" class="img-fluid">
+                        <img src="{% static 'images/testmony2.jpg' %}" alt="Team Member" class="img-fluid">
                     </div>
                     <div class="team-info">
                         <h4>Michael Johnson</h4>
@@ -334,11 +985,11 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="col-lg-3 col-md-6 mb-4">
-                <div class="team-card">
+                <div class="team-card animate-on-scroll">
                     <div class="team-image">
-                        <img src="{% static 'images/team-placeholder.jpg' %}" alt="Team Member" class="img-fluid">
+                        <img src="{% static 'images/testimony1.jpg' %}" alt="Team Member" class="img-fluid">
                     </div>
                     <div class="team-info">
                         <h4>Sarah Williams</h4>
@@ -362,39 +1013,39 @@
             <h2>Our Journey</h2>
             <p>Key milestones in the CloudLink_Devs story</p>
         </div>
-        
+
         <div class="timeline">
-            <div class="timeline-item">
+            <div class="timeline-item animate-on-scroll">
                 <div class="timeline-date">2020</div>
                 <h4>Company Founded</h4>
                 <p>CloudLink_Devs was established with a focus on creating custom web solutions for small businesses.</p>
             </div>
-            
-            <div class="timeline-item">
+
+            <div class="timeline-item animate-on-scroll">
                 <div class="timeline-date">2021</div>
                 <h4>Expansion to Mobile Development</h4>
                 <p>Added mobile app development services to meet growing client demand for cross-platform solutions.</p>
             </div>
-            
-            <div class="timeline-item">
+
+            <div class="timeline-item animate-on-scroll">
                 <div class="timeline-date">2022</div>
                 <h4>POS Systems Launch</h4>
                 <p>Introduced specialized POS system development for retail and restaurant businesses.</p>
             </div>
-            
-            <div class="timeline-item">
+
+            <div class="timeline-item animate-on-scroll">
                 <div class="timeline-date">2023</div>
                 <h4>Team Growth</h4>
                 <p>Expanded our team to include specialized developers, designers, and project managers.</p>
             </div>
-            
-            <div class="timeline-item">
+
+            <div class="timeline-item animate-on-scroll">
                 <div class="timeline-date">2024</div>
                 <h4>New Office Opening</h4>
                 <p>Opened our new headquarters with dedicated spaces for development, client meetings, and collaboration.</p>
             </div>
-            
-            <div class="timeline-item">
+
+            <div class="timeline-item animate-on-scroll">
                 <div class="timeline-date">2025</div>
                 <h4>Looking Forward</h4>
                 <p>Continuing to innovate and expand our services to meet the evolving needs of our clients.</p>
@@ -409,8 +1060,8 @@
         <h2 class="cta-title">Ready to Work With Us?</h2>
         <p class="cta-text">Let's discuss how we can help take your business to the next level with our custom development solutions.</p>
         <div class="cta-buttons">
-            <a href="{% url 'quotes:service_estimator' %}" class="btn btn-light btn-lg me-3">Get a Quote</a>
-            <a href="{% url 'core:contact' %}" class="btn btn-outline-light btn-lg">Contact Us</a>
+            <a href="{% url 'quotes:service_estimator' %}" class="btn btn-primary btn-lg me-3">Get a Quote</a>
+            <a href="{% url 'core:contact' %}" class="btn btn-outline-primary btn-lg">Contact Us</a>
         </div>
     </div>
 </section>
@@ -419,14 +1070,34 @@
 {% block extra_js %}
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Add animation classes on scroll
-        const animateElements = document.querySelectorAll('.mission-card, .vision-card, .team-card, .timeline-item');
-        
+        // Animation on scroll
+        const animateElements = document.querySelectorAll('.animate-on-scroll');
+
+        const isInViewport = (element) => {
+            const rect = element.getBoundingClientRect();
+            return (
+                rect.top <= (window.innerHeight || document.documentElement.clientHeight) * 0.85
+            );
+        };
+
+        const checkVisibility = () => {
+            animateElements.forEach((element) => {
+                if (isInViewport(element)) {
+                    element.classList.add('visible');
+                }
+            });
+        };
+
+        // Set initial animation delays
         animateElements.forEach((element, index) => {
-            element.classList.add('animate-on-scroll');
-            element.dataset.animation = 'slide-up';
-            element.style.animationDelay = `${index * 0.1}s`;
+            element.style.transitionDelay = `${(index % 3) * 0.1}s`;
         });
+
+        // Check on load
+        checkVisibility();
+
+        // Check on scroll
+        window.addEventListener('scroll', checkVisibility);
     });
 </script>
 {% endblock %}

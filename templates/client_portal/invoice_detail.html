@@ -12,6 +12,18 @@
 
 {% block client_portal_css %}
 <style>
+    :root {
+        /* Using your established color scheme */
+        --beige-color: #f5eadb;
+        --amber-color: #c1954a;
+        --dark-amber: #9e7a39;
+        --light-amber: #d4b06a;
+        --off-white: #faf7f2;
+        --black: #212121;
+        --dark-gray: #333333;
+        --light-gray: #f0f0f0;
+    }
+
     .invoice-container {
         background-color: white;
         border-radius: 10px;
@@ -53,8 +65,8 @@
     }
 
     .status-draft, .status-sent {
-        background-color: rgba(78, 115, 223, 0.1);
-        color: var(--primary-color);
+        background-color: rgba(193, 149, 74, 0.1);
+        color: var(--amber-color);
     }
 
     .status-overdue {
@@ -152,7 +164,7 @@
         padding: 15px 20px;
         border-bottom: 1px solid #e3e6f0;
         font-weight: 700;
-        background-color: #f8f9fc;
+        background-color: var(--beige-color);
     }
 
     .payment-body {
@@ -173,8 +185,8 @@
         padding: 3px 10px;
         border-radius: 15px;
         font-size: 0.75rem;
-        background-color: rgba(78, 115, 223, 0.1);
-        color: var(--primary-color);
+        background-color: rgba(193, 149, 74, 0.1);
+        color: var(--amber-color);
     }
 
     .payment-date {
@@ -194,6 +206,34 @@
         text-align: center;
         padding: 30px;
         color: #858796;
+    }
+
+    /* Project link color */
+    .invoice-details a {
+        color: var(--amber-color);
+        text-decoration: none;
+    }
+
+    .invoice-details a:hover {
+        color: var(--dark-amber);
+        text-decoration: underline;
+    }
+
+    /* Text primary color (used for invoice number) */
+    .text-primary {
+        color: var(--amber-color) !important;
+    }
+
+    /* Button styles */
+    .btn-outline-primary {
+        color: var(--amber-color);
+        border-color: var(--amber-color);
+    }
+
+    .btn-outline-primary:hover {
+        background-color: var(--amber-color);
+        border-color: var(--amber-color);
+        color: white;
     }
 
     @media print {

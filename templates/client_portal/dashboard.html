@@ -1,3 +1,675 @@
+{#{% extends 'client_portal/base.html' %}#}
+{#{% load static %}#}
+{##}
+{#{% block title %}Dashboard - Client Portal{% endblock %}#}
+{##}
+{#{% block extra_css %}#}
+{#<style>#}
+{#    :root {#}
+{#        /* Using your established color scheme */#}
+{#        --beige-color: #f5eadb;#}
+{#        --amber-color: #c1954a;#}
+{#        --dark-amber: #9e7a39;#}
+{#        --light-amber: #d4b06a;#}
+{#        --off-white: #faf7f2;#}
+{#        --black: #212121;#}
+{#        --dark-gray: #333333;#}
+{#        --light-gray: #f0f0f0;#}
+{#    }#}
+{##}
+{#    .dashboard-header {#}
+{#        padding: 30px 0;#}
+{#        background-color: var(--beige-color);#}
+{#        margin-bottom: 30px;#}
+{#    }#}
+{##}
+{#    .welcome-message {#}
+{#        margin-bottom: 20px;#}
+{#    }#}
+{##}
+{#    .welcome-message h1 {#}
+{#        font-weight: 700;#}
+{#        margin-bottom: 10px;#}
+{#        color: var(--dark-gray);#}
+{#    }#}
+{##}
+{#    .stats-card {#}
+{#        background-color: white;#}
+{#        border-radius: 10px;#}
+{#        padding: 20px;#}
+{#        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);#}
+{#        margin-bottom: 20px;#}
+{#        height: 100%;#}
+{#        transition: all 0.3s ease;#}
+{#    }#}
+{##}
+{#    .stats-card:hover {#}
+{#        transform: translateY(-5px);#}
+{#        box-shadow: 0 0.5rem 2rem 0 rgba(58, 59, 69, 0.25);#}
+{#    }#}
+{##}
+{#    .stats-card-header {#}
+{#        display: flex;#}
+{#        align-items: center;#}
+{#        margin-bottom: 15px;#}
+{#    }#}
+{##}
+{#    .stats-card-icon {#}
+{#        width: 40px;#}
+{#        height: 40px;#}
+{#        border-radius: 10px;#}
+{#        display: flex;#}
+{#        align-items: center;#}
+{#        justify-content: center;#}
+{#        margin-right: 15px;#}
+{#        font-size: 1.2rem;#}
+{#    }#}
+{##}
+{#    .primary-icon {#}
+{#        background-color: rgba(193, 149, 74, 0.1);#}
+{#        color: var(--amber-color);#}
+{#    }#}
+{##}
+{#    .success-icon {#}
+{#        background-color: rgba(28, 200, 138, 0.1);#}
+{#        color: #1cc88a;#}
+{#    }#}
+{##}
+{#    .warning-icon {#}
+{#        background-color: rgba(246, 194, 62, 0.1);#}
+{#        color: #f6c23e;#}
+{#    }#}
+{##}
+{#    .danger-icon {#}
+{#        background-color: rgba(231, 74, 59, 0.1);#}
+{#        color: #e74a3b;#}
+{#    }#}
+{##}
+{#    .stats-card-title {#}
+{#        font-weight: 700;#}
+{#        margin-bottom: 0;#}
+{#    }#}
+{##}
+{#    .stats-card-value {#}
+{#        font-size: 1.8rem;#}
+{#        font-weight: 700;#}
+{#        margin-bottom: 10px;#}
+{#    }#}
+{##}
+{#    .stats-card-text {#}
+{#        color: #858796;#}
+{#        font-size: 0.9rem;#}
+{#    }#}
+{##}
+{#    .stats-card-text a {#}
+{#        color: var(--amber-color);#}
+{#        text-decoration: none;#}
+{#    }#}
+{##}
+{#    .stats-card-text a:hover {#}
+{#        color: var(--dark-amber);#}
+{#        text-decoration: underline;#}
+{#    }#}
+{##}
+{#    .progress-bar {#}
+{#        height: 10px;#}
+{#        border-radius: 5px;#}
+{#    }#}
+{##}
+{#    .section-title {#}
+{#        font-weight: 700;#}
+{#        margin-bottom: 20px;#}
+{#        padding-bottom: 10px;#}
+{#        border-bottom: 1px solid #e3e6f0;#}
+{#    }#}
+{##}
+{#    .data-card {#}
+{#        background-color: white;#}
+{#        border-radius: 10px;#}
+{#        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);#}
+{#        margin-bottom: 30px;#}
+{#    }#}
+{##}
+{#    .data-card-header {#}
+{#        padding: 15px 20px;#}
+{#        border-bottom: 1px solid #e3e6f0;#}
+{#        font-weight: 700;#}
+{#    }#}
+{##}
+{#    .data-card-body {#}
+{#        padding: 20px;#}
+{#    }#}
+{##}
+{#    .project-item {#}
+{#        padding: 15px;#}
+{#        border-bottom: 1px solid #e3e6f0;#}
+{#        transition: all 0.3s ease;#}
+{#    }#}
+{##}
+{#    .project-item:last-child {#}
+{#        border-bottom: none;#}
+{#    }#}
+{##}
+{#    .project-item:hover {#}
+{#        background-color: var(--light-gray);#}
+{#    }#}
+{##}
+{#    .project-title {#}
+{#        font-weight: 700;#}
+{#        margin-bottom: 5px;#}
+{#    }#}
+{##}
+{#    .project-title a {#}
+{#        color: var(--dark-gray);#}
+{#        text-decoration: none;#}
+{#    }#}
+{##}
+{#    .project-title a:hover {#}
+{#        color: var(--amber-color);#}
+{#    }#}
+{##}
+{#    .project-status {#}
+{#        display: inline-block;#}
+{#        padding: 3px 10px;#}
+{#        border-radius: 15px;#}
+{#        font-size: 0.75rem;#}
+{#        margin-bottom: 5px;#}
+{#    }#}
+{##}
+{#    .status-planning {#}
+{#        background-color: rgba(193, 149, 74, 0.1);#}
+{#        color: var(--amber-color);#}
+{#    }#}
+{##}
+{#    .status-in-progress {#}
+{#        background-color: rgba(246, 194, 62, 0.1);#}
+{#        color: #f6c23e;#}
+{#    }#}
+{##}
+{#    .status-completed {#}
+{#        background-color: rgba(28, 200, 138, 0.1);#}
+{#        color: #1cc88a;#}
+{#    }#}
+{##}
+{#    .status-on-hold {#}
+{#        background-color: rgba(231, 74, 59, 0.1);#}
+{#        color: #e74a3b;#}
+{#    }#}
+{##}
+{#    .status-cancelled {#}
+{#        background-color: rgba(108, 117, 125, 0.1);#}
+{#        color: #6c757d;#}
+{#    }#}
+{##}
+{#    .project-dates {#}
+{#        font-size: 0.85rem;#}
+{#        color: #858796;#}
+{#    }#}
+{##}
+{#    .invoice-item {#}
+{#        padding: 15px;#}
+{#        border-bottom: 1px solid #e3e6f0;#}
+{#        transition: all 0.3s ease;#}
+{#    }#}
+{##}
+{#    .invoice-item:last-child {#}
+{#        border-bottom: none;#}
+{#    }#}
+{##}
+{#    .invoice-item:hover {#}
+{#        background-color: var(--light-gray);#}
+{#    }#}
+{##}
+{#    .invoice-number {#}
+{#        font-weight: 700;#}
+{#        margin-bottom: 5px;#}
+{#    }#}
+{##}
+{#    .invoice-number a {#}
+{#        color: var(--dark-gray);#}
+{#        text-decoration: none;#}
+{#    }#}
+{##}
+{#    .invoice-number a:hover {#}
+{#        color: var(--amber-color);#}
+{#    }#}
+{##}
+{#    .invoice-status {#}
+{#        display: inline-block;#}
+{#        padding: 3px 10px;#}
+{#        border-radius: 15px;#}
+{#        font-size: 0.75rem;#}
+{#        margin-bottom: 5px;#}
+{#    }#}
+{##}
+{#    .status-paid {#}
+{#        background-color: rgba(28, 200, 138, 0.1);#}
+{#        color: #1cc88a;#}
+{#    }#}
+{##}
+{#    .status-draft, .status-sent {#}
+{#        background-color: rgba(193, 149, 74, 0.1);#}
+{#        color: var(--amber-color);#}
+{#    }#}
+{##}
+{#    .status-overdue {#}
+{#        background-color: rgba(231, 74, 59, 0.1);#}
+{#        color: #e74a3b;#}
+{#    }#}
+{##}
+{#    .status-cancelled {#}
+{#        background-color: rgba(108, 117, 125, 0.1);#}
+{#        color: #6c757d;#}
+{#    }#}
+{##}
+{#    .invoice-amount {#}
+{#        font-weight: 700;#}
+{#        color: var(--dark-gray);#}
+{#    }#}
+{##}
+{#    .quick-actions {#}
+{#        background-color: white;#}
+{#        border-radius: 10px;#}
+{#        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);#}
+{#        margin-bottom: 30px;#}
+{#        padding: 20px;#}
+{#    }#}
+{##}
+{#    .action-button {#}
+{#        display: flex;#}
+{#        flex-direction: column;#}
+{#        align-items: center;#}
+{#        text-align: center;#}
+{#        padding: 20px;#}
+{#        border-radius: 10px;#}
+{#        transition: all 0.3s ease;#}
+{#        color: var(--dark-gray);#}
+{#        text-decoration: none;#}
+{#    }#}
+{##}
+{#    .action-button:hover {#}
+{#        background-color: var(--beige-color);#}
+{#        transform: translateY(-5px);#}
+{#        color: var(--dark-gray);#}
+{#    }#}
+{##}
+{#    .action-icon {#}
+{#        font-size: 2rem;#}
+{#        margin-bottom: 10px;#}
+{#        color: var(--amber-color);#}
+{#    }#}
+{##}
+{#    .notification-dot {#}
+{#        position: absolute;#}
+{#        top: -5px;#}
+{#        right: -5px;#}
+{#        width: 12px;#}
+{#        height: 12px;#}
+{#        background-color: #e74a3b;#}
+{#        border-radius: 50%;#}
+{#    }#}
+{##}
+{#    .sidebar-nav {#}
+{#        background-color: white;#}
+{#        border-radius: 10px;#}
+{#        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);#}
+{#        margin-bottom: 30px;#}
+{#    }#}
+{##}
+{#    .sidebar-nav .nav-link {#}
+{#        padding: 15px 20px;#}
+{#        color: var(--dark-gray);#}
+{#        border-left: 3px solid transparent;#}
+{#        transition: all 0.3s ease;#}
+{#    }#}
+{##}
+{#    .sidebar-nav .nav-link:hover {#}
+{#        background-color: var(--beige-color);#}
+{#        border-left-color: var(--amber-color);#}
+{#    }#}
+{##}
+{#    .sidebar-nav .nav-link.active {#}
+{#        background-color: var(--beige-color);#}
+{#        border-left-color: var(--amber-color);#}
+{#        font-weight: 600;#}
+{#    }#}
+{##}
+{#    .sidebar-nav .nav-link i {#}
+{#        margin-right: 10px;#}
+{#        color: var(--amber-color);#}
+{#    }#}
+{##}
+{#    /* Button styles */#}
+{#    .btn-primary {#}
+{#        background-color: var(--amber-color);#}
+{#        border-color: var(--amber-color);#}
+{#        color: white;#}
+{#    }#}
+{##}
+{#    .btn-primary:hover {#}
+{#        background-color: var(--dark-amber);#}
+{#        border-color: var(--dark-amber);#}
+{#    }#}
+{##}
+{#    .btn-outline-primary {#}
+{#        color: var(--amber-color);#}
+{#        border-color: var(--amber-color);#}
+{#    }#}
+{##}
+{#    .btn-outline-primary:hover {#}
+{#        background-color: var(--amber-color);#}
+{#        border-color: var(--amber-color);#}
+{#        color: white;#}
+{#    }#}
+{#</style>#}
+{#{% endblock %}#}
+{##}
+{#{% block content %}#}
+{#<!-- Dashboard Header -->#}
+{#<section class="dashboard-header">#}
+{#    <div class="container">#}
+{#        <div class="welcome-message">#}
+{#            <h1>Welcome, {{ client.full_name }}!</h1>#}
+{#            <p>Here's an overview of your projects and finances.</p>#}
+{#        </div>#}
+{##}
+{#        <div class="row">#}
+{#            <!-- Active Projects -->#}
+{#            <div class="col-md-3">#}
+{#                <div class="stats-card">#}
+{#                    <div class="stats-card-header">#}
+{#                        <div class="stats-card-icon primary-icon">#}
+{#                            <i class="fas fa-clipboard-list"></i>#}
+{#                        </div>#}
+{#                        <h5 class="stats-card-title">Active Projects</h5>#}
+{#                    </div>#}
+{#                    <div class="stats-card-value">{{ active_projects }}</div>#}
+{#                    <div class="stats-card-text">Current projects in progress</div>#}
+{#                </div>#}
+{#            </div>#}
+{##}
+{#            <!-- Completed Projects -->#}
+{#            <div class="col-md-3">#}
+{#                <div class="stats-card">#}
+{#                    <div class="stats-card-header">#}
+{#                        <div class="stats-card-icon success-icon">#}
+{#                            <i class="fas fa-check-circle"></i>#}
+{#                        </div>#}
+{#                        <h5 class="stats-card-title">Completed</h5>#}
+{#                    </div>#}
+{#                    <div class="stats-card-value">{{ completed_projects }}</div>#}
+{#                    <div class="stats-card-text">Successfully completed projects</div>#}
+{#                </div>#}
+{#            </div>#}
+{##}
+{#            <!-- Invoices -->#}
+{#            <div class="col-md-3">#}
+{#                <div class="stats-card">#}
+{#                    <div class="stats-card-header">#}
+{#                        <div class="stats-card-icon warning-icon">#}
+{#                            <i class="fas fa-file-invoice-dollar"></i>#}
+{#                        </div>#}
+{#                        <h5 class="stats-card-title">Total Billed</h5>#}
+{#                    </div>#}
+{#                    <div class="stats-card-value">${{ total_invoiced|floatformat:2 }}</div>#}
+{#                    <div class="stats-card-text">${{ total_paid|floatformat:2 }} paid</div>#}
+{#                </div>#}
+{#            </div>#}
+{##}
+{#            <!-- Balance Due -->#}
+{#            <div class="col-md-3">#}
+{#                <div class="stats-card">#}
+{#                    <div class="stats-card-header">#}
+{#                        <div class="stats-card-icon danger-icon">#}
+{#                            <i class="fas fa-dollar-sign"></i>#}
+{#                        </div>#}
+{#                        <h5 class="stats-card-title">Balance Due</h5>#}
+{#                    </div>#}
+{#                    <div class="stats-card-value">${{ balance_due|floatformat:2 }}</div>#}
+{#                    <div class="stats-card-text">#}
+{#                        {% if balance_due > 0 %}#}
+{#                            <a href="{% url 'client_portal:balance_due' %}">View details</a>#}
+{#                        {% else %}#}
+{#                            All invoices paid#}
+{#                        {% endif %}#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
+{#</section>#}
+{##}
+{#<!-- Dashboard Content -->#}
+{#<section class="dashboard-content">#}
+{#    <div class="container">#}
+{#        <div class="row">#}
+{#            <!-- Main Content -->#}
+{#            <div class="col-lg-8">#}
+{#                <!-- Recent Projects -->#}
+{#                <div class="data-card">#}
+{#                    <div class="data-card-header">#}
+{#                        <div class="d-flex justify-content-between align-items-center">#}
+{#                            <span>Recent Projects</span>#}
+{#                            <a href="{% url 'client_portal:projects' %}" class="btn btn-sm btn-primary">View All</a>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                    <div class="data-card-body p-0">#}
+{#                        {% if recent_projects %}#}
+{#                            {% for project in recent_projects %}#}
+{#                                <div class="project-item">#}
+{#                                    <div class="d-flex justify-content-between align-items-center">#}
+{#                                        <div>#}
+{#                                            <h5 class="project-title">#}
+{#                                                <a href="{% url 'client_portal:project_detail' pk=project.id %}">{{ project.title }}</a>#}
+{#                                            </h5>#}
+{#                                            <span class="project-status status-{{ project.status }}">{{ project.get_status_display }}</span>#}
+{#                                            <div class="project-dates">#}
+{#                                                <i class="far fa-calendar-alt"></i> Started: {{ project.start_date|date:"M d, Y" }}#}
+{#                                                {% if project.end_date %}#}
+{#                                                    <span class="mx-2">|</span>#}
+{#                                                    <i class="far fa-calendar-check"></i> Due: {{ project.end_date|date:"M d, Y" }}#}
+{#                                                {% endif %}#}
+{#                                            </div>#}
+{#                                        </div>#}
+{#                                        <div>#}
+{#                                            <div class="text-end mb-1">#}
+{#                                                <span class="fw-bold">{{ project.completion_percentage }}%</span> Complete#}
+{#                                            </div>#}
+{#                                            <div class="progress" style="width: 120px;">#}
+{#                                                <div class="progress-bar bg-success" role="progressbar" style="width: {{ project.completion_percentage }}%"></div>#}
+{#                                            </div>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                            {% endfor %}#}
+{#                        {% else %}#}
+{#                            <div class="text-center py-5">#}
+{#                                <p>No projects found. Your projects will appear here once they're created.</p>#}
+{#                            </div>#}
+{#                        {% endif %}#}
+{#                    </div>#}
+{#                </div>#}
+{##}
+{#                <!-- Recent Invoices -->#}
+{#                <div class="data-card mt-4">#}
+{#                    <div class="data-card-header">#}
+{#                        <div class="d-flex justify-content-between align-items-center">#}
+{#                            <span>Recent Invoices</span>#}
+{#                            <a href="{% url 'client_portal:invoices' %}" class="btn btn-sm btn-primary">View All</a>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                    <div class="data-card-body p-0">#}
+{#                        {% if recent_invoices %}#}
+{#                            {% for invoice in recent_invoices %}#}
+{#                                <div class="invoice-item">#}
+{#                                    <div class="d-flex justify-content-between align-items-center">#}
+{#                                        <div>#}
+{#                                            <h5 class="invoice-number">#}
+{#                                                <a href="{% url 'client_portal:invoice_detail' pk=invoice.id %}">Invoice #{{ invoice.invoice_number }}</a>#}
+{#                                            </h5>#}
+{#                                            <span class="invoice-status status-{{ invoice.status }}">{{ invoice.get_status_display }}</span>#}
+{#                                            <div class="project-dates">#}
+{#                                                <i class="far fa-calendar-alt"></i> Issued: {{ invoice.issue_date|date:"M d, Y" }}#}
+{#                                                <span class="mx-2">|</span>#}
+{#                                                <i class="far fa-calendar-check"></i> Due: {{ invoice.due_date|date:"M d, Y" }}#}
+{#                                            </div>#}
+{#                                        </div>#}
+{#                                        <div class="invoice-amount">${{ invoice.total|floatformat:2 }}</div>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                            {% endfor %}#}
+{#                        {% else %}#}
+{#                            <div class="text-center py-5">#}
+{#                                <p>No invoices found. Your invoices will appear here once they're created.</p>#}
+{#                            </div>#}
+{#                        {% endif %}#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{##}
+{#            <!-- Sidebar -->#}
+{#            <div class="col-lg-4">#}
+{#                <!-- Client Portal Navigation -->#}
+{#                <div class="sidebar-nav">#}
+{#                    <div class="data-card-header">#}
+{#                        <span>Navigation</span>#}
+{#                    </div>#}
+{#                    <ul class="nav flex-column">#}
+{#                        <li class="nav-item">#}
+{#                            <a class="nav-link active" href="{% url 'client_portal:dashboard' %}">#}
+{#                                <i class="fas fa-tachometer-alt"></i> Dashboard#}
+{#                            </a>#}
+{#                        </li>#}
+{#                        <li class="nav-item">#}
+{#                            <a class="nav-link" href="{% url 'client_portal:projects' %}">#}
+{#                                <i class="fas fa-project-diagram"></i> Projects#}
+{#                            </a>#}
+{#                        </li>#}
+{#                        <li class="nav-item">#}
+{#                            <a class="nav-link" href="{% url 'client_portal:invoices' %}">#}
+{#                                <i class="fas fa-file-invoice"></i> Invoices#}
+{#                            </a>#}
+{#                        </li>#}
+{#                        <li class="nav-item">#}
+{#                            <a class="nav-link" href="{% url 'client_portal:messages' %}">#}
+{#                                <i class="fas fa-envelope"></i> Messages#}
+{#                                {% if unread_messages > 0 %}#}
+{#                                <span class="badge bg-danger rounded-pill ms-2">{{ unread_messages }}</span>#}
+{#                                {% endif %}#}
+{#                            </a>#}
+{#                        </li>#}
+{#                        <li class="nav-item">#}
+{#                            <a class="nav-link" href="{% url 'client_portal:profile' %}">#}
+{#                                <i class="fas fa-user-circle"></i> Profile#}
+{#                            </a>#}
+{#                        </li>#}
+{#                        <li class="nav-item">#}
+{#                            <a class="nav-link" href="{% url 'client_portal:logout' %}">#}
+{#                                <i class="fas fa-sign-out-alt"></i> Logout#}
+{#                            </a>#}
+{#                        </li>#}
+{#                    </ul>#}
+{#                </div>#}
+{##}
+{#                <!-- Quick Actions -->#}
+{#                <div class="quick-actions">#}
+{#                    <h5 class="section-title">Quick Actions</h5>#}
+{#                    <div class="row g-3">#}
+{#                        <div class="col-6">#}
+{#                            <a href="{% url 'client_portal:balance_due' %}" class="action-button">#}
+{#                                <div class="action-icon">#}
+{#                                    <i class="fas fa-credit-card"></i>#}
+{#                                </div>#}
+{#                                <span>Make a Payment</span>#}
+{#                            </a>#}
+{#                        </div>#}
+{#                        <div class="col-6">#}
+{#                            <a href="{% url 'client_portal:messages' %}" class="action-button">#}
+{#                                <div class="action-icon position-relative">#}
+{#                                    <i class="fas fa-comment-alt"></i>#}
+{#                                    {% if unread_messages > 0 %}#}
+{#                                    <div class="notification-dot"></div>#}
+{#                                    {% endif %}#}
+{#                                </div>#}
+{#                                <span>Send Message</span>#}
+{#                            </a>#}
+{#                        </div>#}
+{#                        <div class="col-6">#}
+{#                            <a href="{% url 'core:contact' %}" class="action-button">#}
+{#                                <div class="action-icon">#}
+{#                                    <i class="fas fa-headset"></i>#}
+{#                                </div>#}
+{#                                <span>Get Support</span>#}
+{#                            </a>#}
+{#                        </div>#}
+{#                        <div class="col-6">#}
+{#                            <a href="{% url 'quotes:service_estimator' %}" class="action-button">#}
+{#                                <div class="action-icon">#}
+{#                                    <i class="fas fa-calculator"></i>#}
+{#                                </div>#}
+{#                                <span>Service Estimator</span>#}
+{#                            </a>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{##}
+{#                <!-- Recent Messages -->#}
+{#                {% if client.messages.all %}#}
+{#                <div class="data-card">#}
+{#                    <div class="data-card-header">#}
+{#                        <div class="d-flex justify-content-between align-items-center">#}
+{#                            <span>Recent Messages</span>#}
+{#                            <a href="{% url 'client_portal:messages' %}" class="btn btn-sm btn-primary">View All</a>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                    <div class="data-card-body p-0">#}
+{#                        {% for message in client.messages.all|slice:":3" %}#}
+{#                        <div class="project-item">#}
+{#                            <div>#}
+{#                                <div class="d-flex justify-content-between">#}
+{#                                    <h6 class="mb-1">{{ message.subject }}</h6>#}
+{#                                    <small class="text-muted">{{ message.created_at|date:"M d" }}</small>#}
+{#                                </div>#}
+{#                                <p class="mb-1 text-truncate">{{ message.content|truncatechars:100 }}</p>#}
+{#                                <div class="d-flex justify-content-between align-items-center">#}
+{#                                    <small class="text-muted">#}
+{#                                        {% if message.is_from_client %}#}
+{#                                            <i class="fas fa-paper-plane me-1"></i> Sent by you#}
+{#                                        {% else %}#}
+{#                                            <i class="fas fa-reply me-1"></i> Response from team#}
+{#                                            {% if not message.is_read %}#}
+{#                                            <span class="badge bg-danger">New</span>#}
+{#                                            {% endif %}#}
+{#                                        {% endif %}#}
+{#                                    </small>#}
+{#                                    <a href="{% url 'client_portal:messages' %}" class="btn btn-sm btn-outline-primary">Read</a>#}
+{#                                </div>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                        {% endfor %}#}
+{#                    </div>#}
+{#                </div>#}
+{#                {% endif %}#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
+{#</section>#}
+{#{% endblock %}#}
+{##}
+{#{% block extra_js %}#}
+{#<script>#}
+{#    // Any additional JavaScript for the dashboard can go here#}
+{#    $(document).ready(function() {#}
+{#        // Initialize tooltips#}
+{#        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))#}
+{#        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {#}
+{#            return new bootstrap.Tooltip(tooltipTriggerEl)#}
+{#        });#}
+{#    });#}
+{#</script>#}
+{#{% endblock %}#}
+
+
 {% extends 'client_portal/base.html' %}
 {% load static %}
 
@@ -5,9 +677,21 @@
 
 {% block extra_css %}
 <style>
+    :root {
+        /* Using your established color scheme */
+        --beige-color: #f5eadb;
+        --amber-color: #c1954a;
+        --dark-amber: #9e7a39;
+        --light-amber: #d4b06a;
+        --off-white: #faf7f2;
+        --black: #212121;
+        --dark-gray: #333333;
+        --light-gray: #f0f0f0;
+    }
+
     .dashboard-header {
         padding: 30px 0;
-        background-color: var(--light-gray);
+        background-color: var(--beige-color);
         margin-bottom: 30px;
     }
 
@@ -18,6 +702,7 @@
     .welcome-message h1 {
         font-weight: 700;
         margin-bottom: 10px;
+        color: var(--dark-gray);
     }
 
     .stats-card {
@@ -53,8 +738,8 @@
     }
 
     .primary-icon {
-        background-color: rgba(0, 102, 204, 0.1);
-        color: var(--primary-color);
+        background-color: rgba(193, 149, 74, 0.1);
+        color: var(--amber-color);
     }
 
     .success-icon {
@@ -72,6 +757,11 @@
         color: #e74a3b;
     }
 
+    .info-icon {
+        background-color: rgba(54, 185, 204, 0.1);
+        color: #36b9cc;
+    }
+
     .stats-card-title {
         font-weight: 700;
         margin-bottom: 0;
@@ -86,6 +776,16 @@
     .stats-card-text {
         color: #858796;
         font-size: 0.9rem;
+    }
+
+    .stats-card-text a {
+        color: var(--amber-color);
+        text-decoration: none;
+    }
+
+    .stats-card-text a:hover {
+        color: var(--dark-amber);
+        text-decoration: underline;
     }
 
     .progress-bar {
@@ -136,6 +836,15 @@
         margin-bottom: 5px;
     }
 
+    .project-title a {
+        color: var(--dark-gray);
+        text-decoration: none;
+    }
+
+    .project-title a:hover {
+        color: var(--amber-color);
+    }
+
     .project-status {
         display: inline-block;
         padding: 3px 10px;
@@ -145,8 +854,8 @@
     }
 
     .status-planning {
-        background-color: rgba(78, 115, 223, 0.1);
-        color: var(--primary-color);
+        background-color: rgba(193, 149, 74, 0.1);
+        color: var(--amber-color);
     }
 
     .status-in-progress {
@@ -193,6 +902,15 @@
         margin-bottom: 5px;
     }
 
+    .invoice-number a {
+        color: var(--dark-gray);
+        text-decoration: none;
+    }
+
+    .invoice-number a:hover {
+        color: var(--amber-color);
+    }
+
     .invoice-status {
         display: inline-block;
         padding: 3px 10px;
@@ -207,8 +925,8 @@
     }
 
     .status-draft, .status-sent {
-        background-color: rgba(78, 115, 223, 0.1);
-        color: var(--primary-color);
+        background-color: rgba(193, 149, 74, 0.1);
+        color: var(--amber-color);
     }
 
     .status-overdue {
@@ -223,7 +941,7 @@
 
     .invoice-amount {
         font-weight: 700;
-        color: var(--text-color);
+        color: var(--dark-gray);
     }
 
     .quick-actions {
@@ -242,19 +960,20 @@
         padding: 20px;
         border-radius: 10px;
         transition: all 0.3s ease;
-        color: var(--text-color);
+        color: var(--dark-gray);
         text-decoration: none;
     }
 
     .action-button:hover {
-        background-color: var(--light-gray);
+        background-color: var(--beige-color);
         transform: translateY(-5px);
+        color: var(--dark-gray);
     }
 
     .action-icon {
         font-size: 2rem;
         margin-bottom: 10px;
-        color: var(--primary-color);
+        color: var(--amber-color);
     }
 
     .notification-dot {
@@ -276,31 +995,294 @@
 
     .sidebar-nav .nav-link {
         padding: 15px 20px;
-        color: var(--text-color);
+        color: var(--dark-gray);
         border-left: 3px solid transparent;
         transition: all 0.3s ease;
     }
 
     .sidebar-nav .nav-link:hover {
-        background-color: var(--light-gray);
-        border-left-color: var(--primary-color);
+        background-color: var(--beige-color);
+        border-left-color: var(--amber-color);
     }
 
     .sidebar-nav .nav-link.active {
-        background-color: var(--light-gray);
-        border-left-color: var(--primary-color);
+        background-color: var(--beige-color);
+        border-left-color: var(--amber-color);
         font-weight: 600;
     }
 
     .sidebar-nav .nav-link i {
         margin-right: 10px;
-        color: var(--primary-color);
+        color: var(--amber-color);
+    }
+
+    /* Admin specific styles */
+    .admin-quick-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+        margin-bottom: 30px;
+    }
+
+    .admin-quick-link {
+        flex: 1;
+        min-width: 200px;
+        padding: 20px;
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+        text-align: center;
+        transition: all 0.3s ease;
+        color: var(--dark-gray);
+        text-decoration: none;
+    }
+
+    .admin-quick-link:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 0.5rem 2rem 0 rgba(58, 59, 69, 0.25);
+        color: var(--dark-gray);
+    }
+
+    .admin-quick-link-icon {
+        font-size: 2rem;
+        margin-bottom: 15px;
+        color: var(--amber-color);
+    }
+
+    .admin-quick-link-title {
+        font-weight: 700;
+        margin-bottom: 5px;
+    }
+
+    .admin-alert {
+        padding: 20px;
+        background-color: #fff3cd;
+        border-left: 5px solid #f6c23e;
+        border-radius: 10px;
+        margin-bottom: 30px;
+    }
+
+    .admin-alert-icon {
+        font-size: 2rem;
+        margin-right: 20px;
+        color: #f6c23e;
+    }
+
+    /* Button styles */
+    .btn-primary {
+        background-color: var(--amber-color);
+        border-color: var(--amber-color);
+        color: white;
+    }
+
+    .btn-primary:hover {
+        background-color: var(--dark-amber);
+        border-color: var(--dark-amber);
+    }
+
+    .btn-outline-primary {
+        color: var(--amber-color);
+        border-color: var(--amber-color);
+    }
+
+    .btn-outline-primary:hover {
+        background-color: var(--amber-color);
+        border-color: var(--amber-color);
+        color: white;
     }
 </style>
 {% endblock %}
 
 {% block content %}
-<!-- Dashboard Header -->
+{% if is_admin %}
+<!-- Admin Dashboard -->
+<section class="dashboard-header">
+    <div class="container">
+        <div class="welcome-message">
+            <h1>Admin Dashboard</h1>
+            <p>Welcome to CloudLink_Devs administration. Manage clients, projects, and finances.</p>
+        </div>
+
+        <div class="row">
+            <!-- Total Clients -->
+            <div class="col-md-3">
+                <div class="stats-card">
+                    <div class="stats-card-header">
+                        <div class="stats-card-icon primary-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h5 class="stats-card-title">Total Clients</h5>
+                    </div>
+                    <div class="stats-card-value">{{ total_clients }}</div>
+                    <div class="stats-card-text">{{ active_clients }} active</div>
+                </div>
+            </div>
+
+            <!-- Active Projects -->
+            <div class="col-md-3">
+                <div class="stats-card">
+                    <div class="stats-card-header">
+                        <div class="stats-card-icon success-icon">
+                            <i class="fas fa-project-diagram"></i>
+                        </div>
+                        <h5 class="stats-card-title">Projects</h5>
+                    </div>
+                    <div class="stats-card-value">{{ total_projects }}</div>
+                    <div class="stats-card-text">{{ active_projects }} in progress</div>
+                </div>
+            </div>
+
+            <!-- Total Invoiced -->
+            <div class="col-md-3">
+                <div class="stats-card">
+                    <div class="stats-card-header">
+                        <div class="stats-card-icon warning-icon">
+                            <i class="fas fa-file-invoice-dollar"></i>
+                        </div>
+                        <h5 class="stats-card-title">Total Invoiced</h5>
+                    </div>
+                    <div class="stats-card-value">${{ total_invoiced|floatformat:2 }}</div>
+                    <div class="stats-card-text">${{ total_paid|floatformat:2 }} collected</div>
+                </div>
+            </div>
+
+            <!-- Outstanding Balance -->
+            <div class="col-md-3">
+                <div class="stats-card">
+                    <div class="stats-card-header">
+                        <div class="stats-card-icon danger-icon">
+                            <i class="fas fa-dollar-sign"></i>
+                        </div>
+                        <h5 class="stats-card-title">Outstanding</h5>
+                    </div>
+                    <div class="stats-card-value">${{ balance_due|floatformat:2 }}</div>
+                    <div class="stats-card-text">
+                        <a href="/admin/client_portal/invoice/?status__exact=overdue">View Overdue</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Admin Quick Links -->
+<section class="admin-content">
+    <div class="container">
+        <h4 class="section-title">Quick Actions</h4>
+
+        <div class="admin-quick-links">
+            <a href="{% url 'client_portal:admin_clients' %}" class="admin-quick-link">
+                <div class="admin-quick-link-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <div class="admin-quick-link-title">Manage Clients</div>
+                <div>View and manage all client accounts</div>
+            </a>
+
+            <a href="{% url 'client_portal:admin_create_project' %}" class="admin-quick-link">
+                <div class="admin-quick-link-icon">
+                    <i class="fas fa-folder-plus"></i>
+                </div>
+                <div class="admin-quick-link-title">Create Project</div>
+                <div>Start a new project for a client</div>
+            </a>
+
+            <a href="{% url 'client_portal:admin_create_invoice' %}" class="admin-quick-link">
+                <div class="admin-quick-link-icon">
+                    <i class="fas fa-file-invoice-dollar"></i>
+                </div>
+                <div class="admin-quick-link-title">Create Invoice</div>
+                <div>Generate a new invoice for a client</div>
+            </a>
+
+            <a href="{% url 'client_portal:admin_record_payment' %}" class="admin-quick-link">
+                <div class="admin-quick-link-icon">
+                    <i class="fas fa-money-bill-wave"></i>
+                </div>
+                <div class="admin-quick-link-title">Record Payment</div>
+                <div>Record a payment for an invoice</div>
+            </a>
+        </div>
+
+        {% if recent_payments %}
+        <!-- Recent Activity -->
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="data-card">
+                    <div class="data-card-header">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span>Recent Payments</span>
+                            <a href="{% url 'admin:client_portal_payment_changelist' %}" class="btn btn-sm btn-primary">View All</a>
+                        </div>
+                    </div>
+                    <div class="data-card-body p-0">
+                        {% for payment in recent_payments %}
+                            <div class="project-item">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h6 class="mb-1">{{ payment.invoice.client.full_name }}</h6>
+                                        <div>Invoice #{{ payment.invoice.invoice_number }}</div>
+                                        <small class="text-muted">
+                                            <i class="far fa-calendar-alt me-1"></i> {{ payment.payment_date|date:"M d, Y" }}
+                                            <span class="mx-2">|</span>
+                                            <i class="fas fa-credit-card me-1"></i> {{ payment.get_payment_method_display }}
+                                        </small>
+                                    </div>
+                                    <div class="text-end">
+                                        <div class="invoice-amount">${{ payment.amount|floatformat:2 }}</div>
+                                        <a href="{% url 'client_portal:admin_client_detail' client_id=payment.invoice.client.id %}" class="btn btn-sm btn-outline-primary mt-2">
+                                            View Client
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <div class="data-card">
+                    <div class="data-card-header">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span>Recent Invoices</span>
+                            <a href="{% url 'admin:client_portal_invoice_changelist' %}" class="btn btn-sm btn-primary">View All</a>
+                        </div>
+                    </div>
+                    <div class="data-card-body p-0">
+                        {% for invoice in recent_invoices %}
+                            <div class="invoice-item">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h6 class="mb-1">{{ invoice.client.full_name }}</h6>
+                                        <h5 class="invoice-number">
+                                            <a href="{% url 'client_portal:invoice_detail' pk=invoice.id %}">Invoice #{{ invoice.invoice_number }}</a>
+                                        </h5>
+                                        <span class="invoice-status status-{{ invoice.status }}">{{ invoice.get_status_display }}</span>
+                                    </div>
+                                    <div class="text-end">
+                                        <div class="invoice-amount">${{ invoice.total|floatformat:2 }}</div>
+                                        <small class="{% if invoice.balance_due > 0 %}text-danger{% else %}text-success{% endif %}">
+                                            {% if invoice.balance_due > 0 %}
+                                                ${{ invoice.balance_due|floatformat:2 }} due
+                                            {% else %}
+                                                Paid in full
+                                            {% endif %}
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</section>
+
+{% else %}
+<!-- Client Dashboard -->
 <section class="dashboard-header">
     <div class="container">
         <div class="welcome-message">
@@ -499,54 +1481,71 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'client_portal:logout' %}">
-                                <i class="fas fa-sign-out-alt"></i> Logout
+                            <a class="nav-link" href="{% url 'client_portal:logout' %}"><i class="fas fa-sign-out-alt"></i> Logout
                             </a>
                         </li>
                     </ul>
                 </div>
 
-                <!-- Quick Actions -->
-                <div class="quick-actions">
-                    <h5 class="section-title">Quick Actions</h5>
-                    <div class="row g-3">
-                        <div class="col-6">
-                            <a href="{% url 'client_portal:balance_due' %}" class="action-button">
-                                <div class="action-icon">
-                                    <i class="fas fa-credit-card"></i>
-                                </div>
-                                <span>Make a Payment</span>
-                            </a>
-                        </div>
-                        <div class="col-6">
-                            <a href="{% url 'client_portal:messages' %}" class="action-button">
-                                <div class="action-icon position-relative">
-                                    <i class="fas fa-comment-alt"></i>
-                                    {% if unread_messages > 0 %}
-                                    <div class="notification-dot"></div>
-                                    {% endif %}
-                                </div>
-                                <span>Send Message</span>
-                            </a>
-                        </div>
-                        <div class="col-6">
-                            <a href="{% url 'core:contact' %}" class="action-button">
-                                <div class="action-icon">
-                                    <i class="fas fa-headset"></i>
-                                </div>
-                                <span>Get Support</span>
-                            </a>
-                        </div>
-                        <div class="col-6">
-                            <a href="{% url 'quotes:service_estimator' %}" class="action-button">
-                                <div class="action-icon">
-                                    <i class="fas fa-calculator"></i>
-                                </div>
-                                <span>Service Estimator</span>
-                            </a>
-                        </div>
-                    </div>
+              <!-- Quick Actions -->
+<div class="quick-actions">
+    <h5 class="section-title">Quick Actions</h5>
+    <div class="row g-3">
+        <div class="col-6">
+            <a href="{% url 'client_portal:balance_due' %}" class="action-button">
+                <div class="action-icon">
+                    <i class="fas fa-credit-card"></i>
                 </div>
+                <span>Make a Payment</span>
+            </a>
+        </div>
+        <div class="col-6">
+            <a href="{% url 'client_portal:messages' %}" class="action-button">
+                <div class="action-icon position-relative">
+                    <i class="fas fa-comment-alt"></i>
+                    {% if unread_messages > 0 %}
+                    <div class="notification-dot"></div>
+                    {% endif %}
+                </div>
+                <span>Send Message</span>
+            </a>
+        </div>
+        <div class="col-6">
+            <a href="{% url 'core:contact' %}" class="action-button">
+                <div class="action-icon">
+                    <i class="fas fa-headset"></i>
+                </div>
+                <span>Get Support</span>
+            </a>
+        </div>
+        <div class="col-6">
+            <a href="{% url 'quotes:service_estimator' %}" class="action-button">
+                <div class="action-icon">
+                    <i class="fas fa-calculator"></i>
+                </div>
+                <span>Service Estimator</span>
+            </a>
+        </div>
+        {% if is_admin %}
+        <div class="col-6">
+            <a href="{% url 'client_portal:admin_services' %}" class="action-button">
+                <div class="action-icon">
+                    <i class="fas fa-cogs"></i>
+                </div>
+                <span>Manage Services</span>
+            </a>
+        </div>
+        <div class="col-6">
+            <a href="{% url 'client_portal:admin_clients' %}" class="action-button">
+                <div class="action-icon">
+                    <i class="fas fa-users-cog"></i>
+                </div>
+                <span>Manage Clients</span>
+            </a>
+        </div>
+        {% endif %}
+    </div>
+</div>
 
                 <!-- Recent Messages -->
                 {% if client.messages.all %}
@@ -589,11 +1588,12 @@
         </div>
     </div>
 </section>
+{% endif %}
 {% endblock %}
 
 {% block extra_js %}
 <script>
-    // Any additional JavaScript for the dashboard can go here
+    // Additional JavaScript for the dashboard
     $(document).ready(function() {
         // Initialize tooltips
         var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))

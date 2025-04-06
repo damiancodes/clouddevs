@@ -12,6 +12,18 @@
 
 {% block client_portal_css %}
 <style>
+    :root {
+        /* Using your established color scheme */
+        --beige-color: #f5eadb;
+        --amber-color: #c1954a;
+        --dark-amber: #9e7a39;
+        --light-amber: #d4b06a;
+        --off-white: #faf7f2;
+        --black: #212121;
+        --dark-gray: #333333;
+        --light-gray: #f0f0f0;
+    }
+
     .project-card {
         background-color: white;
         border-radius: 10px;
@@ -47,8 +59,8 @@
     }
 
     .status-planning {
-        background-color: rgba(78, 115, 223, 0.1);
-        color: var(--primary-color);
+        background-color: rgba(193, 149, 74, 0.1);
+        color: var(--amber-color);
     }
 
     .status-in-progress {
@@ -85,6 +97,7 @@
         margin-right: 5px;
         width: 20px;
         text-align: center;
+        color: var(--amber-color);
     }
 
     .project-progress {
@@ -104,13 +117,17 @@
     }
 
     .project-card-footer {
-        background-color: #f8f9fc;
+        background-color: var(--beige-color);
         padding: 15px 20px;
         border-top: 1px solid #e3e6f0;
     }
 
     .projects-filter {
         margin-bottom: 30px;
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+        padding: 20px;
     }
 
     .filter-btn {
@@ -128,8 +145,53 @@
 
     .empty-icon {
         font-size: 4rem;
-        color: #d1d3e2;
+        color: var(--light-amber);
         margin-bottom: 20px;
+    }
+
+    /* Button styles */
+    .btn-primary {
+        background-color: var(--amber-color);
+        border-color: var(--amber-color);
+        color: white;
+    }
+
+    .btn-primary:hover {
+        background-color: var(--dark-amber);
+        border-color: var(--dark-amber);
+    }
+
+    .btn-outline-primary {
+        color: var(--amber-color);
+        border-color: var(--amber-color);
+    }
+
+    .btn-outline-primary:hover {
+        background-color: var(--amber-color);
+        border-color: var(--amber-color);
+        color: white;
+    }
+
+    .btn-outline-primary.active {
+        background-color: var(--amber-color);
+        border-color: var(--amber-color);
+        color: white;
+    }
+
+    .btn-outline-secondary {
+        color: var(--dark-gray);
+        border-color: #d1d3e2;
+    }
+
+    .btn-outline-secondary:hover {
+        background-color: var(--light-gray);
+        color: var(--dark-gray);
+    }
+
+    /* Form styling */
+    .form-select:focus {
+        border-color: var(--light-amber);
+        box-shadow: 0 0 0 0.25rem rgba(193, 149, 74, 0.25);
     }
 </style>
 {% endblock %}

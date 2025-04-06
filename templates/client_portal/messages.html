@@ -11,6 +11,18 @@
 
 {% block client_portal_css %}
 <style>
+    :root {
+        /* Using your established color scheme */
+        --beige-color: #f5eadb;
+        --amber-color: #c1954a;
+        --dark-amber: #9e7a39;
+        --light-amber: #d4b06a;
+        --off-white: #faf7f2;
+        --black: #212121;
+        --dark-gray: #333333;
+        --light-gray: #f0f0f0;
+    }
+
     .messages-container {
         background-color: white;
         border-radius: 10px;
@@ -22,7 +34,7 @@
     .messages-header {
         padding: 20px;
         border-bottom: 1px solid #e3e6f0;
-        background-color: #f8f9fc;
+        background-color: var(--beige-color);
     }
 
     .messages-body {
@@ -39,13 +51,16 @@
     }
 
     .message-from-client {
-        background-color: #e6f2ff;
+        background-color: #dcf8c6; /* WhatsApp sent message color - light green */
         margin-left: 60px;
+        border-radius: 10px;
     }
 
     .message-from-staff {
-        background-color: #f8f9fc;
+        background-color: #ffffff; /* WhatsApp received message color - white */
         margin-right: 60px;
+        border-radius: 10px;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
     }
 
     .message-avatar {
@@ -58,7 +73,7 @@
 
     .client-avatar {
         left: -50px;
-        background-color: #4e73df;
+        background-color: var(--amber-color);
         color: white;
         display: flex;
         align-items: center;
@@ -129,6 +144,61 @@
         font-size: 4rem;
         color: #d1d3e2;
         margin-bottom: 20px;
+    }
+
+    /* Help resources styling */
+    .card-body {
+        padding: 1.25rem;
+    }
+
+    .card-body h6 {
+        font-size: 1rem;
+        font-weight: 600;
+        color: var(--dark-gray);
+    }
+
+    .card-body .text-muted {
+        font-size: 0.9rem;
+        line-height: 1.5;
+        color: #6c757d;
+    }
+
+    .card-body a {
+        color: var(--amber-color);
+        text-decoration: none;
+        transition: color 0.2s ease;
+    }
+
+    .card-body a:hover {
+        color: var(--dark-amber);
+        text-decoration: underline;
+    }
+
+    /* Tips styling */
+    .card-body ul {
+        padding-left: 1.5rem;
+        margin-bottom: 0;
+    }
+
+    .card-body ul li {
+        margin-bottom: 0.75rem;
+        line-height: 1.4;
+    }
+
+    .card-body ul li:last-child {
+        margin-bottom: 0;
+    }
+
+    /* Button style */
+    .btn-primary {
+        background-color: var(--amber-color);
+        border-color: var(--amber-color);
+    }
+
+    .btn-primary:hover,
+    .btn-primary:focus {
+        background-color: var(--dark-amber);
+        border-color: var(--dark-amber);
     }
 </style>
 {% endblock %}
@@ -229,20 +299,20 @@
                 <h5 class="mb-0">Help & Resources</h5>
             </div>
             <div class="card-body">
-                <div class="mb-4">
-                    <h6 class="mb-2"><i class="fas fa-question-circle me-2"></i> Common Questions</h6>
+                <div class="mb-3">
+                    <h6><i class="fas fa-question-circle me-2"></i> Common Questions</h6>
                     <p class="text-muted">Check our <a href="#">FAQ section</a> for answers to common questions.</p>
                 </div>
-                <div class="mb-4">
-                    <h6 class="mb-2"><i class="fas fa-book me-2"></i> Documentation</h6>
+                <div class="mb-3">
+                    <h6><i class="fas fa-book me-2"></i> Documentation</h6>
                     <p class="text-muted">Browse our <a href="#">help documentation</a> for detailed guides.</p>
                 </div>
-                <div class="mb-4">
-                    <h6 class="mb-2"><i class="fas fa-phone-alt me-2"></i> Contact Support</h6>
+                <div class="mb-3">
+                    <h6><i class="fas fa-phone-alt me-2"></i> Contact Support</h6>
                     <p class="text-muted">Call us at (123) 456-7890 for urgent matters.</p>
                 </div>
-                <div class="mb-4">
-                    <h6 class="mb-2"><i class="fas fa-clock me-2"></i> Response Time</h6>
+                <div>
+                    <h6><i class="fas fa-clock me-2"></i> Response Time</h6>
                     <p class="text-muted">We typically respond to messages within 24 hours during business days.</p>
                 </div>
             </div>
@@ -255,10 +325,10 @@
             </div>
             <div class="card-body">
                 <ul class="text-muted">
-                    <li class="mb-2">Include your project number if your message is about a specific project</li>
-                    <li class="mb-2">Be as detailed as possible in describing your issue or question</li>
-                    <li class="mb-2">Mention any troubleshooting steps you've already tried</li>
-                    <li class="mb-2">For technical issues, include screenshots if possible</li>
+                    <li>Include your project number if your message is about a specific project</li>
+                    <li>Be as detailed as possible in describing your issue or question</li>
+                    <li>Mention any troubleshooting steps you've already tried</li>
+                    <li>For technical issues, include screenshots if possible</li>
                 </ul>
             </div>
         </div>

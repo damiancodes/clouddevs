@@ -1,0 +1,33 @@
+{% extends "admin/base.html" %}
+{% load static %}
+
+{% block title %}{{ title }} | {{ site_title|default:_('CloudLink_Devs Admin') }}{% endblock %}
+
+{% block branding %}
+<h1 id="site-name"><a href="{% url 'admin:index' %}">{{ site_header|default:_('CloudLink_Devs Administration') }}</a></h1>
+{% endblock %}
+
+{% block nav-global %}
+<a href="{% url 'client_portal:logout' %}" class="logout-link">
+    <i class="fas fa-sign-out-alt"></i> Logout
+</a>
+{% endblock %}
+
+{% block extrahead %}
+<style>
+    .logout-link {
+        position: absolute;
+        top: 10px;
+        right: 20px;
+        color: white;
+        text-decoration: none;
+        background-color: #ba2121;
+        padding: 8px 15px;
+        border-radius: 4px;
+        transition: background-color 0.3s ease;
+    }
+    .logout-link:hover {
+        background-color: #a41b1b;
+    }
+</style>
+{% endblock %}

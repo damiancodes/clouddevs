@@ -1,3 +1,337 @@
+{#{% extends "base.html" %}#}
+{#{% load static %}#}
+{##}
+{#{% block title %}Our Services - CloudLink_Devs{% endblock %}#}
+{##}
+{#{% block extra_css %}#}
+{#<style>#}
+{#    /* Services Header */#}
+{#    .services-header {#}
+{#        background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);#}
+{#        color: white;#}
+{#        padding: 80px 0;#}
+{#        text-align: center;#}
+{#    }#}
+{##}
+{#    .services-header h1 {#}
+{#        font-weight: 800;#}
+{#        margin-bottom: 20px;#}
+{#    }#}
+{##}
+{#    /* Services Cards */#}
+{#    .services-section {#}
+{#        padding: 80px 0;#}
+{#    }#}
+{##}
+{#    .service-card {#}
+{#        border-radius: 10px;#}
+{#        overflow: hidden;#}
+{#        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);#}
+{#        margin-bottom: 30px;#}
+{#        height: 100%;#}
+{#        transition: transform 0.3s ease, box-shadow 0.3s ease;#}
+{#    }#}
+{##}
+{#    .service-card:hover {#}
+{#        transform: translateY(-10px);#}
+{#        box-shadow: 0 1rem 3rem rgba(58, 59, 69, 0.175);#}
+{#    }#}
+{##}
+{#    .service-image {#}
+{#        height: 200px;#}
+{#        overflow: hidden;#}
+{#        position: relative;#}
+{#    }#}
+{##}
+{#    .service-image img {#}
+{#        width: 100%;#}
+{#        height: 100%;#}
+{#        object-fit: cover;#}
+{#    }#}
+{##}
+{#    .service-image::after {#}
+{#        content: '';#}
+{#        position: absolute;#}
+{#        top: 0;#}
+{#        left: 0;#}
+{#        width: 100%;#}
+{#        height: 100%;#}
+{#        background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.6) 100%);#}
+{#    }#}
+{##}
+{#    .service-content {#}
+{#        padding: 25px;#}
+{#    }#}
+{##}
+{#    .service-content h3 {#}
+{#        margin-bottom: 15px;#}
+{#        font-weight: 700;#}
+{#    }#}
+{##}
+{#    .service-icon {#}
+{#        margin-bottom: 20px;#}
+{#        width: 60px;#}
+{#        height: 60px;#}
+{#        background-color: var(--light-gray);#}
+{#        border-radius: 50%;#}
+{#        display: flex;#}
+{#        align-items: center;#}
+{#        justify-content: center;#}
+{#        color: var(--accent-color);#}
+{#        font-size: 1.5rem;#}
+{#    }#}
+{##}
+{#    /* Process Section */#}
+{#    .process-section {#}
+{#        padding: 80px 0;#}
+{#        background-color: var(--light-gray);#}
+{#    }#}
+{##}
+{#    .process-step {#}
+{#        text-align: center;#}
+{#        padding: 30px;#}
+{#        position: relative;#}
+{#    }#}
+{##}
+{#    .step-number {#}
+{#        width: 50px;#}
+{#        height: 50px;#}
+{#        background-color: var(--primary-color);#}
+{#        color: white;#}
+{#        border-radius: 50%;#}
+{#        display: flex;#}
+{#        align-items: center;#}
+{#        justify-content: center;#}
+{#        font-size: 1.25rem;#}
+{#        font-weight: 700;#}
+{#        margin: 0 auto 20px;#}
+{#    }#}
+{##}
+{#    .step-connector {#}
+{#        position: absolute;#}
+{#        top: 55px;#}
+{#        right: -15px;#}
+{#        width: 30px;#}
+{#        height: 2px;#}
+{#        background-color: var(--primary-color);#}
+{#        z-index: 1;#}
+{#    }#}
+{##}
+{#    .step-connector:after {#}
+{#        content: '';#}
+{#        position: absolute;#}
+{#        right: 0;#}
+{#        top: -4px;#}
+{#        width: 10px;#}
+{#        height: 10px;#}
+{#        border-top: 2px solid var(--primary-color);#}
+{#        border-right: 2px solid var(--primary-color);#}
+{#        transform: rotate(45deg);#}
+{#    }#}
+{##}
+{#    /* Last step has no connector */#}
+{#    .process-step:last-child .step-connector {#}
+{#        display: none;#}
+{#    }#}
+{##}
+{#    /* CTA Section */#}
+{#    .cta-section {#}
+{#        padding: 80px 0;#}
+{#        background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);#}
+{#        color: white;#}
+{#        text-align: center;#}
+{#    }#}
+{##}
+{#    .cta-title {#}
+{#        font-size: 2.5rem;#}
+{#        font-weight: 700;#}
+{#        margin-bottom: 1.5rem;#}
+{#    }#}
+{##}
+{#    .cta-text {#}
+{#        max-width: 700px;#}
+{#        margin: 0 auto 2rem;#}
+{#        opacity: 0.9;#}
+{#    }#}
+{##}
+{#    /* Dark mode adaptations */#}
+{#    body.dark-mode .service-card {#}
+{#        background-color: #2a2c3e;#}
+{#    }#}
+{##}
+{#    body.dark-mode .service-icon {#}
+{#        background-color: #3a3d52;#}
+{#    }#}
+{##}
+{#    body.dark-mode .process-section {#}
+{#        background-color: #222533;#}
+{#    }#}
+{#</style>#}
+{#{% endblock %}#}
+{##}
+{#{% block content %}#}
+{#<!-- Services Header -->#}
+{#<section class="services-header">#}
+{#    <div class="container">#}
+{#        <h1>Our Services</h1>#}
+{#        <p class="lead">Comprehensive digital solutions tailored to your business needs</p>#}
+{#    </div>#}
+{#</section>#}
+{##}
+{#<!-- Services Section -->#}
+{#<section class="services-section">#}
+{#    <div class="container">#}
+{#        <div class="section-title text-center mb-5">#}
+{#            <h2>What We Offer</h2>#}
+{#            <p>Explore our range of development services</p>#}
+{#        </div>#}
+{##}
+{#        <div class="row">#}
+{#            <div class="col-lg-4 col-md-6 mb-4">#}
+{#                <div class="service-card">#}
+{#                    <div class="service-image">#}
+{#                        <img src="{% static 'images/service-web.jpg' %}" alt="Web Development">#}
+{#                    </div>#}
+{#                    <div class="service-content">#}
+{#                        <div class="service-icon">#}
+{#                            <i class="fas fa-laptop-code"></i>#}
+{#                        </div>#}
+{#                        <h3>Web Development</h3>#}
+{#                        <p>Custom websites and web applications built with modern technologies to meet your business needs.</p>#}
+{#                        <ul class="mt-3">#}
+{#                            <li>Responsive Web Design</li>#}
+{#                            <li>E-commerce Platforms</li>#}
+{#                            <li>Content Management Systems</li>#}
+{#                            <li>Web Applications</li>#}
+{#                        </ul>#}
+{#                        <a href="{% url 'services:web_development' %}" class="btn btn-primary mt-3">Learn More</a>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{##}
+{#            <div class="col-lg-4 col-md-6 mb-4">#}
+{#                <div class="service-card">#}
+{#                    <div class="service-image">#}
+{#                        <img src="{% static 'images/service-app.jpg' %}" alt="App Development">#}
+{#                    </div>#}
+{#                    <div class="service-content">#}
+{#                        <div class="service-icon">#}
+{#                            <i class="fas fa-mobile-alt"></i>#}
+{#                        </div>#}
+{#                        <h3>App Development</h3>#}
+{#                        <p>Native and cross-platform mobile applications for iOS and Android to reach your customers anywhere.</p>#}
+{#                        <ul class="mt-3">#}
+{#                            <li>iOS App Development</li>#}
+{#                            <li>Android App Development</li>#}
+{#                            <li>Cross-Platform Solutions</li>#}
+{#                            <li>App Maintenance & Updates</li>#}
+{#                        </ul>#}
+{#                        <a href="{% url 'services:app_development' %}" class="btn btn-primary mt-3">Learn More</a>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{##}
+{#            <div class="col-lg-4 col-md-6 mb-4">#}
+{#                <div class="service-card">#}
+{#                    <div class="service-image">#}
+{#                        <img src="{% static 'images/service-pos.jpg' %}" alt="POS Systems">#}
+{#                    </div>#}
+{#                    <div class="service-content">#}
+{#                        <div class="service-icon">#}
+{#                            <i class="fas fa-cash-register"></i>#}
+{#                        </div>#}
+{#                        <h3>POS Systems</h3>#}
+{#                        <p>Customized point-of-sale solutions for retail, restaurants, and other businesses to streamline operations.</p>#}
+{#                        <ul class="mt-3">#}
+{#                            <li>Retail POS Systems</li>#}
+{#                            <li>Restaurant Management</li>#}
+{#                            <li>Inventory Control</li>#}
+{#                            <li>Customer Management</li>#}
+{#                        </ul>#}
+{#                        <a href="{% url 'services:pos_systems' %}" class="btn btn-primary mt-3">Learn More</a>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
+{#</section>#}
+{##}
+{#<!-- Process Section -->#}
+{#<section class="process-section">#}
+{#    <div class="container">#}
+{#        <div class="section-title text-center mb-5">#}
+{#            <h2>Our Development Process</h2>#}
+{#            <p>How we turn your ideas into reality</p>#}
+{#        </div>#}
+{##}
+{#        <div class="row">#}
+{#            <div class="col-lg-3 col-md-6">#}
+{#                <div class="process-step">#}
+{#                    <div class="step-number">1</div>#}
+{#                    <div class="step-connector"></div>#}
+{#                    <h4>Discovery</h4>#}
+{#                    <p>We learn about your business, goals, and requirements to understand your needs.</p>#}
+{#                </div>#}
+{#            </div>#}
+{##}
+{#            <div class="col-lg-3 col-md-6">#}
+{#                <div class="process-step">#}
+{#                    <div class="step-number">2</div>#}
+{#                    <div class="step-connector"></div>#}
+{#                    <h4>Planning</h4>#}
+{#                    <p>We create a detailed plan with timelines, features, and technical specifications.</p>#}
+{#                </div>#}
+{#            </div>#}
+{##}
+{#            <div class="col-lg-3 col-md-6">#}
+{#                <div class="process-step">#}
+{#                    <div class="step-number">3</div>#}
+{#                    <div class="step-connector"></div>#}
+{#                    <h4>Development</h4>#}
+{#                    <p>Our team builds your solution using agile methodologies with regular updates.</p>#}
+{#                </div>#}
+{#            </div>#}
+{##}
+{#            <div class="col-lg-3 col-md-6">#}
+{#                <div class="process-step">#}
+{#                    <div class="step-number">4</div>#}
+{#                    <h4>Launch & Support</h4>#}
+{#                    <p>We deploy your solution and provide ongoing maintenance and support.</p>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
+{#</section>#}
+{##}
+{#<!-- CTA Section -->#}
+{#<section class="cta-section">#}
+{#    <div class="container">#}
+{#        <h2 class="cta-title">Ready to Start Your Project?</h2>#}
+{#        <p class="cta-text">Contact us today for a free consultation and let's bring your ideas to life.</p>#}
+{#        <div class="cta-buttons">#}
+{#            <a href="{% url 'quotes:service_estimator' %}" class="btn btn-light btn-lg me-3">Get a Quote</a>#}
+{#            <a href="{% url 'core:contact' %}" class="btn btn-outline-light btn-lg">Contact Us</a>#}
+{#        </div>#}
+{#    </div>#}
+{#</section>#}
+{#{% endblock %}#}
+{##}
+{#{% block extra_js %}#}
+{#<script>#}
+{#    document.addEventListener('DOMContentLoaded', function() {#}
+{#        // Add animation classes on scroll#}
+{#        const animateElements = document.querySelectorAll('.service-card, .process-step');#}
+{##}
+{#        animateElements.forEach((element, index) => {#}
+{#            element.classList.add('animate-on-scroll');#}
+{#            element.dataset.animation = 'slide-up';#}
+{#            element.style.animationDelay = `${index * 0.1}s`;#}
+{#        });#}
+{#    });#}
+{#</script>#}
+{#{% endblock %}#}
+
+
 {% extends "base.html" %}
 {% load static %}
 
@@ -5,9 +339,20 @@
 
 {% block extra_css %}
 <style>
+    :root {
+        --beige-color: #f5eadb;
+        --amber-color: #c1954a;
+        --dark-amber: #9e7a39;
+        --light-amber: #d4b06a;
+        --off-white: #faf7f2;
+        --black: #212121;
+        --dark-gray: #333333;
+        --light-gray: #f0f0f0;
+    }
+
     /* Services Header */
     .services-header {
-        background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+        background: linear-gradient(135deg, var(--amber-color) 0%, var(--dark-amber) 100%);
         color: white;
         padding: 80px 0;
         text-align: center;
@@ -21,6 +366,7 @@
     /* Services Cards */
     .services-section {
         padding: 80px 0;
+        background-color: var(--off-white);
     }
 
     .service-card {
@@ -30,6 +376,7 @@
         margin-bottom: 30px;
         height: 100%;
         transition: transform 0.3s ease, box-shadow 0.3s ease;
+        background-color: white;
     }
 
     .service-card:hover {
@@ -66,25 +413,26 @@
     .service-content h3 {
         margin-bottom: 15px;
         font-weight: 700;
+        color: var(--black);
     }
 
     .service-icon {
         margin-bottom: 20px;
         width: 60px;
         height: 60px;
-        background-color: var(--light-gray);
+        background-color: var(--beige-color);
         border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
-        color: var(--accent-color);
+        color: var(--amber-color);
         font-size: 1.5rem;
     }
 
     /* Process Section */
     .process-section {
         padding: 80px 0;
-        background-color: var(--light-gray);
+        background-color: var(--beige-color);
     }
 
     .process-step {
@@ -96,7 +444,7 @@
     .step-number {
         width: 50px;
         height: 50px;
-        background-color: var(--primary-color);
+        background-color: var(--amber-color);
         color: white;
         border-radius: 50%;
         display: flex;
@@ -113,7 +461,7 @@
         right: -15px;
         width: 30px;
         height: 2px;
-        background-color: var(--primary-color);
+        background-color: var(--amber-color);
         z-index: 1;
     }
 
@@ -124,8 +472,8 @@
         top: -4px;
         width: 10px;
         height: 10px;
-        border-top: 2px solid var(--primary-color);
-        border-right: 2px solid var(--primary-color);
+        border-top: 2px solid var(--amber-color);
+        border-right: 2px solid var(--amber-color);
         transform: rotate(45deg);
     }
 
@@ -137,13 +485,13 @@
     /* CTA Section */
     .cta-section {
         padding: 80px 0;
-        background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+        background: linear-gradient(135deg, var(--amber-color) 0%, var(--dark-amber) 100%);
         color: white;
         text-align: center;
     }
 
     .cta-title {
-        font-size: 2.5rem;
+        font-size: la2.5rem;
         font-weight: 700;
         margin-bottom: 1.5rem;
     }
@@ -154,9 +502,59 @@
         opacity: 0.9;
     }
 
+    /* Button styles */
+    .btn-primary {
+        background-color: var(--amber-color);
+        border-color: var(--amber-color);
+        color: white;
+    }
+
+    .btn-primary:hover {
+        background-color: var(--dark-amber);
+        border-color: var(--dark-amber);
+        color: white;
+    }
+
+    .section-title h2 {
+        color: var(--black);
+        font-weight: 700;
+        margin-bottom: 1rem;
+    }
+
+    .section-title p {
+        color: var(--dark-gray);
+    }
+
+    /* Animation styles */
+    .animate-on-scroll {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: all 0.7s ease-out;
+    }
+
+    .animate-on-scroll.visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
     /* Dark mode adaptations */
+    body.dark-mode .services-section {
+        background-color: #222533;
+    }
+
     body.dark-mode .service-card {
-        background-color: #2a2c3e;
+        background-color: var(--dark-gray);
+    }
+
+    body.dark-mode .service-content h3,
+    body.dark-mode .process-step h4 {
+        color: var(--off-white);
+    }
+
+    body.dark-mode .service-content p,
+    body.dark-mode .process-step p,
+    body.dark-mode .service-content ul li {
+        color: #c2c5d3;
     }
 
     body.dark-mode .service-icon {
@@ -164,7 +562,15 @@
     }
 
     body.dark-mode .process-section {
-        background-color: #222533;
+        background-color: #333333;
+    }
+
+    body.dark-mode .section-title h2 {
+        color: var(--off-white);
+    }
+
+    body.dark-mode .section-title p {
+        color: #c2c5d3;
     }
 </style>
 {% endblock %}
@@ -190,7 +596,7 @@
             <div class="col-lg-4 col-md-6 mb-4">
                 <div class="service-card">
                     <div class="service-image">
-                        <img src="{% static 'images/service-web.jpg' %}" alt="Web Development">
+                        <img src="{% static 'images/homepage4.jpg' %}" alt="Web Development">
                     </div>
                     <div class="service-content">
                         <div class="service-icon">
@@ -212,7 +618,7 @@
             <div class="col-lg-4 col-md-6 mb-4">
                 <div class="service-card">
                     <div class="service-image">
-                        <img src="{% static 'images/service-app.jpg' %}" alt="App Development">
+                        <img src="{% static 'images/homepage1.jpg' %}" alt="App Development">
                     </div>
                     <div class="service-content">
                         <div class="service-icon">
@@ -234,7 +640,7 @@
             <div class="col-lg-4 col-md-6 mb-4">
                 <div class="service-card">
                     <div class="service-image">
-                        <img src="{% static 'images/service-pos.jpg' %}" alt="POS Systems">
+                        <img src="{% static 'images/appdev.jpg' %}" alt="POS Systems">
                     </div>
                     <div class="service-content">
                         <div class="service-icon">
@@ -322,11 +728,31 @@
         // Add animation classes on scroll
         const animateElements = document.querySelectorAll('.service-card, .process-step');
 
+        const isInViewport = (element) => {
+            const rect = element.getBoundingClientRect();
+            return (
+                rect.top <= (window.innerHeight || document.documentElement.clientHeight) * 0.85
+            );
+        };
+
+        const checkVisibility = () => {
+            animateElements.forEach((element) => {
+                if (isInViewport(element)) {
+                    element.classList.add('visible');
+                }
+            });
+        };
+
         animateElements.forEach((element, index) => {
             element.classList.add('animate-on-scroll');
-            element.dataset.animation = 'slide-up';
-            element.style.animationDelay = `${index * 0.1}s`;
+            element.style.transitionDelay = `${index * 0.1}s`;
         });
+
+        // Check on load
+        checkVisibility();
+
+        // Check on scroll
+        window.addEventListener('scroll', checkVisibility);
     });
 </script>
 {% endblock %}

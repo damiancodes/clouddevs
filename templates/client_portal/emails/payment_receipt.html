@@ -1,0 +1,79 @@
+{% extends 'client_portal/emails/base_email.html' %}
+
+{% block email_title %}Payment Receipt - Invoice #{{ invoice.invoice_number }}{% endblock %}
+
+{% block email_content %}
+<tr>
+    <td style="padding: 20px; text-align: left; color: #333333;">
+        <h2 style="margin-bottom: 20px; color: #c1954a;">Payment Receipt</h2>
+        
+        <p>Hello {{ client.full_name }},</p>
+        
+        <p>Thank you for your payment! This email serves as a receipt for your recent payment to CloudLink_Devs.</p>
+        
+        {% if additional_message %}
+        <div style="background-color: #f5eadb; padding: 15px; border-radius: 5px; margin-bottom: 20px;">
+            <p style="margin: 0;"><strong>Message:</strong> {{ additional_message }}</p>
+        </div>
+        {% endif %}
+        
+        <table width="100%" cellpadding="10" cellspacing="0" style="background-color: #f8f9fc; border-radius: 5px; margin-bottom: 20px;">
+            <tr>
+                <td colspan="2" style="text-align: center; padding: 20px;">
+                    <h3 style="color: #c1954a; margin: 0; font-size: 24px;">${{ payment.amount }}</h3>
+                    <p style="margin: 10px 0 0 0;">Payment Amount</p>
+                </td>
+            </tr>
+            <tr>
+                <td width="50%" style="border-top: 1px solid #e3e6f0;"><strong>Invoice Number:</strong></td>
+                <td width="50%" style="border-top: 1px solid #e3e6f0;">{{ invoice.invoice_number }}</td>
+            </tr>
+            <tr>
+                <td><strong>Payment Date:</strong></td>
+                <td>{{ payment.payment_date }}</td>
+            </tr>
+            <tr>
+                <td><strong>Payment Method:</strong></td>
+                <td>{{ payment.get_payment_method_display }}</td>
+            </tr>
+            {% if payment.transaction_id %}
+            <tr>
+                <td><strong>Transaction ID:</strong></td>
+                <td>{{ payment.transaction_id }}</td>
+            </tr>
+            {% endif %}
+            <tr>
+                <td><strong>Invoice Total:</strong></td>
+                <td>${{ invoice.total }}</td>
+            </tr>
+            <tr>
+                <td><strong>Balance Due:</strong></td>
+                <td>${{ invoice.balance_due }}</td>
+            </tr>
+        </table>
+        
+        <table cellspacing="0" cellpadding="0" border="0" width="100%" style="margin-bottom: 20px;">
+            <tr>
+                <td align="center">
+                    <table cellspacing="0" cellpadding="0" border="0">
+                        <tr>
+                            <td style="border-radius: 5px; background-color: #c1954a; color: #ffffff; padding: 10px 25px;">
+                                <a href="{{ view_receipt_url }}" target="_blank" style="color: #ffffff; text-decoration: none; display: inline-block; font-family: Arial, sans-serif; font-size: 16px; font-weight: bold;">View Receipt</a>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        
+        <p>You can also view your invoice details by clicking <a href="{{ view_invoice_url }}" style="color: #c1954a;">here</a>.</p>
+        
+        <p>If you have any questions about this payment or your invoice, please contact our support team at <a href="mailto:support@cloudlinkdevs.com" style="color: #c1954a;">support@cloudlinkdevs.com</a> or call us at (123) 456-7890.</p>
+        
+        <p>
+            Thank you for your business!<br/>
+            The CloudLink_Devs Team
+        </p>
+    </td>
+</tr>
+{% endblock %}

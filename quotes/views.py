@@ -7,6 +7,7 @@ from .models import Service, ServiceFeature, QuoteRequest
 from .forms import QuoteRequestForm, ServiceEstimatorForm
 
 
+
 def quote_request(request):
     """Display and process the quote request form"""
     if request.method == 'POST':

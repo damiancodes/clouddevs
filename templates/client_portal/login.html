@@ -5,11 +5,24 @@
 
 {% block extra_css %}
 <style>
+    :root {
+        --beige-color: #f5eadb;
+        --amber-color: #c1954a;
+        --dark-amber: #9e7a39;
+        --light-amber: #d4b06a;
+        --off-white: #faf7f2;
+        --black: #212121;
+        --dark-gray: #333333;
+        --light-gray: #f0f0f0;
+    }
+
     .login-container {
         min-height: 70vh;
         display: flex;
         align-items: center;
         justify-content: center;
+        background-color: var(--off-white);
+        padding: 40px 0;
     }
 
     .login-card {
@@ -17,12 +30,12 @@
         width: 100%;
         background-color: white;
         border-radius: 10px;
-        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
         overflow: hidden;
     }
 
     .login-header {
-        background-color: var(--primary-color);
+        background-color: var(--amber-color);
         color: white;
         padding: 30px;
         text-align: center;
@@ -51,12 +64,19 @@
     .form-control {
         border-radius: 5px;
         padding: 12px;
+        border: 1px solid #ced4da;
+        transition: all 0.3s ease;
+    }
+
+    .form-control:focus {
+        border-color: var(--amber-color);
+        box-shadow: 0 0 0 0.25rem rgba(193, 149, 74, 0.25);
     }
 
     .btn-login {
         width: 100%;
         padding: 12px;
-        background-color: var(--primary-color);
+        background-color: var(--amber-color);
         border: none;
         border-radius: 5px;
         color: white;
@@ -65,13 +85,67 @@
     }
 
     .btn-login:hover {
-        background-color: var(--primary-dark);
+        background-color: var(--dark-amber);
     }
 
     .login-icon {
         font-size: 3rem;
         margin-bottom: 20px;
         color: white;
+    }
+
+    a {
+        color: var(--amber-color);
+        transition: all 0.3s ease;
+    }
+
+    a:hover {
+        color: var(--dark-amber);
+        text-decoration: none;
+    }
+
+    /* Dark mode adaptations */
+    body.dark-mode .login-container {
+        background-color: #222533;
+    }
+
+    body.dark-mode .login-card {
+        background-color: var(--dark-gray);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    body.dark-mode .login-header {
+        background-color: var(--amber-color);
+    }
+
+    body.dark-mode .login-footer {
+        background-color: #1e1e2d;
+        border-top-color: #343a40;
+    }
+
+    body.dark-mode .login-body label,
+    body.dark-mode .login-footer,
+    body.dark-mode .form-check-label {
+        color: var(--off-white);
+    }
+
+    body.dark-mode .form-control {
+        background-color: rgba(255, 255, 255, 0.1);
+        border-color: #343a40;
+        color: var(--off-white);
+    }
+
+    body.dark-mode .form-control:focus {
+        border-color: var(--amber-color);
+        background-color: rgba(255, 255, 255, 0.15);
+    }
+
+    body.dark-mode a {
+        color: var(--light-amber);
+    }
+
+    body.dark-mode a:hover {
+        color: var(--amber-color);
     }
 </style>
 {% endblock %}

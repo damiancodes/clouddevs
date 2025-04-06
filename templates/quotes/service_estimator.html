@@ -5,10 +5,21 @@
 
 {% block extra_css %}
 <style>
+    :root {
+        --beige-color: #f5eadb;
+        --amber-color: #c1954a;
+        --dark-amber: #9e7a39;
+        --light-amber: #d4b06a;
+        --off-white: #faf7f2;
+        --black: #212121;
+        --dark-gray: #333333;
+        --light-gray: #f0f0f0;
+    }
+
     /* Estimator Header */
     .estimator-header {
-        background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
-        color: white;
+        background: var(--beige-color);
+        color: var(--black);
         padding: 80px 0;
         text-align: center;
     }
@@ -16,11 +27,17 @@
     .estimator-header h1 {
         font-weight: 800;
         margin-bottom: 20px;
+        color: var(--black);
+    }
+
+    .estimator-header p {
+        color: var(--dark-gray);
     }
 
     /* Estimator Content */
     .estimator-section {
         padding: 80px 0;
+        background-color: var(--off-white);
     }
 
     .estimator-card {
@@ -33,13 +50,15 @@
 
     .estimator-card-header {
         padding: 20px;
-        background-color: #f8f9fc;
-        border-bottom: 1px solid #e3e6f0;
+        background-color: var(--amber-color);
+        color: white;
+        border-bottom: 1px solid var(--light-gray);
     }
 
     .estimator-card-header h2 {
         margin-bottom: 0;
         font-size: 1.5rem;
+        font-weight: 700;
     }
 
     .estimator-card-body {
@@ -54,7 +73,7 @@
     .service-info {
         margin-top: 20px;
         padding: 20px;
-        background-color: #f8f9fc;
+        background-color: var(--light-gray);
         border-radius: 10px;
         display: none;
     }
@@ -65,12 +84,13 @@
 
     .service-description {
         margin-bottom: 15px;
+        color: var(--dark-gray);
     }
 
     .service-price {
         font-size: 1.25rem;
         font-weight: 700;
-        color: var(--primary-color);
+        color: var(--amber-color);
     }
 
     /* Features Selection */
@@ -85,7 +105,7 @@
 
     .feature-item {
         padding: 20px;
-        border: 1px solid #e3e6f0;
+        border: 1px solid var(--light-gray);
         border-radius: 10px;
         margin-bottom: 20px;
         transition: all 0.3s ease;
@@ -106,32 +126,33 @@
         font-weight: 700;
         font-size: 1.1rem;
         margin-bottom: 0;
+        color: var(--black);
     }
 
     .feature-price {
         font-weight: 700;
-        color: var(--primary-color);
+        color: var(--amber-color);
     }
 
     .feature-description {
         margin-bottom: 15px;
-        color: #858796;
+        color: var(--dark-gray);
     }
 
     .feature-required {
         display: inline-block;
         padding: 2px 8px;
-        background-color: #f8f9fc;
+        background-color: var(--amber-color);
         border-radius: 10px;
         font-size: 0.8rem;
-        color: #5a5c69;
+        color: white;
     }
 
     /* Estimate Summary */
     .estimate-summary {
         margin-top: 40px;
         padding: 30px;
-        background-color: #f8f9fc;
+        background-color: var(--light-gray);
         border-radius: 10px;
         display: none;
     }
@@ -144,18 +165,20 @@
         font-size: 1.5rem;
         font-weight: 700;
         margin-bottom: 20px;
+        color: var(--black);
     }
 
     .estimate-detail {
         display: flex;
         justify-content: space-between;
         margin-bottom: 10px;
+        color: var(--dark-gray);
     }
 
     .estimate-total {
         font-size: 1.5rem;
         font-weight: 700;
-        color: var(--primary-color);
+        color: var(--amber-color);
         margin-top: 20px;
         text-align: right;
     }
@@ -169,18 +192,29 @@
     .btn-next, .btn-back, .btn-request-quote {
         padding: 10px 20px;
         border-radius: 50px;
+        font-weight: 600;
     }
 
     .btn-next, .btn-request-quote {
-        background-color: var(--primary-color);
+        background-color: var(--amber-color);
         color: white;
+        border-color: var(--amber-color);
+    }
+
+    .btn-next:hover, .btn-request-quote:hover {
+        background-color: var(--dark-amber);
+        border-color: var(--dark-amber);
     }
 
     .btn-back {
         background-color: white;
-        color: var(--primary-color);
-        border: 1px solid var(--primary-color);
+        color: var(--amber-color);
+        border: 1px solid var(--amber-color);
         margin-right: 10px;
+    }
+
+    .btn-back:hover {
+        background-color: var(--light-gray);
     }
 
     /* Progress Steps */
@@ -201,83 +235,129 @@
         width: 30px;
         height: 30px;
         border-radius: 50%;
-        background-color: #f8f9fc;
-        color: #858796;
+        background-color: var(--light-gray);
+        color: var(--dark-gray);
         display: flex;
         align-items: center;
         justify-content: center;
         font-weight: 700;
         margin-bottom: 10px;
-        border: 2px solid #e3e6f0;
+        border: 2px solid var(--light-gray);
     }
 
     .step-name {
         font-size: 0.9rem;
-        color: #858796;
+        color: var(--dark-gray);
     }
 
     .progress-connector {
         width: 60px;
         height: 2px;
-        background-color: #e3e6f0;
+        background-color: var(--light-gray);
         margin-top: 15px;
     }
 
     .progress-step.active .step-number {
-        background-color: var(--primary-color);
+        background-color: var(--amber-color);
         color: white;
-        border-color: var(--primary-color);
+        border-color: var(--amber-color);
     }
 
     .progress-step.active .step-name {
-        color: var(--primary-color);
+        color: var(--amber-color);
         font-weight: 700;
     }
 
     .progress-step.completed .step-number {
-        background-color: var(--accent-color);
+        background-color: var(--dark-amber);
         color: white;
-        border-color: var(--accent-color);
+        border-color: var(--dark-amber);
     }
 
     .progress-step.completed .step-name {
-        color: var(--accent-color);
+        color: var(--dark-amber);
+    }
+
+    /* Form controls */
+    .form-control:focus {
+        border-color: var(--amber-color);
+        box-shadow: 0 0 0 0.25rem rgba(193, 149, 74, 0.25);
     }
 
     /* Dark mode adaptations */
-    body.dark-mode .estimator-card,
-    body.dark-mode .feature-item {
-        background-color: #2a2c3e;
+    body.dark-mode .estimator-header {
+        background-color: var(--dark-gray);
+        color: var(--off-white);
     }
 
-    body.dark-mode .estimator-card-header,
+    body.dark-mode .estimator-header h1,
+    body.dark-mode .estimator-header p {
+        color: var(--off-white);
+    }
+
+    body.dark-mode .estimator-section {
+        background-color: #222533;
+    }
+
+    body.dark-mode .estimator-card {
+        background-color: var(--dark-gray);
+        color: var(--off-white);
+    }
+
+    body.dark-mode .estimator-card-header {
+        background-color: var(--amber-color);
+    }
+
+    body.dark-mode .feature-item {
+        background-color: var(--dark-gray);
+        border-color: #3a3d52;
+    }
+
     body.dark-mode .service-info,
     body.dark-mode .estimate-summary {
         background-color: #222533;
     }
 
     body.dark-mode .feature-required {
-        background-color: #3a3d52;
-        color: #e3e6f0;
+        background-color: var(--dark-amber);
+        color: white;
     }
 
     body.dark-mode .btn-back {
-        background-color: #2a2c3e;
-        border-color: var(--primary-color);
+        background-color: var(--dark-gray);
+        border-color: var(--amber-color);
+        color: var(--amber-color);
     }
 
-    body.dark-mode .feature-description {
+    body.dark-mode .feature-description,
+    body.dark-mode .service-description,
+    body.dark-mode .estimate-detail {
         color: #c2c5d3;
     }
 
     body.dark-mode .step-number {
-        background-color: #2a2c3e;
+        background-color: var(--dark-gray);
         border-color: #3a3d52;
+        color: #c2c5d3;
+    }
+
+    body.dark-mode .step-name {
         color: #c2c5d3;
     }
 
     body.dark-mode .progress-connector {
         background-color: #3a3d52;
+    }
+
+    body.dark-mode .feature-name,
+    body.dark-mode .estimate-title {
+        color: var(--off-white);
+    }
+
+    body.dark-mode .form-control {
+        background-color: var(--dark-gray);
+        border-color: #3a3d52;
+        color: var(--off-white);
     }
 </style>
 {% endblock %}

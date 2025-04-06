@@ -1,0 +1,64 @@
+{% extends 'client_portal/base.html' %}
+
+{% block title %}Add New Client{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="mb-4">Add New Client</h1>
+    
+    <form method="post">
+        {% csrf_token %}
+        
+        <div class="row">
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label for="id_username" class="form-label">Username</label>
+                    {{ form.username }}
+                </div>
+                
+                <div class="mb-3">
+                    <label for="id_email" class="form-label">Email</label>
+                    {{ form.email }}
+                </div>
+                
+                <div class="mb-3">
+                    <label for="id_password1" class="form-label">Password</label>
+                    {{ form.password1 }}
+                </div>
+                
+                <div class="mb-3">
+                    <label for="id_password2" class="form-label">Confirm Password</label>
+                    {{ form.password2 }}
+                </div>
+            </div>
+            
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label for="id_company_name" class="form-label">Company Name</label>
+                    {{ form.company_name }}
+                </div>
+                
+                <div class="mb-3">
+                    <label for="id_phone" class="form-label">Phone Number</label>
+                    {{ form.phone }}
+                </div>
+                
+                <div class="mb-3">
+                    <label for="id_address" class="form-label">Address</label>
+                    {{ form.address }}
+                </div>
+            </div>
+        </div>
+        
+        {% if form.errors %}
+        <div class="alert alert-danger">
+            Please correct the errors below.
+        </div>
+        {% endif %}
+        
+        <div class="d-grid">
+            <button type="submit" class="btn btn-primary">Create Client</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

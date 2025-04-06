@@ -1,0 +1,201 @@
+{% extends "client_portal/base.html" %}
+{% load static %}
+
+{% block title %}Add Service | Admin Panel{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Add New Service</h1>
+        <a href="{% url 'client_portal:admin_services' %}" class="d-none d-sm-inline-block btn btn-secondary shadow-sm">
+            <i class="fas fa-arrow-left fa-sm text-white-50"></i> Back to Services
+        </a>
+    </div>
+
+    <!-- Messages -->
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{% if message.tags == 'error' %}danger{% else %}{{ message.tags }}{% endif %} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <!-- Service Form -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Service Information</h6>
+        </div>
+        <div class="card-body">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                
+                {% if form.non_field_errors %}
+                    <div class="alert alert-danger">
+                        {% for error in form.non_field_errors %}
+                            {{ error }}
+                        {% endfor %}
+                    </div>
+                {% endif %}
+                
+                <div class="form-group row">
+                    <label for="{{ form.name.id_for_label }}" class="col-sm-3 col-form-label">Service Name</label>
+                    <div class="col-sm-9">
+                        {{ form.name }}
+                        {% if form.name.errors %}
+                            <div class="invalid-feedback d-block">
+                                {% for error in form.name.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+                
+                <div class="form-group row">
+                    <label for="{{ form.service_type.id_for_label }}" class="col-sm-3 col-form-label">Service Type</label>
+                    <div class="col-sm-9">
+                        {{ form.service_type }}
+                        {% if form.service_type.errors %}
+                            <div class="invalid-feedback d-block">
+                                {% for error in form.service_type.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+                
+                <div class="form-group row">
+                    <label for="{{ form.short_description.id_for_label }}" class="col-sm-3 col-form-label">Short Description</label>
+                    <div class="col-sm-9">
+                        {{ form.short_description }}
+                        {% if form.short_description.errors %}
+                            <div class="invalid-feedback d-block">
+                                {% for error in form.short_description.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                        <small class="form-text text-muted">Brief summary displayed in listings (max 200 characters)</small>
+                    </div>
+                </div>
+                
+                <div class="form-group row">
+                    <label for="{{ form.description.id_for_label }}" class="col-sm-3 col-form-label">Full Description</label>
+                    <div class="col-sm-9">
+                        {{ form.description }}
+                        {% if form.description.errors %}
+                            <div class="invalid-feedback d-block">
+                                {% for error in form.description.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                        <small class="form-text text-muted">Detailed description of the service</small>
+                    </div>
+                </div>
+                
+                <div class="form-group row">
+                    <label for="{{ form.features.id_for_label }}" class="col-sm-3 col-form-label">Features</label>
+                    <div class="col-sm-9">
+                        {{ form.features }}
+                        {% if form.features.errors %}
+                            <div class="invalid-feedback d-block">
+                                {% for error in form.features.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                        <small class="form-text text-muted">List the main features of this service</small>
+                    </div>
+                </div>
+                
+                <div class="form-group row">
+                    <label for="{{ form.icon.id_for_label }}" class="col-sm-3 col-form-label">Icon</label>
+                    <div class="col-sm-9">
+                        {{ form.icon }}
+                        {% if form.icon.errors %}
+                            <div class="invalid-feedback d-block">
+                                {% for error in form.icon.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                        <small class="form-text text-muted">Font Awesome icon class (e.g., fas fa-code)</small>
+                        <div class="mt-2">
+                            <span id="icon-preview" class="mr-2"></span> Icon Preview
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group row">
+                    <label for="{{ form.image.id_for_label }}" class="col-sm-3 col-form-label">Image</label>
+                    <div class="col-sm-9">
+                        {{ form.image }}
+                        {% if form.image.errors %}
+                            <div class="invalid-feedback d-block">
+                                {% for error in form.image.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                        <small class="form-text text-muted">Upload an image for this service (optional)</small>
+                    </div>
+                </div>
+                
+                <div class="form-group row">
+                    <label for="{{ form.is_active.id_for_label }}" class="col-sm-3 col-form-label">Status</label>
+                    <div class="col-sm-9">
+                        <div class="custom-control custom-switch">
+                            {{ form.is_active }}
+                            <label class="custom-control-label" for="{{ form.is_active.id_for_label }}">
+                                Active (display on website)
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group row">
+                    <div class="col-sm-9 offset-sm-3">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save"></i> Save Service
+                        </button>
+                        <a href="{% url 'client_portal:admin_services' %}" class="btn btn-secondary">Cancel</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    $(document).ready(function() {
+        // Add Bootstrap form classes if not already added by form definition
+        $('input[type="text"], input[type="email"], textarea, select').addClass('form-control');
+        $('input[type="file"]').addClass('form-control-file');
+        $('input[type="checkbox"]').addClass('custom-control-input');
+        
+        // Icon preview functionality
+        function updateIconPreview() {
+            const iconClass = $("#{{ form.icon.id_for_label }}").val();
+            if (iconClass) {
+                $("#icon-preview").html(`<i class="${iconClass}"></i>`);
+            } else {
+                $("#icon-preview").html('');
+            }
+        }
+        
+        $("#{{ form.icon.id_for_label }}").on('input', updateIconPreview);
+        
+        // Initialize icon preview
+        updateIconPreview();
+    });
+</script>
+{% endblock %}
