@@ -52,7 +52,23 @@ INSTALLED_APPS = [
     'portfolio',
     'blog',
     'quotes',
+    'mpesa_api',
 ]
+# M-Pesa API Configuration
+MPESA_CONFIG = {
+    'CONSUMER_KEY': '2wAKKr3EQVZCjoG64vGRxk6R7vkXZapUFNYcGQsbIAaMebSD',
+    'CONSUMER_SECRET': 'LVRxnPGajFSxe3EOuss7XRthQoZQKG8UBeVpbcGwgNWsbvRY1HyY5aZYjxSHZ195',
+    'SHORTCODE': '174379',  # Use the test shortcode provided by Safaricom
+    'PASS_KEY': 'bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919',
+    'CALLBACK_URL': 'https://082c-102-0-17-78.ngrok-free.app/mpesa/callback/',
+    'INITIATOR_NAME': 'testapi',
+    'SECURITY_CREDENTIAL': 'QdAeWL42MfpZgUfWiun8XJcAEg/UH+eTDTsauWWU1TFbwxe+zclSlHMY8XzorBdkAGsQJGeEHdXuAgUokV0rzMcComvzSfqH4OgVFkNJcfdKlxs5cIylg6Q5UzeCaEqvDAJMPyZoZhvnO5gQ7zsUrTsBlksmLKek78/em1zvbb3d3CCYSPrkXSGMF9iDd8ogEH5W8sutUPzYxWL9un/SSIZpGjqjftmQwZsuXQu5naU2wPT1HZaML6g4WWxuhYD+inCn+xuLPWXB60YDm3M6E8OXM5T6cqve/zWeULnE02+3FJAI8H/FZNlIH8Q8gYuG6arBKV7aCxWq4aA66o2Bcw==',
+    'TEST_MSISDN': '254795471321',  # Test phone number
+    'ACCOUNT_REFERENCE': 'CloudLink',
+    'TRANSACTION_DESC': 'Payment for services',
+    'ENVIRONMENT': 'sandbox',
+}
+
 # URL Configuration
 ROOT_URLCONF = 'cloudlink_devs.urls'
 

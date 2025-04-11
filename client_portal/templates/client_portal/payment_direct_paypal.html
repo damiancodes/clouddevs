@@ -1,0 +1,127 @@
+{% extends 'client_portal/base.html' %}
+{% load static %}
+
+{% block client_portal_title %}PayPal Direct Payment - Client Portal{% endblock %}
+
+{% block breadcrumb_items %}
+<li class="breadcrumb-item"><a href="{% url 'client_portal:direct_payment' %}">Direct Payment</a></li>
+<li class="breadcrumb-item active">PayPal Payment</li>
+{% endblock %}
+
+{% block page_title %}PayPal Direct Payment{% endblock %}
+
+{% block client_portal_css %}
+<style>
+    .paypal-container {
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+        margin-bottom: 30px;
+        padding: 30px;
+    }
+
+    .payment-summary {
+        background-color: #f8f9fc;
+        border-radius: 10px;
+        padding: 20px;
+        margin-bottom: 30px;
+    }
+
+    .paypal-logo {
+        max-width: 200px;
+        margin-bottom: 20px;
+    }
+
+    .secure-badge {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        margin-top: 20px;
+        color: #6c757d;
+    }
+</style>
+{% endblock %}
+
+{% block client_portal_content %}
+<div class="row">
+    <div class="col-lg-8 mx-auto">
+        <div class="paypal-container">
+            <!-- Payment Summary -->
+            <div class="payment-summary">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h5 class="mb-0">Payment Summary</h5>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <strong>Client:</strong> {{ client.full_name }}
+                        </div>
+                        <div class="mb-3">
+                            <strong>Purpose:</strong> {{ purpose }}
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <strong>Amount to Pay:</strong> ${{ amount|floatformat:2 }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PayPal Payment Info -->
+            <div class="text-center mb-4">
+                <img src="https://www.paypalobjects.com/webstatic/mktg/logo/pp_cc_mark_111x69.jpg" alt="PayPal Logo" class="paypal-logo">
+                <h4>Pay with PayPal</h4>
+                <p class="text-muted">Amount to pay: <strong>${{ amount }}</strong></p>
+            </div>
+
+            <!-- PayPal Button Container -->
+            <div class="text-center">
+                <div id="paypal-button-container"></div>
+
+                <div class="mt-3">
+                    <a href="{% url 'client_portal:direct_payment' %}" class="btn btn-outline-secondary">
+                        <i class="fas fa-arrow-left me-2"></i> Choose Another Payment Method
+                    </a>
+                </div>
+            </div>
+
+            <div class="secure-badge">
+                <i class="fas fa-shield-alt"></i>
+                <span>All payments are secure and encrypted.</span>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block client_portal_js %}
+<!-- PayPal SDK with your Client ID -->
+<script src="https://www.paypal.com/sdk/js?client-id=Ab4_efGdj3yENvZ87OVhfAOkoCx15P8G_KcnAIv4g4sWyLgyeQt0yfTWCI7ec6xJuhFOuyXVbfG2e2YZ&currency=USD"></script>
+
+<script>
+    // Render the PayPal button
+    paypal.Buttons({
+        // Set up the transaction
+        createOrder: function(data, actions) {
+            return actions.order.create({
+                purchase_units: [{
+                    amount: {
+                        value: '{{ amount }}'
+                    },
+                    description: '{{ purpose }}'
+                }]
+            });
+        },
+
+        // Finalize the transaction
+        onApprove: function(data, actions) {
+            return actions.order.capture().then(function(details) {
+                // Redirect to success page
+                window.location.href = "{% url 'client_portal:direct_payment_success' payment_method='paypal' transaction_id='PAYPAL-" + details.id + "' %}";
+            });
+        }
+    }).render('#paypal-button-container');
+</script>
+{% endblock %}

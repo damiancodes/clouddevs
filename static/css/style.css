@@ -1,423 +1,423 @@
-/* CloudLink_Devs Main Stylesheet */
-
-/* ===== GLOBAL STYLES ===== */
-:root {
-    --primary-color: #0066cc;
-    --secondary-color: #00aaff;
-    --accent-color: #ff6600;
-      /*--body-color: #666666; !* Add this line *!*/
-    --text-color: #333333;
-    --bg-color: #ffffff;
-    --footer-bg: #333333;
-    --light-gray: #f8f9fa;
-    --box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
-    --transition: all 0.3s ease;
-    --border-radius: 0.35rem;
-}
-
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    line-height: 1.6;
-    color: var(--text-color);
-    background-color: var(--bg-color);
-    transition: background-color 0.3s ease;
-    overflow-x: hidden;
-}
-
-h1, h2, h3, h4, h5, h6 {
-    font-weight: 600;
-    color: var(--text-color);
-}
-
-/* ===== NAVBAR ===== */
-.navbar {
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    padding: 0.75rem 1rem;
-}
-
-.navbar-brand {
-    font-size: 1.5rem;
-    font-weight: 700;
-    display: flex;
-    align-items: center;
-    color: var(--primary-color);
-}
-
-.navbar-brand img {
-    margin-right: 10px;
-}
-
-.navbar-nav .nav-link {
-    font-weight: 600;
-    padding: 0.5rem 1rem;
-    position: relative;
-}
-
-.navbar-nav .nav-link:after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    width: 0;
-    height: 2px;
-    background: var(--accent-color);
-    transition: var(--transition);
-    transform: translateX(-50%);
-}
-
-.navbar-nav .nav-link:hover:after,
-.navbar-nav .nav-link.active:after {
-    width: 70%;
-}
-
-.dropdown-menu {
-    border: none;
-    box-shadow: var(--box-shadow);
-    border-radius: var(--border-radius);
-}
-
-.dropdown-item:hover {
-    background-color: var(--light-gray);
-    color: var(--primary-color);
-}
-
-/* Theme toggle button */
-#theme-toggle {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: var(--light-gray);
-    color: var(--text-color);
-    transition: var(--transition);
-}
-
-#theme-toggle:hover {
-    background-color: var(--primary-color);
-    color: #fff;
-}
-
-/* ===== MAIN CONTENT ===== */
-main {
-    min-height: calc(100vh - 350px);
-}
-
-/* Page headers */
-.page-header, .about-header, .contact-header {
-    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
-    color: white;
-    padding: 60px 0;
-    margin-bottom: 50px;
-    text-align: center;
-}
-
-.page-header h1, .about-header h1, .contact-header h1 {
-    font-weight: 700;
-    margin-bottom: 15px;
-    color: white;
-}
-
-/* Cards */
-.card, .service-card, .testimonial-card, .mission-card, .vision-card, .team-card, .work-card, .contact-info, .contact-form {
-    border: none;
-    border-radius: var(--border-radius);
-    box-shadow: var(--box-shadow);
-    transition: var(--transition);
-    margin-bottom: 1.5rem;
-}
-
-.card:hover, .service-card:hover, .work-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 0.5rem 2rem 0 rgba(58, 59, 69, 0.2);
-}
-
-.card-title {
-    font-weight: 700;
-    margin-bottom: 1rem;
-}
-
-/* Buttons */
-.btn {
-    font-weight: 600;
-    padding: 0.5rem 1.5rem;
-    border-radius: var(--border-radius);
-    transition: var(--transition);
-}
-
-.btn-primary {
-    background-color: var(--primary-color);
-    border-color: var(--primary-color);
-}
-
-.btn-primary:hover {
-    background-color: var(--accent-color);
-    border-color: var(--accent-color);
-}
-
-.btn-outline-primary {
-    border-color: var(--primary-color);
-    color: var(--primary-color);
-}
-
-.btn-outline-primary:hover {
-    background-color: var(--primary-color);
-    color: white;
-}
-
-/* Hero section */
-.hero-section {
-    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
-    color: white;
-    padding: 100px 0;
-}
-
-.hero-title, .cta-title {
-    color: white;
-}
-
-/* Service cards */
-.service-icon, .feature-icon, .card-icon {
-    color: var(--accent-color);
-}
-
-.service-card .btn:hover, .work-card .btn:hover {
-    background-color: var(--accent-color);
-    border-color: var(--accent-color);
-}
-
-/* Features section */
-.feature-icon {
-    background-color: var(--primary-color);
-}
-
-/* CTA section */
-.cta-section {
-    /*background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);*/
-      background-color: var(--beige-color);
-}
-
-/* Forms */
-.form-control {
-    border-radius: var(--border-radius);
-    padding: 0.75rem 1rem;
-    border: 1px solid #d1d3e2;
-}
-
-.form-control:focus {
-    border-color: var(--primary-color);
-    box-shadow: 0 0 0 0.25rem rgba(0, 102, 204, 0.25);
-}
-
-.form-group.focused label {
-    color: var(--primary-color);
-}
-
-/* ===== CHAT WIDGET ===== */
-.chat-widget {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    z-index: 999;
-}
-
-.chat-icon {
-    width: 60px;
-    height: 60px;
-    background-color: var(--primary-color);
-    color: white;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    box-shadow: 0 0.25rem 1rem 0 rgba(0, 102, 204, 0.3);
-    transition: var(--transition);
-}
-
-.chat-icon:hover {
-    transform: scale(1.1);
-    background-color: var(--accent-color);
-}
-
-.chat-icon i {
-    font-size: 24px;
-}
-
-.chat-container {
-    position: absolute;
-    bottom: 80px;
-    right: 0;
-    width: 350px;
-    background-color: white;
-    border-radius: 10px;
-    box-shadow: 0 0.5rem 2rem 0 rgba(58, 59, 69, 0.2);
-    overflow: hidden;
-}
-
-.chat-header {
-    background-color: var(--primary-color);
-    color: white;
-    padding: 15px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.chat-header h5 {
-    margin: 0;
-    color: white;
-}
-
-.close-btn {
-    background: none;
-    border: none;
-    color: white;
-    font-size: 1.5rem;
-    cursor: pointer;
-}
-
-.chat-messages {
-    height: 300px;
-    padding: 15px;
-    overflow-y: auto;
-}
-
-.message {
-    margin-bottom: 15px;
-    max-width: 80%;
-}
-
-.message p {
-    padding: 10px 15px;
-    border-radius: 20px;
-    margin: 0;
-}
-
-.message.bot {
-    margin-right: auto;
-}
-
-.message.bot p {
-    background-color: #f2f3f5;
-}
-
-.message.user {
-    margin-left: auto;
-}
-
-.message.user p {
-    background-color: var(--primary-color);
-    color: white;
-}
-
-.chat-input {
-    display: flex;
-    border-top: 1px solid #eee;
-    padding: 10px;
-}
-
-.chat-input input {
-    flex: 1;
-    border: none;
-    padding: 10px;
-    border-radius: 20px;
-    background-color: #f2f3f5;
-}
-
-.chat-input input:focus {
-    outline: none;
-}
-
-.chat-input button {
-    border: none;
-    background-color: var(--primary-color);
-    color: white;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    margin-left: 10px;
-    cursor: pointer;
-}
-
-.chat-input button:hover {
-    background-color: var(--accent-color);
-}
-
-/* ===== FOOTER ===== */
-footer {
-    background-color: var(--footer-bg);
-    color: white;
-    padding: 60px 0 30px;
-}
-
-footer h5 {
-    font-weight: 700;
-    margin-bottom: 1.5rem;
-    color: white;
-}
-
-footer ul li {
-    margin-bottom: 0.5rem;
-}
-
-footer a {
-    text-decoration: none;
-    transition: var(--transition);
-}
-
-footer a:hover {
-    color: var(--accent-color) !important;
-}
-
-.social-icons a {
-    font-size: 1.5rem;
-    transition: var(--transition);
-}
-
-.social-icons a:hover {
-    transform: translateY(-3px);
-}
-
-/* ===== RESPONSIVE STYLES ===== */
-@media (max-width: 992px) {
-    .navbar-nav .nav-link:after {
-        display: none;
-    }
-
-    .chat-container {
-        width: 300px;
-    }
-}
-
-@media (max-width: 768px) {
-    .chat-container {
-        width: 90vw;
-        right: 5vw;
-    }
-}
-
-/* ===== ANIMATIONS ===== */
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-
-@keyframes slideUp {
-    from { transform: translateY(30px); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
-}
-
-.fade-in {
-    animation: fadeIn 0.5s ease forwards;
-}
-
-.slide-up {
-    animation: slideUp 0.5s ease forwards;
-}
-
-/* Animation for service cards */
-.service-card, .feature-item, .testimonial-card, .work-card {
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
+/*!* CloudLink_Devs Main Stylesheet *!*/
+
+/*!* ===== GLOBAL STYLES ===== *!*/
+/*:root {*/
+/*    --primary-color: #0066cc;*/
+/*    --secondary-color: #00aaff;*/
+/*    --accent-color: #ff6600;*/
+/*      !*--body-color: #666666; !* Add this line *!*!*/
+/*    --text-color: #333333;*/
+/*    --bg-color: #ffffff;*/
+/*    --footer-bg: #333333;*/
+/*    --light-gray: #f8f9fa;*/
+/*    --box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);*/
+/*    --transition: all 0.3s ease;*/
+/*    --border-radius: 0.35rem;*/
+/*}*/
+
+/*body {*/
+/*    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;*/
+/*    line-height: 1.6;*/
+/*    color: var(--text-color);*/
+/*    background-color: var(--bg-color);*/
+/*    transition: background-color 0.3s ease;*/
+/*    overflow-x: hidden;*/
+/*}*/
+
+/*h1, h2, h3, h4, h5, h6 {*/
+/*    font-weight: 600;*/
+/*    color: var(--text-color);*/
+/*}*/
+
+/*!* ===== NAVBAR ===== *!*/
+/*.navbar {*/
+/*    box-shadow: 0 2px 4px rgba(0,0,0,0.1);*/
+/*    padding: 0.75rem 1rem;*/
+/*}*/
+
+/*.navbar-brand {*/
+/*    font-size: 1.5rem;*/
+/*    font-weight: 700;*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*    color: var(--primary-color);*/
+/*}*/
+
+/*.navbar-brand img {*/
+/*    margin-right: 10px;*/
+/*}*/
+
+/*.navbar-nav .nav-link {*/
+/*    font-weight: 600;*/
+/*    padding: 0.5rem 1rem;*/
+/*    position: relative;*/
+/*}*/
+
+/*.navbar-nav .nav-link:after {*/
+/*    content: '';*/
+/*    position: absolute;*/
+/*    bottom: 0;*/
+/*    left: 50%;*/
+/*    width: 0;*/
+/*    height: 2px;*/
+/*    background: var(--accent-color);*/
+/*    transition: var(--transition);*/
+/*    transform: translateX(-50%);*/
+/*}*/
+
+/*.navbar-nav .nav-link:hover:after,*/
+/*.navbar-nav .nav-link.active:after {*/
+/*    width: 70%;*/
+/*}*/
+
+/*.dropdown-menu {*/
+/*    border: none;*/
+/*    box-shadow: var(--box-shadow);*/
+/*    border-radius: var(--border-radius);*/
+/*}*/
+
+/*.dropdown-item:hover {*/
+/*    background-color: var(--light-gray);*/
+/*    color: var(--primary-color);*/
+/*}*/
+
+/*!* Theme toggle button *!*/
+/*#theme-toggle {*/
+/*    width: 40px;*/
+/*    height: 40px;*/
+/*    border-radius: 50%;*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*    justify-content: center;*/
+/*    background-color: var(--light-gray);*/
+/*    color: var(--text-color);*/
+/*    transition: var(--transition);*/
+/*}*/
+
+/*#theme-toggle:hover {*/
+/*    background-color: var(--primary-color);*/
+/*    color: #fff;*/
+/*}*/
+
+/*!* ===== MAIN CONTENT ===== *!*/
+/*main {*/
+/*    min-height: calc(100vh - 350px);*/
+/*}*/
+
+/*!* Page headers *!*/
+/*.page-header, .about-header, .contact-header {*/
+/*    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);*/
+/*    color: white;*/
+/*    padding: 60px 0;*/
+/*    margin-bottom: 50px;*/
+/*    text-align: center;*/
+/*}*/
+
+/*.page-header h1, .about-header h1, .contact-header h1 {*/
+/*    font-weight: 700;*/
+/*    margin-bottom: 15px;*/
+/*    color: white;*/
+/*}*/
+
+/*!* Cards *!*/
+/*.card, .service-card, .testimonial-card, .mission-card, .vision-card, .team-card, .work-card, .contact-info, .contact-form {*/
+/*    border: none;*/
+/*    border-radius: var(--border-radius);*/
+/*    box-shadow: var(--box-shadow);*/
+/*    transition: var(--transition);*/
+/*    margin-bottom: 1.5rem;*/
+/*}*/
+
+/*.card:hover, .service-card:hover, .work-card:hover {*/
+/*    transform: translateY(-5px);*/
+/*    box-shadow: 0 0.5rem 2rem 0 rgba(58, 59, 69, 0.2);*/
+/*}*/
+
+/*.card-title {*/
+/*    font-weight: 700;*/
+/*    margin-bottom: 1rem;*/
+/*}*/
+
+/*!* Buttons *!*/
+/*.btn {*/
+/*    font-weight: 600;*/
+/*    padding: 0.5rem 1.5rem;*/
+/*    border-radius: var(--border-radius);*/
+/*    transition: var(--transition);*/
+/*}*/
+
+/*.btn-primary {*/
+/*    background-color: var(--primary-color);*/
+/*    border-color: var(--primary-color);*/
+/*}*/
+
+/*.btn-primary:hover {*/
+/*    background-color: var(--accent-color);*/
+/*    border-color: var(--accent-color);*/
+/*}*/
+
+/*.btn-outline-primary {*/
+/*    border-color: var(--primary-color);*/
+/*    color: var(--primary-color);*/
+/*}*/
+
+/*.btn-outline-primary:hover {*/
+/*    background-color: var(--primary-color);*/
+/*    color: white;*/
+/*}*/
+
+/*!* Hero section *!*/
+/*.hero-section {*/
+/*    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);*/
+/*    color: white;*/
+/*    padding: 100px 0;*/
+/*}*/
+
+/*.hero-title, .cta-title {*/
+/*    color: white;*/
+/*}*/
+
+/*!* Service cards *!*/
+/*.service-icon, .feature-icon, .card-icon {*/
+/*    color: var(--accent-color);*/
+/*}*/
+
+/*.service-card .btn:hover, .work-card .btn:hover {*/
+/*    background-color: var(--accent-color);*/
+/*    border-color: var(--accent-color);*/
+/*}*/
+
+/*!* Features section *!*/
+/*.feature-icon {*/
+/*    background-color: var(--primary-color);*/
+/*}*/
+
+/*!* CTA section *!*/
+/*.cta-section {*/
+/*    !*background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);*!*/
+/*      background-color: var(--beige-color);*/
+/*}*/
+
+/*!* Forms *!*/
+/*.form-control {*/
+/*    border-radius: var(--border-radius);*/
+/*    padding: 0.75rem 1rem;*/
+/*    border: 1px solid #d1d3e2;*/
+/*}*/
+
+/*.form-control:focus {*/
+/*    border-color: var(--primary-color);*/
+/*    box-shadow: 0 0 0 0.25rem rgba(0, 102, 204, 0.25);*/
+/*}*/
+
+/*.form-group.focused label {*/
+/*    color: var(--primary-color);*/
+/*}*/
+
+/*!* ===== CHAT WIDGET ===== *!*/
+/*.chat-widget {*/
+/*    position: fixed;*/
+/*    bottom: 20px;*/
+/*    right: 20px;*/
+/*    z-index: 999;*/
+/*}*/
+
+/*.chat-icon {*/
+/*    width: 60px;*/
+/*    height: 60px;*/
+/*    background-color: var(--primary-color);*/
+/*    color: white;*/
+/*    border-radius: 50%;*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*    justify-content: center;*/
+/*    cursor: pointer;*/
+/*    box-shadow: 0 0.25rem 1rem 0 rgba(0, 102, 204, 0.3);*/
+/*    transition: var(--transition);*/
+/*}*/
+
+/*.chat-icon:hover {*/
+/*    transform: scale(1.1);*/
+/*    background-color: var(--accent-color);*/
+/*}*/
+
+/*.chat-icon i {*/
+/*    font-size: 24px;*/
+/*}*/
+
+/*.chat-container {*/
+/*    position: absolute;*/
+/*    bottom: 80px;*/
+/*    right: 0;*/
+/*    width: 350px;*/
+/*    background-color: white;*/
+/*    border-radius: 10px;*/
+/*    box-shadow: 0 0.5rem 2rem 0 rgba(58, 59, 69, 0.2);*/
+/*    overflow: hidden;*/
+/*}*/
+
+/*.chat-header {*/
+/*    background-color: var(--primary-color);*/
+/*    color: white;*/
+/*    padding: 15px;*/
+/*    display: flex;*/
+/*    justify-content: space-between;*/
+/*    align-items: center;*/
+/*}*/
+
+/*.chat-header h5 {*/
+/*    margin: 0;*/
+/*    color: white;*/
+/*}*/
+
+/*.close-btn {*/
+/*    background: none;*/
+/*    border: none;*/
+/*    color: white;*/
+/*    font-size: 1.5rem;*/
+/*    cursor: pointer;*/
+/*}*/
+
+/*.chat-messages {*/
+/*    height: 300px;*/
+/*    padding: 15px;*/
+/*    overflow-y: auto;*/
+/*}*/
+
+/*.message {*/
+/*    margin-bottom: 15px;*/
+/*    max-width: 80%;*/
+/*}*/
+
+/*.message p {*/
+/*    padding: 10px 15px;*/
+/*    border-radius: 20px;*/
+/*    margin: 0;*/
+/*}*/
+
+/*.message.bot {*/
+/*    margin-right: auto;*/
+/*}*/
+
+/*.message.bot p {*/
+/*    background-color: #f2f3f5;*/
+/*}*/
+
+/*.message.user {*/
+/*    margin-left: auto;*/
+/*}*/
+
+/*.message.user p {*/
+/*    background-color: var(--primary-color);*/
+/*    color: white;*/
+/*}*/
+
+/*.chat-input {*/
+/*    display: flex;*/
+/*    border-top: 1px solid #eee;*/
+/*    padding: 10px;*/
+/*}*/
+
+/*.chat-input input {*/
+/*    flex: 1;*/
+/*    border: none;*/
+/*    padding: 10px;*/
+/*    border-radius: 20px;*/
+/*    background-color: #f2f3f5;*/
+/*}*/
+
+/*.chat-input input:focus {*/
+/*    outline: none;*/
+/*}*/
+
+/*.chat-input button {*/
+/*    border: none;*/
+/*    background-color: var(--primary-color);*/
+/*    color: white;*/
+/*    width: 40px;*/
+/*    height: 40px;*/
+/*    border-radius: 50%;*/
+/*    margin-left: 10px;*/
+/*    cursor: pointer;*/
+/*}*/
+
+/*.chat-input button:hover {*/
+/*    background-color: var(--accent-color);*/
+/*}*/
+
+/*!* ===== FOOTER ===== *!*/
+/*footer {*/
+/*    background-color: var(--footer-bg);*/
+/*    color: white;*/
+/*    padding: 60px 0 30px;*/
+/*}*/
+
+/*footer h5 {*/
+/*    font-weight: 700;*/
+/*    margin-bottom: 1.5rem;*/
+/*    color: white;*/
+/*}*/
+
+/*footer ul li {*/
+/*    margin-bottom: 0.5rem;*/
+/*}*/
+
+/*footer a {*/
+/*    text-decoration: none;*/
+/*    transition: var(--transition);*/
+/*}*/
+
+/*footer a:hover {*/
+/*    color: var(--accent-color) !important;*/
+/*}*/
+
+/*.social-icons a {*/
+/*    font-size: 1.5rem;*/
+/*    transition: var(--transition);*/
+/*}*/
+
+/*.social-icons a:hover {*/
+/*    transform: translateY(-3px);*/
+/*}*/
+
+/*!* ===== RESPONSIVE STYLES ===== *!*/
+/*@media (max-width: 992px) {*/
+/*    .navbar-nav .nav-link:after {*/
+/*        display: none;*/
+/*    }*/
+
+/*    .chat-container {*/
+/*        width: 300px;*/
+/*    }*/
+/*}*/
+
+/*@media (max-width: 768px) {*/
+/*    .chat-container {*/
+/*        width: 90vw;*/
+/*        right: 5vw;*/
+/*    }*/
+/*}*/
+
+/*!* ===== ANIMATIONS ===== *!*/
+/*@keyframes fadeIn {*/
+/*    from { opacity: 0; }*/
+/*    to { opacity: 1; }*/
+/*}*/
+
+/*@keyframes slideUp {*/
+/*    from { transform: translateY(30px); opacity: 0; }*/
+/*    to { transform: translateY(0); opacity: 1; }*/
+/*}*/
+
+/*.fade-in {*/
+/*    animation: fadeIn 0.5s ease forwards;*/
+/*}*/
+
+/*.slide-up {*/
+/*    animation: slideUp 0.5s ease forwards;*/
+/*}*/
+
+/*!* Animation for service cards *!*/
+/*.service-card, .feature-item, .testimonial-card, .work-card {*/
+/*    transition: transform 0.3s ease, box-shadow 0.3s ease;*/
+/*}*/

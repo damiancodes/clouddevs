@@ -585,6 +585,34 @@ def make_payment(request, invoice_id):
 
 
 @login_required
+@login_required
+def process_direct_paypal(request, amount):
+    """Process direct PayPal payment without invoice"""
+    try:
+        client = request.user.client_profile
+    except:
+        messages.error(request, 'You do not have a client profile.')
+        return redirect('client_portal:dashboard')
+
+    # Get purpose from session
+    purpose = request.session.get('direct_payment_purpose', 'Direct payment')
+
+    # Store amount in session
+    request.session['direct_payment_amount'] = float(amount)
+    request.session.modified = True
+
+    # In a real implementation, this would integrate with PayPal API
+    # For now, we'll just simulate the payment process
+
+    return render(request, 'client_portal/payment_direct_paypal.html', {
+        'client': client,
+        'amount': amount,
+        'purpose': purpose
+    })
+
+
+
+@login_required
 def process_paypal(request, invoice_id, amount):
     """Process PayPal payment"""
     # For admin users, get any invoice
@@ -634,15 +662,27 @@ def process_mpesa(request, invoice_id, amount):
         # For regular clients, get only their invoice
         invoice = get_object_or_404(Invoice, id=invoice_id, client=request.user.client_profile)
 
-    # In a real implementation, this would integrate with M-Pesa API
-    # For now, we'll just simulate the payment process
+    if request.method == 'POST':
+        # Get the phone number from the form
+        phone_number = request.POST.get('phone_number', '').strip()
 
+        if not phone_number:
+            messages.error(request, 'Please enter a valid M-Pesa phone number.')
+            return render(request, 'client_portal/payment_mpesa.html', {
+                'invoice': invoice,
+                'amount': amount,
+                'is_admin': is_admin_user(request.user)
+            })
+
+        # Redirect to the STK push initiation in mpesa_api app
+        return redirect('mpesa_api:initiate_stk_push', invoice_id=invoice_id, amount=amount)
+
+    # Display the M-Pesa payment form
     return render(request, 'client_portal/payment_mpesa.html', {
         'invoice': invoice,
         'amount': amount,
         'is_admin': is_admin_user(request.user)
     })
-
 
 @login_required
 def payment_success(request, invoice_id, payment_method, transaction_id):
@@ -1364,3 +1404,324 @@ def client_logout(request):
         logout(request)
         messages.success(request, 'You have been logged out successfully.')
         return redirect('client_portal:login')
+
+
+from django.http import JsonResponse
+from django.views.decorators.http import require_http_methods
+
+
+@login_required
+@require_http_methods(["GET", "POST"])
+def direct_payment(request):
+    if request.method == 'POST':
+        try:
+            payment_method = request.POST.get('payment_method')
+            amount = request.POST.get('amount')
+            purpose = request.POST.get('purpose')
+
+            # Validate input
+            try:
+                amount = float(amount)
+                if amount <= 0:
+                    raise ValueError("Amount must be greater than zero")
+            except ValueError:
+                # For AJAX requests, return JSON error
+                if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+                    return JsonResponse({
+                        'status': 'error',
+                        'message': 'Please enter a valid payment amount.'
+                    }, status=400)
+
+                messages.error(request, 'Please enter a valid payment amount.')
+                return render(request, 'client_portal/direct_payment.html')
+
+            # Store purpose and amount in session
+            request.session['direct_payment_purpose'] = purpose
+
+            # Determine redirect URL based on payment method
+            if payment_method == 'mpesa':
+                redirect_url = reverse('client_portal:process_direct_mpesa', kwargs={'amount': amount})
+            elif payment_method == 'paypal':
+                redirect_url = reverse('client_portal:process_direct_paypal', kwargs={'amount': amount})
+            elif payment_method == 'credit_card':
+                redirect_url = reverse('client_portal:process_direct_credit_card', kwargs={'amount': amount})
+            else:
+                # For AJAX requests, return JSON error
+                if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+                    return JsonResponse({
+                        'status': 'error',
+                        'message': 'Invalid payment method selected.'
+                    }, status=400)
+
+                messages.error(request, 'Invalid payment method selected.')
+                return render(request, 'client_portal/direct_payment.html')
+
+            # For AJAX requests, return JSON with redirect URL
+            if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+                return JsonResponse({
+                    'status': 'success',
+                    'redirect': redirect_url
+                })
+
+            # For non-AJAX requests, redirect
+            return redirect(redirect_url)
+
+        except Exception as e:
+            # Log the error
+            import traceback
+            traceback.print_exc()
+
+            # For AJAX requests, return JSON error
+            if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+                return JsonResponse({
+                    'status': 'error',
+                    'message': 'An unexpected error occurred. Please try again.'
+                }, status=500)
+
+            messages.error(request, 'An unexpected error occurred. Please try again.')
+            return render(request, 'client_portal/direct_payment.html')
+
+    return render(request, 'client_portal/direct_payment.html')
+
+@login_required
+def process_direct_paypal(request, amount):
+    """Process direct PayPal payment"""
+    try:
+        client = request.user.client_profile
+    except:
+        messages.error(request, 'You do not have a client profile.')
+        return redirect('client_portal:dashboard')
+
+    purpose = request.session.get('direct_payment_purpose', 'Direct payment')
+
+    # In a real implementation, this would integrate with PayPal API
+    # For now, we'll simulate the payment process
+    return render(request, 'client_portal/payment_direct_paypal.html', {
+        'amount': amount,
+        'purpose': purpose,
+        'client': client
+    })
+
+
+@login_required
+def process_direct_credit_card(request, amount):
+    """Process direct credit card payment"""
+    try:
+        client = request.user.client_profile
+    except:
+        messages.error(request, 'You do not have a client profile.')
+        return redirect('client_portal:dashboard')
+
+    purpose = request.session.get('direct_payment_purpose', 'Direct payment')
+
+    # In a real implementation, this would integrate with a payment gateway API
+    # For now, we'll simulate the payment process
+    return render(request, 'client_portal/payment_direct_crypto.html', {
+        'amount': amount,
+        'purpose': purpose,
+        'client': client
+    })
+
+
+@login_required
+def process_direct_mpesa(request, amount):
+    """Process direct M-Pesa payment"""
+    # Clear previous payment data when starting a new flow
+    if request.method == 'GET':
+        # Clear previous session data
+        request.session.pop('mpesa_phone_number', None)
+        request.session.pop('mpesa_checkout_request_id', None)
+        request.session.pop('mpesa_direct_payment', None)
+        request.session.modified = True
+    """Process direct M-Pesa payment"""
+    try:
+        client = request.user.client_profile
+    except:
+        messages.error(request, 'You do not have a client profile.')
+        return redirect('client_portal:dashboard')
+
+    purpose = request.session.get('direct_payment_purpose', 'Direct payment')
+
+    if request.method == 'POST':
+        # Get phone number from the form
+        phone_number = request.POST.get('phone_number', '')
+        print(f"DEBUG - Phone from form: {phone_number}")
+
+        if phone_number:
+            # Format phone number before storing (similar to API)
+            if phone_number.startswith('+'):
+                phone_number = phone_number[1:]
+            if phone_number.startswith('0'):
+                phone_number = '254' + phone_number[1:]
+            if not phone_number.startswith('254'):
+                phone_number = '254' + phone_number
+
+            print(f"DEBUG - Formatted phone: {phone_number}")
+
+            # Store data in session - make sure to use session.modified = True
+            request.session['mpesa_phone_number'] = phone_number
+            request.session['direct_payment_amount'] = float(amount)
+            request.session.modified = True
+
+            print(f"DEBUG - Session after storing: {request.session.get('mpesa_phone_number')}")
+
+            # Forward to the M-Pesa API for processing
+            return redirect('mpesa_api:initiate_direct_payment', amount=amount)
+        else:
+            messages.error(request, 'Please enter your M-Pesa phone number.')
+
+    # For GET requests, or if POST didn't redirect (e.g., missing phone number)
+    phone_number = request.session.get('mpesa_phone_number', '')
+    print(f"DEBUG - Phone for display: {phone_number}")
+
+    # Display M-Pesa payment form
+    return render(request, 'client_portal/payment_direct_mpesa.html', {
+        'amount': amount,
+        'purpose': purpose,
+        'phone_number': phone_number,
+        'client': client
+    })
+@login_required
+def direct_payment_success(request, payment_method, transaction_id):
+    """Handle successful direct payment"""
+    try:
+        client = request.user.client_profile
+    except:
+        messages.error(request, 'You do not have a client profile.')
+        return redirect('client_portal:dashboard')
+
+    # Get details from session
+    amount = request.session.get('direct_payment_amount', 0)
+    purpose = request.session.get('direct_payment_purpose', 'Direct payment')
+
+    # Create payment record without an invoice
+    payment = Payment.objects.create(
+        invoice=None,  # Direct payment has no invoice
+        amount=amount,
+        payment_date=timezone.now().date(),
+        payment_method=payment_method,
+        transaction_id=transaction_id,
+        notes=f"Direct payment: {purpose}"
+    )
+
+    # Clear session data
+    request.session.pop('direct_payment_amount', None)
+    request.session.pop('direct_payment_purpose', None)
+    request.session.pop('mpesa_phone_number', None)
+
+    messages.success(request, f'Payment of ${amount} processed successfully!')
+
+    # Redirect to the receipt page
+    return redirect('client_portal:print_receipt', payment_id=payment.id)
+
+
+@login_required
+def process_direct_crypto(request, amount):
+    """Process direct cryptocurrency payment"""
+    try:
+        client = request.user.client_profile
+    except:
+        messages.error(request, 'You do not have a client profile.')
+        return redirect('client_portal:dashboard')
+
+    # Get details from request or session
+    crypto_type = request.GET.get('crypto', 'bitcoin')
+    purpose = request.GET.get('purpose', request.session.get('direct_payment_purpose', 'Direct payment'))
+
+    # Store data in session
+    request.session['direct_payment_amount'] = float(amount)
+    request.session['direct_payment_purpose'] = purpose
+    request.session['crypto_type'] = crypto_type
+    request.session.modified = True
+
+    # Crypto addresses (in production, these would be unique per transaction)
+    crypto_addresses = {
+        'bitcoin': 'bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh',
+        'ethereum': '0x89205A3A3b2A69De6Dbf7f01ED13B2108B2c43e7',
+        'litecoin': 'LTC123abcdefghijklmnopqrstuvwxyz123456'
+    }
+
+    address = crypto_addresses.get(crypto_type, crypto_addresses['bitcoin'])
+
+    # In a real implementation, you would integrate with a crypto payment gateway
+    # and generate unique addresses for each transaction
+
+    return render(request, 'client_portal/payment_direct_crypto.html', {
+        'client': client,
+        'amount': amount,
+        'purpose': purpose,
+        'crypto_type': crypto_type,
+        'address': address,
+        'qr_url': f"https://api.qrserver.com/v1/create-qr-code/?size=200x200&data={crypto_type}:{address}?amount={amount}"
+    })
+
+
+@login_required
+def verify_crypto_payment(request, amount):
+    """Verify a cryptocurrency payment was received"""
+    try:
+        client = request.user.client_profile
+    except:
+        messages.error(request, 'You do not have a client profile.')
+        return redirect('client_portal:dashboard')
+
+    # Get details from request or session
+    crypto_type = request.session.get('crypto_type', 'bitcoin')
+    purpose = request.session.get('direct_payment_purpose', 'Direct payment')
+
+    if request.method == 'POST':
+        # In a real implementation, you would verify the payment on the blockchain
+        # For now, we'll simulate successful verification
+
+        # Create a transaction ID based on the crypto type
+        transaction_id = f"CRYPTO-{crypto_type.upper()}-{uuid.uuid4().hex[:8]}"
+
+        # Redirect to success page
+        return redirect('client_portal:direct_payment_success',
+                        payment_method=crypto_type,
+                        transaction_id=transaction_id)
+
+    return render(request, 'client_portal/verify_crypto_payment.html', {
+        'client': client,
+        'amount': amount,
+        'purpose': purpose,
+        'crypto_type': crypto_type
+    })
+
+
+@login_required
+def direct_payment_success(request, payment_method, transaction_id):
+    """Handle successful direct payment"""
+    try:
+        client = request.user.client_profile
+    except:
+        messages.error(request, 'You do not have a client profile.')
+        return redirect('client_portal:dashboard')
+
+    # Get details from session
+    amount = request.session.get('direct_payment_amount', 0)
+    purpose = request.session.get('direct_payment_purpose', 'Direct payment')
+
+    # Create payment record without an invoice
+    payment = Payment.objects.create(
+        invoice=None,  # Direct payment has no invoice
+        amount=amount,
+        payment_date=timezone.now().date(),
+        payment_method=payment_method,
+        transaction_id=transaction_id,
+        notes=f"Direct payment: {purpose}"
+    )
+
+    # Clear session data
+    request.session.pop('direct_payment_amount', None)
+    request.session.pop('direct_payment_purpose', None)
+    request.session.pop('mpesa_phone_number', None)
+    request.session.pop('crypto_type', None)
+    request.session.modified = True
+
+    messages.success(request, f'Payment of ${amount} processed successfully!')
+
+    # Redirect to the receipt page
+    return redirect('client_portal:print_receipt', payment_id=payment.id)
+
+

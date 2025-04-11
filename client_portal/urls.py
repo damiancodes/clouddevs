@@ -298,4 +298,14 @@ urlpatterns = [
 
     # Email receipt URL
     path('payment/receipt/<int:payment_id>/email/', views.email_receipt, name='email_receipt'),
+
+
+path('direct-payment/', views.direct_payment, name='direct_payment'),
+path('direct-payment/paypal/<str:amount>/', views.process_direct_paypal, name='process_direct_paypal'),
+path('direct-payment/credit-card/<str:amount>/', views.process_direct_credit_card, name='process_direct_credit_card'),
+path('direct-payment/mpesa/<str:amount>/', views.process_direct_mpesa, name='process_direct_mpesa'),
+path('direct-payment/success/<str:payment_method>/<str:transaction_id>/',
+     views.direct_payment_success, name='direct_payment_success'),
+
+
 ]

@@ -1,0 +1,737 @@
+{#{% extends 'client_portal/base.html' %}#}
+{#{% load static %}#}
+{##}
+{#{% block client_portal_title %}Make Direct Payment - Client Portal{% endblock %}#}
+{##}
+{#{% block breadcrumb_items %}#}
+{#<li class="breadcrumb-item active">Make Direct Payment</li>#}
+{#{% endblock %}#}
+{##}
+{#{% block page_title %}Make Direct Payment{% endblock %}#}
+{##}
+{#{% block client_portal_css %}#}
+{#<style>#}
+{#    .payment-container {#}
+{#        background-color: white;#}
+{#        border-radius: 10px;#}
+{#        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);#}
+{#        margin-bottom: 30px;#}
+{#        padding: 30px;#}
+{#    }#}
+{#    #}
+{#    .payment-methods {#}
+{#        margin-bottom: 30px;#}
+{#    }#}
+{#    #}
+{#    .payment-method-card {#}
+{#        border: 2px solid #e3e6f0;#}
+{#        border-radius: 10px;#}
+{#        padding: 20px;#}
+{#        margin-bottom: 20px;#}
+{#        cursor: pointer;#}
+{#        transition: all 0.3s ease;#}
+{#    }#}
+{#    #}
+{#    .payment-method-card:hover {#}
+{#        border-color: var(--primary-color);#}
+{#        background-color: rgba(78, 115, 223, 0.05);#}
+{#    }#}
+{#    #}
+{#    .payment-method-card.selected {#}
+{#        border-color: var(--primary-color);#}
+{#        background-color: rgba(78, 115, 223, 0.05);#}
+{#    }#}
+{#    #}
+{#    .payment-method-icon {#}
+{#        font-size: 2rem;#}
+{#        margin-bottom: 15px;#}
+{#        color: var(--primary-color);#}
+{#    }#}
+{#    #}
+{#    .payment-method-title {#}
+{#        font-weight: 700;#}
+{#        margin-bottom: 5px;#}
+{#    }#}
+{#    #}
+{#    .payment-method-description {#}
+{#        color: #858796;#}
+{#        font-size: 0.9rem;#}
+{#    }#}
+{#    #}
+{#    .payment-form {#}
+{#        margin-top: 30px;#}
+{#    }#}
+{#    #}
+{#    .form-group {#}
+{#        margin-bottom: 20px;#}
+{#    }#}
+{#    #}
+{#    .secure-badge {#}
+{#        display: flex;#}
+{#        align-items: center;#}
+{#        justify-content: center;#}
+{#        gap: 10px;#}
+{#        margin-top: 20px;#}
+{#        color: #6c757d;#}
+{#    }#}
+{#</style>#}
+{#{% endblock %}#}
+{##}
+{#{% block client_portal_content %}#}
+{#<div class="row">#}
+{#    <div class="col-lg-8 mx-auto">#}
+{#        <div class="payment-container">#}
+{#            <h4 class="mb-4 text-center">Quick Payment</h4>#}
+{#            <p class="text-center mb-4">Make a direct payment to your account without requiring an invoice.</p>#}
+{#            #}
+{#            <form method="post" action="{% url 'client_portal:direct_payment' %}" id="payment-form">#}
+{#                {% csrf_token %}#}
+{#                #}
+{#                <!-- Amount Input -->#}
+{#                <div class="form-group">#}
+{#                    <label for="amount" class="form-label">Payment Amount</label>#}
+{#                    <div class="input-group">#}
+{#                        <span class="input-group-text">$</span>#}
+{#                        <input type="number" step="0.01" min="1" class="form-control" id="amount" name="amount" required>#}
+{#                    </div>#}
+{#                    <div class="form-text">Enter the amount you wish to pay.</div>#}
+{#                </div>#}
+{#                #}
+{#                <!-- Purpose Input -->#}
+{#                <div class="form-group">#}
+{#                    <label for="purpose" class="form-label">Payment Purpose</label>#}
+{#                    <input type="text" class="form-control" id="purpose" name="purpose" placeholder="E.g., Deposit, Service fee, etc." required>#}
+{#                    <div class="form-text">Enter the purpose of your payment.</div>#}
+{#                </div>#}
+{#                #}
+{#                <!-- Payment Methods -->#}
+{#                <div class="payment-methods">#}
+{#                    <h5 class="mb-3">Select Payment Method</h5>#}
+{#                    <div class="row">#}
+{#                        <div class="col-md-4">#}
+{#                            <div class="payment-method-card selected" data-method="credit_card">#}
+{#                                <div class="text-center">#}
+{#                                    <div class="payment-method-icon">#}
+{#                                        <i class="fas fa-credit-card"></i>#}
+{#                                    </div>#}
+{#                                    <h5 class="payment-method-title">Credit Card</h5>#}
+{#                                    <p class="payment-method-description">Pay securely with your credit card</p>#}
+{#                                </div>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                        <div class="col-md-4">#}
+{#                            <div class="payment-method-card" data-method="paypal">#}
+{#                                <div class="text-center">#}
+{#                                    <div class="payment-method-icon">#}
+{#                                        <i class="fab fa-paypal"></i>#}
+{#                                    </div>#}
+{#                                    <h5 class="payment-method-title">PayPal</h5>#}
+{#                                    <p class="payment-method-description">Pay with your PayPal account</p>#}
+{#                                </div>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                        <div class="col-md-4">#}
+{#                            <div class="payment-method-card" data-method="mpesa">#}
+{#                                <div class="text-center">#}
+{#                                    <div class="payment-method-icon">#}
+{#                                        <i class="fas fa-mobile-alt"></i>#}
+{#                                    </div>#}
+{#                                    <h5 class="payment-method-title">M-Pesa</h5>#}
+{#                                    <p class="payment-method-description">Pay using M-Pesa</p>#}
+{#                                </div>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{#                #}
+{#                <!-- Payment Method (Hidden) -->#}
+{#                <input type="hidden" name="payment_method" id="payment_method" value="credit_card">#}
+{#                #}
+{#                <!-- Credit Card Form -->#}
+{#                <div id="credit-card-form" class="payment-form">#}
+{#                    <div class="form-group">#}
+{#                        <label for="cardholder-name" class="form-label">Cardholder Name</label>#}
+{#                        <input type="text" class="form-control" id="cardholder-name" placeholder="John Doe">#}
+{#                    </div>#}
+{#                    #}
+{#                    <div class="form-group">#}
+{#                        <label for="card-number" class="form-label">Card Number</label>#}
+{#                        <input type="text" class="form-control" id="card-number" placeholder="1234 5678 9012 3456">#}
+{#                    </div>#}
+{#                    #}
+{#                    <div class="row">#}
+{#                        <div class="col-md-6">#}
+{#                            <div class="form-group">#}
+{#                                <label for="expiry-date" class="form-label">Expiry Date</label>#}
+{#                                <input type="text" class="form-control" id="expiry-date" placeholder="MM/YY">#}
+{#                            </div>#}
+{#                        </div>#}
+{#                        <div class="col-md-6">#}
+{#                            <div class="form-group">#}
+{#                                <label for="cvv" class="form-label">CVV</label>#}
+{#                                <input type="text" class="form-control" id="cvv" placeholder="123">#}
+{#                            </div>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{#                #}
+{#                <!-- PayPal Form -->#}
+{#                <div id="paypal-form" class="payment-form d-none">#}
+{#                    <p class="text-center">You will be redirected to PayPal to complete your payment after you click the "Proceed to Payment" button below.</p>#}
+{#                    <div class="text-center">#}
+{#                        <img src="https://www.paypalobjects.com/webstatic/mktg/logo/pp_cc_mark_111x69.jpg" alt="PayPal" height="60">#}
+{#                    </div>#}
+{#                </div>#}
+{#                #}
+{#                <!-- M-Pesa Form -->#}
+{#                <div id="mpesa-form" class="payment-form d-none">#}
+{#                    <div class="form-group">#}
+{#                        <label for="phone-number" class="form-label">M-Pesa Phone Number</label>#}
+{#                        <input type="text" class="form-control" id="phone-number" name="phone_number" placeholder="+254 7XX XXX XXX">#}
+{#                        <div class="form-text">Enter the phone number linked to your M-Pesa account</div>#}
+{#                    </div>#}
+{#                    <p class="text-center mt-3">#}
+{#                        You will receive a prompt on your phone to confirm the payment after clicking the button below.#}
+{#                    </p>#}
+{#                </div>#}
+{#                #}
+{#                <!-- Submit Button -->#}
+{#                <div class="text-center mt-4">#}
+{#                    <button type="submit" class="btn btn-success btn-lg">#}
+{#                        <i class="fas fa-lock me-2"></i> Proceed to Payment#}
+{#                    </button>#}
+{#                </div>#}
+{#                #}
+{#                <div class="secure-badge">#}
+{#                    <i class="fas fa-shield-alt"></i>#}
+{#                    <span>All payments are secure and encrypted.</span>#}
+{#                </div>#}
+{#            </form>#}
+{#        </div>#}
+{#    </div>#}
+{#</div>#}
+{#{% endblock %}#}
+{##}
+{#{% block client_portal_js %}#}
+{#<script>#}
+{#    $(document).ready(function() {#}
+{#        // Payment method selection#}
+{#        $('.payment-method-card').on('click', function() {#}
+{#            $('.payment-method-card').removeClass('selected');#}
+{#            $(this).addClass('selected');#}
+{##}
+{#            const method = $(this).data('method');#}
+{#            $('#payment_method').val(method);#}
+{##}
+{#            // Show the appropriate form#}
+{#            $('.payment-form').addClass('d-none');#}
+{#            if (method === 'credit_card') {#}
+{#                $('#credit-card-form').removeClass('d-none');#}
+{#            } else if (method === 'paypal') {#}
+{#                $('#paypal-form').removeClass('d-none');#}
+{#            } else if (method === 'mpesa') {#}
+{#                $('#mpesa-form').removeClass('d-none');#}
+{#            }#}
+{#        });#}
+{##}
+{#        // Format credit card number#}
+{#        $('#card-number').on('input', function() {#}
+{#            let value = $(this).val().replace(/\D/g, '');#}
+{#            let formattedValue = '';#}
+{##}
+{#            for (let i = 0; i < value.length; i++) {#}
+{#                if (i > 0 && i % 4 === 0) {#}
+{#                    formattedValue += ' ';#}
+{#                }#}
+{#                formattedValue += value[i];#}
+{#            }#}
+{##}
+{#            $(this).val(formattedValue);#}
+{#        });#}
+{##}
+{#        // Format expiry date#}
+{#        $('#expiry-date').on('input', function() {#}
+{#            let value = $(this).val().replace(/\D/g, '');#}
+{#            let formattedValue = '';#}
+{##}
+{#            if (value.length > 0) {#}
+{#                formattedValue = value.substring(0, Math.min(2, value.length));#}
+{#                if (value.length > 2) {#}
+{#                    formattedValue += '/' + value.substring(2, Math.min(4, value.length));#}
+{#                }#}
+{#            }#}
+{##}
+{#            $(this).val(formattedValue);#}
+{#        });#}
+{##}
+{#        // Limit CVV to 3 or 4 digits#}
+{#        $('#cvv').on('input', function() {#}
+{#            let value = $(this).val().replace(/\D/g, '');#}
+{#            $(this).val(value.substring(0, 4));#}
+{#        });#}
+{##}
+{#        // Form validation#}
+{#        $('#payment-form').on('submit', function(e) {#}
+{#            const method = $('#payment_method').val();#}
+{##}
+{#            if (method === 'credit_card') {#}
+{#                const cardholderName = $('#cardholder-name').val();#}
+{#                const cardNumber = $('#card-number').val().replace(/\s/g, '');#}
+{#                const expiryDate = $('#expiry-date').val();#}
+{#                const cvv = $('#cvv').val();#}
+{##}
+{#                if (!cardholderName || !cardNumber || !expiryDate || !cvv) {#}
+{#                    alert('Please fill in all credit card details');#}
+{#                    e.preventDefault();#}
+{#                    return false;#}
+{#                }#}
+{#            } else if (method === 'mpesa') {#}
+{#                const phoneNumber = $('#phone-number').val();#}
+{##}
+{#                if (!phoneNumber) {#}
+{#                    alert('Please enter your M-Pesa phone number');#}
+{#                    e.preventDefault();#}
+{#                    return false;#}
+{#                }#}
+{#            }#}
+{#        });#}
+{#});#}
+{#</script>#}
+{#{% endblock %}#}
+
+
+{% extends 'client_portal/base.html' %}
+{% load static %}
+
+{% block client_portal_title %}Make Direct Payment - Client Portal{% endblock %}
+
+{% block breadcrumb_items %}
+<li class="breadcrumb-item active">Make Direct Payment</li>
+{% endblock %}
+
+{% block page_title %}Make Direct Payment{% endblock %}
+
+{% block client_portal_css %}
+<style>
+    :root {
+        /* Color scheme */
+        --beige-color: #f5eadb;
+        --amber-color: #c1954a;
+        --dark-amber: #9e7a39;
+        --light-amber: #d4b06a;
+        --off-white: #faf7f2;
+        --black: #212121;
+        --dark-gray: #333333;
+        --light-gray: #f0f0f0;
+    }
+
+    .payment-container {
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+        margin-bottom: 30px;
+        padding: 30px;
+    }
+
+    .payment-methods {
+        margin-bottom: 30px;
+    }
+
+    .payment-method-card {
+        border: 2px solid #e3e6f0;
+        border-radius: 10px;
+        padding: 20px;
+        margin-bottom: 20px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .payment-method-card:hover {
+        border-color: var(--amber-color);
+        background-color: rgba(193, 149, 74, 0.05);
+    }
+
+    .payment-method-card.selected {
+        border-color: var(--amber-color);
+        background-color: rgba(193, 149, 74, 0.05);
+    }
+
+    .payment-method-icon {
+        font-size: 2rem;
+        margin-bottom: 15px;
+        color: var(--amber-color);
+    }
+
+    .payment-method-title {
+        font-weight: 700;
+        margin-bottom: 5px;
+    }
+
+    .payment-method-description {
+        color: #858796;
+        font-size: 0.9rem;
+    }
+
+    .payment-form {
+        margin-top: 30px;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .secure-badge {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        margin-top: 20px;
+        color: #6c757d;
+    }
+
+    .btn-primary {
+        background-color: var(--amber-color);
+        border-color: var(--amber-color);
+    }
+
+    .btn-primary:hover {
+        background-color: var(--dark-amber);
+        border-color: var(--dark-amber);
+    }
+
+    .btn-outline-primary {
+        color: var(--amber-color);
+        border-color: var(--amber-color);
+    }
+
+    .btn-outline-primary:hover,
+    .btn-outline-primary.active {
+        background-color: var(--amber-color);
+        border-color: var(--amber-color);
+        color: white;
+    }
+
+    .btn-success {
+        background-color: #1cc88a;
+        border-color: #1cc88a;
+    }
+
+    .btn-success:hover {
+        background-color: #169b6b;
+        border-color: #169b6b;
+    }
+
+    .crypto-option img {
+        height: 18px;
+        width: auto;
+        margin-right: 5px;
+    }
+
+    .crypto-qr-container {
+        background-color: white;
+        padding: 15px;
+        border-radius: 8px;
+        display: inline-block;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    .crypto-details {
+        background-color: var(--beige-color);
+        border-radius: 8px;
+        padding: 15px;
+        margin-top: 20px;
+    }
+
+    .timer {
+        font-size: 1.2rem;
+        font-weight: bold;
+        color: var(--dark-amber);
+    }
+</style>
+{% endblock %}
+
+{% block client_portal_content %}
+<div class="row">
+    <div class="col-lg-8 mx-auto">
+        <div class="payment-container">
+            <h4 class="mb-4 text-center">Quick Payment</h4>
+            <p class="text-center mb-4">Make a direct payment to your account without requiring an invoice.</p>
+
+            <form method="post" action="{% url 'client_portal:direct_payment' %}" id="payment-form">
+                {% csrf_token %}
+
+                <!-- Amount Input -->
+                <div class="form-group">
+                    <label for="amount" class="form-label">Payment Amount</label>
+                    <div class="input-group">
+                        <span class="input-group-text">$</span>
+                        <input type="number" step="0.01" min="1" class="form-control" id="amount" name="amount" required>
+                    </div>
+                    <div class="form-text">Enter the amount you wish to pay.</div>
+                </div>
+
+                <!-- Purpose Input -->
+                <div class="form-group">
+                    <label for="purpose" class="form-label">Payment Purpose</label>
+                    <input type="text" class="form-control" id="purpose" name="purpose" placeholder="E.g., Deposit, Service fee, etc." required>
+                    <div class="form-text">Enter the purpose of your payment.</div>
+                </div>
+
+                <!-- Payment Methods -->
+                <div class="payment-methods">
+                    <h5 class="mb-3">Select Payment Method</h5>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="payment-method-card selected" data-method="mpesa">
+                                <div class="text-center">
+                                    <div class="payment-method-icon">
+                                        <i class="fas fa-mobile-alt"></i>
+                                    </div>
+                                    <h5 class="payment-method-title">M-Pesa</h5>
+                                    <p class="payment-method-description">Pay using M-Pesa</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="payment-method-card" data-method="paypal">
+                                <div class="text-center">
+                                    <div class="payment-method-icon">
+                                        <i class="fab fa-paypal"></i>
+                                    </div>
+                                    <h5 class="payment-method-title">PayPal</h5>
+                                    <p class="payment-method-description">Pay with your PayPal account</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="payment-method-card" data-method="crypto">
+                                <div class="text-center">
+                                    <div class="payment-method-icon">
+                                        <i class="fab fa-bitcoin"></i>
+                                    </div>
+                                    <h5 class="payment-method-title">Cryptocurrency</h5>
+                                    <p class="payment-method-description">Pay with Bitcoin, Ethereum, etc.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Payment Method (Hidden) -->
+                <input type="hidden" name="payment_method" id="payment_method" value="mpesa">
+
+                <!-- M-Pesa Form -->
+                <div id="mpesa-form" class="payment-form">
+                    <div class="form-group">
+                        <label for="phone-number" class="form-label">M-Pesa Phone Number</label>
+                        <input type="text" class="form-control" id="phone-number" name="phone_number" placeholder="+254 7XX XXX XXX">
+                        <div class="form-text">Enter the phone number linked to your M-Pesa account</div>
+                    </div>
+                    <p class="text-center mt-3">
+                        You will receive a prompt on your phone to confirm the payment after clicking the button below.
+                    </p>
+                </div>
+
+                <!-- PayPal Form -->
+                <div id="paypal-form" class="payment-form d-none">
+                    <p class="text-center">You will be redirected to PayPal to complete your payment after you click the "Proceed to Payment" button below.</p>
+                    <div class="text-center">
+                        <img src="https://www.paypalobjects.com/webstatic/mktg/logo/pp_cc_mark_111x69.jpg" alt="PayPal" height="60">
+                    </div>
+                </div>
+
+                <!-- Crypto Form -->
+                <div id="crypto-form" class="payment-form d-none">
+                    <div class="text-center mb-4">
+                        <p>Select a cryptocurrency to pay with:</p>
+                        <div class="btn-group mb-3">
+                            <button type="button" class="btn btn-outline-primary active crypto-option" data-crypto="bitcoin">
+                                <img src="{% static 'images/crypto/bitcoin.svg' %}" alt="Bitcoin" onerror="this.src='https://cryptologos.cc/logos/bitcoin-btc-logo.svg?v=022'; this.onerror='';">
+                                Bitcoin
+                            </button>
+                            <button type="button" class="btn btn-outline-primary crypto-option" data-crypto="ethereum">
+                                <img src="{% static 'images/crypto/ethereum.svg' %}" alt="Ethereum" onerror="this.src='https://cryptologos.cc/logos/ethereum-eth-logo.svg?v=022'; this.onerror='';">
+                                Ethereum
+                            </button>
+                            <button type="button" class="btn btn-outline-primary crypto-option" data-crypto="litecoin">
+                                <img src="{% static 'images/crypto/litecoin.svg' %}" alt="Litecoin" onerror="this.src='https://cryptologos.cc/logos/litecoin-ltc-logo.svg?v=022'; this.onerror='';">
+                                Litecoin
+                            </button>
+                        </div>
+                        <div class="mt-4">
+                            <p>Scan the QR code below to pay <strong>$<span id="crypto-amount">0.00</span></strong>:</p>
+                            <div class="crypto-qr-container">
+                                <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=bitcoin:bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh" alt="Bitcoin QR Code" id="crypto-qr-image" width="200" height="200">
+                            </div>
+
+                            <div class="crypto-details">
+                                <p class="mb-2">Send payment to this address:</p>
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" id="crypto-address" value="bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh" readonly>
+                                    <button class="btn btn-outline-secondary" type="button" id="copy-address-btn">
+                                        <i class="fas fa-copy"></i> Copy
+                                    </button>
+                                </div>
+                                <p class="mb-2">Payment expires in: <span class="timer" id="payment-timer">15:00</span></p>
+                                <p class="small text-muted mb-0">After payment, click "I've Made the Payment" below to continue.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="text-center mt-4">
+                    <button type="submit" class="btn btn-success btn-lg">
+                        <i class="fas fa-lock me-2"></i> Proceed to Payment
+                    </button>
+
+                    <!-- Crypto Confirmation Button (initially hidden) -->
+                    <button type="button" id="crypto-confirm-btn" class="btn btn-primary btn-lg d-none">
+                        <i class="fas fa-check me-2"></i> I've Made the Payment
+                    </button>
+                </div>
+
+                <div class="secure-badge">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>All payments are secure and encrypted.</span>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block client_portal_js %}
+<script>
+    $(document).ready(function() {
+        // Update crypto amount when form amount changes
+        $('#amount').on('input', function() {
+            $('#crypto-amount').text($(this).val());
+        });
+
+        // Payment method selection
+        $('.payment-method-card').on('click', function() {
+            $('.payment-method-card').removeClass('selected');
+            $(this).addClass('selected');
+
+            const method = $(this).data('method');
+            $('#payment_method').val(method);
+
+            // Show the appropriate form
+            $('.payment-form').addClass('d-none');
+            if (method === 'mpesa') {
+                $('#mpesa-form').removeClass('d-none');
+                $('#crypto-confirm-btn').addClass('d-none');
+                $('button[type="submit"]').removeClass('d-none');
+            } else if (method === 'paypal') {
+                $('#paypal-form').removeClass('d-none');
+                $('#crypto-confirm-btn').addClass('d-none');
+                $('button[type="submit"]').removeClass('d-none');
+            } else if (method === 'crypto') {
+                $('#crypto-form').removeClass('d-none');
+                $('#crypto-confirm-btn').removeClass('d-none');
+                $('button[type="submit"]').addClass('d-none');
+                // Set initial amount
+                $('#crypto-amount').text($('#amount').val() || '0.00');
+                // Reset timer
+                startTimer(15 * 60); // 15 minutes in seconds
+            }
+        });
+
+        // Crypto selection
+        $('.crypto-option').on('click', function() {
+            $('.crypto-option').removeClass('active');
+            $(this).addClass('active');
+
+            const crypto = $(this).data('crypto');
+            const amount = $('#amount').val() || '0.00';
+
+            // Update QR code and address based on selected crypto
+            if (crypto === 'bitcoin') {
+                const address = 'bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh';
+                $('#crypto-qr-image').attr('src', `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=bitcoin:${address}?amount=${amount}`);
+                $('#crypto-address').val(address);
+            } else if (crypto === 'ethereum') {
+                const address = '0x89205A3A3b2A69De6Dbf7f01ED13B2108B2c43e7';
+                $('#crypto-qr-image').attr('src', `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=ethereum:${address}?value=${amount}`);
+                $('#crypto-address').val(address);
+            } else if (crypto === 'litecoin') {
+                const address = 'LTC123abcdefghijklmnopqrstuvwxyz123456';
+                $('#crypto-qr-image').attr('src', `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=litecoin:${address}?amount=${amount}`);
+                $('#crypto-address').val(address);
+            }
+        });
+
+        // Copy to clipboard functionality
+        $('#copy-address-btn').on('click', function() {
+            const addressInput = document.getElementById('crypto-address');
+            addressInput.select();
+            document.execCommand('copy');
+
+            // Show copy confirmation
+            const originalText = $(this).html();
+            $(this).html('<i class="fas fa-check"></i> Copied!');
+            setTimeout(() => {
+                $(this).html(originalText);
+            }, 2000);
+        });
+
+        // Crypto payment confirmation
+        $('#crypto-confirm-btn').on('click', function() {
+            const amount = $('#amount').val();
+            const purpose = $('#purpose').val();
+            const crypto = $('.crypto-option.active').data('crypto');
+
+            if (!amount || !purpose || !crypto) {
+                alert('Please fill in all required fields');
+                return;
+            }
+
+            // Simulate redirect to crypto payment processing
+            window.location.href = `/client/direct-payment/crypto/${amount}/?crypto=${crypto}&purpose=${encodeURIComponent(purpose)}`;
+        });
+
+        // Form validation
+        $('#payment-form').on('submit', function(e) {
+            const method = $('#payment_method').val();
+
+            if (method === 'mpesa') {
+                const phoneNumber = $('#phone-number').val();
+
+                if (!phoneNumber) {
+                    alert('Please enter your M-Pesa phone number');
+                    e.preventDefault();
+                    return false;
+                }
+            }
+
+            if (!$('#amount').val() || !$('#purpose').val()) {
+                alert('Please enter both amount and purpose');
+                e.preventDefault();
+                return false;
+            }
+        });
+
+        // Timer functionality
+        function startTimer(duration) {
+            let timer = duration;
+            const timerElement = document.getElementById('payment-timer');
+
+            const interval = setInterval(function() {
+                const minutes = Math.floor(timer / 60);
+                let seconds = timer % 60;
+
+                seconds = seconds < 10 ? "0" + seconds : seconds;
+
+                timerElement.textContent = minutes + ":" + seconds;
+
+                if (--timer < 0) {
+                    clearInterval(interval);
+                    timerElement.textContent = "Expired";
+                    $('#crypto-confirm-btn').prop('disabled', true).text('Payment Expired');
+                }
+            }, 1000);
+        }
+    });
+</script>
+{% endblock %}

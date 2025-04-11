@@ -1,0 +1,237 @@
+
+{% extends 'client_portal/base.html' %}
+{% load static %}
+
+{% block client_portal_title %}M-Pesa Payment Status - Client Portal{% endblock %}
+
+{% block breadcrumb_items %}
+<li class="breadcrumb-item"><a href="{% url 'client_portal:invoices' %}">Invoices</a></li>
+<li class="breadcrumb-item"><a href="{% url 'client_portal:invoice_detail' pk=invoice.id %}">Invoice #{{ invoice.invoice_number }}</a></li>
+<li class="breadcrumb-item active">M-Pesa Payment Status</li>
+{% endblock %}
+
+{% block page_title %}M-Pesa Payment Status{% endblock %}
+
+{% block client_portal_css %}
+<style>
+    .status-container {
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+        margin-bottom: 30px;
+        padding: 30px;
+    }
+
+    .invoice-summary {
+        background-color: #f8f9fc;
+        border-radius: 10px;
+        padding: 20px;
+        margin-bottom: 30px;
+    }
+
+    .payment-status {
+        text-align: center;
+        padding: 30px 20px;
+        margin-bottom: 30px;
+        border-radius: 10px;
+    }
+
+    .payment-status.pending {
+        background-color: #fff3cd;
+        border: 1px solid #ffeeba;
+    }
+
+    .payment-status-icon {
+        font-size: 3rem;
+        margin-bottom: 20px;
+        color: #f6c23e;
+    }
+
+    .spinner {
+        display: inline-block;
+        width: 80px;
+        height: 80px;
+        margin-bottom: 20px;
+    }
+
+    .spinner:after {
+        content: " ";
+        display: block;
+        width: 64px;
+        height: 64px;
+        margin: 8px;
+        border-radius: 50%;
+        border: 6px solid #f6c23e;
+        border-color: #f6c23e transparent #f6c23e transparent;
+        animation: spinner 1.2s linear infinite;
+    }
+
+    @keyframes spinner {
+        0% {
+            transform: rotate(0deg);
+        }
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+</style>
+{% endblock %}
+
+{% block client_portal_content %}
+<div class="row">
+    <div class="col-lg-8 mx-auto">
+        <div class="status-container">
+            <!-- Invoice Summary -->
+            <div class="invoice-summary">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h5 class="mb-0">Invoice Summary</h5>
+                    <a href="{% url 'client_portal:invoice_detail' pk=invoice.id %}" class="btn btn-sm btn-outline-primary">View Invoice</a>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <strong>Invoice #:</strong> {{ invoice.invoice_number }}
+                        </div>
+                        <div class="mb-3">
+                            <strong>Issue Date:</strong> {{ invoice.issue_date|date:"M d, Y" }}
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <strong>Amount to Pay:</strong> ${{ amount|floatformat:2 }}
+                        </div>
+                        <div class="mb-3">
+                            <strong>Phone Number:</strong> {{ transaction.phone_number }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Payment Status -->
+            <div class="payment-status pending" id="payment-status">
+                <div class="spinner" id="status-spinner"></div>
+                <h4 id="status-title">Processing M-Pesa Payment</h4>
+                <p id="status-message">Please check your phone and enter your M-Pesa PIN to complete the payment.</p>
+                <p class="text-muted">This page will automatically update when the payment is completed.</p>
+            </div>
+
+            <div class="text-center mb-4">
+                <a href="{% url 'client_portal:invoice_detail' pk=invoice.id %}" class="btn btn-outline-secondary">
+                    <i class="fas fa-arrow-left me-2"></i> Back to Invoice
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block client_portal_js %}
+<script>
+    $(document).ready(function() {
+        let checkCount = 0;
+        const maxChecks = 30; // Maximum number of times to check (30 * 3 seconds = 90 seconds)
+
+        // Function to check payment status
+        function checkPaymentStatus() {
+            $.ajax({
+                url: '{% url "mpesa_api:query_payment_status" %}',
+                type: 'GET',
+                dataType: 'json',
+                success: function(response) {
+                    if (response.status === 'completed') {
+                        // Payment completed
+                        if (response.success) {
+                            // Payment successful
+                            const statusDiv = $('#payment-status');
+                            statusDiv.removeClass('pending').addClass('bg-success text-white');
+
+                            $('#status-spinner').hide();
+                            $('#status-title').text('Payment Successful!');
+                            $('#status-message').html('<i class="fas fa-check-circle fa-3x mb-3"></i><br>Your M-Pesa payment has been received. You will be redirected to the receipt page.');
+
+                            // Redirect after showing success message
+                            setTimeout(function() {
+                                window.location.href = '{% url "mpesa_api:check_payment_status" %}';
+                            }, 3000);
+                        } else {
+                            // Payment failed
+                            const statusDiv = $('#payment-status');
+                            statusDiv.removeClass('pending').addClass('bg-danger text-white');
+
+                            $('#status-spinner').hide();
+                            $('#status-title').text('Payment Failed');
+                            $('#status-message').html('<i class="fas fa-times-circle fa-3x mb-3"></i><br>' + response.message);
+
+                            // Add button to try again
+                            $('#status-message').after('<a href="{% url "client_portal:make_payment" invoice_id=invoice.id %}" class="btn btn-light mt-3">Try Again</a>');
+                        }
+                    } else if (response.status === 'pending') {
+                        // Still pending, check again if not exceeded max count
+                        checkCount++;
+                        if (checkCount < maxChecks) {
+                            setTimeout(checkPaymentStatus, 3000);
+                        } else {
+                            // Timeout reached
+                            const statusDiv = $('#payment-status');
+                            statusDiv.removeClass('pending').addClass('bg-warning');
+
+                            $('#status-spinner').hide();
+                            $('#status-title').text('Payment Taking Too Long');
+                            $('#status-message').html('Your payment is taking longer than expected. Please check your phone or try again.');
+
+                            // Add button to refresh or try again
+                            $('#status-message').after('<div class="mt-3"><button id="check-again" class="btn btn-primary me-2">Check Again</button><a href="{% url "client_portal:make_payment" invoice_id=invoice.id %}" class="btn btn-outline-secondary">Try Again</a></div>');
+
+                            // Add click handler for check again button
+                            $('#check-again').on('click', function() {
+                                // Reset check count and start checking again
+                                checkCount = 0;
+
+                                // Reset UI
+                                const statusDiv = $('#payment-status');
+                                statusDiv.removeClass('bg-warning').addClass('pending');
+
+                                $('#status-spinner').show();
+                                $('#status-title').text('Processing M-Pesa Payment');
+                                $('#status-message').text('Please check your phone and enter your M-Pesa PIN to complete the payment.');
+
+                                // Remove the buttons
+                                $(this).parent().remove();
+
+                                // Start checking again
+                                setTimeout(checkPaymentStatus, 1000);
+                            });
+                        }
+                    } else {
+                        // Error state
+                        const statusDiv = $('#payment-status');
+                        statusDiv.removeClass('pending').addClass('bg-danger text-white');
+
+                        $('#status-spinner').hide();
+                        $('#status-title').text('Error');
+                        $('#status-message').html('<i class="fas fa-exclamation-triangle fa-3x mb-3"></i><br>' + response.message);
+
+                        // Add button to try again
+                        $('#status-message').after('<a href="{% url "client_portal:make_payment" invoice_id=invoice.id %}" class="btn btn-light mt-3">Try Again</a>');
+                    }
+                },
+                error: function() {
+                    // AJAX error
+                    const statusDiv = $('#payment-status');
+                    statusDiv.removeClass('pending').addClass('bg-danger text-white');
+
+                    $('#status-spinner').hide();
+                    $('#status-title').text('Connection Error');
+                    $('#status-message').html('<i class="fas fa-wifi fa-3x mb-3"></i><br>There was a problem connecting to the server. Please try again.');
+
+                    // Add button to try again
+                    $('#status-message').after('<a href="{% url "client_portal:make_payment" invoice_id=invoice.id %}" class="btn btn-light mt-3">Try Again</a>');
+                }
+            });
+        }
+
+        // Start checking payment status
+        setTimeout(checkPaymentStatus, 3000);
+    });
+</script>
+{% endblock %}

@@ -347,9 +347,7 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'portfolio:portfolio' %}">Portfolio</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'blog:blog_list' %}">Blog</a>
-                        </li>
+
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'quotes:service_estimator' %}">Estimator</a>
                         </li>
@@ -359,14 +357,19 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'core:contact' %}">Contact</a>
                         </li>
+
                         <li class="nav-item">
                             <a class="nav-link btn btn-dark text-white ms-2 px-3" href="{% url 'client_portal:login' %}">Client Login</a>
                         </li>
-                        <li class="nav-item ms-2">
-                            <button id="theme-toggle" class="btn btn-sm">
-                                <i class="fas fa-moon"></i>
-                            </button>
-                        </li>
+
+
+
+                        <li class="nav-item">
+    <a class="nav-link {% if request.resolver_match.url_name == 'direct_payment' %}active{% endif %}" href="{% url 'client_portal:direct_payment' %}">
+        <i class="fas fa-money-bill-wave fa-fw"></i>
+        <span>PayHere</span>
+    </a>
+</li>
                     </ul>
                 </div>
             </div>
@@ -519,3 +522,8 @@
     {% block extra_js %}{% endblock %}
 </body>
 </html>
+
+
+
+
+

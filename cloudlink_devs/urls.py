@@ -26,10 +26,14 @@ urlpatterns = [
     path('', include('core.urls')),  # Core app handles the main pages
     path('services/', include('services.urls')),
     path('portfolio/', include('portfolio.urls')),
+
+   path('mpesa/', include('mpesa_api.urls')),
     path('blog/', include('blog.urls')),
     path('quotes/', include('quotes.urls')),
     path('chat/', include('chatbot.urls')),
     path('client/', include('client_portal.urls')),  # Keep just one client path
+
+# path('direct-payment/crypto/<str:amount>/', views.process_direct_crypto, name='process_direct_crypto'),
 ]
 
 # Serve media files in development
