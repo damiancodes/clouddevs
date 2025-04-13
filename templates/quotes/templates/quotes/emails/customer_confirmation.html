@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Order Confirmation - CloudLink_Devs</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #ffffff;
+        }
+        .header {
+            text-align: center;
+            padding: 20px;
+            background-color: #c1954a;
+            color: white;
+        }
+        .footer {
+            text-align: centertext-align: center;
+            padding: 20px;
+            margin-top: 20px;
+            color: #666;
+            font-size: 12px;
+        }
+        .content {
+            padding: 20px;
+        }
+        h1 {
+            color: #c1954a;
+            margin-bottom: 20px;
+        }
+        .order-details {
+            margin: 30px 0;
+            border: 1px solid #eee;
+            padding: 15px;
+        }
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+        .detail-row:last-child {
+            border-bottom: none;
+        }
+        .detail-label {
+            font-weight: bold;
+            color: #555;
+        }
+        .features-list {
+            margin: 20px 0;
+        }
+        .feature-item {
+            background-color: #f5eadb;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+        .feature-row {
+            display: flex;
+            justify-content: space-between;
+        }
+        .total-row {
+            font-weight: bold;
+            font-size: 18px;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 2px solid #eee;
+        }
+        .button {
+            display: inline-block;
+            background-color: #c1954a;
+            color: white;
+            padding: 12px 25px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+        .next-steps {
+            margin-top: 30px;
+            background-color: #f5f5f5;
+            padding: 15px;
+            border-radius: 5px;
+        }
+        .step {
+            margin-bottom: 15px;
+        }
+        .step-number {
+            display: inline-block;
+            width: 25px;
+            height: 25px;
+            background-color: #c1954a;
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 25px;
+            margin-right: 10px;
+        }
+        .step-title {
+            font-weight: bold;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>CloudLink_Devs</h1>
+            <p>Your Custom Solution Order</p>
+        </div>
+
+        <div class="content">
+            <h2>Thank You for Your Order!</h2>
+
+            <p>Dear {{ order.name }},</p>
+
+            <p>Thank you for choosing CloudLink_Devs for your custom solution. We're excited to work with you!</p>
+
+            <div class="order-details">
+                <h3>Order Details</h3>
+
+                <div class="detail-row">
+                    <span class="detail-label">Service:</span>
+                    <span>{{ order.service.name }}</span>
+                </div>
+
+                <div class="detail-row">
+                    <span class="detail-label">Order Date:</span>
+                    <span>{{ order.created_at|date:"F j, Y, g:i a" }}</span>
+                </div>
+
+                <div class="detail-row">
+                    <span class="detail-label">Appointment Date:</span>
+                    <span>{{ order.appointment_date|date:"F j, Y, g:i a" }}</span>
+                </div>
+
+                <h4>Selected Features</h4>
+                <div class="features-list">
+                    {% for feature in order.selected_features.all %}
+                        <div class="feature-item">
+                            <div class="feature-row">
+                                <span>{{ feature.feature.name }}</span>
+                                <span>
+                                    {% if feature.price_type == 'fixed' %}
+                                        ${{ feature.price_at_order }}
+                                    {% else %}
+                                        {{ feature.feature.price_value }}% (${{ feature.price_at_order }})
+                                    {% endif %}
+                                </span>
+                            </div>
+                        </div>
+                    {% empty %}
+                        <p>No additional features selected.</p>
+                    {% endfor %}
+                </div>
+
+                <div class="detail-row total-row">
+                    <span>Total (USD):</span>
+                    <span>${{ order.total_price_usd }}</span>
+                </div>
+
+                <div class="detail-row">
+                    <span>Total (KSH):</span>
+                    <span>KSH {{ order.total_price_ksh }}</span>
+                </div>
+
+                {% if order.is_paid %}
+                    <h4>Payment Information</h4>
+                    <div class="detail-row">
+                        <span class="detail-label">Payment Method:</span>
+                        <span>
+                            {% if order.payment_method == 'mpesa' %}
+                                M-Pesa
+                            {% elif order.payment_method == 'paypal' %}
+                                PayPal
+                            {% elif order.payment_method == 'crypto' %}
+                                Cryptocurrency
+                            {% else %}
+                                {{ order.payment_method|capfirst }}
+                            {% endif %}
+                        </span>
+                    </div>
+                    {% if order.transaction_id %}
+                        <div class="detail-row">
+                            <span class="detail-label">Transaction ID:</span>
+                            <span>{{ order.transaction_id }}</span>
+                        </div>
+                    {% endif %}
+                {% elif payment_skipped %}
+                    <p><strong>Payment Status:</strong> You've chosen to skip payment for now. Our team will contact you regarding payment options.</p>
+                {% endif %}
+            </div>
+
+            <div class="next-steps">
+                <h3>What's Next?</h3>
+
+                <div class="step">
+                    <span class="step-number">1</span>
+                    <span class="step-title">Team Review</span>
+                    <p>Our team will review your order and prepare for your upcoming appointment.</p>
+                </div>
+
+                <div class="step">
+                    <span class="step-number">2</span>
+                    <span class="step-title">Consultation</span>
+                    <p>We'll meet with you on the scheduled appointment date to discuss your custom solution in detail.</p>
+                </div>
+
+                <div class="step">
+                    <span class="step-number">3</span>
+                    <span class="step-title">Project Kickoff</span>
+                    <p>After the consultation, we'll finalize the project scope and begin work on your custom solution.</p>
+                </div>
+            </div>
+
+            <p>If you have any questions or need to make changes to your order, please don't hesitate to contact us.</p>
+
+            <p>Thank you again for choosing CloudLink_Devs!</p>
+
+            <p>Best regards,<br>
+            The CloudLink_Devs Team</p>
+        </div>
+
+        <div class="footer">
+            <p>&copy; {% now "Y" %} CloudLink_Devs. All rights reserved.</p>
+            <p>123 Business Street, Nairobi, Kenya</p>
+        </div>
+    </div>
+</body>
+</html>

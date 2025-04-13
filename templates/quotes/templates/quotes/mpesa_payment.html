@@ -1,0 +1,551 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}M-Pesa Payment - CloudLink_Devs{% endblock %}
+
+{% block extra_css %}
+<style>
+    :root {
+        --beige-color: #f5eadb;
+        --amber-color: #c1954a;
+        --dark-amber: #9e7a39;
+        --light-amber: #d4b06a;
+        --off-white: #faf7f2;
+        --black: #212121;
+        --dark-gray: #333333;
+        --light-gray: #f0f0f0;
+    }
+
+    /* Payment Header */
+    .payment-header {
+        background: linear-gradient(135deg, var(--amber-color) 0%, var(--dark-amber) 100%);
+        color: white;
+        padding: 60px 0;
+        text-align: center;
+    }
+
+    .payment-header h1 {
+        font-weight: 800;
+        margin-bottom: 20px;
+    }
+
+    /* Payment Content */
+    .payment-section {
+        padding: 80px 0;
+        background-color: var(--off-white);
+    }
+
+    .payment-card {
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+        margin-bottom: 30px;
+        background-color: white;
+    }
+
+    .payment-card-header {
+        padding: 20px;
+        background-color: var(--amber-color);
+        color: white;
+        border-bottom: 1px solid var(--light-gray);
+    }
+
+    .payment-card-header h2 {
+        margin-bottom: 0;
+        font-size: 1.5rem;
+        font-weight: 700;
+    }
+
+    .payment-card-body {
+        padding: 30px;
+    }
+
+    /* M-Pesa Specific */
+    .mpesa-logo {
+        max-width: 150px;
+        margin-bottom: 20px;
+    }
+
+    .phone-input-group {
+        display: flex;
+        align-items: center;
+    }
+
+    .phone-prefix {
+        background-color: var(--light-gray);
+        padding: 10px 15px;
+        border-radius: 5px 0 0 5px;
+        border: 1px solid #d1d3e2;
+        border-right: none;
+        font-weight: 600;
+    }
+
+    .phone-input {
+        flex-grow: 1;
+        border-radius: 0 5px 5px 0;
+        border: 1px solid #d1d3e2;
+        padding: 10px 15px;
+    }
+
+    .phone-input:focus {
+        border-color: var(--light-amber);
+        box-shadow: 0 0 0 0.25rem rgba(193, 149, 74, 0.25);
+    }
+
+    .payment-instructions {
+        margin-top: 30px;
+        padding: 20px;
+        background-color: var(--beige-color);
+        border-radius: 10px;
+    }
+
+    .payment-instructions h3 {
+        font-size: 1.2rem;
+        font-weight: 700;
+        margin-bottom: 15px;
+    }
+
+    .instruction-step {
+        display: flex;
+        margin-bottom: 15px;
+    }
+
+    .step-number {
+        width: 25px;
+        height: 25px;
+        border-radius: 50%;
+        background-color: var(--amber-color);
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        margin-right: 15px;
+        flex-shrink: 0;
+    }
+
+    .step-text {
+        font-size: 0.95rem;
+    }
+
+    .payment-status {
+        text-align: center;
+        margin-top: 30px;
+        padding: 20px;
+        border-radius: 10px;
+        display: none;
+    }
+
+    .payment-status.success {
+        background-color: #d4edda;
+        color: #155724;
+        display: block;
+    }
+
+    .payment-status.error {
+        background-color: #f8d7da;
+        color: #721c24;
+        display: block;
+    }
+
+    .payment-status.pending {
+        background-color: #fff3cd;
+        color: #856404;
+        display: block;
+    }
+
+    /* Order summary */
+    .order-summary {
+        background-color: var(--beige-color);
+        border-radius: 10px;
+        padding: 25px;
+    }
+
+    .order-summary-title {
+        font-size: 1.25rem;
+        font-weight: 700;
+        margin-bottom: 20px;
+        color: var(--dark-gray);
+    }
+
+    .order-detail {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+    }
+
+    .order-total {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 20px;
+        padding-top: 20px;
+        border-top: 1px solid rgba(0, 0, 0, 0.1);
+        font-weight: 700;
+        font-size: 1.1rem;
+    }
+
+    /* Buttons */
+    .btn-amber {
+        background-color: var(--amber-color);
+        color: white;
+        font-weight: 600;
+        padding: 10px 20px;
+        border-radius: 5px;
+        border: none;
+        transition: all 0.3s ease;
+    }
+
+    .btn-amber:hover {
+        background-color: var(--dark-amber);
+        color: white;
+    }
+
+    .btn-outline-amber {
+        background-color: transparent;
+        color: var(--amber-color);
+        font-weight: 600;
+        padding: 10px 20px;
+        border-radius: 5px;
+        border: 1px solid var(--amber-color);
+        transition: all 0.3s ease;
+    }
+
+    .btn-outline-amber:hover {
+        background-color: var(--amber-color);
+        color: white;
+    }
+
+    /* Spinner */
+    .mpesa-spinner {
+        display: none;
+        text-align: center;
+        margin: 20px 0;
+    }
+
+    .mpesa-spinner .spinner-border {
+        color: var(--amber-color);
+    }
+
+    /* Dark mode adaptations */
+    body.dark-mode .payment-section {
+        background-color: #222533;
+    }
+
+    body.dark-mode .payment-card {
+        background-color: var(--dark-gray);
+        color: var(--off-white);
+    }
+
+    body.dark-mode .payment-instructions,
+    body.dark-mode .order-summary {
+        background-color: #222533;
+        color: var(--off-white);
+    }
+
+    body.dark-mode .phone-prefix {
+        background-color: #3a3d52;
+        border-color: #3a3d52;
+        color: var(--off-white);
+    }
+
+    body.dark-mode .phone-input {
+        background-color: var(--dark-gray);
+        border-color: #3a3d52;
+        color: var(--off-white);
+    }
+
+    body.dark-mode .order-summary-title {
+        color: var(--off-white);
+    }
+
+    body.dark-mode .payment-status.success {
+        background-color: rgba(212, 237, 218, 0.2);
+    }
+
+    body.dark-mode .payment-status.error {
+        background-color: rgba(248, 215, 218, 0.2);
+    }
+
+    body.dark-mode .payment-status.pending {
+        background-color: rgba(255, 243, 205, 0.2);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Payment Header -->
+<section class="payment-header">
+    <div class="container">
+        <h1>M-Pesa Payment</h1>
+        <p class="lead">Complete your payment using M-Pesa STK Push</p>
+    </div>
+</section>
+
+<!-- Payment Content -->
+<section class="payment-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="payment-card">
+                    <div class="payment-card-header">
+                        <h2>M-Pesa Payment</h2>
+                    </div>
+                    <div class="payment-card-body">
+                        <div class="text-center mb-4">
+                            <img src="{% static 'images/mpesa-logo.png' %}" alt="M-Pesa Logo" class="mpesa-logo">
+                            <p>Enter your M-Pesa phone number to receive a payment prompt</p>
+                        </div>
+
+                        <form id="mpesa-payment-form">
+                            {% csrf_token %}
+                            <div class="mb-4">
+                                <label for="phone_number" class="form-label">M-Pesa Phone Number</label>
+                                <div class="phone-input-group">
+                                    <div class="phone-prefix">+254</div>
+                                    <input type="text" class="phone-input" id="phone_number" name="phone_number" placeholder="7XX XXX XXX" maxlength="9" required>
+                                </div>
+                                <div class="form-text">Enter your phone number without the leading zero (e.g., 7XXXXXXXX)</div>
+                            </div>
+
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-amber" id="pay-button">
+                                    <i class="fas fa-mobile-alt me-2"></i> Pay KSH {{ order.total_price_ksh }}
+                                </button>
+                            </div>
+                        </form>
+
+                        <div class="mpesa-spinner">
+                            <div class="spinner-border" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                            <p class="mt-2">Processing your payment. Please wait...</p>
+                        </div>
+
+                        <div id="payment-status"></div>
+
+                        <div class="payment-instructions">
+                            <h3>How to Complete M-Pesa Payment:</h3>
+                            
+                            <div class="instruction-step">
+                                <div class="step-number">1</div>
+                                <div class="step-text">Enter your M-Pesa phone number and click "Pay"</div>
+                            </div>
+                            
+                            <div class="instruction-step">
+                                <div class="step-number">2</div>
+                                <div class="step-text">You will receive an STK Push notification on your phone</div>
+                            </div>
+                            
+                            <div class="instruction-step">
+                                <div class="step-number">3</div>
+                                <div class="step-text">Enter your M-Pesa PIN to authorize the payment</div>
+                            </div>
+                            
+                            <div class="instruction-step">
+                                <div class="step-number">4</div>
+                                <div class="step-text">Once payment is completed, you will be redirected to the confirmation page</div>
+                            </div>
+                            
+                            <div class="alert alert-info mt-3">
+                                <i class="fas fa-info-circle me-2"></i> Make sure you have sufficient balance in your M-Pesa account
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="order-summary">
+                    <h3 class="order-summary-title">Order Summary</h3>
+                    
+                    <div class="order-detail">
+                        <span>Service:</span>
+                        <span>{{ order.service.name }}</span>
+                    </div>
+                    
+                    <div class="order-detail">
+                        <span>Features:</span>
+                        <span>{{ order.features.count }}</span>
+                    </div>
+                    
+                    <div class="order-detail">
+                        <span>Appointment Date:</span>
+                        <span>{{ order.appointment_date|date:"F j, Y, g:i a" }}</span>
+                    </div>
+                    
+                    <div class="order-total">
+                        <span>Total:</span>
+                        <span>KSH {{ order.total_price_ksh }}</span>
+                    </div>
+
+                    <div class="mt-4">
+                        <a href="{% url 'quotes:payment_choice' %}" class="btn btn-outline-amber w-100">
+                            <i class="fas fa-arrow-left me-2"></i> Choose Different Payment Method
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const mpesaForm = document.getElementById('mpesa-payment-form');
+        const payButton = document.getElementById('pay-button');
+        const spinner = document.querySelector('.mpesa-spinner');
+        const paymentStatus = document.getElementById('payment-status');
+        
+        mpesaForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Show spinner
+            payButton.disabled = true;
+            spinner.style.display = 'block';
+            
+            // Get phone number
+            const phoneNumber = document.getElementById('phone_number').value;
+            
+            // Call STK Push API
+            fetch('{% url "quotes:mpesa_stk_push" %}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                body: JSON.stringify({
+                    phone_number: phoneNumber,
+                    order_id: '{{ order.id }}',
+                    amount: '{{ order.total_price_ksh }}'
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                spinner.style.display = 'none';
+                
+                if (data.success) {
+                    // Show pending status
+                    paymentStatus.innerHTML = `
+                        <div class="payment-status pending">
+                            <i class="fas fa-clock fa-2x mb-3"></i>
+                            <h4>STK Push Sent</h4>
+                            <p>Please check your phone and enter your M-Pesa PIN to complete the payment.</p>
+                        </div>
+                    `;
+                    
+                    // Start checking payment status
+                    checkPaymentStatus(data.checkout_request_id);
+                } else {
+                    // Show error
+                    paymentStatus.innerHTML = `
+                        <div class="payment-status error">
+                            <i class="fas fa-exclamation-circle fa-2x mb-3"></i>
+                            <h4>Payment Failed</h4>
+                            <p>${data.message || 'There was an error processing your M-Pesa payment. Please try again.'}</p>
+                        </div>
+                    `;
+                    payButton.disabled = false;
+                }
+            })
+            .catch(error => {
+                spinner.style.display = 'none';
+                paymentStatus.innerHTML = `
+                    <div class="payment-status error">
+                        <i class="fas fa-exclamation-circle fa-2x mb-3"></i>
+                        <h4>Payment Failed</h4>
+                        <p>There was an error processing your M-Pesa payment. Please try again.</p>
+                    </div>
+                `;
+                payButton.disabled = false;
+                console.error('Error:', error);
+            });
+        });
+        
+        function checkPaymentStatus(checkoutRequestId) {
+            let attempts = 0;
+            const maxAttempts = 10;
+            
+            const checkStatus = setInterval(function() {
+                attempts++;
+                
+                fetch('{% url "quotes:mpesa_check_status" %}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': '{{ csrf_token }}'
+                    },
+                    body: JSON.stringify({
+                        checkout_request_id: checkoutRequestId,
+                        order_id: '{{ order.id }}'
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Payment successful
+                        clearInterval(checkStatus);
+                        paymentStatus.innerHTML = `
+                            <div class="payment-status success">
+                                <i class="fas fa-check-circle fa-2x mb-3"></i>
+                                <h4>Payment Successful!</h4>
+                                <p>Your payment has been received. You will be redirected to the confirmation page.</p>
+                            </div>
+                        `;
+                        
+                        // Redirect to confirmation page after 3 seconds
+                        setTimeout(function() {
+                            window.location.href = "{% url 'quotes:payment_callback' order.id 'mpesa' %}?transaction_id=" + data.transaction_id;
+                        }, 3000);
+                    } else if (data.status === 'pending') {
+                        // Still waiting for payment
+                        if (attempts >= maxAttempts) {
+                            clearInterval(checkStatus);
+                            paymentStatus.innerHTML = `
+                                <div class="payment-status pending">
+                                    <i class="fas fa-clock fa-2x mb-3"></i>
+                                    <h4>Payment Pending</h4>
+                                    <p>We haven't received your payment confirmation yet. If you've completed the payment, it may take a few moments to reflect. You'll receive a confirmation email once the payment is processed.</p>
+                                    <a href="{% url 'quotes:payment_callback' order.id 'mpesa' %}" class="btn btn-amber mt-3">Continue to Confirmation</a>
+                                </div>
+                            `;
+                        }
+                    } else {
+                        // Payment failed
+                        clearInterval(checkStatus);
+                        paymentStatus.innerHTML = `
+                            <div class="payment-status error">
+                                <i class="fas fa-times-circle fa-2x mb-3"></i>
+                                <h4>Payment Failed</h4>
+                                <p>${data.message || 'There was an error processing your M-Pesa payment. Please try again.'}</p>
+                                <button id="retry-payment" class="btn btn-amber mt-3">Try Again</button>
+                            </div>
+                        `;
+                        
+                        // Enable retry button
+                        document.getElementById('retry-payment').addEventListener('click', function() {
+                            paymentStatus.innerHTML = '';
+                            payButton.disabled = false;
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.error('Error checking payment status:', error);
+                    if (attempts >= maxAttempts) {
+                        clearInterval(checkStatus);
+                        paymentStatus.innerHTML = `
+                            <div class="payment-status error">
+                                <i class="fas fa-exclamation-circle fa-2x mb-3"></i>
+                                <h4>Unable to Verify Payment</h4>
+                                <p>We couldn't verify your payment status. If you completed the payment, you'll receive a confirmation email once it's processed.</p>
+                                <a href="{% url 'quotes:payment_callback' order.id 'mpesa' %}" class="btn btn-amber mt-3">Continue to Confirmation</a>
+                            </div>
+                        `;
+                    }
+                });
+            }, 5000); // Check every 5 seconds
+        }
+    });
+</script>
+{% endblock %}

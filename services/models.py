@@ -40,3 +40,14 @@ class ServiceFeature(models.Model):
 
     def __str__(self):
         return f"{self.service.name} - {self.title}"
+
+    class ServiceOrder(models.Model):
+        """Model for storing the display order of services."""
+        service = models.OneToOneField(Service, on_delete=models.CASCADE, related_name='display_order')
+        order = models.IntegerField(default=0)
+
+        class Meta:
+            ordering = ['order']
+
+        def __str__(self):
+            return f"{self.service.name} (Order: {self.order})"

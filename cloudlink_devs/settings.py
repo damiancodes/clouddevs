@@ -213,6 +213,11 @@ TEMPLATES = [
     },
 ]
 
+PAYPAL_CLIENT_ID = 'your-paypal-client-id'  # For PayPal integration
+CRYPTO_ADDRESS = 'your-crypto-wallet-address'  # For crypto payments
+ADMIN_EMAIL = 'admin@example.com'  # For email notifications
+DEFAULT_FROM_EMAIL = 'jamhimira@gmail.com'  # For sending emails
+
 # MEDIA_URL = '/media/'
 # MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 #

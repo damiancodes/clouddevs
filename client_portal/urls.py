@@ -307,5 +307,8 @@ path('direct-payment/mpesa/<str:amount>/', views.process_direct_mpesa, name='pro
 path('direct-payment/success/<str:payment_method>/<str:transaction_id>/',
      views.direct_payment_success, name='direct_payment_success'),
 
-
+path('direct-payment/crypto/<str:amount>/', views.process_direct_crypto, name='process_direct_crypto'),
+path('direct-payment/verify-crypto/<str:amount>/', views.verify_crypto_payment, name='verify_crypto_payment'),
+path('direct-payment/success/<str:payment_method>/<str:transaction_id>/',
+     views.direct_payment_success, name='direct_payment_success'),
 ]

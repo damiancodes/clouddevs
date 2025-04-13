@@ -1,0 +1,325 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Payment Options - CloudLink_Devs{% endblock %}
+
+{% block extra_css %}
+<style>
+    :root {
+        --beige-color: #f5eadb;
+        --amber-color: #c1954a;
+        --dark-amber: #9e7a39;
+        --light-amber: #d4b06a;
+        --off-white: #faf7f2;
+        --black: #212121;
+        --dark-gray: #333333;
+        --light-gray: #f0f0f0;
+    }
+
+    /* Payment Header */
+    .payment-header {
+        background: linear-gradient(135deg, var(--amber-color) 0%, var(--dark-amber) 100%);
+        color: white;
+        padding: 80px 0;
+        text-align: center;
+    }
+
+    .payment-header h1 {
+        font-weight: 800;
+        margin-bottom: 20px;
+    }
+
+    /* Payment Content */
+    .payment-section {
+        padding: 80px 0;
+        background-color: var(--off-white);
+    }
+
+    .payment-card {
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+        margin-bottom: 30px;
+        background-color: white;
+    }
+
+    .payment-card-header {
+        padding: 20px;
+        background-color: var(--amber-color);
+        color: white;
+        border-bottom: 1px solid var(--light-gray);
+    }
+
+    .payment-card-header h2 {
+        margin-bottom: 0;
+        font-size: 1.5rem;
+        font-weight: 700;
+    }
+
+    .payment-card-body {
+        padding: 30px;
+    }
+
+    /* Payment method cards */
+    .payment-method-card {
+        border-radius: 10px;
+        border: 2px solid var(--light-gray);
+        padding: 25px;
+        height: 100%;
+        transition: all 0.3s ease;
+    }
+
+    .payment-method-card:hover {
+        border-color: var(--amber-color);
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    }
+
+    .payment-method-icon {
+        font-size: 2.5rem;
+        color: var(--amber-color);
+        margin-bottom: 20px;
+    }
+
+    .payment-method-title {
+        font-size: 1.25rem;
+        font-weight: 700;
+        margin-bottom: 15px;
+    }
+
+    .payment-method-description {
+        color: var(--dark-gray);
+        margin-bottom: 20px;
+    }
+
+    /* Order summary */
+    .order-summary {
+        background-color: var(--beige-color);
+        border-radius: 10px;
+        padding: 25px;
+    }
+
+    .order-summary-title {
+        font-size: 1.25rem;
+        font-weight: 700;
+        margin-bottom: 20px;
+        color: var(--dark-gray);
+    }
+
+    .order-detail {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+    }
+
+    .order-total {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 20px;
+        padding-top: 20px;
+        border-top: 1px solid rgba(0, 0, 0, 0.1);
+        font-weight: 700;
+        font-size: 1.1rem;
+    }
+
+    .currency-toggle {
+        margin-bottom: 15px;
+        text-align: right;
+    }
+
+    /* Buttons */
+    .btn-amber {
+        background-color: var(--amber-color);
+        color: white;
+        font-weight: 600;
+        padding: 10px 20px;
+        border-radius: 5px;
+        border: none;
+        transition: all 0.3s ease;
+    }
+
+    .btn-amber:hover {
+        background-color: var(--dark-amber);
+        color: white;
+    }
+
+    .btn-outline-amber {
+        background-color: transparent;
+        color: var(--amber-color);
+        font-weight: 600;
+        padding: 10px 20px;
+        border-radius: 5px;
+        border: 1px solid var(--amber-color);
+        transition: all 0.3s ease;
+    }
+
+    .btn-outline-amber:hover {
+        background-color: var(--amber-color);
+        color: white;
+    }
+
+    /* Dark mode adaptations */
+    body.dark-mode .payment-section {
+        background-color: #222533;
+    }
+
+    body.dark-mode .payment-card,
+    body.dark-mode .payment-method-card {
+        background-color: var(--dark-gray);
+        color: var(--off-white);
+    }
+
+    body.dark-mode .payment-method-card {
+        border-color: #3a3d52;
+    }
+
+    body.dark-mode .payment-method-description {
+        color: #c2c5d3;
+    }
+
+    body.dark-mode .order-summary {
+        background-color: #222533;
+    }
+
+    body.dark-mode .order-summary-title {
+        color: var(--off-white);
+    }
+
+    body.dark-mode .order-detail,
+    body.dark-mode .order-total {
+        color: #c2c5d3;
+    }
+
+    body.dark-mode .order-total {
+        border-color: rgba(255, 255, 255, 0.1);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Payment Header -->
+<section class="payment-header">
+    <div class="container">
+        <h1>Choose Payment Method</h1>
+        <p class="lead">Select how you'd like to pay for your custom solution</p>
+    </div>
+</section>
+
+<!-- Payment Content -->
+<section class="payment-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="payment-card">
+                    <div class="payment-card-header">
+                        <h2>Select Payment Method</h2>
+                    </div>
+                    <div class="payment-card-body">
+                        <div class="row">
+                            <div class="col-md-4 mb-4">
+                                <a href="{% url 'quotes:process_mpesa' order.id %}" class="text-decoration-none">
+                                    <div class="payment-method-card">
+                                        <div class="payment-method-icon">
+                                            <i class="fas fa-mobile-alt"></i>
+                                        </div>
+                                        <h3 class="payment-method-title">M-Pesa</h3>
+                                        <p class="payment-method-description">Pay easily using M-Pesa STK Push service. You'll receive a prompt on your phone.</p>
+                                        <button class="btn btn-amber w-100">Pay with M-Pesa</button>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-md-4 mb-4">
+                                <a href="{% url 'quotes:process_paypal' order.id %}" class="text-decoration-none">
+                                    <div class="payment-method-card">
+                                        <div class="payment-method-icon">
+                                            <i class="fab fa-paypal"></i>
+                                        </div>
+                                        <h3 class="payment-method-title">PayPal</h3>
+                                        <p class="payment-method-description">Pay securely with your PayPal account or credit card through PayPal gateway.</p>
+                                        <button class="btn btn-amber w-100">Pay with PayPal</button>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-md-4 mb-4">
+                                <a href="{% url 'quotes:process_crypto' order.id %}" class="text-decoration-none">
+                                    <div class="payment-method-card">
+                                        <div class="payment-method-icon">
+                                            <i class="fab fa-bitcoin"></i>
+                                        </div>
+                                        <h3 class="payment-method-title">Crypto</h3>
+                                        <p class="payment-method-description">Pay using cryptocurrencies like Bitcoin, Ethereum, or other supported coins.</p>
+                                        <button class="btn btn-amber w-100">Pay with Crypto</button>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="text-center mt-4">
+                            <p>Not ready to pay now?</p>
+                            <a href="{% url 'quotes:skip_payment' order.id %}" class="btn btn-outline-amber">
+                                Skip Payment <i class="fas fa-arrow-right"></i>
+                            </a></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="order-summary">
+                    <div class="currency-toggle">
+                        <select id="currency-select" class="form-select form-select-sm" style="width: auto; display: inline-block;">
+                            <option value="USD">USD</option>
+                            <option value="KSH">KSH</option>
+                        </select>
+                    </div>
+
+                    <h3 class="order-summary-title">Order Summary</h3>
+
+                    <div class="order-detail">
+                        <span>Service:</span>
+                        <span>{{ order.service.name }}</span>
+                    </div>
+
+                    <div class="order-detail">
+                        <span>Features:</span>
+                        <span>{{ order.features.count }}</span>
+                    </div>
+
+                    <div class="order-detail">
+                        <span>Appointment Date:</span>
+                        <span>{{ order.appointment_date|date:"F j, Y, g:i a" }}</span>
+                    </div>
+
+                    <div class="order-total">
+                        <span>Total:</span>
+                        <span>
+                            <span class="price-usd">${{ order.total_price }}</span>
+                            <span class="price-ksh" style="display:none;">KSH {{ order.total_price_ksh }}</span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Currency toggle
+        const currencySelect = document.getElementById('currency-select');
+        const usdElements = document.querySelectorAll('.price-usd');
+        const kshElements = document.querySelectorAll('.price-ksh');
+
+        currencySelect.addEventListener('change', function() {
+            if (this.value === 'USD') {
+                usdElements.forEach(el => el.style.display = 'inline');
+                kshElements.forEach(el => el.style.display = 'none');
+            } else {
+                usdElements.forEach(el => el.style.display = 'none');
+                kshElements.forEach(el => el.style.display = 'inline');
+            }
+        });
+    });
+</script>
+{% endblock %}

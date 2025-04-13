@@ -20,20 +20,49 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
+# urlpatterns = [
+#     path('admin/', admin.site.urls),  # Keep just one admin path
+#     path('accounts/', include('django.contrib.auth.urls')),  # Django auth views
+#     path('', include('core.urls')),  # Core app handles the main pages
+#     path('services/', include('services.urls')),
+#     path('portfolio/', include('portfolio.urls')),
+#
+#    path('mpesa/', include('mpesa_api.urls')),
+#     path('blog/', include('blog.urls')),
+#     path('quotes/', include('quotes.urls')),
+#     path('chat/', include('chatbot.urls')),
+#     path('client/', include('client_portal.urls')),  # Keep just one client path
+#
+# # path('direct-payment/crypto/<str:amount>/', views.process_direct_crypto, name='process_direct_crypto'),
+# ]
+#
+# # Serve media files in development
+# if settings.DEBUG:
+#     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+#     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
+# cloudlink_devs/urls.py
+from django.contrib import admin
+from django.urls import path, include
+from django.conf import settings
+from django.conf.urls.static import static
+
 urlpatterns = [
-    path('admin/', admin.site.urls),  # Keep just one admin path
-    path('accounts/', include('django.contrib.auth.urls')),  # Django auth views
-    path('', include('core.urls')),  # Core app handles the main pages
+    path('admin/', admin.site.urls),
+    path('accounts/', include('django.contrib.auth.urls')),
+    path('', include('core.urls')),
     path('services/', include('services.urls')),
     path('portfolio/', include('portfolio.urls')),
-
-   path('mpesa/', include('mpesa_api.urls')),
+    path('mpesa/', include('mpesa_api.urls')),
     path('blog/', include('blog.urls')),
+
+
     path('quotes/', include('quotes.urls')),
     path('chat/', include('chatbot.urls')),
-    path('client/', include('client_portal.urls')),  # Keep just one client path
+    path('client/', include('client_portal.urls')),
 
-# path('direct-payment/crypto/<str:amount>/', views.process_direct_crypto, name='process_direct_crypto'),
+#      path('crypto/', include('crypto_api.urls')),  # If you have a separate crypto app
+
 ]
 
 # Serve media files in development
