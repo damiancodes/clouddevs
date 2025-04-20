@@ -5,127 +5,573 @@
 {##}
 {#{% block extra_css %}#}
 {#<style>#}
-{#    /* About Header */#}
+{#    :root {#}
+{#        --beige-color: #f5eadb;#}
+{#        --amber-color: #c1954a;#}
+{#        --dark-amber: #9e7a39;#}
+{#        --light-amber: #d4b06a;#}
+{#        --off-white: #faf7f2;#}
+{#        --black: #212121;#}
+{#        --dark-gray: #333333;#}
+{#        --light-gray: #f0f0f0;#}
+{#        --gradient-primary: linear-gradient(135deg, var(--amber-color), var(--dark-amber));#}
+{#        --gradient-light: linear-gradient(135deg, var(--light-amber), var(--amber-color));#}
+{#        --card-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);#}
+{#        --card-shadow-hover: 0 20px 45px rgba(0, 0, 0, 0.15);#}
+{#    }#}
+{##}
+{#    /* Enhanced About Header */#}
 {#    .about-header {#}
-{#        background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);#}
-{#        color: white;#}
-{#        padding: 80px 0;#}
+{#        background: linear-gradient(135deg, var(--beige-color) 0%, #f0e5cd 100%);#}
+{#        color: var(--black);#}
+{#        padding: 120px 0 80px;#}
 {#        text-align: center;#}
+{#        position: relative;#}
+{#        overflow: hidden;#}
+{#    }#}
+{##}
+{#    .about-header::before {#}
+{#        content: '';#}
+{#        position: absolute;#}
+{#        top: 0;#}
+{#        left: 0;#}
+{#        width: 100%;#}
+{#        height: 100%;#}
+{#        background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c1954a' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");#}
+{#        z-index: 1;#}
+{#    }#}
+{##}
+{#    .about-header-content {#}
+{#        position: relative;#}
+{#        z-index: 2;#}
 {#    }#}
 {##}
 {#    .about-header h1 {#}
 {#        font-weight: 800;#}
 {#        margin-bottom: 20px;#}
+{#        color: var(--black);#}
+{#        font-size: 3.5rem;#}
+{#        opacity: 0;#}
+{#        transform: translateY(30px);#}
+{#        animation: fadeInUp 0.8s forwards 0.3s;#}
 {#    }#}
 {##}
-{#    /* About Content */#}
+{#    .about-header p.lead {#}
+{#        color: var(--dark-gray);#}
+{#        max-width: 700px;#}
+{#        margin: 0 auto;#}
+{#        font-size: 1.2rem;#}
+{#        opacity: 0;#}
+{#        transform: translateY(30px);#}
+{#        animation: fadeInUp 0.8s forwards 0.5s;#}
+{#    }#}
+{##}
+{#    /* Modernized About Content Section */#}
 {#    .about-content {#}
-{#        padding: 80px 0;#}
+{#        padding: 100px 0;#}
+{#        position: relative;#}
+{#        overflow: hidden;#}
 {#    }#}
 {##}
-{#    .about-image {#}
-{#        border-radius: 10px;#}
-{#        overflow: hidden;#}
-{#        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);#}
+{#    .about-content::before {#}
+{#        content: '';#}
+{#        position: absolute;#}
+{#        width: 600px;#}
+{#        height: 600px;#}
+{#        border-radius: 50%;#}
+{#        background: radial-gradient(circle, rgba(193, 149, 74, 0.05) 0%, rgba(193, 149, 74, 0) 70%);#}
+{#        top: -200px;#}
+{#        left: -200px;#}
+{#        z-index: 0;#}
+{#    }#}
+{##}
+{#    .about-content::after {#}
+{#        content: '';#}
+{#        position: absolute;#}
+{#        width: 500px;#}
+{#        height: 500px;#}
+{#        border-radius: 50%;#}
+{#        background: radial-gradient(circle, rgba(193, 149, 74, 0.05) 0%, rgba(193, 149, 74, 0) 70%);#}
+{#        bottom: -200px;#}
+{#        right: -200px;#}
+{#        z-index: 0;#}
+{#    }#}
+{##}
+{#    .about-text {#}
+{#        position: relative;#}
+{#        z-index: 1;#}
 {#    }#}
 {##}
 {#    .about-text h2 {#}
-{#        margin-bottom: 25px;#}
+{#        margin-bottom: 30px;#}
 {#        font-weight: 700;#}
+{#        color: var(--black);#}
+{#        font-size: 2.5rem;#}
+{#        position: relative;#}
+{#        display: inline-block;#}
 {#    }#}
 {##}
-{#    /* Mission & Vision */#}
-{#    .mission-vision {#}
-{#        padding: 80px 0;#}
-{#        background-color: var(--light-gray);#}
+{#    .about-text h2::after {#}
+{#        content: '';#}
+{#        position: absolute;#}
+{#        bottom: -10px;#}
+{#        left: 0;#}
+{#        width: 60px;#}
+{#        height: 3px;#}
+{#        background: var(--gradient-primary);#}
 {#    }#}
 {##}
-{#    .mission-card, .vision-card {#}
-{#        padding: 40px;#}
-{#        border-radius: 10px;#}
-{#        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);#}
-{#        height: 100%;#}
-{#        background-color: white;#}
-{#    }#}
-{##}
-{#    .card-icon {#}
-{#        font-size: 3rem;#}
-{#        color: var(--accent-color);#}
+{#    .about-text p {#}
+{#        color: var(--dark-gray);#}
+{#        font-size: 1.05rem;#}
+{#        line-height: 1.8;#}
 {#        margin-bottom: 20px;#}
 {#    }#}
 {##}
-{#    /* Team Section */#}
+{#    /* Enhanced Who We Are Card */#}
+{#    .who-we-are-card {#}
+{#        border-radius: 24px;#}
+{#        overflow: hidden;#}
+{#        background-color: white;#}
+{#        box-shadow: var(--card-shadow);#}
+{#        height: 100%;#}
+{#        transform: translateY(50px);#}
+{#        opacity: 0;#}
+{#        transition: all 0.7s cubic-bezier(0.23, 1, 0.32, 1);#}
+{#        position: relative;#}
+{#        z-index: 1;#}
+{#    }#}
+{##}
+{#    .who-we-are-card.visible {#}
+{#        transform: translateY(0);#}
+{#        opacity: 1;#}
+{#    }#}
+{##}
+{#    .who-we-are-card:hover {#}
+{#        transform: translateY(-15px);#}
+{#        box-shadow: var(--card-shadow-hover);#}
+{#    }#}
+{##}
+{#    .who-we-are-card::before {#}
+{#        content: '';#}
+{#        position: absolute;#}
+{#        top: 0;#}
+{#        left: 0;#}
+{#        width: 100%;#}
+{#        height: 100%;#}
+{#        background: linear-gradient(135deg, rgba(193, 149, 74, 0.05) 0%, rgba(193, 149, 74, 0) 100%);#}
+{#        z-index: -1;#}
+{#        opacity: 0;#}
+{#        transition: opacity 0.5s ease;#}
+{#    }#}
+{##}
+{#    .who-we-are-card:hover::before {#}
+{#        opacity: 1;#}
+{#    }#}
+{##}
+{#    .who-we-are-image {#}
+{#        height: 280px;#}
+{#        overflow: hidden;#}
+{#        position: relative;#}
+{#    }#}
+{##}
+{#    .who-we-are-image::after {#}
+{#        content: '';#}
+{#        position: absolute;#}
+{#        bottom: 0;#}
+{#        left: 0;#}
+{#        width: 100%;#}
+{#        height: 50%;#}
+{#        background: linear-gradient(to top, rgba(0,0,0,0.5), transparent);#}
+{#        opacity: 0;#}
+{#        transition: opacity 0.5s ease;#}
+{#    }#}
+{##}
+{#    .who-we-are-card:hover .who-we-are-image::after {#}
+{#        opacity: 1;#}
+{#    }#}
+{##}
+{#    .who-we-are-image img {#}
+{#        width: 100%;#}
+{#        height: 100%;#}
+{#        object-fit: cover;#}
+{#        transition: transform 0.7s cubic-bezier(0.23, 1, 0.32, 1);#}
+{#    }#}
+{##}
+{#    .who-we-are-card:hover .who-we-are-image img {#}
+{#        transform: scale(1.1);#}
+{#    }#}
+{##}
+{#    .who-we-are-content {#}
+{#        padding: 35px;#}
+{#        position: relative;#}
+{#        border-top: 5px solid var(--amber-color);#}
+{#        margin-top: -5px;#}
+{#    }#}
+{##}
+{#    .who-we-are-content h3 {#}
+{#        font-weight: 700;#}
+{#        margin-bottom: 20px;#}
+{#        font-size: 1.6rem;#}
+{#        color: var(--black);#}
+{#        position: relative;#}
+{#        display: inline-block;#}
+{#    }#}
+{##}
+{#    .who-we-are-content h3::before {#}
+{#        content: '';#}
+{#        position: absolute;#}
+{#        bottom: -8px;#}
+{#        left: 0;#}
+{#        width: 40px;#}
+{#        height: 3px;#}
+{#        background: var(--gradient-primary);#}
+{#        transition: width 0.3s ease;#}
+{#    }#}
+{##}
+{#    .who-we-are-card:hover .who-we-are-content h3::before {#}
+{#        width: 80px;#}
+{#    }#}
+{##}
+{#    .who-we-are-content p {#}
+{#        color: var(--dark-gray);#}
+{#        margin-bottom: 25px;#}
+{#        font-size: 1.05rem;#}
+{#        line-height: 1.7;#}
+{#    }#}
+{##}
+{#    .who-we-are-content .btn {#}
+{#        padding: 12px 30px;#}
+{#        font-weight: 600;#}
+{#        border-radius: 50px;#}
+{#        background: white;#}
+{#        color: var(--amber-color);#}
+{#        border: 2px solid var(--amber-color);#}
+{#        transition: all 0.3s ease;#}
+{#        position: relative;#}
+{#        overflow: hidden;#}
+{#        z-index: 1;#}
+{#    }#}
+{##}
+{#    .who-we-are-content .btn::before {#}
+{#        content: '';#}
+{#        position: absolute;#}
+{#        top: 0;#}
+{#        left: 0;#}
+{#        width: 0%;#}
+{#        height: 100%;#}
+{#        background: var(--gradient-primary);#}
+{#        transition: all 0.3s ease;#}
+{#        z-index: -1;#}
+{#    }#}
+{##}
+{#    .who-we-are-content .btn:hover {#}
+{#        color: white;#}
+{#        border-color: transparent;#}
+{#    }#}
+{##}
+{#    .who-we-are-content .btn:hover::before {#}
+{#        width: 100%;#}
+{#    }#}
+{##}
+{#    /* Enhanced Mission & Vision Section */#}
+{#    .mission-vision {#}
+{#        padding: 100px 0;#}
+{#        background-color: var(--off-white);#}
+{#        position: relative;#}
+{#        overflow: hidden;#}
+{#    }#}
+{##}
+{#    .mission-vision::before {#}
+{#        content: '';#}
+{#        position: absolute;#}
+{#        top: 0;#}
+{#        left: 0;#}
+{#        width: 100%;#}
+{#        height: 100%;#}
+{#        background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c1954a' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");#}
+{#        z-index: 0;#}
+{#    }#}
+{##}
+{#    .mission-vision .container {#}
+{#        position: relative;#}
+{#        z-index: 0;#}
+{#    }#}
+{##}
+{#    .mission-vision .container {#}
+{#        position: relative;#}
+{#        z-index: 1;#}
+{#    }#}
+{##}
+{#    .mission-card, .vision-card {#}
+{#        border-radius: 24px;#}
+{#        overflow: hidden;#}
+{#        background: white;#}
+{#        box-shadow: var(--card-shadow);#}
+{#        height: 100%;#}
+{#        transform: translateY(50px);#}
+{#        opacity: 0;#}
+{#        transition: all 0.7s cubic-bezier(0.23, 1, 0.32, 1);#}
+{#        display: flex;#}
+{#        flex-direction: column;#}
+{#    }#}
+{##}
+{#    .mission-card.visible, .vision-card.visible {#}
+{#        transform: translateY(0);#}
+{#        opacity: 1;#}
+{#    }#}
+{##}
+{#    .mission-card:hover, .vision-card:hover {#}
+{#        transform: translateY(-15px);#}
+{#        box-shadow: var(--card-shadow-hover);#}
+{#    }#}
+{##}
+{#    .mission-image, .vision-image {#}
+{#        height: 280px;#}
+{#        position: relative;#}
+{#        overflow: hidden;#}
+{#    }#}
+{##}
+{#    .mission-image img, .vision-image img {#}
+{#        width: 100%;#}
+{#        height: 100%;#}
+{#        object-fit: cover;#}
+{#        transition: transform 0.7s cubic-bezier(0.23, 1, 0.32, 1);#}
+{#    }#}
+{##}
+{#    .mission-card:hover .mission-image img,#}
+{#    .vision-card:hover .vision-image img {#}
+{#        transform: scale(1.1);#}
+{#    }#}
+{##}
+{#    .mission-content, .vision-content {#}
+{#        padding: 35px;#}
+{#        flex-grow: 1;#}
+{#        display: flex;#}
+{#        flex-direction: column;#}
+{#        position: relative;#}
+{#    }#}
+{##}
+{#    .mission-content::before, .vision-content::before {#}
+{#        content: '';#}
+{#        position: absolute;#}
+{#        top: 0;#}
+{#        left: 0;#}
+{#        width: 100%;#}
+{#        height: 5px;#}
+{#    }#}
+{##}
+{#    .mission-content::before {#}
+{#        background: var(--gradient-primary);#}
+{#    }#}
+{##}
+{#    .vision-content::before {#}
+{#        background: var(--gradient-primary);#}
+{#    }#}
+{##}
+{#    .mission-content h3, .vision-content h3 {#}
+{#        font-weight: 700;#}
+{#        margin-bottom: 20px;#}
+{#        font-size: 1.6rem;#}
+{#        color: var(--black);#}
+{#        position: relative;#}
+{#        display: inline-block;#}
+{#    }#}
+{##}
+{#    .mission-content h3::after, .vision-content h3::after {#}
+{#        content: '';#}
+{#        position: absolute;#}
+{#        bottom: -8px;#}
+{#        left: 0;#}
+{#        width: 40px;#}
+{#        height: 3px;#}
+{#        transition: width 0.3s ease;#}
+{#    }#}
+{##}
+{#    .mission-content h3::after {#}
+{#        background: var(--gradient-primary);#}
+{#    }#}
+{##}
+{#    .vision-content h3::after {#}
+{#        background: var(--gradient-primary);#}
+{#    }#}
+{##}
+{#    .mission-card:hover .mission-content h3::after,#}
+{#    .vision-card:hover .vision-content h3::after {#}
+{#        width: 80px;#}
+{#    }#}
+{##}
+{#    .mission-content p, .vision-content p {#}
+{#        color: var(--dark-gray);#}
+{#        font-size: 1.05rem;#}
+{#        line-height: 1.7;#}
+{#        margin-bottom: 0;#}
+{#        flex-grow: 1;#}
+{#    }#}
+{##}
+{#    /* Enhanced Team Section */#}
 {#    .team-section {#}
-{#        padding: 80px 0;#}
+{#        padding: 100px 0;#}
+{#        position: relative;#}
+{#        overflow: hidden;#}
+{#    }#}
+{##}
+{#    .team-section::before {#}
+{#        content: '';#}
+{#        position: absolute;#}
+{#        top: -150px;#}
+{#        right: -150px;#}
+{#        width: 400px;#}
+{#        height: 400px;#}
+{#        border-radius: 50%;#}
+{#        background: radial-gradient(circle, rgba(193, 149, 74, 0.05) 0%, rgba(193, 149, 74, 0) 70%);#}
+{#        z-index: 0;#}
+{#    }#}
+{##}
+{#    .team-section::after {#}
+{#        content: '';#}
+{#        position: absolute;#}
+{#        bottom: -150px;#}
+{#        left: -150px;#}
+{#        width: 400px;#}
+{#        height: 400px;#}
+{#        border-radius: 50%;#}
+{#        background: radial-gradient(circle, rgba(193, 149, 74, 0.05) 0%, rgba(193, 149, 74, 0) 70%);#}
+{#        z-index: 0;#}
 {#    }#}
 {##}
 {#    .team-card {#}
-{#        border-radius: 10px;#}
+{#        border-radius: 24px;#}
 {#        overflow: hidden;#}
-{#        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);#}
+{#        box-shadow: var(--card-shadow);#}
 {#        margin-bottom: 30px;#}
 {#        background-color: white;#}
+{#        height: 100%;#}
+{#        transform: translateY(50px);#}
+{#        opacity: 0;#}
+{#        transition: all 0.7s cubic-bezier(0.23, 1, 0.32, 1);#}
+{#        position: relative;#}
+{#        z-index: 1;#}
+{#    }#}
+{##}
+{#    .team-card.visible {#}
+{#        transform: translateY(0);#}
+{#        opacity: 1;#}
+{#    }#}
+{##}
+{#    .team-card:hover {#}
+{#        transform: translateY(-15px);#}
+{#        box-shadow: var(--card-shadow-hover);#}
 {#    }#}
 {##}
 {#    .team-image {#}
 {#        position: relative;#}
 {#        overflow: hidden;#}
+{#        height: 280px;#}
+{#    }#}
+{##}
+{#    .team-image::after {#}
+{#        content: '';#}
+{#        position: absolute;#}
+{#        top: 0;#}
+{#        left: 0;#}
+{#        width: 100%;#}
+{#        height: 100%;#}
+{#        background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0) 60%);#}
+{#        opacity: 0;#}
+{#        transition: opacity 0.5s ease;#}
+{#    }#}
+{##}
+{#    .team-card:hover .team-image::after {#}
+{#        opacity: 1;#}
 {#    }#}
 {##}
 {#    .team-image img {#}
-{#        transition: all 0.3s ease;#}
+{#        width: 100%;#}
+{#        height: 100%;#}
+{#        object-fit: cover;#}
+{#        transition: transform 0.7s cubic-bezier(0.23, 1, 0.32, 1);#}
 {#    }#}
 {##}
 {#    .team-card:hover .team-image img {#}
-{#        transform: scale(1.05);#}
+{#        transform: scale(1.1);#}
 {#    }#}
 {##}
 {#    .team-info {#}
-{#        padding: 20px;#}
+{#        padding: 30px;#}
 {#        text-align: center;#}
+{#        position: relative;#}
+{#    }#}
+{##}
+{#    .team-info::before {#}
+{#        content: '';#}
+{#        position: absolute;#}
+{#        top: 0;#}
+{#        left: 50%;#}
+{#        transform: translateX(-50%);#}
+{#        width: 60px;#}
+{#        height: 5px;#}
+{#        background: var(--gradient-primary);#}
+{#        border-radius: 0 0 10px 10px;#}
+{#        transition: width 0.3s ease;#}
+{#    }#}
+{##}
+{#    .team-card:hover .team-info::before {#}
+{#        width: 100px;#}
 {#    }#}
 {##}
 {#    .team-info h4 {#}
-{#        margin-bottom: 5px;#}
+{#        margin-bottom: 10px;#}
+{#        color: var(--black);#}
+{#        font-weight: 700;#}
+{#        font-size: 1.3rem;#}
+{#        transition: color 0.3s ease;#}
+{#    }#}
+{##}
+{#    .team-card:hover .team-info h4 {#}
+{#        color: var(--amber-color);#}
 {#    }#}
 {##}
 {#    .team-info p {#}
-{#        color: #858796;#}
-{#        margin-bottom: 15px;#}
+{#        color: var(--amber-color);#}
+{#        margin-bottom: 20px;#}
+{#        font-weight: 600;#}
+{#        font-size: 1.05rem;#}
+{#        opacity: 0.8;#}
+{#        transition: opacity 0.3s ease;#}
 {#    }#}
 {##}
-{#    .team-social {#}
-{#        display: flex;#}
-{#        justify-content: center;#}
-{#        gap: 10px;#}
+{#    .team-card:hover .team-info p {#}
+{#        opacity: 1;#}
 {#    }#}
 {##}
-{#    .social-link {#}
-{#        width: 35px;#}
-{#        height: 35px;#}
-{#        display: flex;#}
-{#        align-items: center;#}
-{#        justify-content: center;#}
-{#        background-color: var(--light-gray);#}
-{#        color: var(--primary-color);#}
-{#        border-radius: 50%;#}
-{#        transition: all 0.3s ease;#}
-{#    }#}
-{##}
-{#    .social-link:hover {#}
-{#        background-color: var(--accent-color);#}
-{#        color: white;#}
-{#    }#}
-{##}
-{#    /* Timeline */#}
+{#    /* Enhanced Timeline Section */#}
 {#    .timeline-section {#}
-{#        padding: 80px 0;#}
-{#        background-color: var(--light-gray);#}
+{#        padding: 100px 0;#}
+{#        background-color: var(--off-white);#}
+{#        position: relative;#}
+{#        overflow: hidden;#}
+{#    }#}
+{##}
+{#    .timeline-section::before {#}
+{#        content: '';#}
+{#        position: absolute;#}
+{#        top: 0;#}
+{#        left: 0;#}
+{#        width: 100%;#}
+{#        height: 100%;#}
+{#        background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c1954a' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");#}
+{#        z-index: 0;#}
+{#    }#}
+{##}
+{#    .timeline-section .container {#}
+{#        position: relative;#}
+{#        z-index: 1;#}
 {#    }#}
 {##}
 {#    .timeline {#}
 {#        position: relative;#}
-{#        padding-left: 30px;#}
+{#        padding-left: 50px;#}
 {#    }#}
 {##}
 {#    .timeline:before {#}
@@ -133,14 +579,23 @@
 {#        position: absolute;#}
 {#        height: 100%;#}
 {#        width: 3px;#}
-{#        background-color: var(--primary-color);#}
+{#        background: var(--gradient-primary);#}
 {#        left: 0;#}
 {#        top: 0;#}
+{#        border-radius: 1.5px;#}
 {#    }#}
 {##}
 {#    .timeline-item {#}
 {#        position: relative;#}
-{#        margin-bottom: 50px;#}
+{#        margin-bottom: 60px;#}
+{#        transform: translateX(50px);#}
+{#        opacity: 0;#}
+{#        transition: all 0.7s cubic-bezier(0.23, 1, 0.32, 1);#}
+{#    }#}
+{##}
+{#    .timeline-item.visible {#}
+{#        transform: translateX(0);#}
+{#        opacity: 1;#}
 {#    }#}
 {##}
 {#    .timeline-item:last-child {#}
@@ -150,46 +605,480 @@
 {#    .timeline-item:before {#}
 {#        content: "";#}
 {#        position: absolute;#}
-{#        width: 15px;#}
-{#        height: 15px;#}
+{#        width: 20px;#}
+{#        height: 20px;#}
 {#        border-radius: 50%;#}
-{#        background-color: var(--primary-color);#}
-{#        left: -36px;#}
+{#        background: var(--gradient-primary);#}
+{#        left: -59px;#}
 {#        top: 5px;#}
+{#        box-shadow: 0 0 0 5px rgba(193, 149, 74, 0.2);#}
+{#        transition: all 0.3s ease;#}
+{#    }#}
+{##}
+{#    .timeline-item:hover:before {#}
+{#        transform: scale(1.2);#}
+{#        box-shadow: 0 0 0 8px rgba(193, 149, 74, 0.2);#}
 {#    }#}
 {##}
 {#    .timeline-date {#}
 {#        font-weight: 700;#}
-{#        color: var(--accent-color);#}
+{#        color: var(--amber-color);#}
 {#        margin-bottom: 10px;#}
+{#        font-size: 1.2rem;#}
+{#        transition: all 0.3s ease;#}
 {#    }#}
 {##}
-{#    /* CTA Section */#}
+{#    .timeline-item:hover .timeline-date {#}
+{#        transform: translateX(5px);#}
+{#    }#}
+{##}
+{#    .timeline-item h4 {#}
+{#        color: var(--black);#}
+{#        font-weight: 700;#}
+{#        font-size: 1.3rem;#}
+{#        margin-bottom: 12px;#}
+{#        transition: all 0.3s ease;#}
+{#    }#}
+{##}
+{#    .timeline-item:hover h4 {#}
+{#        color: var(--amber-color);#}
+{#    }#}
+{##}
+{#    .timeline-item p {#}
+{#        color: var(--dark-gray);#}
+{#        line-height: 1.7;#}
+{#    }#}
+{##}
+{#    /* Enhanced CTA Section */#}
 {#    .cta-section {#}
-{#        padding: 80px 0;#}
-{#        background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);#}
-{#        color: white;#}
+{#        padding: 100px 0;#}
+{#        background: linear-gradient(135deg, var(--beige-color) 0%, #f0e5cd 100%);#}
+{#        color: var(--black);#}
 {#        text-align: center;#}
+{#        position: relative;#}
+{#        overflow: hidden;#}
+{#    }#}
+{##}
+{#    .cta-section::before {#}
+{#        content: '';#}
+{#        position: absolute;#}
+{#        top: 0;#}
+{#        left: 0;#}
+{#        width: 100%;#}
+{#        height: 100%;#}
+{#        background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c1954a' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");#}
+{#        z-index: 0;#}
+{#    }#}
+{##}
+{#    .cta-section .container {#}
+{#        position: relative;#}
+{#        z-index: 1;#}
 {#    }#}
 {##}
 {#    .cta-title {#}
-{#        font-size: 2.5rem;#}
-{#        font-weight: 700;#}
+{#        font-size: 2.8rem;#}
+{#        font-weight: 800;#}
 {#        margin-bottom: 1.5rem;#}
+{#        color: var(--black);#}
+{#        opacity: 0;#}
+{#        transform: translateY(30px);#}
+{#    }#}
+{##}
+{#    .cta-title.visible {#}
+{#        animation: fadeInUp 0.8s forwards;#}
 {#    }#}
 {##}
 {#    .cta-text {#}
 {#        max-width: 700px;#}
-{#        margin: 0 auto 2rem;#}
+{#        margin: 0 auto 2.5rem;#}
+{#        color: var(--dark-gray);#}
+{#        font-size: 1.2rem;#}
+{#        line-height: 1.7;#}
+{#        opacity: 0;#}
+{#        transform: translateY(30px);#}
+{#    }#}
+{##}
+{#    .cta-text.visible {#}
+{#        animation: fadeInUp 0.8s forwards 0.2s;#}
+{#    }#}
+{##}
+{#    .cta-buttons {#}
+{#        opacity: 0;#}
+{#        transform: translateY(30px);#}
+{#    }#}
+{##}
+{#    .cta-buttons.visible {#}
+{#        animation: fadeInUp 0.8s forwards 0.4s;#}
+{#    }#}
+{##}
+{#    .cta-section .btn {#}
+{#        padding: 15px 35px;#}
+{#        font-size: 1.1rem;#}
+{#        font-weight: 600;#}
+{#        border-radius: 50px;#}
+{#        transition: all 0.3s ease;#}
+{#        margin: 0 10px 10px;#}
+{#        position: relative;#}
+{#        overflow: hidden;#}
+{#        z-index: 1;#}
+{#    }#}
+{##}
+{#    .cta-section .btn-primary {#}
+{#        background: var(--gradient-primary);#}
+{#        border: none;#}
+{#        color: white;#}
+{#        box-shadow: 0 10px 20px rgba(193, 149, 74, 0.3);#}
+{#    }#}
+{##}
+{#    .cta-section .btn-primary:hover {#}
+{#        transform: translateY(-5px);#}
+{#        box-shadow: 0 15px 30px rgba(193, 149, 74, 0.4);#}
+{#    }#}
+{##}
+{#    .cta-section .btn-outline-primary {#}
+{#        background: transparent;#}
+{#        color: var(--amber-color);#}
+{#        border: 2px solid var(--amber-color);#}
+{#    }#}
+{##}
+{#    .cta-section .btn-outline-primary::before {#}
+{#        content: '';#}
+{#        position: absolute;#}
+{#        top: 0;#}
+{#        left: 0;#}
+{#        width: 0%;#}
+{#        height: 100%;#}
+{#        background: var(--gradient-primary);#}
+{#        transition: all 0.3s ease;#}
+{#        z-index: -1;#}
+{#    }#}
+{##}
+{#    .cta-section .btn-outline-primary:hover {#}
+{#        color: white;#}
+{#        border-color: transparent;#}
+{#        transform: translateY(-5px);#}
+{#        box-shadow: 0 15px 30px rgba(193, 149, 74, 0.3);#}
+{#    }#}
+{##}
+{#    .cta-section .btn-outline-primary:hover::before {#}
+{#        width: 100%;#}
+{#    }#}
+{##}
+{#    /* Enhanced Section Titles */#}
+{#    .section-title {#}
+{#        margin-bottom: 60px;#}
+{#        position: relative;#}
+{#    }#}
+{##}
+{#    .section-title h2 {#}
+{#        font-weight: 800;#}
+{#        color: var(--black);#}
+{#        position: relative;#}
+{#        display: inline-block;#}
+{#        margin-bottom: 20px;#}
+{#        font-size: 2.5rem;#}
+{#        opacity: 0;#}
+{#        transform: translateY(30px);#}
+{#        animation: fadeInUp 0.8s forwards 0.2s;#}
+{#    }#}
+{##}
+{#    .section-title h2:after {#}
+{#        content: '';#}
+{#        position: absolute;#}
+{#        bottom: -15px;#}
+{#        left: 0;#}
+{#        width: 60px;#}
+{#        height: 3px;#}
+{#        background: var(--gradient-primary);#}
+{#    }#}
+{##}
+{#    .section-title.text-center h2:after {#}
+{#        left: 50%;#}
+{#        transform: translateX(-50%);#}
+{#    }#}
+{##}
+{#    .section-title p {#}
+{#        color: var(--dark-gray);#}
+{#        font-size: 1.1rem;#}
+{#        line-height: 1.7;#}
+{#        max-width: 700px;#}
+{#        margin: 0 auto;#}
+{#        opacity: 0;#}
+{#        transform: translateY(30px);#}
+{#        animation: fadeInUp 0.8s forwards 0.4s;#}
+{#    }#}
+{##}
+{#    /* Team Cards Enhancement - New Style Without Social Icons */#}
+{#    .team-card {#}
+{#        border-radius: 24px;#}
+{#        overflow: hidden;#}
+{#        box-shadow: var(--card-shadow);#}
+{#        background-color: white;#}
+{#        height: 100%;#}
+{#        position: relative;#}
+{#        transition: all 0.5s ease;#}
+{#    }#}
+{##}
+{#    .team-card:hover {#}
+{#        transform: translateY(-15px);#}
+{#        box-shadow: var(--card-shadow-hover);#}
+{#    }#}
+{##}
+{#    .team-image {#}
+{#        height: 300px;#}
+{#        position: relative;#}
+{#        overflow: hidden;#}
+{#    }#}
+{##}
+{#    .team-image img {#}
+{#        width: 100%;#}
+{#        height: 100%;#}
+{#        object-fit: cover;#}
+{#        transition: all 0.7s ease;#}
+{#    }#}
+{##}
+{#    .team-card:hover .team-image img {#}
+{#        transform: scale(1.1);#}
+{#    }#}
+{##}
+{#    .team-image::before {#}
+{#        content: '';#}
+{#        position: absolute;#}
+{#        bottom: 0;#}
+{#        left: 0;#}
+{#        width: 100%;#}
+{#        height: 100%;#}
+{#        background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);#}
+{#        opacity: 0;#}
+{#        transition: opacity 0.5s ease;#}
+{#        z-index: 1;#}
+{#    }#}
+{##}
+{#    .team-card:hover .team-image::before {#}
+{#        opacity: 1;#}
+{#    }#}
+{##}
+{#    .team-info {#}
+{#        padding: 25px;#}
+{#        position: relative;#}
+{#        transition: all 0.3s ease;#}
+{#        background: white;#}
+{#        z-index: 2;#}
+{#    }#}
+{##}
+{#    .team-info::after {#}
+{#        content: '';#}
+{#        position: absolute;#}
+{#        bottom: 0;#}
+{#        left: 0;#}
+{#        width: 100%;#}
+{#        height: 3px;#}
+{#        background: var(--gradient-primary);#}
+{#        transform: scaleX(0);#}
+{#        transform-origin: right;#}
+{#        transition: transform 0.5s ease;#}
+{#    }#}
+{##}
+{#    .team-card:hover .team-info::after {#}
+{#        team-card:hover .team-info::after {#}
+{#        transform: scaleX(1);#}
+{#        transform-origin: left;#}
+{#    }#}
+{##}
+{#    .team-info h4 {#}
+{#        font-weight: 700;#}
+{#        font-size: 1.4rem;#}
+{#        margin-bottom: 8px;#}
+{#        color: var(--black);#}
+{#        transition: all 0.3s ease;#}
+{#    }#}
+{##}
+{#    .team-info p {#}
+{#        color: var(--amber-color);#}
+{#        font-weight: 600;#}
+{#        font-size: 1.05rem;#}
+{#        margin: 0;#}
+{#        transition: all 0.3s ease;#}
+{#    }#}
+{##}
+{#    .team-card:hover .team-info h4 {#}
+{#        color: var(--amber-color);#}
+{#    }#}
+{##}
+{#    .team-card:hover .team-info p {#}
 {#        opacity: 0.9;#}
 {#    }#}
 {##}
+{#    .team-card::after {#}
+{#        content: '';#}
+{#        position: absolute;#}
+{#        top: 10px;#}
+{#        right: 10px;#}
+{#        width: 50px;#}
+{#        height: 50px;#}
+{#        border-radius: 50%;#}
+{#        background: var(--gradient-primary);#}
+{#        opacity: 0;#}
+{#        transform: scale(0);#}
+{#        transition: all 0.5s ease;#}
+{#        z-index: 2;#}
+{#    }#}
+{##}
+{#    .team-card:hover::after {#}
+{#        opacity: 0.9;#}
+{#        transform: scale(1);#}
+{#    }#}
+{##}
+{#    /* Enhanced Animations */#}
+{#    @keyframes fadeInUp {#}
+{#        from {#}
+{#            opacity: 0;#}
+{#            transform: translateY(30px);#}
+{#        }#}
+{#        to {#}
+{#            opacity: 1;#}
+{#            transform: translateY(0);#}
+{#        }#}
+{#    }#}
+{##}
+{#    @keyframes fadeIn {#}
+{#        from {#}
+{#            opacity: 0;#}
+{#        }#}
+{#        to {#}
+{#            opacity: 1;#}
+{#        }#}
+{#    }#}
+{##}
+{#    @keyframes float {#}
+{#        0% {#}
+{#            transform: translateY(0px);#}
+{#        }#}
+{#        50% {#}
+{#            transform: translateY(-10px);#}
+{#        }#}
+{#        100% {#}
+{#            transform: translateY(0px);#}
+{#        }#}
+{#    }#}
+{##}
+{#    @keyframes slideInLeft {#}
+{#        from {#}
+{#            opacity: 0;#}
+{#            transform: translateX(-50px);#}
+{#        }#}
+{#        to {#}
+{#            opacity: 1;#}
+{#            transform: translateX(0);#}
+{#        }#}
+{#    }#}
+{##}
+{#    @keyframes slideInRight {#}
+{#        from {#}
+{#            opacity: 0;#}
+{#            transform: translateX(50px);#}
+{#        }#}
+{#        to {#}
+{#            opacity: 1;#}
+{#            transform: translateX(0);#}
+{#        }#}
+{#    }#}
+{##}
+{#    @keyframes pulse {#}
+{#        0% {#}
+{#            transform: scale(1);#}
+{#            box-shadow: var(--card-shadow);#}
+{#        }#}
+{#        50% {#}
+{#            transform: scale(1.03);#}
+{#            box-shadow: var(--card-shadow-hover);#}
+{#        }#}
+{#        100% {#}
+{#            transform: scale(1);#}
+{#            box-shadow: var(--card-shadow);#}
+{#        }#}
+{#    }#}
+{##}
+{#    /* Animated Elements */#}
+{#    .animate-fadeInUp {#}
+{#        opacity: 0;#}
+{#        transform: translateY(30px);#}
+{#    }#}
+{##}
+{#    .animate-fadeInUp.visible {#}
+{#        animation: fadeInUp 0.8s forwards;#}
+{#    }#}
+{##}
+{#    .animate-fadeIn {#}
+{#        opacity: 0;#}
+{#    }#}
+{##}
+{#    .animate-fadeIn.visible {#}
+{#        animation: fadeIn 0.8s forwards;#}
+{#    }#}
+{##}
+{#    .animate-float {#}
+{#        animation: float 6s ease-in-out infinite;#}
+{#    }#}
+{##}
+{#    .animate-slideInLeft {#}
+{#        opacity: 0;#}
+{#        transform: translateX(-50px);#}
+{#    }#}
+{##}
+{#    .animate-slideInLeft.visible {#}
+{#        animation: slideInLeft 0.8s forwards;#}
+{#    }#}
+{##}
+{#    .animate-slideInRight {#}
+{#        opacity: 0;#}
+{#        transform: translateX(50px);#}
+{#    }#}
+{##}
+{#    .animate-slideInRight.visible {#}
+{#        animation: slideInRight 0.8s forwards;#}
+{#    }#}
+{##}
+{#    .animate-pulse {#}
+{#        animation: pulse 4s infinite;#}
+{#    }#}
+{##}
+{#    /* Sequential Animation Delays */#}
+{#    .delay-100 {#}
+{#        animation-delay: 0.1s;#}
+{#    }#}
+{##}
+{#    .delay-200 {#}
+{#        animation-delay: 0.2s;#}
+{#    }#}
+{##}
+{#    .delay-300 {#}
+{#        animation-delay: 0.3s;#}
+{#    }#}
+{##}
+{#    .delay-400 {#}
+{#        animation-delay: 0.4s;#}
+{#    }#}
+{##}
+{#    .delay-500 {#}
+{#        animation-delay: 0.5s;#}
+{#    }#}
+{##}
 {#    /* Dark mode adaptations */#}
+{#    body.dark-mode .about-header {#}
+{#        background: linear-gradient(135deg, #2c2c2c 0%, #222222 100%);#}
+{#    }#}
+{##}
+{#    body.dark-mode .about-header h1,#}
+{#    body.dark-mode .about-header p {#}
+{#        color: var(--off-white);#}
+{#    }#}
+{##}
 {#    body.dark-mode .mission-card,#}
 {#    body.dark-mode .vision-card,#}
-{#    body.dark-mode .team-card {#}
-{#        background-color: #2a2c3e;#}
-{#        color: #f8f9fc;#}
+{#    body.dark-mode .team-card,#}
+{#    body.dark-mode .who-we-are-card {#}
+{#        background-color: var(--dark-gray);#}
 {#    }#}
 {##}
 {#    body.dark-mode .mission-vision,#}
@@ -197,26 +1086,50 @@
 {#        background-color: #222533;#}
 {#    }#}
 {##}
-{#    body.dark-mode .social-link {#}
-{#        background-color: #3a3d52;#}
+{#    body.dark-mode .timeline-date {#}
+{#        color: var(--light-amber);#}
 {#    }#}
 {##}
-{#    body.dark-mode .timeline-date {#}
-{#        color: var(--accent-color);#}
-{#    }#}
-{#    #}
 {#    body.dark-mode .team-info p {#}
-{#        color: #c2c5d3;#}
+{#        color: var(--light-amber);#}
+{#    }#}
+{##}
+{#    body.dark-mode .about-text h2,#}
+{#    body.dark-mode .mission-content h3,#}
+{#    body.dark-mode .vision-content h3,#}
+{#    body.dark-mode .who-we-are-content h3,#}
+{#    body.dark-mode .team-info h4,#}
+{#    body.dark-mode .timeline-item h4,#}
+{#    body.dark-mode .cta-title,#}
+{#    body.dark-mode .section-title h2 {#}
+{#        color: var(--off-white);#}
+{#    }#}
+{##}
+{#    body.dark-mode .about-text p,#}
+{#    body.dark-mode .mission-content p,#}
+{#    body.dark-mode .vision-content p,#}
+{#    body.dark-mode .who-we-are-content p,#}
+{#    body.dark-mode .timeline-item p,#}
+{#    body.dark-mode .cta-text {#}
+{#        color: #e2e8f0;#}
+{#    }#}
+{##}
+{#    body.dark-mode .cta-section {#}
+{#        background: linear-gradient(135deg, #2c2c2c 0%, #222222 100%);#}
+{#    }#}
+{##}
+{#    body.dark-mode .team-info {#}
+{#        background-color: var(--dark-gray);#}
 {#    }#}
 {#</style>#}
 {#{% endblock %}#}
 {##}
 {#{% block content %}#}
-{#<!-- About Header -->#}
+{#<!-- Enhanced About Header -->#}
 {#<section class="about-header">#}
-{#    <div class="container">#}
+{#    <div class="container about-header-content">#}
 {#        <h1>About CloudLink_Devs</h1>#}
-{#        <p class="lead">Learn more about our team, our values, and our journey in creating digital solutions</p>#}
+{#        <p class="lead">Learn more about our team, our values, and our journey in creating innovative digital solutions</p>#}
 {#    </div>#}
 {#</section>#}
 {##}
@@ -225,13 +1138,20 @@
 {#    <div class="container">#}
 {#        <div class="row align-items-center">#}
 {#            <div class="col-lg-6 mb-4 mb-lg-0">#}
-{#                <div class="about-image">#}
-{#                    <img src="{% static 'images/about-image.jpg' %}" alt="CloudLink_Devs Team" class="img-fluid">#}
+{#                <div class="who-we-are-card animate-on-scroll">#}
+{#                    <div class="who-we-are-image">#}
+{#                        <img src="{% static 'images/homepage4.jpg' %}" alt="CloudLink_Devs Team">#}
+{#                    </div>#}
+{#                    <div class="who-we-are-content">#}
+{#                        <h3>Who We Are</h3>#}
+{#                        <p>CloudLink_Devs is a team of passionate developers, designers, and digital strategists dedicated to helping businesses succeed in the digital world.</p>#}
+{#                        <a href="{% url 'core:home' %}" class="btn btn-outline-primary">Back to Home</a>#}
+{#                    </div>#}
 {#                </div>#}
 {#            </div>#}
 {#            <div class="col-lg-6">#}
-{#                <div class="about-text">#}
-{#                    <h2>Who We Are</h2>#}
+{#                <div class="about-text animate-slideInRight">#}
+{#                    <h2>Our Story</h2>#}
 {#                    <p>CloudLink_Devs is a team of passionate developers, designers, and digital strategists dedicated to helping businesses succeed in the digital world. We specialize in creating custom web applications, mobile apps, and POS systems that are tailored to meet the unique needs of our clients.</p>#}
 {#                    <p>Founded in 2020, we've worked with businesses of all sizes across multiple industries, from startups to established enterprises. Our approach combines technical expertise with a deep understanding of business needs to deliver solutions that drive growth and improve efficiency.</p>#}
 {#                    <p>At CloudLink_Devs, we believe in building long-term relationships with our clients. We don't just deliver a product and walk away – we partner with you to ensure your digital solutions continue to evolve and adapt to your changing business needs.</p>#}
@@ -248,27 +1168,29 @@
 {#            <h2>Our Mission & Vision</h2>#}
 {#            <p>The core principles that guide our work</p>#}
 {#        </div>#}
-{#        #}
+{##}
 {#        <div class="row">#}
 {#            <div class="col-md-6 mb-4 mb-md-0">#}
-{#                <div class="mission-card">#}
-{#                    <div class="card-icon">#}
-{#                        <i class="fas fa-bullseye"></i>#}
+{#                <div class="mission-card animate-on-scroll delay-100">#}
+{#                    <div class="mission-image">#}
+{#                        <img src="{% static 'images/mission.jpg' %}" alt="Our Mission">#}
 {#                    </div>#}
-{#                    <h3>Our Mission</h3>#}
-{#                    <p>To empower businesses with innovative digital solutions that solve real problems, enhance efficiency, and drive sustainable growth.</p>#}
-{#                    <p>We are committed to delivering high-quality, customized technologies that meet the unique needs of each client while providing exceptional service and support throughout the entire development journey.</p>#}
+{#                    <div class="mission-content">#}
+{#                        <h3>Our Mission</h3>#}
+{#                        <p>To empower businesses with innovative digital solutions that solve real problems, enhance efficiency, and drive sustainable growth.</p>#}
+{#                    </div>#}
 {#                </div>#}
 {#            </div>#}
-{#            #}
+{##}
 {#            <div class="col-md-6">#}
-{#                <div class="vision-card">#}
-{#                    <div class="card-icon">#}
-{#                        <i class="fas fa-eye"></i>#}
+{#                <div class="vision-card animate-on-scroll delay-300">#}
+{#                    <div class="vision-image">#}
+{#                        <img src="{% static 'images/vission.jpg' %}" alt="Our Vision">#}
 {#                    </div>#}
-{#                    <h3>Our Vision</h3>#}
-{#                    <p>To become the most trusted technology partner for businesses seeking digital transformation, recognized for our technical excellence, client-focused approach, and sustainable solutions.</p>#}
-{#                    <p>We envision a world where businesses of all sizes have access to powerful, tailored digital tools that level the playing field and create opportunities for growth and innovation.</p>#}
+{#                    <div class="vision-content">#}
+{#                        <h3>Our Vision</h3>#}
+{#                        <p>To become the most trusted technology partner for businesses seeking digital transformation, recognized for our technical excellence, client-focused approach, and sustainable solutions.</p>#}
+{#                    </div>#}
 {#                </div>#}
 {#            </div>#}
 {#        </div>#}
@@ -280,74 +1202,54 @@
 {#    <div class="container">#}
 {#        <div class="section-title text-center mb-5">#}
 {#            <h2>Meet Our Team</h2>#}
-{#            <p>The talented people behind CloudLink_Devs</p>#}
+{#            <p>Our dedicated professionals who ensure your success</p>#}
 {#        </div>#}
-{#        #}
+{##}
 {#        <div class="row">#}
 {#            <div class="col-lg-3 col-md-6 mb-4">#}
-{#                <div class="team-card">#}
+{#                <div class="team-card animate-on-scroll delay-100">#}
 {#                    <div class="team-image">#}
-{#                        <img src="{% static 'images/team-placeholder.jpg' %}" alt="Team Member" class="img-fluid">#}
+{#                        <img src="{% static 'images/test67.jpg' %}" alt="Team Member">#}
 {#                    </div>#}
 {#                    <div class="team-info">#}
-{#                        <h4>John Doe</h4>#}
+{#                        <h4>John Omondi</h4>#}
 {#                        <p>Founder & CEO</p>#}
-{#                        <div class="team-social">#}
-{#                            <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>#}
-{#                            <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>#}
-{#                            <a href="#" class="social-link"><i class="fab fa-github"></i></a>#}
-{#                        </div>#}
 {#                    </div>#}
 {#                </div>#}
 {#            </div>#}
-{#            #}
+{##}
 {#            <div class="col-lg-3 col-md-6 mb-4">#}
-{#                <div class="team-card">#}
+{#                <div class="team-card animate-on-scroll delay-200">#}
 {#                    <div class="team-image">#}
-{#                        <img src="{% static 'images/team-placeholder.jpg' %}" alt="Team Member" class="img-fluid">#}
+{#                        <img src="{% static 'images/leaddev.jpg' %}" alt="Team Member">#}
 {#                    </div>#}
 {#                    <div class="team-info">#}
-{#                        <h4>Jane Smith</h4>#}
+{#                        <h4>Damien Padri</h4>#}
 {#                        <p>Lead Developer</p>#}
-{#                        <div class="team-social">#}
-{#                            <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>#}
-{#                            <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>#}
-{#                            <a href="#" class="social-link"><i class="fab fa-github"></i></a>#}
-{#                        </div>#}
 {#                    </div>#}
 {#                </div>#}
 {#            </div>#}
-{#            #}
+{##}
 {#            <div class="col-lg-3 col-md-6 mb-4">#}
-{#                <div class="team-card">#}
+{#                <div class="team-card animate-on-scroll delay-300">#}
 {#                    <div class="team-image">#}
-{#                        <img src="{% static 'images/team-placeholder.jpg' %}" alt="Team Member" class="img-fluid">#}
+{#                        <img src="{% static 'images/testmony2.jpg' %}" alt="Team Member">#}
 {#                    </div>#}
 {#                    <div class="team-info">#}
-{#                        <h4>Michael Johnson</h4>#}
+{#                        <h4>Melisa Minage</h4>#}
 {#                        <p>UI/UX Designer</p>#}
-{#                        <div class="team-social">#}
-{#                            <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>#}
-{#                            <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>#}
-{#                            <a href="#" class="social-link"><i class="fab fa-dribbble"></i></a>#}
-{#                        </div>#}
 {#                    </div>#}
 {#                </div>#}
 {#            </div>#}
-{#            #}
+{##}
 {#            <div class="col-lg-3 col-md-6 mb-4">#}
-{#                <div class="team-card">#}
+{#                <div class="team-card animate-on-scroll delay-400">#}
 {#                    <div class="team-image">#}
-{#                        <img src="{% static 'images/team-placeholder.jpg' %}" alt="Team Member" class="img-fluid">#}
+{#                        <img src="{% static 'images/test5.jpg' %}" alt="Team Member">#}
 {#                    </div>#}
 {#                    <div class="team-info">#}
-{#                        <h4>Sarah Williams</h4>#}
+{#                        <h4>Sarah Wachira</h4>#}
 {#                        <p>Project Manager</p>#}
-{#                        <div class="team-social">#}
-{#                            <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>#}
-{#                            <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>#}
-{#                            <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>#}
-{#                        </div>#}
 {#                    </div>#}
 {#                </div>#}
 {#            </div>#}
@@ -362,39 +1264,39 @@
 {#            <h2>Our Journey</h2>#}
 {#            <p>Key milestones in the CloudLink_Devs story</p>#}
 {#        </div>#}
-{#        #}
+{##}
 {#        <div class="timeline">#}
-{#            <div class="timeline-item">#}
+{#            <div class="timeline-item animate-on-scroll">#}
 {#                <div class="timeline-date">2020</div>#}
 {#                <h4>Company Founded</h4>#}
 {#                <p>CloudLink_Devs was established with a focus on creating custom web solutions for small businesses.</p>#}
 {#            </div>#}
-{#            #}
-{#            <div class="timeline-item">#}
+{##}
+{#            <div class="timeline-item animate-on-scroll">#}
 {#                <div class="timeline-date">2021</div>#}
 {#                <h4>Expansion to Mobile Development</h4>#}
 {#                <p>Added mobile app development services to meet growing client demand for cross-platform solutions.</p>#}
 {#            </div>#}
-{#            #}
-{#            <div class="timeline-item">#}
+{##}
+{#            <div class="timeline-item animate-on-scroll">#}
 {#                <div class="timeline-date">2022</div>#}
 {#                <h4>POS Systems Launch</h4>#}
 {#                <p>Introduced specialized POS system development for retail and restaurant businesses.</p>#}
 {#            </div>#}
-{#            #}
-{#            <div class="timeline-item">#}
+{##}
+{#            <div class="timeline-item animate-on-scroll">#}
 {#                <div class="timeline-date">2023</div>#}
 {#                <h4>Team Growth</h4>#}
 {#                <p>Expanded our team to include specialized developers, designers, and project managers.</p>#}
 {#            </div>#}
-{#            #}
-{#            <div class="timeline-item">#}
+{##}
+{#            <div class="timeline-item animate-on-scroll">#}
 {#                <div class="timeline-date">2024</div>#}
 {#                <h4>New Office Opening</h4>#}
 {#                <p>Opened our new headquarters with dedicated spaces for development, client meetings, and collaboration.</p>#}
 {#            </div>#}
-{#            #}
-{#            <div class="timeline-item">#}
+{##}
+{#            <div class="timeline-item animate-on-scroll">#}
 {#                <div class="timeline-date">2025</div>#}
 {#                <h4>Looking Forward</h4>#}
 {#                <p>Continuing to innovate and expand our services to meet the evolving needs of our clients.</p>#}
@@ -406,11 +1308,11 @@
 {#<!-- CTA Section -->#}
 {#<section class="cta-section">#}
 {#    <div class="container">#}
-{#        <h2 class="cta-title">Ready to Work With Us?</h2>#}
-{#        <p class="cta-text">Let's discuss how we can help take your business to the next level with our custom development solutions.</p>#}
-{#        <div class="cta-buttons">#}
-{#            <a href="{% url 'quotes:service_estimator' %}" class="btn btn-light btn-lg me-3">Get a Quote</a>#}
-{#            <a href="{% url 'core:contact' %}" class="btn btn-outline-light btn-lg">Contact Us</a>#}
+{#        <h2 class="cta-title animate-on-scroll">Ready to Work With Us?</h2>#}
+{#        <p class="cta-text animate-on-scroll">Let's discuss how we can help take your business to the next level with our custom development solutions.</p>#}
+{#        <div class="cta-buttons animate-on-scroll">#}
+{#            <a href="{% url 'quotes:service_estimator' %}" class="btn btn-primary btn-lg">Get a Quote</a>#}
+{#            <a href="{% url 'core:contact' %}" class="btn btn-outline-primary btn-lg">Contact Us</a>#}
 {#        </div>#}
 {#    </div>#}
 {#</section>#}
@@ -419,17 +1321,78 @@
 {#{% block extra_js %}#}
 {#<script>#}
 {#    document.addEventListener('DOMContentLoaded', function() {#}
-{#        // Add animation classes on scroll#}
-{#        const animateElements = document.querySelectorAll('.mission-card, .vision-card, .team-card, .timeline-item');#}
-{#        #}
+{#        // Enhanced animation on scroll#}
+{#        const animateElements = document.querySelectorAll('.animate-on-scroll, .animate-fadeInUp, .animate-fadeIn, .animate-slideInLeft, .animate-slideInRight, .cta-title, .cta-text, .cta-buttons');#}
+{##}
+{#        const isInViewport = (element) => {#}
+{#            const rect = element.getBoundingClientRect();#}
+{#            return (#}
+{#                rect.top <= (window.innerHeight || document.documentElement.clientHeight) * 0.85#}
+{#            );#}
+{#        };#}
+{##}
+{#        const checkVisibility = () => {#}
+{#            animateElements.forEach((element) => {#}
+{#                if (isInViewport(element)) {#}
+{#                    element.classList.add('visible');#}
+{#                }#}
+{#            });#}
+{#        };#}
+{##}
+{#        // Sequential animation delays#}
 {#        animateElements.forEach((element, index) => {#}
-{#            element.classList.add('animate-on-scroll');#}
-{#            element.dataset.animation = 'slide-up';#}
-{#            element.style.animationDelay = `${index * 0.1}s`;#}
+{#            // Only set delay if not already specified by class#}
+{#            if (!element.classList.contains('delay-100') &&#}
+{#                !element.classList.contains('delay-200') &&#}
+{#                !element.classList.contains('delay-300') &&#}
+{#                !element.classList.contains('delay-400') &&#}
+{#                !element.classList.contains('delay-500')) {#}
+{#                element.style.transitionDelay = `${(index % 5) * 0.1}s`;#}
+{#            }#}
+{#        });#}
+{##}
+{#        // Check on load#}
+{#        checkVisibility();#}
+{##}
+{#        // Check on scroll with throttling for better performance#}
+{#        let isScrolling = false;#}
+{#        window.addEventListener('scroll', function() {#}
+{#            if (!isScrolling) {#}
+{#                window.requestAnimationFrame(function() {#}
+{#                    checkVisibility();#}
+{#                    isScrolling = false;#}
+{#                });#}
+{#                isScrolling = true;#}
+{#            }#}
+{#        });#}
+{##}
+{#        // Apply initial floating animation to certain elements#}
+{#        const floatElements = document.querySelectorAll('.section-title h2');#}
+{#        floatElements.forEach(element => {#}
+{#            element.classList.add('animate-float');#}
+{#        });#}
+{##}
+{#        // Add smooth hover effect to all buttons#}
+{#        const buttons = document.querySelectorAll('.btn');#}
+{#        buttons.forEach(button => {#}
+{#            button.addEventListener('mouseenter', function() {#}
+{#                this.style.transition = 'all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)';#}
+{#            });#}
+{#        });#}
+{##}
+{#        // Add subtle parallax effect to background elements#}
+{#        window.addEventListener('mousemove', function(e) {#}
+{#            const moveX = (e.clientX - window.innerWidth / 2) * 0.01;#}
+{#            const moveY = (e.clientY - window.innerHeight / 2) * 0.01;#}
+{##}
+{#            document.querySelectorAll('.about-header::before, .mission-vision::before, .timeline-section::before').forEach(element => {#}
+{#                element.style.transform = `translateX(${moveX}px) translateY(${moveY}px)`;#}
+{#            });#}
 {#        });#}
 {#    });#}
 {#</script>#}
 {#{% endblock %}#}
+
 
 {% extends "base.html" %}
 {% load static %}
@@ -447,114 +1410,321 @@
         --black: #212121;
         --dark-gray: #333333;
         --light-gray: #f0f0f0;
+        --gradient-primary: linear-gradient(135deg, var(--amber-color), var(--dark-amber));
+        --gradient-light: linear-gradient(135deg, var(--light-amber), var(--amber-color));
+        --card-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        --card-shadow-hover: 0 20px 45px rgba(0, 0, 0, 0.15);
     }
 
-    /* About Header */
+    /* Enhanced About Header */
     .about-header {
-        background: var(--beige-color);
+        background: linear-gradient(135deg, var(--beige-color) 0%, #f0e5cd 100%);
         color: var(--black);
-        padding: 80px 0;
+        padding: 100px 0 60px; /* Reduced padding */
         text-align: center;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .about-header::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c1954a' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        z-index: 1;
+    }
+
+    .about-header-content {
+        position: relative;
+        z-index: 2;
     }
 
     .about-header h1 {
         font-weight: 800;
         margin-bottom: 20px;
         color: var(--black);
+        font-size: 3.5rem;
+        opacity: 0;
+        transform: translateY(30px);
+        animation: fadeInUp 0.8s forwards 0.3s;
     }
 
-    .about-header p {
+    .about-header p.lead {
         color: var(--dark-gray);
+        max-width: 700px;
+        margin: 0 auto;
+        font-size: 1.2rem;
+        opacity: 0;
+        transform: translateY(30px);
+        animation: fadeInUp 0.8s forwards 0.5s;
     }
 
-    /* About Content */
+    /* Modernized About Content Section */
     .about-content {
-        padding: 80px 0;
+        padding: 70px 0; /* Reduced padding */
+        position: relative;
+        overflow: hidden;
     }
 
-    .about-image {
-        border-radius: 10px;
-        overflow: hidden;
-        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    .about-content::before {
+        content: '';
+        position: absolute;
+        width: 600px;
+        height: 600px;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(193, 149, 74, 0.05) 0%, rgba(193, 149, 74, 0) 70%);
+        top: -200px;
+        left: -200px;
+        z-index: 0;
+    }
+
+    .about-content::after {
+        content: '';
+        position: absolute;
+        width: 500px;
+        height: 500px;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(193, 149, 74, 0.05) 0%, rgba(193, 149, 74, 0) 70%);
+        bottom: -200px;
+        right: -200px;
+        z-index: 0;
+    }
+
+    .about-text {
+        position: relative;
+        z-index: 1;
     }
 
     .about-text h2 {
-        margin-bottom: 25px;
+        margin-bottom: 30px;
         font-weight: 700;
         color: var(--black);
+        font-size: 2.5rem;
+        position: relative;
+        display: inline-block;
     }
 
-    /* Card for Who We Are */
+    .about-text h2::after {
+        content: '';
+        position: absolute;
+        bottom: -10px;
+        left: 0;
+        width: 60px;
+        height: 3px;
+        background: var(--gradient-primary);
+    }
+
+    .about-text p {
+        color: var(--dark-gray);
+        font-size: 1.05rem;
+        line-height: 1.8;
+        margin-bottom: 20px;
+    }
+
+    /* Enhanced Who We Are Card */
     .who-we-are-card {
-        border-radius: 10px;
+        border-radius: 24px;
         overflow: hidden;
         background-color: white;
-        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-        margin-bottom: 30px;
+        box-shadow: var(--card-shadow);
         height: 100%;
+        transform: translateY(50px);
+        opacity: 0;
+        transition: all 0.7s cubic-bezier(0.23, 1, 0.32, 1);
+        position: relative;
+        z-index: 1;
+    }
+
+    .who-we-are-card.visible {
+        transform: translateY(0);
+        opacity: 1;
+    }
+
+    .who-we-are-card:hover {
+        transform: translateY(-15px);
+        box-shadow: var(--card-shadow-hover);
+    }
+
+    .who-we-are-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, rgba(193, 149, 74, 0.05) 0%, rgba(193, 149, 74, 0) 100%);
+        z-index: -1;
+        opacity: 0;
+        transition: opacity 0.5s ease;
+    }
+
+    .who-we-are-card:hover::before {
+        opacity: 1;
     }
 
     .who-we-are-image {
-        height: 250px;
+        height: 280px;
         overflow: hidden;
+        position: relative;
+    }
+
+    .who-we-are-image::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 50%;
+        background: linear-gradient(to top, rgba(0,0,0,0.5), transparent);
+        opacity: 0;
+        transition: opacity 0.5s ease;
+    }
+
+    .who-we-are-card:hover .who-we-are-image::after {
+        opacity: 1;
     }
 
     .who-we-are-image img {
         width: 100%;
         height: 100%;
         object-fit: cover;
-        transition: transform 0.5s ease;
+        transition: transform 0.7s cubic-bezier(0.23, 1, 0.32, 1);
     }
 
     .who-we-are-card:hover .who-we-are-image img {
-        transform: scale(1.05);
+        transform: scale(1.1);
     }
 
     .who-we-are-content {
-        padding: 25px;
+        padding: 35px;
+        position: relative;
+        border-top: 5px solid var(--amber-color);
+        margin-top: -5px;
     }
 
     .who-we-are-content h3 {
         font-weight: 700;
-        margin-bottom: 15px;
-        font-size: 1.4rem;
+        margin-bottom: 20px;
+        font-size: 1.6rem;
         color: var(--black);
+        position: relative;
+        display: inline-block;
+    }
+
+    .who-we-are-content h3::before {
+        content: '';
+        position: absolute;
+        bottom: -8px;
+        left: 0;
+        width: 40px;
+        height: 3px;
+        background: var(--gradient-primary);
+        transition: width 0.3s ease;
+    }
+
+    .who-we-are-card:hover .who-we-are-content h3::before {
+        width: 80px;
     }
 
     .who-we-are-content p {
         color: var(--dark-gray);
-        margin-bottom: 20px;
-        font-size: 1rem;
-        line-height: 1.6;
+        margin-bottom: 25px;
+        font-size: 1.05rem;
+        line-height: 1.7;
     }
 
     .who-we-are-content .btn {
-        padding: 8px 20px;
-        font-weight: 500;
+        padding: 12px 30px;
+        font-weight: 600;
+        border-radius: 50px;
+        background: white;
+        color: var(--amber-color);
+        border: 2px solid var(--amber-color);
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+        z-index: 1;
     }
 
-    /* Mission & Vision */
+    .who-we-are-content .btn::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 0%;
+        height: 100%;
+        background: var(--gradient-primary);
+        transition: all 0.3s ease;
+        z-index: -1;
+    }
+
+    .who-we-are-content .btn:hover {
+        color: white;
+        border-color: transparent;
+    }
+
+    .who-we-are-content .btn:hover::before {
+        width: 100%;
+    }
+
+    /* Enhanced Mission & Vision Section */
     .mission-vision {
-        padding: 80px 0;
+        padding: 70px 0; /* Reduced padding */
         background-color: var(--off-white);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .mission-vision::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c1954a' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        z-index: 0;
+    }
+
+    .mission-vision .container {
+        position: relative;
+        z-index: 0;
+    }
+
+    .mission-vision .container {
+        position: relative;
+        z-index: 1;
     }
 
     .mission-card, .vision-card {
-        border-radius: 10px;
+        border-radius: 24px;
         overflow: hidden;
-        background-color: white;
-        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        background: white;
+        box-shadow: var(--card-shadow);
         height: 100%;
-        transition: all 0.3s ease;
+        transform: translateY(50px);
+        opacity: 0;
+        transition: all 0.7s cubic-bezier(0.23, 1, 0.32, 1);
+        display: flex;
+        flex-direction: column;
+    }
+
+    .mission-card.visible, .vision-card.visible {
+        transform: translateY(0);
+        opacity: 1;
     }
 
     .mission-card:hover, .vision-card:hover {
-        transform: translateY(-10px);
-        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        transform: translateY(-15px);
+        box-shadow: var(--card-shadow-hover);
     }
 
     .mission-image, .vision-image {
-        height: 200px;
+        height: 280px;
+        position: relative;
         overflow: hidden;
     }
 
@@ -562,111 +1732,242 @@
         width: 100%;
         height: 100%;
         object-fit: cover;
-        transition: transform 0.5s ease;
+        transition: transform 0.7s cubic-bezier(0.23, 1, 0.32, 1);
     }
 
     .mission-card:hover .mission-image img,
     .vision-card:hover .vision-image img {
-        transform: scale(1.05);
+        transform: scale(1.1);
     }
 
     .mission-content, .vision-content {
-        padding: 25px;
+        padding: 35px;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+    }
+
+    .mission-content::before, .vision-content::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 5px;
+    }
+
+    .mission-content::before {
+        background: var(--gradient-primary);
+    }
+
+    .vision-content::before {
+        background: var(--gradient-primary);
     }
 
     .mission-content h3, .vision-content h3 {
         font-weight: 700;
-        margin-bottom: 15px;
-        font-size: 1.4rem;
+        margin-bottom: 20px;
+        font-size: 1.6rem;
         color: var(--black);
+        position: relative;
+        display: inline-block;
+    }
+
+    .mission-content h3::after, .vision-content h3::after {
+        content: '';
+        position: absolute;
+        bottom: -8px;
+        left: 0;
+        width: 40px;
+        height: 3px;
+        transition: width 0.3s ease;
+    }
+
+    .mission-content h3::after {
+        background: var(--gradient-primary);
+    }
+
+    .vision-content h3::after {
+        background: var(--gradient-primary);
+    }
+
+    .mission-card:hover .mission-content h3::after,
+    .vision-card:hover .vision-content h3::after {
+        width: 80px;
     }
 
     .mission-content p, .vision-content p {
         color: var(--dark-gray);
-        margin-bottom: 10px;
-        line-height: 1.6;
+        font-size: 1.05rem;
+        line-height: 1.7;
+        margin-bottom: 0;
+        flex-grow: 1;
     }
 
-    .card-icon {
-        font-size: 3rem;
-        color: var(--amber-color);
-        margin-bottom: 20px;
-    }
-
-    /* Team Section */
+    /* Enhanced Team Section */
     .team-section {
-        padding: 80px 0;
+        padding: 70px 0; /* Reduced padding */
+        position: relative;
+        overflow: hidden;
+    }
+
+    .team-section::before {
+        content: '';
+        position: absolute;
+        top: -150px;
+        right: -150px;
+        width: 400px;
+        height: 400px;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(193, 149, 74, 0.05) 0%, rgba(193, 149, 74, 0) 70%);
+        z-index: 0;
+    }
+
+    .team-section::after {
+        content: '';
+        position: absolute;
+        bottom: -150px;
+        left: -150px;
+        width: 400px;
+        height: 400px;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(193, 149, 74, 0.05) 0%, rgba(193, 149, 74, 0) 70%);
+        z-index: 0;
     }
 
     .team-card {
-        border-radius: 10px;
+        border-radius: 24px;
         overflow: hidden;
-        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+        box-shadow: var(--card-shadow);
         margin-bottom: 30px;
         background-color: white;
+        height: 100%;
+        transform: translateY(50px);
+        opacity: 0;
+        transition: all 0.7s cubic-bezier(0.23, 1, 0.32, 1);
+        position: relative;
+        z-index: 1;
+    }
+
+    .team-card.visible {
+        transform: translateY(0);
+        opacity: 1;
+    }
+
+    .team-card:hover {
+        transform: translateY(-15px);
+        box-shadow: var(--card-shadow-hover);
     }
 
     .team-image {
         position: relative;
         overflow: hidden;
+        height: 280px;
+    }
+
+    .team-image::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0) 60%);
+        opacity: 0;
+        transition: opacity 0.5s ease;
+    }
+
+    .team-card:hover .team-image::after {
+        opacity: 1;
     }
 
     .team-image img {
-        transition: all 0.3s ease;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.7s cubic-bezier(0.23, 1, 0.32, 1);
     }
 
     .team-card:hover .team-image img {
-        transform: scale(1.05);
+        transform: scale(1.1);
     }
 
     .team-info {
-        padding: 20px;
+        padding: 30px;
         text-align: center;
+        position: relative;
+    }
+
+    .team-info::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 60px;
+        height: 5px;
+        background: var(--gradient-primary);
+        border-radius: 0 0 10px 10px;
+        transition: width 0.3s ease;
+    }
+
+    .team-card:hover .team-info::before {
+        width: 100px;
     }
 
     .team-info h4 {
-        margin-bottom: 5px;
+        margin-bottom: 10px;
         color: var(--black);
+        font-weight: 700;
+        font-size: 1.3rem;
+        transition: color 0.3s ease;
+    }
+
+    .team-card:hover .team-info h4 {
+        color: var(--amber-color);
     }
 
     .team-info p {
         color: var(--amber-color);
-        margin-bottom: 15px;
-        font-weight: 500;
+        margin-bottom: 20px;
+        font-weight: 600;
+        font-size: 1.05rem;
+        opacity: 0.8;
+        transition: opacity 0.3s ease;
     }
 
-    .team-social {
-        display: flex;
-        justify-content: center;
-        gap: 10px;
+    .team-card:hover .team-info p {
+        opacity: 1;
     }
 
-    .social-link {
-        width: 35px;
-        height: 35px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background-color: var(--light-gray);
-        color: var(--amber-color);
-        border-radius: 50%;
-        transition: all 0.3s ease;
-    }
-
-    .social-link:hover {
-        background-color: var(--amber-color);
-        color: white;
-    }
-
-    /* Timeline */
+    /* Enhanced Timeline Section */
     .timeline-section {
-        padding: 80px 0;
+        padding: 70px 0; /* Reduced padding */
         background-color: var(--off-white);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .timeline-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c1954a' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        z-index: 0;
+    }
+
+    .timeline-section .container {
+        position: relative;
+        z-index: 1;
     }
 
     .timeline {
         position: relative;
-        padding-left: 30px;
+        padding-left: 50px;
     }
 
     .timeline:before {
@@ -674,14 +1975,23 @@
         position: absolute;
         height: 100%;
         width: 3px;
-        background-color: var(--amber-color);
+        background: var(--gradient-primary);
         left: 0;
         top: 0;
+        border-radius: 1.5px;
     }
 
     .timeline-item {
         position: relative;
-        margin-bottom: 50px;
+        margin-bottom: 60px;
+        transform: translateX(50px);
+        opacity: 0;
+        transition: all 0.7s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+
+    .timeline-item.visible {
+        transform: translateX(0);
+        opacity: 1;
     }
 
     .timeline-item:last-child {
@@ -691,86 +2001,300 @@
     .timeline-item:before {
         content: "";
         position: absolute;
-        width: 15px;
-        height: 15px;
+        width: 20px;
+        height: 20px;
         border-radius: 50%;
-        background-color: var(--amber-color);
-        left: -36px;
+        background: var(--gradient-primary);
+        left: -59px;
         top: 5px;
+        box-shadow: 0 0 0 5px rgba(193, 149, 74, 0.2);
+        transition: all 0.3s ease;
+    }
+
+    .timeline-item:hover:before {
+        transform: scale(1.2);
+        box-shadow: 0 0 0 8px rgba(193, 149, 74, 0.2);
     }
 
     .timeline-date {
         font-weight: 700;
         color: var(--amber-color);
         margin-bottom: 10px;
+        font-size: 1.2rem;
+        transition: all 0.3s ease;
+    }
+
+    .timeline-item:hover .timeline-date {
+        transform: translateX(5px);
     }
 
     .timeline-item h4 {
         color: var(--black);
+        font-weight: 700;
+        font-size: 1.3rem;
+        margin-bottom: 12px;
+        transition: all 0.3s ease;
     }
 
-    /* CTA Section */
+    .timeline-item:hover h4 {
+        color: var(--amber-color);
+    }
+
+    .timeline-item p {
+        color: var(--dark-gray);
+        line-height: 1.7;
+    }
+
+    /* Achievement Counter Section */
+    .counter-section {
+        padding: 70px 0;
+        background: linear-gradient(135deg, var(--beige-color) 0%, #f0e5cd 100%);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .counter-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c1954a' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        z-index: 0;
+    }
+
+    .counter-section .container {
+        position: relative;
+        z-index: 1;
+    }
+
+    .counter-box {
+        text-align: center;
+        padding: 40px 20px;
+        border-radius: 24px;
+        background-color: white;
+        box-shadow: var(--card-shadow);
+        position: relative;
+        overflow: hidden;
+        height: 100%;
+        transition: all 0.5s ease;
+        transform: translateY(30px);
+        opacity: 0;
+    }
+
+    .counter-box.visible {
+        transform: translateY(0);
+        opacity: 1;
+    }
+
+    .counter-box:hover {
+        transform: translateY(-15px);
+        box-shadow: var(--card-shadow-hover);
+    }
+
+    .counter-box::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 5px;
+        background: var(--gradient-primary);
+    }
+
+    .counter-box::after {
+        content: '';
+        position: absolute;
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(193, 149, 74, 0.05) 0%, rgba(193, 149, 74, 0) 70%);
+        bottom: -50px;
+        right: -50px;
+        z-index: 0;
+    }
+
+    .counter-icon {
+        width: 70px;
+        height: 70px;
+        line-height: 70px;
+        border-radius: 50%;
+        margin: 0 auto 20px;
+        background: var(--gradient-light);
+        box-shadow: 0 10px 20px rgba(193, 149, 74, 0.2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 2rem;
+        transition: all 0.5s ease;
+    }
+
+    .counter-box:hover .counter-icon {
+        transform: rotateY(180deg);
+    }
+
+    .counter-number {
+        font-size: 3rem;
+        font-weight: 800;
+        color: var(--amber-color);
+        margin-bottom: 10px;
+        transition: all 0.3s ease;
+    }
+
+    .counter-box:hover .counter-number {
+        color: var(--dark-amber);
+    }
+
+    .counter-text {
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: var(--dark-gray);
+        margin-bottom: 0;
+    }
+
+    /* Enhanced CTA Section */
     .cta-section {
-        padding: 80px 0;
-        background: var(--beige-color);
+        padding: 70px 0; /* Reduced padding */
+        background: linear-gradient(135deg, var(--beige-color) 0%, #f0e5cd 100%);
         color: var(--black);
         text-align: center;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .cta-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c1954a' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        z-index: 0;
+    }
+
+    .cta-section .container {
+        position: relative;
+        z-index: 1;
     }
 
     .cta-title {
-        font-size: 2.5rem;
-        font-weight: 700;
+        font-size: 2.8rem;
+        font-weight: 800;
         margin-bottom: 1.5rem;
         color: var(--black);
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    .cta-title.visible {
+        animation: fadeInUp 0.8s forwards;
     }
 
     .cta-text {
         max-width: 700px;
-        margin: 0 auto 2rem;
+        margin: 0 auto 2.5rem;
         color: var(--dark-gray);
+        font-size: 1.2rem;
+        line-height: 1.7;
+        opacity: 0;
+        transform: translateY(30px);
     }
 
-    .btn-primary {
-        background-color: var(--amber-color);
-        border-color: var(--amber-color);
+    .cta-text.visible {
+        animation: fadeInUp 0.8s forwards 0.2s;
     }
 
-    .btn-primary:hover {
-        background-color: var(--dark-amber);
-        border-color: var(--dark-amber);
+    .cta-buttons {
+        opacity: 0;
+        transform: translateY(30px);
     }
 
-    .btn-outline-primary {
+    .cta-buttons.visible {
+        animation: fadeInUp 0.8s forwards 0.4s;
+    }
+
+    .cta-section .btn {
+        padding: 15px 35px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        border-radius: 50px;
+        transition: all 0.3s ease;
+        margin: 0 10px 10px;
+        position: relative;
+        overflow: hidden;
+        z-index: 1;
+    }
+
+    .cta-section .btn-primary {
+        background: var(--gradient-primary);
+        border: none;
+        color: white;
+        box-shadow: 0 10px 20px rgba(193, 149, 74, 0.3);
+    }
+
+    .cta-section .btn-primary:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 30px rgba(193, 149, 74, 0.4);
+    }
+
+    .cta-section .btn-outline-primary {
+        background: transparent;
         color: var(--amber-color);
-        border-color: var(--amber-color);
+        border: 2px solid var(--amber-color);
     }
 
-    .btn-outline-primary:hover {
-        background-color: var(--amber-color);
-        border-color: var(--amber-color);
+    .cta-section .btn-outline-primary::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 0%;
+        height: 100%;
+        background: var(--gradient-primary);
+        transition: all 0.3s ease;
+        z-index: -1;
     }
 
-    /* Section Titles */
+    .cta-section .btn-outline-primary:hover {
+        color: white;
+        border-color: transparent;
+        transform: translateY(-5px);
+        box-shadow: 0 15px 30px rgba(193, 149, 74, 0.3);
+    }
+
+    .cta-section .btn-outline-primary:hover::before {
+        width: 100%;
+    }
+
+    /* Enhanced Section Titles */
     .section-title {
-        margin-bottom: 40px;
+        margin-bottom: 50px; /* Reduced margin */
+        position: relative;
     }
 
     .section-title h2 {
-        font-weight: 700;
+        font-weight: 800;
         color: var(--black);
         position: relative;
         display: inline-block;
-        margin-bottom: 15px;
+        margin-bottom: 20px;
+        font-size: 2.5rem;
+        opacity: 0;
+        transform: translateY(30px);
+        animation: fadeInUp 0.8s forwards 0.2s;
     }
 
     .section-title h2:after {
         content: '';
         position: absolute;
-        bottom: -10px;
+        bottom: -15px;
         left: 0;
-        width: 50px;
+        width: 60px;
         height: 3px;
-        background-color: var(--amber-color);
+        background: var(--gradient-primary);
     }
 
     .section-title.text-center h2:after {
@@ -778,10 +2302,287 @@
         transform: translateX(-50%);
     }
 
+    .section-title p {
+        color: var(--dark-gray);
+        font-size: 1.1rem;
+        line-height: 1.7;
+        max-width: 700px;
+        margin: 0 auto;
+        opacity: 0;
+        transform: translateY(30px);
+        animation: fadeInUp 0.8s forwards 0.4s;
+    }
+
+    /* Team Cards Enhancement - New Style Without Social Icons */
+    .team-card {
+        border-radius: 24px;
+        overflow: hidden;
+        box-shadow: var(--card-shadow);
+        background-color: white;
+        height: 100%;
+        position: relative;
+        transition: all 0.5s ease;
+    }
+
+    .team-card:hover {
+        transform: translateY(-15px);
+        box-shadow: var(--card-shadow-hover);
+    }
+
+    .team-image {
+        height: 300px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .team-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: all 0.7s ease;
+    }
+
+    .team-card:hover .team-image img {
+        transform: scale(1.1);
+    }
+
+    .team-image::before {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+        opacity: 0;
+        transition: opacity 0.5s ease;
+        z-index: 1;
+    }
+
+    .team-card:hover .team-image::before {
+        opacity: 1;
+    }
+
+    .team-info {
+        padding: 25px;
+        position: relative;
+        transition: all 0.3s ease;
+        background: white;
+        z-index: 2;
+    }
+
+    .team-info::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 3px;
+        background: var(--gradient-primary);
+        transform: scaleX(0);
+        transform-origin: right;
+        transition: transform 0.5s ease;
+    }
+
+    .team-card:hover .team-info::after {
+        transform: scaleX(1);
+        transform-origin: left;
+    }
+
+    .team-info h4 {
+        font-weight: 700;
+        font-size: 1.4rem;
+        margin-bottom: 8px;
+        color: var(--black);
+        transition: all 0.3s ease;
+    }
+
+    .team-info p {
+        color: var(--amber-color);
+        font-weight: 600;
+        font-size: 1.05rem;
+        margin: 0;
+        transition: all 0.3s ease;
+    }
+
+    .team-card:hover .team-info h4 {
+        color: var(--amber-color);
+    }
+
+    .team-card:hover .team-info p {
+        opacity: 0.9;
+    }
+
+    .team-card::after {
+        content: '';
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background: var(--gradient-primary);
+        opacity: 0;
+        transform: scale(0);
+        transition: all 0.5s ease;
+        z-index: 2;
+    }
+
+    .team-card:hover::after {
+        opacity: 0.9;
+        transform: scale(1);
+    }
+
+    /* Enhanced Animations */
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
+
+    @keyframes float {
+        0% {
+            transform: translateY(0px);
+        }
+        50% {
+            transform: translateY(-10px);
+        }
+        100% {
+            transform: translateY(0px);
+        }
+    }
+
+    @keyframes slideInLeft {
+        from {
+            opacity: 0;
+            transform: translateX(-50px);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+
+    @keyframes slideInRight {
+        from {
+            opacity: 0;
+            transform: translateX(50px);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+
+    @keyframes pulse {
+        0% {
+            transform: scale(1);
+            box-shadow: var(--card-shadow);
+        }
+        50% {
+            transform: scale(1.03);
+            box-shadow: var(--card-shadow-hover);
+        }
+        100% {
+            transform: scale(1);
+            box-shadow: var(--card-shadow);
+        }
+    }
+
+    /* Counter animation */
+    @keyframes countUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Animated Elements */
+    .animate-fadeInUp {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    .animate-fadeInUp.visible {
+        animation: fadeInUp 0.8s forwards;
+    }
+
+    .animate-fadeIn {
+        opacity: 0;
+    }
+
+    .animate-fadeIn.visible {
+        animation: fadeIn 0.8s forwards;
+    }
+
+    .animate-float {
+        animation: float 6s ease-in-out infinite;
+    }
+
+    .animate-slideInLeft {
+        opacity: 0;
+        transform: translateX(-50px);
+    }
+
+    .animate-slideInLeft.visible {
+        animation: slideInLeft 0.8s forwards;
+    }
+
+    .animate-slideInRight {
+        opacity: 0;
+        transform: translateX(50px);
+    }
+
+    .animate-slideInRight.visible {
+        animation: slideInRight 0.8s forwards;
+    }
+
+    .animate-pulse {
+        animation: pulse 4s infinite;
+    }
+
+    /* Sequential Animation Delays */
+    .delay-100 {
+        animation-delay: 0.1s;
+    }
+
+    .delay-200 {
+        animation-delay: 0.2s;
+    }
+
+    .delay-300 {
+        animation-delay: 0.3s;
+    }
+
+    .delay-400 {
+        animation-delay: 0.4s;
+    }
+
+    .delay-500 {
+        animation-delay: 0.5s;
+    }
+
     /* Dark mode adaptations */
     body.dark-mode .about-header {
-        background-color: var(--dark-gray);
-        color: var(--off-white);
+        background: linear-gradient(135deg, #2c2c2c 0%, #222222 100%);
     }
 
     body.dark-mode .about-header h1,
@@ -792,18 +2593,15 @@
     body.dark-mode .mission-card,
     body.dark-mode .vision-card,
     body.dark-mode .team-card,
-    body.dark-mode .who-we-are-card {
+    body.dark-mode .who-we-are-card,
+    body.dark-mode .counter-box {
         background-color: var(--dark-gray);
-        color: var(--off-white);
     }
 
     body.dark-mode .mission-vision,
-    body.dark-mode .timeline-section {
+    body.dark-mode .timeline-section,
+    body.dark-mode .counter-section {
         background-color: #222533;
-    }
-
-    body.dark-mode .social-link {
-        background-color: #3a3d52;
     }
 
     body.dark-mode .timeline-date {
@@ -820,7 +2618,9 @@
     body.dark-mode .who-we-are-content h3,
     body.dark-mode .team-info h4,
     body.dark-mode .timeline-item h4,
-    body.dark-mode .cta-title {
+    body.dark-mode .cta-title,
+    body.dark-mode .section-title h2,
+    body.dark-mode .counter-text {
         color: var(--off-white);
     }
 
@@ -834,29 +2634,22 @@
     }
 
     body.dark-mode .cta-section {
+        background: linear-gradient(135deg, #2c2c2c 0%, #222222 100%);
+    }
+
+    body.dark-mode .team-info {
         background-color: var(--dark-gray);
     }
-
-    /* Animations */
-    .animate-on-scroll {
-        opacity: 0;
-        transform: translateY(30px);
-        transition: all 0.7s ease-out;
-    }
-
-    .animate-on-scroll.visible {
-        opacity: 1;
-        transform: translateY(0);
-    }
+}
 </style>
 {% endblock %}
 
 {% block content %}
-<!-- About Header -->
+<!-- Enhanced About Header -->
 <section class="about-header">
-    <div class="container">
+    <div class="container about-header-content">
         <h1>About CloudLink_Devs</h1>
-        <p class="lead">Learn more about our team, our values, and our journey in creating digital solutions</p>
+        <p class="lead">Learn more about our team, our values, and our journey in creating innovative digital solutions</p>
     </div>
 </section>
 
@@ -867,7 +2660,7 @@
             <div class="col-lg-6 mb-4 mb-lg-0">
                 <div class="who-we-are-card animate-on-scroll">
                     <div class="who-we-are-image">
-                        <img src="{% static 'images/services2.jpg' %}" alt="CloudLink_Devs Team">
+                        <img src="{% static 'images/homepage4.jpg' %}" alt="CloudLink_Devs Team">
                     </div>
                     <div class="who-we-are-content">
                         <h3>Who We Are</h3>
@@ -877,7 +2670,7 @@
                 </div>
             </div>
             <div class="col-lg-6">
-                <div class="about-text">
+                <div class="about-text animate-slideInRight">
                     <h2>Our Story</h2>
                     <p>CloudLink_Devs is a team of passionate developers, designers, and digital strategists dedicated to helping businesses succeed in the digital world. We specialize in creating custom web applications, mobile apps, and POS systems that are tailored to meet the unique needs of our clients.</p>
                     <p>Founded in 2020, we've worked with businesses of all sizes across multiple industries, from startups to established enterprises. Our approach combines technical expertise with a deep understanding of business needs to deliver solutions that drive growth and improve efficiency.</p>
@@ -898,27 +2691,25 @@
 
         <div class="row">
             <div class="col-md-6 mb-4 mb-md-0">
-                <div class="mission-card animate-on-scroll">
+                <div class="mission-card animate-on-scroll delay-100">
                     <div class="mission-image">
-                        <img src="{% static 'images/services.png' %}" alt="Our Mission">
+                        <img src="{% static 'images/mission.jpg' %}" alt="Our Mission">
                     </div>
                     <div class="mission-content">
                         <h3>Our Mission</h3>
                         <p>To empower businesses with innovative digital solutions that solve real problems, enhance efficiency, and drive sustainable growth.</p>
-                        <p>We are committed to delivering high-quality, customized technologies that meet the unique needs of each client while providing exceptional service and support throughout the entire development journey.</p>
                     </div>
                 </div>
             </div>
 
             <div class="col-md-6">
-                <div class="vision-card animate-on-scroll">
+                <div class="vision-card animate-on-scroll delay-300">
                     <div class="vision-image">
-                        <img src="{% static 'images/homepage5.jpg' %}" alt="Our Vision">
+                        <img src="{% static 'images/vission.jpg' %}" alt="Our Vision">
                     </div>
                     <div class="vision-content">
                         <h3>Our Vision</h3>
                         <p>To become the most trusted technology partner for businesses seeking digital transformation, recognized for our technical excellence, client-focused approach, and sustainable solutions.</p>
-                        <p>We envision a world where businesses of all sizes have access to powerful, tailored digital tools that level the playing field and create opportunities for growth and innovation.</p>
                     </div>
                 </div>
             </div>
@@ -931,74 +2722,54 @@
     <div class="container">
         <div class="section-title text-center mb-5">
             <h2>Meet Our Team</h2>
-            <p>The talented people behind CloudLink_Devs</p>
+            <p>Our dedicated professionals who ensure your success</p>
         </div>
 
         <div class="row">
             <div class="col-lg-3 col-md-6 mb-4">
-                <div class="team-card animate-on-scroll">
+                <div class="team-card animate-on-scroll delay-100">
                     <div class="team-image">
-                        <img src="{% static 'images/' %}" alt="Team Member" class="img-fluid">
+                        <img src="{% static 'images/test67.jpg' %}" alt="Team Member">
                     </div>
                     <div class="team-info">
-                        <h4>John Doe</h4>
+                        <h4>John Omondi</h4>
                         <p>Founder & CEO</p>
-                        <div class="team-social">
-                            <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
-                            <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
-                            <a href="#" class="social-link"><i class="fab fa-github"></i></a>
-                        </div>
                     </div>
                 </div>
             </div>
 
             <div class="col-lg-3 col-md-6 mb-4">
-                <div class="team-card animate-on-scroll">
+                <div class="team-card animate-on-scroll delay-200">
                     <div class="team-image">
-                        <img src="{% static 'images/leaddev.jpg' %}" alt="Team Member" class="img-fluid">
+                        <img src="{% static 'images/leaddev.jpg' %}" alt="Team Member">
                     </div>
                     <div class="team-info">
-                        <h4>Jane Smith</h4>
+                        <h4>Damien Padri</h4>
                         <p>Lead Developer</p>
-                        <div class="team-social">
-                            <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
-                            <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
-                            <a href="#" class="social-link"><i class="fab fa-github"></i></a>
-                        </div>
                     </div>
                 </div>
             </div>
 
             <div class="col-lg-3 col-md-6 mb-4">
-                <div class="team-card animate-on-scroll">
+                <div class="team-card animate-on-scroll delay-300">
                     <div class="team-image">
-                        <img src="{% static 'images/testmony2.jpg' %}" alt="Team Member" class="img-fluid">
+                        <img src="{% static 'images/testmony2.jpg' %}" alt="Team Member">
                     </div>
                     <div class="team-info">
-                        <h4>Michael Johnson</h4>
+                        <h4>Melisa Minage</h4>
                         <p>UI/UX Designer</p>
-                        <div class="team-social">
-                            <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
-                            <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
-                            <a href="#" class="social-link"><i class="fab fa-dribbble"></i></a>
-                        </div>
                     </div>
                 </div>
             </div>
 
             <div class="col-lg-3 col-md-6 mb-4">
-                <div class="team-card animate-on-scroll">
+                <div class="team-card animate-on-scroll delay-400">
                     <div class="team-image">
-                        <img src="{% static 'images/testimony1.jpg' %}" alt="Team Member" class="img-fluid">
+                        <img src="{% static 'images/test5.jpg' %}" alt="Team Member">
                     </div>
                     <div class="team-info">
-                        <h4>Sarah Williams</h4>
+                        <h4>Sarah Wachira</h4>
                         <p>Project Manager</p>
-                        <div class="team-social">
-                            <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
-                            <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
-                            <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -1054,13 +2825,65 @@
     </div>
 </section>
 
+<!-- Achievement Counter Section -->
+<section class="counter-section">
+    <div class="container">
+        <div class="section-title text-center mb-5">
+            <h2>Our Achievements</h2>
+            <p>Numbers that showcase our growth and success</p>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="counter-box animate-on-scroll delay-100">
+                    <div class="counter-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="counter-number" data-count="230">0</div>
+                    <p class="counter-text">Clients Served</p>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="counter-box animate-on-scroll delay-200">
+                    <div class="counter-icon">
+                        <i class="fas fa-laptop-code"></i>
+                    </div>
+                    <div class="counter-number" data-count="520">0</div>
+                    <p class="counter-text">Projects Completed</p>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="counter-box animate-on-scroll delay-300">
+                    <div class="counter-icon">
+                        <i class="fas fa-cogs"></i>
+                    </div>
+                    <div class="counter-number" data-count="15">0</div>
+                    <p class="counter-text">Services Offered</p>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="counter-box animate-on-scroll delay-400">
+                    <div class="counter-icon">
+                        <i class="fas fa-award"></i>
+                    </div>
+                    <div class="counter-number" data-count="12">0</div>
+                    <p class="counter-text">Awards Won</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
 <!-- CTA Section -->
 <section class="cta-section">
     <div class="container">
-        <h2 class="cta-title">Ready to Work With Us?</h2>
-        <p class="cta-text">Let's discuss how we can help take your business to the next level with our custom development solutions.</p>
-        <div class="cta-buttons">
-            <a href="{% url 'quotes:service_estimator' %}" class="btn btn-primary btn-lg me-3">Get a Quote</a>
+        <h2 class="cta-title animate-on-scroll">Ready to Work With Us?</h2>
+        <p class="cta-text animate-on-scroll">Let's discuss how we can help take your business to the next level with our custom development solutions.</p>
+        <div class="cta-buttons animate-on-scroll">
+            <a href="{% url 'quotes:service_estimator' %}" class="btn btn-primary btn-lg">Get a Quote</a>
             <a href="{% url 'core:contact' %}" class="btn btn-outline-primary btn-lg">Contact Us</a>
         </div>
     </div>
@@ -1070,8 +2893,8 @@
 {% block extra_js %}
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Animation on scroll
-        const animateElements = document.querySelectorAll('.animate-on-scroll');
+        // Enhanced animation on scroll
+        const animateElements = document.querySelectorAll('.animate-on-scroll, .animate-fadeInUp, .animate-fadeIn, .animate-slideInLeft, .animate-slideInRight, .cta-title, .cta-text, .cta-buttons, .counter-box');
 
         const isInViewport = (element) => {
             const rect = element.getBoundingClientRect();
@@ -1084,20 +2907,96 @@
             animateElements.forEach((element) => {
                 if (isInViewport(element)) {
                     element.classList.add('visible');
+
+                    // Start counter animation if it's a counter number and in viewport
+                    if (element.classList.contains('counter-box') && element.querySelector('.counter-number')) {
+                        startCounting(element.querySelector('.counter-number'));
+                    }
                 }
             });
         };
 
-        // Set initial animation delays
+        // Counter animation function
+        function startCounting(counterElement) {
+            if (counterElement.getAttribute('data-counted') === 'true') return;
+
+            const target = parseInt(counterElement.getAttribute('data-count'));
+            const duration = 2000; // 2 seconds
+            const step = 30; // Update every 30ms
+            const initialValue = 0;
+
+            let current = initialValue;
+            const increment = target / (duration / step);
+
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    current = target;
+                    clearInterval(timer);
+                }
+                counterElement.textContent = Math.floor(current);
+            }, step);
+
+            counterElement.setAttribute('data-counted', 'true');
+        }
+
+        // Sequential animation delays
         animateElements.forEach((element, index) => {
-            element.style.transitionDelay = `${(index % 3) * 0.1}s`;
+            // Only set delay if not already specified by class
+            if (!element.classList.contains('delay-100') &&
+                !element.classList.contains('delay-200') &&
+                !element.classList.contains('delay-300') &&
+                !element.classList.contains('delay-400') &&
+                !element.classList.contains('delay-500')) {
+                element.style.transitionDelay = `${(index % 5) * 0.1}s`;
+            }
         });
 
         // Check on load
         checkVisibility();
 
-        // Check on scroll
-        window.addEventListener('scroll', checkVisibility);
+        // Check on scroll with throttling for better performance
+        let isScrolling = false;
+        window.addEventListener('scroll', function() {
+            if (!isScrolling) {
+                window.requestAnimationFrame(function() {
+                    checkVisibility();
+                    isScrolling = false;
+                });
+                isScrolling = true;
+            }
+        });
+
+        // Apply initial floating animation to certain elements
+        const floatElements = document.querySelectorAll('.section-title h2');
+        floatElements.forEach(element => {
+            element.classList.add('animate-float');
+        });
+
+        // Add smooth hover effect to all buttons
+        const buttons = document.querySelectorAll('.btn');
+        buttons.forEach(button => {
+            button.addEventListener('mouseenter', function() {
+                this.style.transition = 'all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+            });
+        });
+
+        // Add subtle parallax effect to background elements
+        window.addEventListener('mousemove', function(e) {
+            const moveX = (e.clientX - window.innerWidth / 2) * 0.01;
+            const moveY = (e.clientY - window.innerHeight / 2) * 0.01;
+
+            document.querySelectorAll('.about-header::before, .mission-vision::before, .timeline-section::before, .counter-section::before').forEach(element => {
+                element.style.transform = `translateX(${moveX}px) translateY(${moveY}px)`;
+            });
+        });
+
+        // Ensure counters are checked on initial load
+        document.querySelectorAll('.counter-box').forEach(box => {
+            if (isInViewport(box) && box.querySelector('.counter-number')) {
+                startCounting(box.querySelector('.counter-number'));
+            }
+        });
     });
 </script>
 {% endblock %}

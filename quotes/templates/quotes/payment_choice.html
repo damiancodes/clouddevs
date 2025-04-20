@@ -1,0 +1,1047 @@
+{#{% extends "base.html" %}#}
+{#{% load static %}#}
+{##}
+{#{% block title %}Payment Options - CloudLink_Devs{% endblock %}#}
+{##}
+{#{% block extra_css %}#}
+{#<style>#}
+{#    :root {#}
+{#        --beige-color: #f5eadb;#}
+{#        --amber-color: #c1954a;#}
+{#        --dark-amber: #9e7a39;#}
+{#        --light-amber: #d4b06a;#}
+{#        --off-white: #faf7f2;#}
+{#        --black: #212121;#}
+{#        --dark-gray: #333333;#}
+{#        --light-gray: #f0f0f0;#}
+{##}
+{#        /* Added M-Pesa colors */#}
+{#        --mpesa-green: #5cb85c;#}
+{#        --mpesa-dark-green: #449d44;#}
+{#        --paypal-blue: #0070ba;#}
+{#        --paypal-dark-blue: #003087;#}
+{#        --crypto-orange: #f7931a;#}
+{#        --crypto-dark-orange: #d97b16;#}
+{##}
+{#        /* Gradients */#}
+{#        --gradient-amber: linear-gradient(135deg, var(--amber-color) 0%, var(--dark-amber) 100%);#}
+{#        --gradient-mpesa: linear-gradient(135deg, var(--mpesa-green) 0%, var(--mpesa-dark-green) 100%);#}
+{#        --gradient-paypal: linear-gradient(135deg, var(--paypal-blue) 0%, var(--paypal-dark-blue) 100%);#}
+{#        --gradient-crypto: linear-gradient(135deg, var(--crypto-orange) 0%, var(--crypto-dark-orange) 100%);#}
+{#    }#}
+{##}
+{#    /* Modern Payment Header */#}
+{#    .payment-header {#}
+{#        background: var(--gradient-amber);#}
+{#        color: white;#}
+{#        padding: 100px 0 80px;#}
+{#        text-align: center;#}
+{#        position: relative;#}
+{#        overflow: hidden;#}
+{#    }#}
+{##}
+{#    .payment-header::before {#}
+{#        content: '';#}
+{#        position: absolute;#}
+{#        top: 0;#}
+{#        left: 0;#}
+{#        width: 100%;#}
+{#        height: 100%;#}
+{#        background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.08'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");#}
+{#        z-index: 1;#}
+{#    }#}
+{##}
+{#    .payment-header-content {#}
+{#        position: relative;#}
+{#        z-index: 2;#}
+{#    }#}
+{##}
+{#    .payment-header h1 {#}
+{#        font-weight: 800;#}
+{#        margin-bottom: 20px;#}
+{#        font-size: 3.5rem;#}
+{#        opacity: 0;#}
+{#        transform: translateY(30px);#}
+{#        animation: fadeInUp 0.8s forwards 0.3s;#}
+{#    }#}
+{##}
+{#    .payment-header p.lead {#}
+{#        max-width: 700px;#}
+{#        margin: 0 auto;#}
+{#        font-size: 1.2rem;#}
+{#        opacity: 0;#}
+{#        transform: translateY(30px);#}
+{#        animation: fadeInUp 0.8s forwards 0.5s;#}
+{#    }#}
+{##}
+{#    /* Sleek Payment Section */#}
+{#    .payment-section {#}
+{#        padding: 100px 0;#}
+{#        background-color: var(--off-white);#}
+{#        position: relative;#}
+{#        overflow: hidden;#}
+{#    }#}
+{##}
+{#    .payment-section::before {#}
+{#        content: '';#}
+{#        position: absolute;#}
+{#        width: 600px;#}
+{#        height: 600px;#}
+{#        border-radius: 50%;#}
+{#        background: radial-gradient(circle, rgba(193, 149, 74, 0.05) 0%, rgba(193, 149, 74, 0) 70%);#}
+{#        top: -200px;#}
+{#        left: -200px;#}
+{#        z-index: 0;#}
+{#    }#}
+{##}
+{#    .payment-section::after {#}
+{#        content: '';#}
+{#        position: absolute;#}
+{#        width: 500px;#}
+{#        height: 500px;#}
+{#        border-radius: 50%;#}
+{#        background: radial-gradient(circle, rgba(193, 149, 74, 0.05) 0%, rgba(193, 149, 74, 0) 70%);#}
+{#        bottom: -200px;#}
+{#        right: -200px;#}
+{#        z-index: 0;#}
+{#    }#}
+{##}
+{#    .payment-section .container {#}
+{#        position: relative;#}
+{#        z-index: 1;#}
+{#    }#}
+{##}
+{#    .payment-card {#}
+{#        border-radius: 24px;#}
+{#        overflow: hidden;#}
+{#        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);#}
+{#        margin-bottom: 30px;#}
+{#        background-color: white;#}
+{#        transform: translateY(50px);#}
+{#        opacity: 0;#}
+{#        animation: fadeInUp 0.8s forwards 0.3s;#}
+{#    }#}
+{##}
+{#    .payment-card-header {#}
+{#        padding: 30px;#}
+{#        background: var(--gradient-amber);#}
+{#        color: white;#}
+{#        position: relative;#}
+{#    }#}
+{##}
+{#    .payment-card-header h2 {#}
+{#        margin-bottom: 0;#}
+{#        font-size: 1.8rem;#}
+{#        font-weight: 700;#}
+{#    }#}
+{##}
+{#    .payment-card-body {#}
+{#        padding: 40px 30px;#}
+{#    }#}
+{##}
+{#    /* Modern Payment Method Cards */#}
+{#    .payment-methods {#}
+{#        display: flex;#}
+{#        flex-wrap: wrap;#}
+{#        gap: 20px;#}
+{#        justify-content: center;#}
+{#    }#}
+{##}
+{#    .payment-method-card {#}
+{#        flex: 1;#}
+{#        min-width: 250px;#}
+{#        border-radius: 20px;#}
+{#        overflow: hidden;#}
+{#        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);#}
+{#        transform: translateY(50px);#}
+{#        opacity: 0;#}
+{#        animation: fadeInUp 0.8s forwards;#}
+{#        transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);#}
+{#        position: relative;#}
+{#        background: white;#}
+{#        height: 100%;#}
+{#    }#}
+{##}
+{#    .payment-method-card:nth-child(1) {#}
+{#        animation-delay: 0.4s;#}
+{#    }#}
+{##}
+{#    .payment-method-card:nth-child(2) {#}
+{#        animation-delay: 0.6s;#}
+{#    }#}
+{##}
+{#    .payment-method-card:nth-child(3) {#}
+{#        animation-delay: 0.8s;#}
+{#    }#}
+{##}
+{#    .payment-method-card:hover {#}
+{#        transform: translateY(-15px);#}
+{#        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);#}
+{#    }#}
+{##}
+{#    .payment-method-header {#}
+{#        padding: 25px;#}
+{#        position: relative;#}
+{#        overflow: hidden;#}
+{#        display: flex;#}
+{#        align-items: center;#}
+{#        height: 120px;#}
+{#    }#}
+{##}
+{#    .mpesa-header {#}
+{#        background: var(--gradient-mpesa);#}
+{#    }#}
+{##}
+{#    .paypal-header {#}
+{#        background: var(--gradient-paypal);#}
+{#    }#}
+{##}
+{#    .crypto-header {#}
+{#        background: var(--gradient-crypto);#}
+{#    }#}
+{##}
+{#    .payment-method-logo {#}
+{#        width: 80px;#}
+{#        height: 80px;#}
+{#        background: white;#}
+{#        border-radius: 50%;#}
+{#        display: flex;#}
+{#        align-items: center;#}
+{#        justify-content: center;#}
+{#        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);#}
+{#        z-index: 2;#}
+{#    }#}
+{##}
+{#    .payment-method-logo img {#}
+{#        max-width: 60%;#}
+{#        max-height: 60%;#}
+{#    }#}
+{##}
+{#    .payment-method-logo i {#}
+{#        font-size: 2.5rem;#}
+{#    }#}
+{##}
+{#    .mpesa-logo i {#}
+{#        color: var(--mpesa-green);#}
+{#    }#}
+{##}
+{#    .paypal-logo i {#}
+{#        color: var(--paypal-blue);#}
+{#    }#}
+{##}
+{#    .crypto-logo i {#}
+{#        color: var(--crypto-orange);#}
+{#    }#}
+{##}
+{#    .payment-method-header::after {#}
+{#        content: '';#}
+{#        position: absolute;#}
+{#        top: 0;#}
+{#        left: 0;#}
+{#        width: 100%;#}
+{#        height: 100%;#}
+{#        background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");#}
+{#        opacity: 0.5;#}
+{#        z-index: 1;#}
+{#    }#}
+{##}
+{#    .payment-method-body {#}
+{#        padding: 25px;#}
+{#        text-align: center;#}
+{#    }#}
+{##}
+{#    .payment-method-title {#}
+{#        font-size: 1.4rem;#}
+{#        font-weight: 700;#}
+{#        margin-bottom: 15px;#}
+{#        color: var(--black);#}
+{#    }#}
+{##}
+{#    .payment-btn {#}
+{#        width: 100%;#}
+{#        padding: 15px;#}
+{#        border: none;#}
+{#        border-radius: 50px;#}
+{#        font-weight: 600;#}
+{#        font-size: 1.1rem;#}
+{#        transition: all 0.3s ease;#}
+{#        position: relative;#}
+{#        overflow: hidden;#}
+{#        z-index: 1;#}
+{#        color: white;#}
+{#        margin-top: 20px;#}
+{#        display: flex;#}
+{#        align-items: center;#}
+{#        justify-content: center;#}
+{#        gap: 10px;#}
+{#    }#}
+{##}
+{#    .payment-btn::before {#}
+{#        content: '';#}
+{#        position: absolute;#}
+{#        top: 0;#}
+{#        left: 0;#}
+{#        width: 0%;#}
+{#        height: 100%;#}
+{#        transition: all 0.3s ease;#}
+{#        z-index: -1;#}
+{#        opacity: 0;#}
+{#    }#}
+{##}
+{#    .payment-btn:hover::before {#}
+{#        width: 100%;#}
+{#        opacity: 1;#}
+{#    }#}
+{##}
+{#    .mpesa-btn {#}
+{#        background: var(--gradient-mpesa);#}
+{#    }#}
+{##}
+{#    .mpesa-btn::before {#}
+{#        background: var(--mpesa-dark-green);#}
+{#    }#}
+{##}
+{#    .paypal-btn {#}
+{#        background: var(--gradient-paypal);#}
+{#    }#}
+{##}
+{#    .paypal-btn::before {#}
+{#        background: var(--paypal-dark-blue);#}
+{#    }#}
+{##}
+{#    .crypto-btn {#}
+{#        background: var(--gradient-crypto);#}
+{#    }#}
+{##}
+{#    .crypto-btn::before {#}
+{#        background: var(--crypto-dark-orange);#}
+{#    }#}
+{##}
+{#    .payment-btn i {#}
+{#        font-size: 1.2rem;#}
+{#        transition: transform 0.3s ease;#}
+{#    }#}
+{##}
+{#    .payment-btn:hover i {#}
+{#        transform: translateX(5px);#}
+{#    }#}
+{##}
+{#    /* Skip Payment Button */#}
+{#    .skip-payment {#}
+{#        text-align: center;#}
+{#        margin-top: 40px;#}
+{#        opacity: 0;#}
+{#        transform: translateY(30px);#}
+{#        animation: fadeInUp 0.8s forwards 1s;#}
+{#    }#}
+{##}
+{#    .skip-payment p {#}
+{#        font-size: 1.1rem;#}
+{#        margin-bottom: 15px;#}
+{#        color: var(--dark-gray);#}
+{#    }#}
+{##}
+{#    .skip-btn {#}
+{#        background: transparent;#}
+{#        color: var(--amber-color);#}
+{#        border: 2px solid var(--amber-color);#}
+{#        padding: 12px 30px;#}
+{#        border-radius: 50px;#}
+{#        font-weight: 600;#}
+{#        transition: all 0.3s ease;#}
+{#        display: inline-flex;#}
+{#        align-items: center;#}
+{#        gap: 10px;#}
+{#        position: relative;#}
+{#        overflow: hidden;#}
+{#        z-index: 1;#}
+{#    }#}
+{##}
+{#    .skip-btn::before {#}
+{#        content: '';#}
+{#        position: absolute;#}
+{#        top: 0;#}
+{#        left: 0;#}
+{#        width: 0%;#}
+{#        height: 100%;#}
+{#        background: var(--gradient-amber);#}
+{#        transition: all 0.3s ease;#}
+{#        z-index: -1;#}
+{#    }#}
+{##}
+{#    .skip-btn:hover {#}
+{#        color: white;#}
+{#        border-color: transparent;#}
+{#    }#}
+{##}
+{#    .skip-btn:hover::before {#}
+{#        width: 100%;#}
+{#    }#}
+{##}
+{#    .skip-btn i {#}
+{#        transition: transform 0.3s ease;#}
+{#    }#}
+{##}
+{#    .skip-btn:hover i {#}
+{#        transform: translateX(5px);#}
+{#    }#}
+{##}
+{#    /* Enhanced Order Summary */#}
+{#    .order-summary {#}
+{#        background-color: white;#}
+{#        border-radius: 24px;#}
+{#        padding: 30px;#}
+{#        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);#}
+{#        height: 100%;#}
+{#        transform: translateY(50px);#}
+{#        opacity: 0;#}
+{#        animation: fadeInUp 0.8s forwards 0.7s;#}
+{#        position: relative;#}
+{#        overflow: hidden;#}
+{#    }#}
+{##}
+{#    .order-summary::before {#}
+{#        content: '';#}
+{#        position: absolute;#}
+{#        top: 0;#}
+{#        left: 0;#}
+{#        width: 5px;#}
+{#        height: 100%;#}
+{#        background: var(--gradient-amber);#}
+{#        border-radius: 5px 0 0 5px;#}
+{#    }#}
+{##}
+{#    .currency-toggle {#}
+{#        margin-bottom: 20px;#}
+{#        text-align: right;#}
+{#    }#}
+{##}
+{#    .currency-toggle select {#}
+{#        border: 1px solid var(--light-gray);#}
+{#        padding: 8px 15px;#}
+{#        border-radius: 50px;#}
+{#        font-size: 0.9rem;#}
+{#        font-weight: 500;#}
+{#        cursor: pointer;#}
+{#        transition: all 0.3s ease;#}
+{#        background-color: white;#}
+{#    }#}
+{##}
+{#    .currency-toggle select:focus {#}
+{#        outline: none;#}
+{#        border-color: var(--amber-color);#}
+{#        box-shadow: 0 0 0 2px rgba(193, 149, 74, 0.2);#}
+{#    }#}
+{##}
+{#    .order-summary-title {#}
+{#        font-size: 1.4rem;#}
+{#        font-weight: 700;#}
+{#        margin-bottom: 25px;#}
+{#        color: var(--black);#}
+{#        padding-bottom: 15px;#}
+{#        border-bottom: 1px solid var(--light-gray);#}
+{#    }#}
+{##}
+{#    .order-detail {#}
+{#        display: flex;#}
+{#        justify-content: space-between;#}
+{#        margin-bottom: 15px;#}
+{#    }#}
+{##}
+{#    .order-detail-label {#}
+{#        color: var(--dark-gray);#}
+{#        font-weight: 500;#}
+{#    }#}
+{##}
+{#    .order-detail-value {#}
+{#        font-weight: 600;#}
+{#        color: var(--black);#}
+{#    }#}
+{##}
+{#    .order-total {#}
+{#        display: flex;#}
+{#        justify-content: space-between;#}
+{#        margin-top: 25px;#}
+{#        padding-top: 20px;#}
+{#        border-top: 2px solid var(--light-amber);#}
+{#    }#}
+{##}
+{#    .order-total-label {#}
+{#        font-weight: 700;#}
+{#        font-size: 1.2rem;#}
+{#        color: var(--black);#}
+{#    }#}
+{##}
+{#    .order-total-value {#}
+{#        font-weight: 700;#}
+{#        font-size: 1.2rem;#}
+{#        color: var(--amber-color);#}
+{#    }#}
+{##}
+{#    /* Enhanced Animations */#}
+{#    @keyframes fadeInUp {#}
+{#        from {#}
+{#            opacity: 0;#}
+{#            transform: translateY(30px);#}
+{#        }#}
+{#        to {#}
+{#            opacity: 1;#}
+{#            transform: translateY(0);#}
+{#        }#}
+{#    }#}
+{##}
+{#    @keyframes fadeIn {#}
+{#        from {#}
+{#            opacity: 0;#}
+{#        }#}
+{#        to {#}
+{#            opacity: 1;#}
+{#        }#}
+{#    }#}
+{##}
+{#    @keyframes float {#}
+{#        0% {#}
+{#            transform: translateY(0px);#}
+{#        }#}
+{#        50% {#}
+{#            transform: translateY(-10px);#}
+{#        }#}
+{#        100% {#}
+{#            transform: translateY(0px);#}
+{#        }#}
+{#    }#}
+{##}
+{#    /* Dark mode adaptations */#}
+{#    body.dark-mode .payment-section {#}
+{#        background-color: #222533;#}
+{#    }#}
+{##}
+{#    body.dark-mode .payment-card,#}
+{#    body.dark-mode .order-summary,#}
+{#    body.dark-mode .payment-method-card {#}
+{#        background-color: var(--dark-gray);#}
+{#    }#}
+{##}
+{#    body.dark-mode .payment-method-title,#}
+{#    body.dark-mode .order-summary-title,#}
+{#    body.dark-mode .order-total-label {#}
+{#        color: var(--off-white);#}
+{#    }#}
+{##}
+{#    body.dark-mode .order-detail-label,#}
+{#    body.dark-mode .skip-payment p {#}
+{#        color: #c2c5d3;#}
+{#    }#}
+{##}
+{#    body.dark-mode .order-detail-value {#}
+{#        color: var(--off-white);#}
+{#    }#}
+{##}
+{#    body.dark-mode .currency-toggle select {#}
+{#        background-color: var(--dark-gray);#}
+{#        color: var(--off-white);#}
+{#        border-color: #3a3d52;#}
+{#    }#}
+{##}
+{#    body.dark-mode .order-summary-title {#}
+{#        border-color: #3a3d52;#}
+{#    }#}
+{##}
+{#    body.dark-mode .order-total {#}
+{#        border-color: var(--dark-amber);#}
+{#    }#}
+{#</style>#}
+{#{% endblock %}#}
+{##}
+{#{% block content %}#}
+{#<!-- Modern Payment Header -->#}
+{#<section class="payment-header">#}
+{#    <div class="container payment-header-content">#}
+{#        <h1>Complete Your Purchase</h1>#}
+{#        <p class="lead">Choose your preferred payment method to finalize your order</p>#}
+{#    </div>#}
+{#</section>#}
+{##}
+{#<!-- Payment Content -->#}
+{#<section class="payment-section">#}
+{#    <div class="container">#}
+{#        <div class="row">#}
+{#            <div class="col-lg-8">#}
+{#                <div class="payment-card">#}
+{#                    <div class="payment-card-header">#}
+{#                        <h2>Select Payment Method</h2>#}
+{#                    </div>#}
+{#                    <div class="payment-card-body">#}
+{#                        <div class="payment-methods">#}
+{#                            <a href="{% url 'quotes:process_mpesa' order.id %}" class="payment-method-card">#}
+{#                                <div class="payment-method-header mpesa-header">#}
+{#                                    <div class="payment-method-logo mpesa-logo">#}
+{#                                        <i class="fas fa-mobile-alt"></i>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                                <div class="payment-method-body">#}
+{#                                    <h3 class="payment-method-title">M-Pesa</h3>#}
+{#                                    <button class="payment-btn mpesa-btn">#}
+{#                                        Pay with M-Pesa <i class="fas fa-arrow-right"></i>#}
+{#                                    </button>#}
+{#                                </div>#}
+{#                            </a>#}
+{##}
+{#                            <a href="{% url 'quotes:process_paypal' order.id %}" class="payment-method-card">#}
+{#                                <div class="payment-method-header paypal-header">#}
+{#                                    <div class="payment-method-logo paypal-logo">#}
+{#                                        <i class="fab fa-paypal"></i>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                                <div class="payment-method-body">#}
+{#                                    <h3 class="payment-method-title">PayPal</h3>#}
+{#                                    <button class="payment-btn paypal-btn">#}
+{#                                        Pay with PayPal <i class="fas fa-arrow-right"></i>#}
+{#                                    </button>#}
+{#                                </div>#}
+{#                            </a>#}
+{##}
+{#                            <a href="{% url 'quotes:process_crypto' order.id %}" class="payment-method-card">#}
+{#                                <div class="payment-method-header crypto-header">#}
+{#                                    <div class="payment-method-logo crypto-logo">#}
+{#                                        <i class="fab fa-bitcoin"></i>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                                <div class="payment-method-body">#}
+{#                                    <h3 class="payment-method-title">Cryptocurrency</h3>#}
+{#                                    <button class="payment-btn crypto-btn">#}
+{#                                        Pay with Crypto <i class="fas fa-arrow-right"></i>#}
+{#                                    </button>#}
+{#                                </div>#}
+{#                            </a>#}
+{#                        </div>#}
+{##}
+{#                        <div class="skip-payment">#}
+{#                            <p>Not ready to complete payment right now?</p>#}
+{#                            <a href="{% url 'quotes:skip_payment' order.id %}" class="skip-btn">#}
+{#                                Skip Payment <i class="fas fa-arrow-right"></i>#}
+{#                            </a>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{##}
+{#            <div class="col-lg-4">#}
+{#                <div class="order-summary">#}
+{#                    <div class="currency-toggle">#}
+{#                        <select id="currency-select" class="form-select">#}
+{#                            <option value="USD">USD</option>#}
+{#                            <option value="KSH">KSH</option>#}
+{#                        </select>#}
+{#                    </div>#}
+{##}
+{#                    <h3 class="order-summary-title">Order Summary</h3>#}
+{##}
+{#                    <div class="order-detail">#}
+{#                        <span class="order-detail-label">Service:</span>#}
+{#                        <span class="order-detail-value">{{ order.service.name }}</span>#}
+{#                    </div>#}
+{##}
+{#                    <div class="order-detail">#}
+{#                        <span class="order-detail-label">Features:</span>#}
+{#                        <span class="order-detail-value">{{ order.features.count }}</span>#}
+{#                    </div>#}
+{##}
+{#                    <div class="order-detail">#}
+{#                        <span class="order-detail-label">Appointment:</span>#}
+{#                        <span class="order-detail-value">{{ order.appointment_date|date:"F j, Y" }}</span>#}
+{#                    </div>#}
+{##}
+{#                    <div class="order-total">#}
+{#                        <span class="order-total-label">Total:</span>#}
+{#                        <span class="order-total-value">#}
+{#                            <span class="price-usd">${{ order.total_price }}</span>#}
+{#                            <span class="price-ksh" style="display:none;">KSH {{ order.total_price_ksh }}</span>#}
+{#                        </span>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
+{#</section>#}
+{#{% endblock %}#}
+{##}
+{#{% block extra_js %}#}
+{#<script>#}
+{#    document.addEventListener('DOMContentLoaded', function() {#}
+{#        // Currency toggle#}
+{#        const currencySelect = document.getElementById('currency-select');#}
+{#        const usdElements = document.querySelectorAll('.price-usd');#}
+{#        const kshElements = document.querySelectorAll('.price-ksh');#}
+{##}
+{#        currencySelect.addEventListener('change', function() {#}
+{#            if (this.value === 'USD') {#}
+{#                usdElements.forEach(el => el.style.display = 'inline');#}
+{#                kshElements.forEach(el => el.style.display = 'none');#}
+{#            } else {#}
+{#                usdElements.forEach(el => el.style.display = 'none');#}
+{#                kshElements.forEach(el => el.style.display = 'inline');#}
+{#            }#}
+{#        });#}
+{##}
+{#        // Add subtle hover effect to payment method cards#}
+{#        const paymentMethods = document.querySelectorAll('.payment-method-card');#}
+{#        paymentMethods.forEach(card => {#}
+{#            card.addEventListener('mouseenter', function() {#}
+{#                const btn = this.querySelector('.payment-btn');#}
+{#                const icon = btn.querySelector('i');#}
+{#                icon.style.transform = 'translateX(5px)';#}
+{#            });#}
+{##}
+{#            card.addEventListener('mouseleave', function() {#}
+{#                const btn = this.querySelector('.payment-btn');#}
+{#                const icon = btn.querySelector('i');#}
+{#                icon.style.transform = 'translateX(0)';#}
+{#            });#}
+{#        });#}
+{##}
+{#        // Add subtle parallax effect to background elements#}
+{#        window.addEventListener('mousemove', function(e) {#}
+{#            const moveX = (e.clientX - window.innerWidth / 2) * 0.01;#}
+{#            const moveY = (e.clientY - window.innerHeight / 2) * 0.01;#}
+{##}
+{#            document.querySelectorAll('.payment-header::before, .payment-section::before, .payment-section::after').forEach(element => {#}
+{#                element.style.transform = `translateX(${moveX}px) translateY(${moveY}px)`;#}
+{#            });#}
+{#        });#}
+{#    });#}
+{#</script>#}
+{#{% endblock %}#}
+
+
+
+
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Payment Options - CloudLink_Devs{% endblock %}
+
+{% block extra_css %}
+<style>
+    :root {
+        --primary: #2C3E50;
+        --secondary: #E74C3C;
+        --accent: #3498DB;
+        --light: #ECF0F1;
+        --dark: #2C3E50;
+        --white: #FFFFFF;
+        --gray: #95A5A6;
+        --border: #BDC3C7;
+    }
+
+    .payment-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 40px 20px;
+    }
+
+    .payment-header {
+        text-align: center;
+        margin-bottom: 40px;
+    }
+
+    .payment-header h1 {
+        font-size: 2.5rem;
+        color: var(--dark);
+        margin-bottom: 15px;
+    }
+
+    .payment-header p {
+        color: var(--gray);
+        font-size: 1.1rem;
+        max-width: 700px;
+        margin: 0 auto;
+    }
+
+    .payment-content {
+        display: flex;
+        gap: 30px;
+    }
+
+    .payment-methods {
+        flex: 2;
+    }
+
+    .order-summary-container {
+        flex: 1;
+    }
+
+    .payment-section {
+        background: var(--white);
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        padding: 30px;
+        margin-bottom: 30px;
+        border: 1px solid var(--border);
+    }
+
+    .section-title {
+        font-size: 1.4rem;
+        color: var(--dark);
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid var(--border);
+    }
+
+    .payment-options {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .payment-option {
+        display: flex;
+        align-items: center;
+        padding: 20px;
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        color: var(--dark);
+    }
+
+    .payment-option:hover {
+        border-color: var(--accent);
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    .payment-icon {
+        width: 50px;
+        height: 50px;
+        background: var(--light);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 20px;
+        font-size: 1.5rem;
+        color: var(--accent);
+    }
+
+    .payment-details {
+        flex: 1;
+    }
+
+    .payment-name {
+        font-weight: 600;
+        font-size: 1.1rem;
+        margin-bottom: 5px;
+    }
+
+    .payment-description {
+        color: var(--gray);
+        font-size: 0.9rem;
+    }
+
+    .payment-arrow {
+        color: var(--gray);
+        font-size: 1.2rem;
+    }
+
+    .order-summary {
+        position: sticky;
+        top: 20px;
+    }
+
+    .order-item {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 15px;
+    }
+
+    .order-label {
+        color: var(--gray);
+    }
+
+    .order-value {
+        font-weight: 500;
+    }
+
+    .order-total {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 25px;
+        padding-top: 15px;
+        border-top: 1px solid var(--border);
+        font-size: 1.1rem;
+    }
+
+    .total-label {
+        font-weight: 600;
+    }
+
+    .total-amount {
+        font-weight: 700;
+        color: var(--secondary);
+    }
+
+    .currency-selector {
+        margin-bottom: 20px;
+    }
+
+    .currency-selector select {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        background: var(--white);
+    }
+
+    .skip-payment {
+        text-align: center;
+        margin-top: 30px;
+        padding-top: 20px;
+        border-top: 1px solid var(--border);
+    }
+
+    .skip-link {
+        color: var(--accent);
+        text-decoration: none;
+        font-weight: 500;
+        display: inline-flex;
+        align-items: center;
+    }
+
+    .skip-link:hover {
+        text-decoration: underline;
+    }
+
+    @media (max-width: 768px) {
+        .payment-content {
+            flex-direction: column;
+        }
+
+        .order-summary {
+            position: static;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="payment-container">
+    <div class="payment-header">
+        <h1>Complete Your Payment</h1>
+        <p>Select your preferred payment method to finalize your order</p>
+    </div>
+
+    <div class="payment-content">
+        <div class="payment-methods">
+            <div class="payment-section">
+                <h2 class="section-title">Choose Payment Method</h2>
+
+                <div class="payment-options">
+                    <a href="{% url 'quotes:process_mpesa' order.id %}" class="payment-option">
+                        <div class="payment-icon">
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                        <div class="payment-details">
+                            <div class="payment-name">M-Pesa</div>
+                            <div class="payment-description">Pay instantly via M-Pesa</div>
+                        </div>
+                        <div class="payment-arrow">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </a>
+
+                    <a href="{% url 'quotes:process_paypal' order.id %}" class="payment-option">
+                        <div class="payment-icon">
+                            <i class="fab fa-paypal"></i>
+                        </div>
+                        <div class="payment-details">
+                            <div class="payment-name">PayPal</div>
+                            <div class="payment-description">Pay with PayPal account or card</div>
+                        </div>
+                        <div class="payment-arrow">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </a>
+
+                    <a href="{% url 'quotes:process_crypto' order.id %}" class="payment-option">
+                        <div class="payment-icon">
+                            <i class="fab fa-bitcoin"></i>
+                        </div>
+                        <div class="payment-details">
+                            <div class="payment-name">Cryptocurrency</div>
+                            <div class="payment-description">Pay with Bitcoin or other crypto</div>
+                        </div>
+                        <div class="payment-arrow">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <div class="skip-payment">
+                <p>Need more time to decide?</p>
+                <a href="{% url 'quotes:skip_payment' order.id %}" class="skip-link">
+                    Skip payment for now <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+            </div>
+        </div>
+
+        <div class="order-summary-container">
+            <div class="payment-section order-summary">
+                <h2 class="section-title">Order Summary</h2>
+
+                <div class="currency-selector">
+                    <select id="currency-select" class="form-select">
+                        <option value="USD">USD</option>
+                        <option value="KSH">KSH</option>
+                    </select>
+                </div>
+
+                <div class="order-item">
+                    <span class="order-label">Service:</span>
+                    <span class="order-value">{{ order.service.name }}</span>
+                </div>
+
+                <div class="order-item">
+                    <span class="order-label">Features:</span>
+                    <span class="order-value">{{ order.features.count }}</span>
+                </div>
+
+                <div class="order-item">
+                    <span class="order-label">Appointment:</span>
+                    <span class="order-value">{{ order.appointment_date|date:"F j, Y" }}</span>
+                </div>
+
+                <div class="order-total">
+                    <span class="total-label">Total:</span>
+                    <span class="total-amount">
+                        <span class="price-usd">${{ order.total_price }}</span>
+                        <span class="price-ksh" style="display:none;">KSH {{ order.total_price_ksh }}</span>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Currency toggle
+        const currencySelect = document.getElementById('currency-select');
+        const usdElements = document.querySelectorAll('.price-usd');
+        const kshElements = document.querySelectorAll('.price-ksh');
+
+        currencySelect.addEventListener('change', function() {
+            if (this.value === 'USD') {
+                usdElements.forEach(el => el.style.display = 'inline');
+                kshElements.forEach(el => el.style.display = 'none');
+            } else {
+                usdElements.forEach(el => el.style.display = 'none');
+                kshElements.forEach(el => el.style.display = 'inline');
+            }
+        });
+    });
+</script>
+{% endblock %}

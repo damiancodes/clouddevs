@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}Custom Solution Builder - CloudLink_Devs{% endblock %}
+{% block title %}Service Estimator - CloudLink_Devs{% endblock %}
 
 {% block extra_css %}
 <style>
@@ -16,31 +16,31 @@
         --light-gray: #f0f0f0;
     }
 
-    /* Builder Header */
-    .builder-header {
+    /* Estimator Header */
+    .estimator-header {
         background: var(--beige-color);
         color: var(--black);
         padding: 80px 0;
         text-align: center;
     }
 
-    .builder-header h1 {
+    .estimator-header h1 {
         font-weight: 800;
         margin-bottom: 20px;
         color: var(--black);
     }
 
-    .builder-header p {
+    .estimator-header p {
         color: var(--dark-gray);
     }
 
-    /* Builder Content */
-    .builder-section {
+    /* Estimator Content */
+    .estimator-section {
         padding: 80px 0;
         background-color: var(--off-white);
     }
 
-    .builder-card {
+    .estimator-card {
         border-radius: 10px;
         overflow: hidden;
         box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
@@ -48,83 +48,21 @@
         background-color: white;
     }
 
-    .builder-card-header {
+    .estimator-card-header {
         padding: 20px;
         background-color: var(--amber-color);
         color: white;
         border-bottom: 1px solid var(--light-gray);
     }
 
-    .builder-card-header h2 {
+    .estimator-card-header h2 {
         margin-bottom: 0;
         font-size: 1.5rem;
         font-weight: 700;
     }
 
-    .builder-card-body {
+    .estimator-card-body {
         padding: 30px;
-    }
-
-    /* Progress Steps */
-    .progress-steps {
-        display: flex;
-        justify-content: center;
-        margin-bottom: 30px;
-    }
-
-    .progress-step {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        width: 110px;
-    }
-
-    .step-number {
-        width: 30px;
-        height: 30px;
-        border-radius: 50%;
-        background-color: var(--light-gray);
-        color: var(--dark-gray);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-weight: 700;
-        margin-bottom: 10px;
-        border: 2px solid var(--light-gray);
-    }
-
-    .step-name {
-        font-size: 0.8rem;
-        color: var(--dark-gray);
-        text-align: center;
-    }
-
-    .progress-connector {
-        width: 40px;
-        height: 2px;
-        background-color: var(--light-gray);
-        margin-top: 15px;
-    }
-
-    .progress-step.active .step-number {
-        background-color: var(--amber-color);
-        color: white;
-        border-color: var(--amber-color);
-    }
-
-    .progress-step.active .step-name {
-        color: var(--amber-color);
-        font-weight: 700;
-    }
-
-    .progress-step.completed .step-number {
-        background-color: var(--dark-amber);
-        color: white;
-        border-color: var(--dark-amber);
-    }
-
-    .progress-step.completed .step-name {
-        color: var(--dark-amber);
     }
 
     /* Service Selection */
@@ -245,67 +183,25 @@
         text-align: right;
     }
 
-    /* Booking Form */
-    .booking-form {
-        display: none;
-        margin-top: 40px;
-    }
-
-    .booking-form.active {
-        display: block;
-    }
-
-    .form-group {
-        margin-bottom: 20px;
-    }
-
-    label {
-        font-weight: 600;
-        margin-bottom: 8px;
-    }
-
-    .required-field::after {
-        content: '*';
-        color: #e74a3b;
-        margin-left: 4px;
-    }
-
-    .form-control {
-        border-radius: 5px;
-        border: 1px solid #d1d3e2;
-        padding: 10px 15px;
-    }
-
-    .form-control:focus {
-        border-color: var(--light-amber);
-        box-shadow: 0 0 0 0.25rem rgba(193, 149, 74, 0.25);
-    }
-
-    .form-text {
-        color: #858796;
-        font-size: 0.875rem;
-        margin-top: 5px;
-    }
-
     /* Action Buttons */
     .action-buttons {
         margin-top: 40px;
         text-align: center;
     }
 
-    .btn-next, .btn-back, .btn-submit {
+    .btn-next, .btn-back, .btn-request-quote {
         padding: 10px 20px;
         border-radius: 50px;
         font-weight: 600;
     }
 
-    .btn-next, .btn-submit {
+    .btn-next, .btn-request-quote {
         background-color: var(--amber-color);
         color: white;
         border-color: var(--amber-color);
     }
 
-    .btn-next:hover, .btn-submit:hover {
+    .btn-next:hover, .btn-request-quote:hover {
         background-color: var(--dark-amber);
         border-color: var(--dark-amber);
     }
@@ -321,39 +217,94 @@
         background-color: var(--light-gray);
     }
 
-    /* Currency Toggle */
-    .currency-toggle {
+    /* Progress Steps */
+    .progress-steps {
         display: flex;
-        justify-content: flex-end;
-        margin-bottom: 20px;
+        justify-content: center;
+        margin-bottom: 30px;
     }
 
-    .currency-toggle label {
-        margin-right: 10px;
-        font-weight: 600;
+    .progress-step {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 120px;
+    }
+
+    .step-number {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background-color: var(--light-gray);
+        color: var(--dark-gray);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        margin-bottom: 10px;
+        border: 2px solid var(--light-gray);
+    }
+
+    .step-name {
+        font-size: 0.9rem;
+        color: var(--dark-gray);
+    }
+
+    .progress-connector {
+        width: 60px;
+        height: 2px;
+        background-color: var(--light-gray);
+        margin-top: 15px;
+    }
+
+    .progress-step.active .step-number {
+        background-color: var(--amber-color);
+        color: white;
+        border-color: var(--amber-color);
+    }
+
+    .progress-step.active .step-name {
+        color: var(--amber-color);
+        font-weight: 700;
+    }
+
+    .progress-step.completed .step-number {
+        background-color: var(--dark-amber);
+        color: white;
+        border-color: var(--dark-amber);
+    }
+
+    .progress-step.completed .step-name {
+        color: var(--dark-amber);
+    }
+
+    /* Form controls */
+    .form-control:focus {
+        border-color: var(--amber-color);
+        box-shadow: 0 0 0 0.25rem rgba(193, 149, 74, 0.25);
     }
 
     /* Dark mode adaptations */
-    body.dark-mode .builder-header {
+    body.dark-mode .estimator-header {
         background-color: var(--dark-gray);
         color: var(--off-white);
     }
 
-    body.dark-mode .builder-header h1,
-    body.dark-mode .builder-header p {
+    body.dark-mode .estimator-header h1,
+    body.dark-mode .estimator-header p {
         color: var(--off-white);
     }
 
-    body.dark-mode .builder-section {
+    body.dark-mode .estimator-section {
         background-color: #222533;
     }
 
-    body.dark-mode .builder-card {
+    body.dark-mode .estimator-card {
         background-color: var(--dark-gray);
         color: var(--off-white);
     }
 
-    body.dark-mode .builder-card-header {
+    body.dark-mode .estimator-card-header {
         background-color: var(--amber-color);
     }
 
@@ -412,22 +363,22 @@
 {% endblock %}
 
 {% block content %}
-<!-- Builder Header -->
-<section class="builder-header">
+<!-- Estimator Header -->
+<section class="estimator-header">
     <div class="container">
-        <h1>Custom Solution Builder</h1>
-        <p class="lead">Build your custom solution, book an appointment, and make payment all in one place</p>
+        <h1>Service Estimator</h1>
+        <p class="lead">Get an instant estimate for your project</p>
     </div>
 </section>
 
-<!-- Builder Content -->
-<section class="builder-section">
+<!-- Estimator Content -->
+<section class="estimator-section">
     <div class="container">
-        <div class="builder-card">
-            <div class="builder-card-header">
-                <h2>Design Your Perfect Solution</h2>
+        <div class="estimator-card">
+            <div class="estimator-card-header">
+                <h2>Build Your Custom Solution</h2>
             </div>
-            <div class="builder-card-body">
+            <div class="estimator-card-body">
                 <!-- Progress Steps -->
                 <div class="progress-steps">
                     <div class="progress-step active" id="step-1">
@@ -442,30 +393,11 @@
                     <div class="progress-connector"></div>
                     <div class="progress-step" id="step-3">
                         <div class="step-number">3</div>
-                        <div class="step-name">Review Price</div>
-                    </div>
-                    <div class="progress-connector"></div>
-                    <div class="progress-step" id="step-4">
-                        <div class="step-number">4</div>
-                        <div class="step-name">Book Appointment</div>
-                    </div>
-                    <div class="progress-connector"></div>
-                    <div class="progress-step" id="step-5">
-                        <div class="step-number">5</div>
-                        <div class="step-name">Payment</div>
+                        <div class="step-name">Review Estimate</div>
                     </div>
                 </div>
 
-                <!-- Currency Toggle -->
-                <div class="currency-toggle">
-                    <label for="currency-select">Currency:</label>
-                    <select id="currency-select" class="form-select form-select-sm" style="width: auto;">
-                        <option value="USD">USD</option>
-                        <option value="KSH">KSH</option>
-                    </select>
-                </div>
-
-                <form id="solution-builder-form" method="post" action="{% url 'quotes:create_order' %}">
+                <form id="estimator-form" method="post" action="{% url 'quotes:service_estimator' %}">
                     {% csrf_token %}
 
                     <!-- Step 1: Service Selection -->
@@ -483,7 +415,7 @@
                         <div class="service-info" id="service-info">
                             <h3 id="service-name"></h3>
                             <div class="service-description" id="service-description"></div>
-                            <div class="service-price">Starting from: $<span id="service-price-usd"></span> / KSH <span id="service-price-ksh"></span></div>
+                            <div class="service-price">Starting from: <span id="service-price"></span></div>
                         </div>
 
                         <div class="action-buttons">
@@ -514,7 +446,7 @@
                         </div>
                     </div>
 
-                    <!-- Step 3: Review Price -->
+                    <!-- Step 3: Review Estimate -->
                     <div id="step-3-content" style="display: none;">
                         <div class="estimate-summary active">
                             <h3 class="estimate-title">Your Estimate Summary</h3>
@@ -525,7 +457,7 @@
 
                             <div class="estimate-detail">
                                 <span>Base Price:</span>
-                                <span>$<span id="summary-base-price-usd"></span> / KSH <span id="summary-base-price-ksh"></span></span>
+                                <span id="summary-base-price"></span>
                             </div>
 
                             <div id="summary-features">
@@ -533,11 +465,8 @@
                             </div>
 
                             <div class="estimate-total">
-                                <div>Estimated Total:</div>
-                                <div>
-                                    $<span id="summary-total-price-usd"></span> /
-                                    KSH <span id="summary-total-price-ksh"></span>
-                                </div>
+                                <span>Estimated Total:</span>
+                                <span id="summary-total-price"></span>
                             </div>
 
                             <div class="mt-4">
@@ -549,99 +478,8 @@
                             <button type="button" id="btn-step-3-back" class="btn btn-back">
                                 <i class="fas fa-arrow-left"></i> Back
                             </button>
-                            <button type="button" id="btn-step-3-next" class="btn btn-next">
-                                Next <i class="fas fa-arrow-right"></i>
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Step 4: Booking Form -->
-                    <div id="step-4-content" style="display: none;">
-                        <div class="booking-form active">
-                            <h3>Book an Appointment</h3>
-                            <p>Please provide your contact information and preferred appointment date/time:</p>
-
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="name" class="required-field">Full Name</label>
-                                        <input type="text" class="form-control" id="name" name="name" required>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group"><label for="email" class="required-field">Email Address</label>
-                                        <input type="email" class="form-control" id="email" name="email" required>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="phone">Phone Number</label>
-                                        <input type="tel" class="form-control" id="phone" name="phone">
-                                        <small class="form-text">Optional, but recommended for appointment reminders</small>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="appointment_date" class="required-field">Preferred Appointment Date/Time</label>
-                                        <input type="datetime-local" class="form-control" id="appointment_date" name="appointment_date" required>
-                                        <small class="form-text">Choose a date and time for your consultation</small>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="notes">Additional Notes</label>
-                                <textarea class="form-control" id="notes" name="notes" rows="3"></textarea>
-                                <small class="form-text">Any specific requirements or questions you'd like to discuss during the appointment?</small>
-                            </div>
-                        </div>
-
-                        <div class="action-buttons">
-                            <button type="button" id="btn-step-4-back" class="btn btn-back">
-                                <i class="fas fa-arrow-left"></i> Back
-                            </button>
-                            <button type="button" id="btn-step-4-next" class="btn btn-next">
-                                Next <i class="fas fa-arrow-right"></i>
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Step 5: Payment Choice -->
-                    <div id="step-5-content" style="display: none;">
-                        <h3>Choose Payment Option</h3>
-                        <p>You can either make a payment now to secure your appointment or skip payment and pay later.</p>
-
-                        <div class="row mt-4">
-                            <div class="col-md-6 mb-4">
-                                <div class="card h-100">
-                                    <div class="card-body">
-                                        <h5 class="card-title"><i class="fas fa-credit-card me-2"></i> Pay Now</h5>
-                                        <p>Secure your appointment with a payment. You'll be able to select from multiple payment methods on the next screen.</p>
-                                        <button type="submit" id="btn-pay-now" class="btn btn-amber mt-3">
-                                            Pay Now <i class="fas fa-arrow-right"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6 mb-4">
-                                <div class="card h-100">
-                                    <div class="card-body">
-                                        <h5 class="card-title"><i class="fas fa-clock me-2"></i> Skip Payment</h5>
-                                        <p>Submit your order now and make the payment later. Your appointment will still be booked.</p>
-                                        <button type="button" id="btn-skip-payment" class="btn btn-outline-amber mt-3">
-                                            Skip Payment <i class="fas fa-arrow-right"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="action-buttons mt-5">
-                            <button type="button" id="btn-step-5-back" class="btn btn-back">
-                                <i class="fas fa-arrow-left"></i> Back
+                            <button type="submit" class="btn btn-request-quote">
+                                Request Detailed Quote <i class="fas fa-check"></i>
                             </button>
                         </div>
                     </div>
@@ -660,86 +498,32 @@
         const serviceInfo = document.getElementById('service-info');
         const serviceName = document.getElementById('service-name');
         const serviceDescription = document.getElementById('service-description');
-        const servicePriceUSD = document.getElementById('service-price-usd');
-        const servicePriceKSH = document.getElementById('service-price-ksh');
+        const servicePrice = document.getElementById('service-price');
         const featuresContainer = document.getElementById('features-container');
         const summaryServiceName = document.getElementById('summary-service-name');
-        const summaryBasePriceUSD = document.getElementById('summary-base-price-usd');
-        const summaryBasePriceKSH = document.getElementById('summary-base-price-ksh');
+        const summaryBasePrice = document.getElementById('summary-base-price');
         const summaryFeatures = document.getElementById('summary-features');
-        const summaryTotalPriceUSD = document.getElementById('summary-total-price-usd');
-        const summaryTotalPriceKSH = document.getElementById('summary-total-price-ksh');
-        const currencySelect = document.getElementById('currency-select');
+        const summaryTotalPrice = document.getElementById('summary-total-price');
 
         // Step navigation buttons
         const btnStep1Next = document.getElementById('btn-step-1-next');
         const btnStep2Back = document.getElementById('btn-step-2-back');
         const btnStep2Next = document.getElementById('btn-step-2-next');
         const btnStep3Back = document.getElementById('btn-step-3-back');
-        const btnStep3Next = document.getElementById('btn-step-3-next');
-        const btnStep4Back = document.getElementById('btn-step-4-back');
-        const btnStep4Next = document.getElementById('btn-step-4-next');
-        const btnStep5Back = document.getElementById('btn-step-5-back');
-        const btnPayNow = document.getElementById('btn-pay-now');
-        const btnSkipPayment = document.getElementById('btn-skip-payment');
 
         // Step content divs
         const step1Content = document.getElementById('step-1-content');
         const step2Content = document.getElementById('step-2-content');
         const step3Content = document.getElementById('step-3-content');
-        const step4Content = document.getElementById('step-4-content');
-        const step5Content = document.getElementById('step-5-content');
 
         // Step indicators
         const step1 = document.getElementById('step-1');
         const step2 = document.getElementById('step-2');
         const step3 = document.getElementById('step-3');
-        const step4 = document.getElementById('step-4');
-        const step5 = document.getElementById('step-5');
 
         // Variables to store data
         let selectedServiceData = null;
         let selectedFeatures = [];
-        let exchangeRate = 145.00; // Default USD to KSH exchange rate
-
-        // Get exchange rate from the server
-        fetch('/quotes/api/exchange-rate/')
-            .then(response => response.json())
-            .then(data => {
-                exchangeRate = data.rate;
-            })
-            .catch(error => {
-                console.error('Error fetching exchange rate:', error);
-            });
-
-        // Currency toggle
-        currencySelect.addEventListener('change', function() {
-            updateCurrencyDisplay();
-        });
-
-        function updateCurrencyDisplay() {
-            const currency = currencySelect.value;
-            const usdElements = document.querySelectorAll('.price-usd');
-            const kshElements = document.querySelectorAll('.price-ksh');
-
-            if (currency === 'USD') {
-                usdElements.forEach(el => el.style.display = 'inline');
-                kshElements.forEach(el => el.style.display = 'none');
-            } else {
-                usdElements.forEach(el => el.style.display = 'none');
-                kshElements.forEach(el => el.style.display = 'inline');
-            }
-        }
-
-        // Convert USD to KSH
-        function convertUSDtoKSH(amountUSD) {
-            return parseFloat(amountUSD) * exchangeRate;
-        }
-
-        // Format currency
-        function formatCurrency(amount, decimals = 2) {
-            return amount.toFixed(decimals);
-        }
 
         // Service selection
         serviceSelector.addEventListener('change', function() {
@@ -766,12 +550,7 @@
                     // Update service info
                     serviceName.textContent = data.service.name;
                     serviceDescription.textContent = data.service.description;
-
-                    const priceUSD = data.service.base_price;
-                    const priceKSH = convertUSDtoKSH(priceUSD);
-
-                    servicePriceUSD.textContent = formatCurrency(priceUSD);
-                    servicePriceKSH.textContent = formatCurrency(priceKSH);
+                    servicePrice.textContent = `$${data.service.base_price.toFixed(2)}`;
 
                     // Show service info
                     serviceInfo.classList.add('active');
@@ -787,7 +566,6 @@
         // Populate features
         function populateFeatures(features) {
             featuresContainer.innerHTML = '';
-            selectedFeatures = []; // Reset selected features
 
             if (features.length === 0) {
                 featuresContainer.innerHTML = '<p>No additional features available for this service.</p>';
@@ -799,21 +577,14 @@
             const optionalFeatures = features.filter(feature => !feature.is_required);
 
             // Create hidden fields for required features
-            if (requiredFeatures.length > 0) {
-                const requiredTitle = document.createElement('h4');
-                requiredTitle.textContent = 'Required Features';
-                requiredTitle.className = 'mb-3';
-                featuresContainer.appendChild(requiredTitle);
+            requiredFeatures.forEach(feature => {
+                // Create feature item
+                const featureItem = createFeatureItem(feature, true);
+                featuresContainer.appendChild(featureItem);
 
-                requiredFeatures.forEach(feature => {
-                    // Create feature item
-                    const featureItem = createFeatureItem(feature, true);
-                    featuresContainer.appendChild(featureItem);
-
-                    // Add to selected features
-                    selectedFeatures.push(feature);
-                });
-            }
+                // Add to selected features
+                selectedFeatures.push(feature);
+            });
 
             // Create checkboxes for optional features
             if (optionalFeatures.length > 0) {
@@ -888,18 +659,11 @@
             const featurePrice = document.createElement('div');
             featurePrice.className = 'feature-price';
 
-            const priceUSD = feature.price_type === 'fixed'
-                ? feature.price_value
-                : `${feature.price_value}%`;
-
-            const priceKSH = feature.price_type === 'fixed'
-                ? convertUSDtoKSH(feature.price_value)
-                : `${feature.price_value}%`;
-
-            featurePrice.innerHTML = `
-                <span class="price-usd">$${priceUSD}</span>
-                <span class="price-ksh" style="display:none;">KSH ${priceKSH}</span>
-            `;
+            if (feature.price_type === 'fixed') {
+                featurePrice.textContent = `$${feature.price_value.toFixed(2)}`;
+            } else {
+                featurePrice.textContent = `${feature.price_value.toFixed(2)}%`;
+            }
 
             featureHeader.appendChild(featurePrice);
             featureItem.appendChild(featureHeader);
@@ -920,18 +684,13 @@
 
             // Set service info
             summaryServiceName.textContent = selectedServiceData.name;
-
-            const baseUSD = selectedServiceData.base_price;
-            const baseKSH = convertUSDtoKSH(baseUSD);
-
-            summaryBasePriceUSD.textContent = formatCurrency(baseUSD);
-            summaryBasePriceKSH.textContent = formatCurrency(baseKSH);
+            summaryBasePrice.textContent = `$${selectedServiceData.base_price.toFixed(2)}`;
 
             // Clear features summary
             summaryFeatures.innerHTML = '';
 
             // Calculate total
-            let totalUSD = selectedServiceData.base_price;
+            let total = selectedServiceData.base_price;
 
             // Add features
             selectedFeatures.forEach(feature => {
@@ -943,22 +702,16 @@
 
                 const featurePrice = document.createElement('span');
 
-                let featureValueUSD = 0;
+                let featureValue = 0;
                 if (feature.price_type === 'fixed') {
-                    featureValueUSD = feature.price_value;
-                    featurePrice.innerHTML = `
-                        <span class="price-usd">$${formatCurrency(featureValueUSD)}</span>
-                        <span class="price-ksh" style="display:none;">KSH ${formatCurrency(convertUSDtoKSH(featureValueUSD))}</span>
-                    `;
+                    featureValue = feature.price_value;
+                    featurePrice.textContent = `$${feature.price_value.toFixed(2)}`;
                 } else {
-                    featureValueUSD = selectedServiceData.base_price * (feature.price_value / 100);
-                    featurePrice.innerHTML = `
-                        <span class="price-usd">$${formatCurrency(featureValueUSD)} (${feature.price_value}%)</span>
-                        <span class="price-ksh" style="display:none;">KSH ${formatCurrency(convertUSDtoKSH(featureValueUSD))} (${feature.price_value}%)</span>
-                    `;
+                    featureValue = selectedServiceData.base_price * (feature.price_value / 100);
+                    featurePrice.textContent = `$${featureValue.toFixed(2)} (${feature.price_value}%)`;
                 }
 
-                totalUSD += featureValueUSD;
+                total += featureValue;
 
                 featureDetail.appendChild(featureName);
                 featureDetail.appendChild(featurePrice);
@@ -966,54 +719,8 @@
             });
 
             // Update total
-            summaryTotalPriceUSD.textContent = formatCurrency(totalUSD);
-            summaryTotalPriceKSH.textContent = formatCurrency(convertUSDtoKSH(totalUSD));
-
-            // Update hidden fields for the form
-            const totalPriceInput = document.createElement('input');
-            totalPriceInput.type = 'hidden';
-            totalPriceInput.name = 'total_price_usd';
-            totalPriceInput.value = totalUSD.toFixed(2);
-            document.getElementById('solution-builder-form').appendChild(totalPriceInput);
-
-            const totalPriceKshInput = document.createElement('input');
-            totalPriceKshInput.type = 'hidden';
-            totalPriceKshInput.name = 'total_price_ksh';
-            totalPriceKshInput.value = convertUSDtoKSH(totalUSD).toFixed(2);
-            document.getElementById('solution-builder-form').appendChild(totalPriceKshInput);
-
-            // Apply currency toggle
-            updateCurrencyDisplay();
+            summaryTotalPrice.textContent = `$${total.toFixed(2)}`;
         }
-
-       // Skip payment button
-btnSkipPayment.addEventListener('click', function() {
-    // Check if the hidden field already exists and remove it
-    const existingField = document.querySelector('input[name="skip_payment"]');
-    if (existingField) {
-        existingField.remove();
-    }
-
-    // Add a hidden field to indicate skipping payment
-    const skipPaymentInput = document.createElement('input');
-    skipPaymentInput.type = 'hidden';
-    skipPaymentInput.name = 'skip_payment';
-    skipPaymentInput.value = 'true';
-
-    // Make sure we're adding it to the form
-    const form = document.getElementById('solution-builder-form');
-    if (form) {
-        form.appendChild(skipPaymentInput);
-
-        // Log to debug
-        console.log('Added skip_payment field, submitting form');
-
-        // Submit the form
-        form.submit();
-    } else {
-        console.error('Form not found!');
-    }
-});
 
         // Step navigation
         btnStep1Next.addEventListener('click', function() {
@@ -1052,52 +759,6 @@ btnSkipPayment.addEventListener('click', function() {
             step3.classList.remove('active');
             step2.classList.remove('completed');
             step2.classList.add('active');
-        });
-
-        btnStep3Next.addEventListener('click', function() {
-            step3Content.style.display = 'none';
-            step4Content.style.display = 'block';
-
-            step3.classList.remove('active');
-            step3.classList.add('completed');
-            step4.classList.add('active');
-        });
-
-        btnStep4Back.addEventListener('click', function() {
-            step4Content.style.display = 'none';
-            step3Content.style.display = 'block';
-
-            step4.classList.remove('active');
-            step3.classList.remove('completed');
-            step3.classList.add('active');
-        });
-
-        btnStep4Next.addEventListener('click', function() {
-            // Validate booking form
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const appointmentDate = document.getElementById('appointment_date').value;
-
-            if (!name || !email || !appointmentDate) {
-                alert("Please fill in all required fields.");
-                return;
-            }
-
-            step4Content.style.display = 'none';
-            step5Content.style.display = 'block';
-
-            step4.classList.remove('active');
-            step4.classList.add('completed');
-            step5.classList.add('active');
-        });
-
-        btnStep5Back.addEventListener('click', function() {
-            step5Content.style.display = 'none';
-            step4Content.style.display = 'block';
-
-            step5.classList.remove('active');
-            step4.classList.remove('completed');
-            step4.classList.add('active');
         });
 
         // Check if form was pre-filled from session

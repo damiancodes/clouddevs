@@ -1,3 +1,1632 @@
+{#{% extends "base.html" %}#}
+{##}
+{#{% block title %}Contact Us - CloudLink_Devs{% endblock %}#}
+{##}
+{#{% block extra_css %}#}
+{#<style>#}
+{#    :root {#}
+{#        --beige-color: #f5eadb;#}
+{#        --amber-color: #c1954a;#}
+{#        --dark-amber: #9e7a39;#}
+{#        --light-amber: #d4b06a;#}
+{#        --off-white: #faf7f2;#}
+{#        --black: #212121;#}
+{#        --dark-gray: #333333;#}
+{#        --light-gray: #f0f0f0;#}
+{#    }#}
+{##}
+{#    /* Modern Contact Header - Changed color to avoid navbar conflict */#}
+{#    .contact-header {#}
+{#        background: linear-gradient(135deg, var(--dark-gray) 0%, #454545 100%);#}
+{#        color: white;#}
+{#        padding: 100px 0 80px;#}
+{#        margin-bottom: 60px;#}
+{#        text-align: center;#}
+{#        position: relative;#}
+{#        overflow: hidden;#}
+{#    }#}
+{##}
+{#    .contact-header::before {#}
+{#        content: '';#}
+{#        position: absolute;#}
+{#        top: 0;#}
+{#        left: 0;#}
+{#        width: 100%;#}
+{#        height: 100%;#}
+{#        background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");#}
+{#        opacity: 0.3;#}
+{#    }#}
+{##}
+{#    .contact-header h1 {#}
+{#        font-weight: 800;#}
+{#        margin-bottom: 15px;#}
+{#        font-size: 2.8rem;#}
+{#        position: relative;#}
+{#    }#}
+{##}
+{#    .contact-header p {#}
+{#        font-size: 1.2rem;#}
+{#        max-width: 600px;#}
+{#        margin: 0 auto;#}
+{#        position: relative;#}
+{#    }#}
+{##}
+{#    /* Card Shadows and Effects */#}
+{#    .contact-info,#}
+{#    .contact-form,#}
+{#    .whatsapp-cta {#}
+{#        border-radius: 20px;#}
+{#        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);#}
+{#        transition: all 0.3s ease;#}
+{#        background-color: white;#}
+{#        border: none;#}
+{#        overflow: hidden;#}
+{#    }#}
+{##}
+{#    .contact-info:hover,#}
+{#    .contact-form:hover {#}
+{#        transform: translateY(-5px);#}
+{#        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);#}
+{#    }#}
+{##}
+{#    /* Contact Info Card */#}
+{#    .contact-info {#}
+{#        padding: 40px;#}
+{#        height: 100%;#}
+{#        position: relative;#}
+{#    }#}
+{##}
+{#    .contact-info::after {#}
+{#        content: '';#}
+{#        position: absolute;#}
+{#        top: 0;#}
+{#        left: 0;#}
+{#        width: 6px;#}
+{#        height: 100%;#}
+{#        background: var(--amber-color);#}
+{#        border-top-left-radius: 20px;#}
+{#        border-bottom-left-radius: 20px;#}
+{#    }#}
+{##}
+{#    .contact-info h2 {#}
+{#        margin-bottom: 25px;#}
+{#        font-weight: 700;#}
+{#        color: var(--black);#}
+{#        position: relative;#}
+{#        display: inline-block;#}
+{#    }#}
+{##}
+{#    .contact-info h2::after {#}
+{#        content: '';#}
+{#        position: absolute;#}
+{#        bottom: -10px;#}
+{#        left: 0;#}
+{#        width: 50px;#}
+{#        height: 3px;#}
+{#        background-color: var(--amber-color);#}
+{#    }#}
+{##}
+{#    /* Contact Form Card */#}
+{#    .contact-form {#}
+{#        padding: 40px;#}
+{#        position: relative;#}
+{#        z-index: 1;#}
+{#    }#}
+{##}
+{#    .contact-form::before {#}
+{#        content: '';#}
+{#        position: absolute;#}
+{#        top: 0;#}
+{#        right: 0;#}
+{#        width: 200px;#}
+{#        height: 200px;#}
+{#        background: var(--amber-color);#}
+{#        opacity: 0.05;#}
+{#        border-radius: 50%;#}
+{#        transform: translate(30%, -30%);#}
+{#        z-index: -1;#}
+{#    }#}
+{##}
+{#    .contact-form h2 {#}
+{#        margin-bottom: 25px;#}
+{#        font-weight: 700;#}
+{#        color: var(--black);#}
+{#        position: relative;#}
+{#        display: inline-block;#}
+{#    }#}
+{##}
+{#    .contact-form h2::after {#}
+{#        content: '';#}
+{#        position: absolute;#}
+{#        bottom: -10px;#}
+{#        left: 0;#}
+{#        width: 50px;#}
+{#        height: 3px;#}
+{#        background-color: var(--amber-color);#}
+{#    }#}
+{##}
+{#    /* Contact Items */#}
+{#    .contact-item {#}
+{#        display: flex;#}
+{#        align-items: flex-start;#}
+{#        margin-bottom: 25px;#}
+{#        padding-bottom: 15px;#}
+{#        position: relative;#}
+{#    }#}
+{##}
+{#    .contact-item:not(:last-child)::after {#}
+{#        content: '';#}
+{#        position: absolute;#}
+{#        bottom: 0;#}
+{#        left: 0;#}
+{#        width: 100%;#}
+{#        height: 1px;#}
+{#        background: linear-gradient(to right, rgba(0,0,0,0.05), transparent);#}
+{#    }#}
+{##}
+{#    .contact-item i {#}
+{#        font-size: 20px;#}
+{#        color: var(--amber-color);#}
+{#        margin-right: 15px;#}
+{#        min-width: 30px;#}
+{#        text-align: center;#}
+{#        padding-top: 3px;#}
+{#    }#}
+{##}
+{#    .contact-item-content {#}
+{#        flex: 1;#}
+{#    }#}
+{##}
+{#    .contact-item-content h4 {#}
+{#        font-size: 1rem;#}
+{#        font-weight: 600;#}
+{#        margin-bottom: 5px;#}
+{#        color: var(--black);#}
+{#    }#}
+{##}
+{#    .contact-item-content p {#}
+{#        margin: 0;#}
+{#        color: var(--dark-gray);#}
+{#    }#}
+{##}
+{#    /* Social Media Section */#}
+{#    .social-media {#}
+{#        margin-top: 40px;#}
+{#        background: linear-gradient(to right, rgba(0,0,0,0.02), transparent);#}
+{#        padding: 20px;#}
+{#        border-radius: 15px;#}
+{#    }#}
+{##}
+{#    .social-media h3 {#}
+{#        font-size: 1.2rem;#}
+{#        font-weight: 600;#}
+{#        margin-bottom: 15px;#}
+{#        color: var(--black);#}
+{#    }#}
+{##}
+{#    .social-icons {#}
+{#        display: flex;#}
+{#        gap: 15px;#}
+{#    }#}
+{##}
+{#    .social-icon {#}
+{#        display: flex;#}
+{#        align-items: center;#}
+{#        justify-content: center;#}
+{#        width: 42px;#}
+{#        height: 42px;#}
+{#        border-radius: 50%;#}
+{#        background-color: var(--light-gray);#}
+{#        color: var(--amber-color);#}
+{#        transition: all 0.3s ease;#}
+{#        font-size: 1.1rem;#}
+{#    }#}
+{##}
+{#    .social-icon:hover {#}
+{#        background-color: var(--amber-color);#}
+{#        color: white;#}
+{#        transform: translateY(-5px);#}
+{#    }#}
+{##}
+{#    /* Modern Form Styling */#}
+{#    .form-group {#}
+{#        margin-bottom: 25px;#}
+{#        position: relative;#}
+{#    }#}
+{##}
+{#    .form-control {#}
+{#        padding: 12px 15px;#}
+{#        border-radius: 10px;#}
+{#        border: 2px solid #e9ecef;#}
+{#        transition: all 0.3s ease;#}
+{#    }#}
+{##}
+{#    .form-control:focus {#}
+{#        border-color: var(--amber-color);#}
+{#        box-shadow: 0 0 0 0.25rem rgba(193, 149, 74, 0.15);#}
+{#    }#}
+{##}
+{#    .form-group label {#}
+{#        font-weight: 500;#}
+{#        margin-bottom: 8px;#}
+{#        display: block;#}
+{#        color: var(--black);#}
+{#    }#}
+{##}
+{#    /* Button Styling */#}
+{#    .btn-primary {#}
+{#        background-color: var(--amber-color);#}
+{#        border: none;#}
+{#        padding: 12px 30px;#}
+{#        font-weight: 600;#}
+{#        border-radius: 10px;#}
+{#        box-shadow: 0 5px 15px rgba(193, 149, 74, 0.3);#}
+{#        transition: all 0.3s ease;#}
+{#    }#}
+{##}
+{#    .btn-primary:hover {#}
+{#        background-color: var(--dark-amber);#}
+{#        transform: translateY(-3px);#}
+{#        box-shadow: 0 8px 20px rgba(193, 149, 74, 0.4);#}
+{#    }#}
+{##}
+{#    .btn-primary i {#}
+{#        margin-right: 8px;#}
+{#    }#}
+{##}
+{#    /* WhatsApp Section - Completely Redesigned */#}
+{#    .whatsapp-section {#}
+{#        padding: 70px 0;#}
+{#        background-color: var(--off-white);#}
+{#        position: relative;#}
+{#        overflow: hidden;#}
+{#    }#}
+{##}
+{#    .whatsapp-section::before {#}
+{#        content: '';#}
+{#        position: absolute;#}
+{#        right: 0;#}
+{#        top: 0;#}
+{#        width: 40%;#}
+{#        height: 100%;#}
+{#        background: rgba(193, 149, 74, 0.05);#}
+{#        clip-path: polygon(30% 0, 100% 0, 100% 100%, 0% 100%);#}
+{#        z-index: 0;#}
+{#    }#}
+{##}
+{#    .whatsapp-cta {#}
+{#        background: linear-gradient(135deg, white 0%, #fafafa 100%);#}
+{#        padding: 40px;#}
+{#        border-radius: 20px;#}
+{#        position: relative;#}
+{#        z-index: 1;#}
+{#    }#}
+{##}
+{#    .whatsapp-cta-content {#}
+{#        max-width: 600px;#}
+{#        margin: 0 auto;#}
+{#    }#}
+{##}
+{#    .whatsapp-cta h2 {#}
+{#        font-size: 2rem;#}
+{#        font-weight: 700;#}
+{#        margin-bottom: 15px;#}
+{#        color: var(--black);#}
+{#    }#}
+{##}
+{#    .whatsapp-cta p {#}
+{#        margin-bottom: 25px;#}
+{#        font-size: 1.1rem;#}
+{#        color: var(--dark-gray);#}
+{#    }#}
+{##}
+{#    .whatsapp-btn {#}
+{#        display: inline-flex;#}
+{#        align-items: center;#}
+{#        background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);#}
+{#        color: white;#}
+{#        border: none;#}
+{#        padding: 15px 30px;#}
+{#        border-radius: 50px;#}
+{#        font-weight: 600;#}
+{#        font-size: 1.1rem;#}
+{#        box-shadow: 0 5px 20px rgba(37, 211, 102, 0.3);#}
+{#        transition: all 0.3s ease;#}
+{#    }#}
+{##}
+{#    .whatsapp-btn:hover {#}
+{#        transform: translateY(-5px);#}
+{#        box-shadow: 0 10px 25px rgba(37, 211, 102, 0.4);#}
+{#    }#}
+{##}
+{#    .whatsapp-btn i {#}
+{#        font-size: 1.4rem;#}
+{#        margin-right: 10px;#}
+{#    }#}
+{##}
+{#    /* Map Section */#}
+{#    .map-section {#}
+{#        margin: 0;#}
+{#        padding: 70px 0;#}
+{#        background-color: white;#}
+{#    }#}
+{##}
+{#    .map-section h2 {#}
+{#        text-align: center;#}
+{#        margin-bottom: 30px;#}
+{#        font-weight: 700;#}
+{#        position: relative;#}
+{#        display: inline-block;#}
+{#        left: 50%;#}
+{#        transform: translateX(-50%);#}
+{#    }#}
+{##}
+{#    .map-section h2::after {#}
+{#        content: '';#}
+{#        position: absolute;#}
+{#        bottom: -10px;#}
+{#        left: 50%;#}
+{#        transform: translateX(-50%);#}
+{#        width: 50px;#}
+{#        height: 3px;#}
+{#        background-color: var(--amber-color);#}
+{#    }#}
+{##}
+{#    .map-container {#}
+{#        border-radius: 20px;#}
+{#        overflow: hidden;#}
+{#        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);#}
+{#    }#}
+{##}
+{#    .map-placeholder {#}
+{#        height: 400px;#}
+{#        background-color: #f8f9fa;#}
+{#        display: flex;#}
+{#        align-items: center;#}
+{#        justify-content: center;#}
+{#        color: var(--dark-gray);#}
+{#        font-size: 1.1rem;#}
+{#    }#}
+{##}
+{#    .map-placeholder i {#}
+{#        font-size: 2rem;#}
+{#        margin-right: 15px;#}
+{#        color: var(--amber-color);#}
+{#    }#}
+{##}
+{#    /* Alert messages */#}
+{#    .alert {#}
+{#        border-radius: 15px;#}
+{#        margin-bottom: 30px;#}
+{#        padding: 15px 20px;#}
+{#        border: none;#}
+{#        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);#}
+{#    }#}
+{##}
+{#    .page-section {#}
+{#        background-color: var(--off-white);#}
+{#        padding-bottom: 70px;#}
+{#    }#}
+{##}
+{#    /* Checkbox styling */#}
+{#    .form-check {#}
+{#        padding-left: 2rem;#}
+{#    }#}
+{##}
+{#    .form-check-input {#}
+{#        width: 1.2rem;#}
+{#        height: 1.2rem;#}
+{#        margin-top: 0.15rem;#}
+{#        margin-left: -2rem;#}
+{#        background-color: #fff;#}
+{#        border: 2px solid #ced4da;#}
+{#    }#}
+{##}
+{#    .form-check-input:checked {#}
+{#        background-color: var(--amber-color);#}
+{#        border-color: var(--amber-color);#}
+{#    }#}
+{##}
+{#    .form-check-label {#}
+{#        font-size: 0.95rem;#}
+{#    }#}
+{##}
+{#    /* Dark mode adaptations */#}
+{#    body.dark-mode .contact-header {#}
+{#        background: linear-gradient(135deg, #1a1a1a 0%, #2c2c2c 100%);#}
+{#    }#}
+{##}
+{#    body.dark-mode .contact-info,#}
+{#    body.dark-mode .contact-form,#}
+{#    body.dark-mode .whatsapp-cta {#}
+{#        background-color: var(--dark-gray);#}
+{#        color: var(--off-white);#}
+{#    }#}
+{##}
+{#    body.dark-mode .contact-info h2,#}
+{#    body.dark-mode .contact-form h2,#}
+{#    body.dark-mode .whatsapp-cta h2,#}
+{#    body.dark-mode .contact-item-content h4,#}
+{#    body.dark-mode .social-media h3 {#}
+{#        color: white;#}
+{#    }#}
+{##}
+{#    body.dark-mode .contact-item-content p,#}
+{#    body.dark-mode .whatsapp-cta p {#}
+{#        color: #e2e8f0;#}
+{#    }#}
+{##}
+{#    body.dark-mode .social-icon {#}
+{#        background-color: #3a3d52;#}
+{#        color: var(--light-amber);#}
+{#    }#}
+{##}
+{#    body.dark-mode .social-icon:hover {#}
+{#        background-color: var(--amber-color);#}
+{#    }#}
+{##}
+{#    body.dark-mode .map-placeholder {#}
+{#        background-color: #3a3d52;#}
+{#        color: var(--off-white);#}
+{#    }#}
+{##}
+{#    body.dark-mode .form-control {#}
+{#        background-color: #3a3d52;#}
+{#        border-color: #4e5269;#}
+{#        color: var(--off-white);#}
+{#    }#}
+{##}
+{#    body.dark-mode .form-check-label {#}
+{#        color: var(--off-white);#}
+{#    }#}
+{##}
+{#    body.dark-mode .social-media {#}
+{#        background: linear-gradient(to right, rgba(255,255,255,0.05), transparent);#}
+{#    }#}
+{##}
+{#    body.dark-mode .contact-item:not(:last-child)::after {#}
+{#        background: linear-gradient(to right, rgba(255,255,255,0.1), transparent);#}
+{#    }#}
+{##}
+{#    body.dark-mode .whatsapp-cta {#}
+{#        background: linear-gradient(135deg, #2c2c2c 0%, #222222 100%);#}
+{#    }#}
+{##}
+{#    body.dark-mode .page-section {#}
+{#        background-color: #1a1a1a;#}
+{#    }#}
+{##}
+{#    /* Animations for elements */#}
+{#    @keyframes fadeInUp {#}
+{#        from {#}
+{#            opacity: 0;#}
+{#            transform: translate3d(0, 30px, 0);#}
+{#        }#}
+{#        to {#}
+{#            opacity: 1;#}
+{#            transform: translate3d(0, 0, 0);#}
+{#        }#}
+{#    }#}
+{##}
+{#    .animate-fade-in-up {#}
+{#        animation: fadeInUp 0.8s ease-out forwards;#}
+{#    }#}
+{##}
+{#    .delay-1 {#}
+{#        animation-delay: 0.1s;#}
+{#    }#}
+{##}
+{#    .delay-2 {#}
+{#        animation-delay: 0.2s;#}
+{#    }#}
+{##}
+{#    .delay-3 {#}
+{#        animation-delay: 0.3s;#}
+{#    }#}
+{##}
+{#    .delay-4 {#}
+{#        animation-delay: 0.4s;#}
+{#    }#}
+{#</style>#}
+{#{% endblock %}#}
+{##}
+{#{% block content %}#}
+{#<!-- Modern Contact Header -->#}
+{#<section class="contact-header">#}
+{#    <div class="container">#}
+{#        <h1>Get In Touch</h1>#}
+{#        <p>Have a project in mind? Let's turn your vision into reality.</p>#}
+{#    </div>#}
+{#</section>#}
+{##}
+{#<section class="page-section contact-content">#}
+{#    <div class="container">#}
+{#        {% if messages %}#}
+{#            {% for message in messages %}#}
+{#                <div class="alert alert-{{ message.tags }} alert-dismissible fade show animate-fade-in-up" role="alert">#}
+{#                    {{ message }}#}
+{#                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>#}
+{#                </div>#}
+{#            {% endfor %}#}
+{#        {% endif %}#}
+{##}
+{#        <div class="row gy-4">#}
+{#            <div class="col-lg-5">#}
+{#                <div class="contact-info animate-fade-in-up delay-1">#}
+{#                    <h2>Contact Information</h2>#}
+{#                    <p>We're here to help with any questions about our services. Reach out to us using any of these channels.</p>#}
+{##}
+{#                    <div class="contact-details mt-4">#}
+{#                        <div class="contact-item">#}
+{#                            <i class="fas fa-map-marker-alt"></i>#}
+{#                            <div class="contact-item-content">#}
+{#                                <h4>Our Location</h4>#}
+{#                                <p>123 Kipande Street, Nairobi City</p>#}
+{#                            </div>#}
+{#                        </div>#}
+{##}
+{#                        <div class="contact-item">#}
+{#                            <i class="fas fa-phone"></i>#}
+{#                            <div class="contact-item-content">#}
+{#                                <h4>Phone Number</h4>#}
+{#                                <p>(123) 456-7890</p>#}
+{#                            </div>#}
+{#                        </div>#}
+{##}
+{#                        <!-- WhatsApp Contact Item -->#}
+{#                        <div class="contact-item">#}
+{#                            <i class="fab fa-whatsapp"></i>#}
+{#                            <div class="contact-item-content">#}
+{#                                <h4>WhatsApp</h4>#}
+{#                                <p><a href="https://wa.me/254795471321" target="_blank" rel="noopener noreferrer" style="color: var(--amber-color);">(123) 456-7890</a></p>#}
+{#                            </div>#}
+{#                        </div>#}
+{##}
+{#                        <div class="contact-item">#}
+{#                            <i class="fas fa-envelope"></i>#}
+{#                            <div class="contact-item-content">#}
+{#                                <h4>Email Address</h4>#}
+{#                                <p>info@cloudlinkdevs.com</p>#}
+{#                            </div>#}
+{#                        </div>#}
+{##}
+{#                        <div class="contact-item">#}
+{#                            <i class="fas fa-clock"></i>#}
+{#                            <div class="contact-item-content">#}
+{#                                <h4>Working Hours</h4>#}
+{#                                <p>Monday - Friday: 9:00 AM - 6:00 PM</p>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                    </div>#}
+{##}
+{#                    <div class="social-media">#}
+{#                        <h3>Connect With Us</h3>#}
+{#                        <div class="social-icons">#}
+{#                            <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>#}
+{#                            <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>#}
+{#                            <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>#}
+{#                            <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>#}
+{#                            <a href="#" class="social-icon"><i class="fab fa-github"></i></a>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{##}
+{#            <div class="col-lg-7">#}
+{#                <div class="contact-form animate-fade-in-up delay-2">#}
+{#                    <h2>Send Us a Message</h2>#}
+{#                    <p>Fill out the form below and we'll get back to you as soon as possible.</p>#}
+{##}
+{#                    <form method="post" action="{% url 'core:contact_submit' %}" id="contactForm" class="mt-4">#}
+{#                        {% csrf_token %}#}
+{##}
+{#                        <div class="row">#}
+{#                            <div class="col-md-6">#}
+{#                                <div class="form-group">#}
+{#                                    <label for="name">Your Name <span class="text-danger">*</span></label>#}
+{#                                    <input type="text" id="name" name="name" class="form-control" required>#}
+{#                                </div>#}
+{#                            </div>#}
+{##}
+{#                            <div class="col-md-6">#}
+{#                                <div class="form-group">#}
+{#                                    <label for="email">Email Address <span class="text-danger">*</span></label>#}
+{#                                    <input type="email" id="email" name="email" class="form-control" required>#}
+{#                                </div>#}
+{#                            </div>#}
+{#                        </div>#}
+{##}
+{#                        <div class="form-group">#}
+{#                            <label for="subject">Subject <span class="text-danger">*</span></label>#}
+{#                            <input type="text" id="subject" name="subject" class="form-control" required>#}
+{#                        </div>#}
+{##}
+{#                        <div class="form-group">#}
+{#                            <label for="message">Message <span class="text-danger">*</span></label>#}
+{#                            <textarea id="message" name="message" class="form-control" rows="5" required></textarea>#}
+{#                        </div>#}
+{##}
+{#                        <div class="form-group form-check">#}
+{#                            <input type="checkbox" class="form-check-input" id="privacy" required>#}
+{#                            <label class="form-check-label" for="privacy">I agree to the <a href="#" style="color: var(--amber-color);">privacy policy</a> <span class="text-danger">*</span></label>#}
+{#                        </div>#}
+{##}
+{#                        <button type="submit" class="btn btn-primary mt-3">#}
+{#                            <i class="fas fa-paper-plane"></i>Send Message#}
+{#                        </button>#}
+{#                    </form>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
+{#</section>#}
+{##}
+{#<!-- Redesigned WhatsApp CTA Section -->#}
+{#<section class="whatsapp-section">#}
+{#    <div class="container">#}
+{#        <div class="whatsapp-cta animate-fade-in-up delay-3">#}
+{#            <div class="whatsapp-cta-content text-center">#}
+{#                <h2>Need Immediate Assistance?</h2>#}
+{#                <p>Get quick responses to your questions via WhatsApp. Our team is ready to help you right away.</p>#}
+{#                <a href="https://wa.me/254795471321" target="_blank" rel="noopener noreferrer" class="whatsapp-btn">#}
+{#                    <i class="fab fa-whatsapp"></i> Chat with us on WhatsApp#}
+{#                </a>#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
+{#</section>#}
+{##}
+{#<section class="map-section">#}
+{#    <div class="container">#}
+{#        <h2>Our Location</h2>#}
+{#        <div class="map-container animate-fade-in-up delay-4">#}
+{#            <!-- Replace with actual Google Maps embed code -->#}
+{#            <div class="map-placeholder">#}
+{#                <i class="fas fa-map-marked-alt"></i>#}
+{#                <p>Google Maps will be integrated here</p>#}
+{#            </div>#}
+{##}
+{##}
+{#        <iframe#}
+{#    src="https://www.google.com/maps/embed/v1/place?key=AIzaSyAamvbnvSbFnO6aEMdA5J0oSzL6EHOtJCA&q=Your+Kipande Road+Nairobi"#}
+{#    width="100%"#}
+{#    height="400"#}
+{#    style="border:0;"#}
+{#    allowfullscreen=""#}
+{#    loading="lazy"#}
+{#    referrerpolicy="no-referrer-when-downgrade">#}
+{#   </iframe>#}
+{#            -->#}
+{#        </div>#}
+{#    </div>#}
+{#</section>#}
+{#{% endblock %}#}
+{##}
+{#{% block extra_js %}#}
+{#<script>#}
+{#    document.addEventListener('DOMContentLoaded', function() {#}
+{#        const contactForm = document.getElementById('contactForm');#}
+{##}
+{#        // Add animation classes dynamically#}
+{#        const animateElements = document.querySelectorAll('.animate-fade-in-up');#}
+{#        animateElements.forEach(element => {#}
+{#            element.style.opacity = '0';#}
+{#            setTimeout(() => {#}
+{#                element.style.opacity = '1';#}
+{#            }, 100);#}
+{#        });#}
+{##}
+{#        if (contactForm) {#}
+{#            contactForm.addEventListener('submit', function(e) {#}
+{#                const submitBtn = this.querySelector('button[type="submit"]');#}
+{#                const originalBtnText = submitBtn.innerHTML;#}
+{##}
+{#                // Basic client-side validation#}
+{#                const name = document.getElementById('name').value.trim();#}
+{#                const email = document.getElementById('email').value.trim();#}
+{#                const subject = document.getElementById('subject').value.trim();#}
+{#                const message = document.getElementById('message').value.trim();#}
+{##}
+{#                if (name === '' || email === '' || subject === '' || message === '') {#}
+{#                    e.preventDefault();#}
+{#                    alert('Please fill out all required fields');#}
+{#                    return false;#}
+{#                }#}
+{##}
+{#                // Email validation#}
+{#                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;#}
+{#                if (!emailRegex.test(email)) {#}
+{#                    e.preventDefault();#}
+{#                    alert('Please enter a valid email address');#}
+{#                    return false;#}
+{#                }#}
+{##}
+{#                // Show loading state#}
+{#                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Sending...';#}
+{#                submitBtn.disabled = true;#}
+{##}
+{#                // Form will submit normally after validation passes#}
+{#                // The loading state will be cleared when the page reloads#}
+{#            });#}
+{#        }#}
+{##}
+{#        // Apply micro-interactions#}
+{#        const formInputs = document.querySelectorAll('.form-control');#}
+{##}
+{#        formInputs.forEach(input => {#}
+{#            input.addEventListener('focus', function() {#}
+{#                this.parentElement.classList.add('focused');#}
+{#            });#}
+{##}
+{#            input.addEventListener('blur', function() {#}
+{#                this.parentElement.classList.remove('focused');#}
+{#            });#}
+{#        });#}
+{##}
+{#        // Add subtle hover effects to form fields#}
+{#        const formGroups = document.querySelectorAll('.form-group');#}
+{#        formGroups.forEach(group => {#}
+{#            const input = group.querySelector('.form-control');#}
+{#            if (input) {#}
+{#                input.addEventListener('mouseover', function() {#}
+{#                    if (!this.classList.contains('focused')) {#}
+{#                        this.style.borderColor = '#d8d8d8';#}
+{#                    }#}
+{#                });#}
+{##}
+{#                input.addEventListener('mouseout', function() {#}
+{#                    if (!this.classList.contains('focused')) {#}
+{#                        this.style.borderColor = '#e9ecef';#}
+{#                    }#}
+{#                });#}
+{#            }#}
+{#        });#}
+{#    });#}
+{#</script>#}
+{#{% endblock %}#}
+{##}
+{#{% extends "base.html" %}#}
+{##}
+{#{% block title %}Contact Us - CloudLink_Devs{% endblock %}#}
+{##}
+{#{% block extra_css %}#}
+{#<style>#}
+{#    :root {#}
+{#        --beige-color: #f5eadb;#}
+{#        --amber-color: #c1954a;#}
+{#        --dark-amber: #9e7a39;#}
+{#        --light-amber: #d4b06a;#}
+{#        --off-white: #faf7f2;#}
+{#        --black: #212121;#}
+{#        --dark-gray: #333333;#}
+{#        --light-gray: #f0f0f0;#}
+{#    }#}
+{##}
+{#    /* Modern Contact Header - Changed color to avoid navbar conflict */#}
+{#    .contact-header {#}
+{#        background: linear-gradient(135deg, var(--dark-gray) 0%, #454545 100%);#}
+{#        color: white;#}
+{#        padding: 100px 0 80px;#}
+{#        margin-bottom: 60px;#}
+{#        text-align: center;#}
+{#        position: relative;#}
+{#        overflow: hidden;#}
+{#    }#}
+{##}
+{#    .contact-header::before {#}
+{#        content: '';#}
+{#        position: absolute;#}
+{#        top: 0;#}
+{#        left: 0;#}
+{#        width: 100%;#}
+{#        height: 100%;#}
+{#        background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");#}
+{#        opacity: 0.3;#}
+{#    }#}
+{##}
+{#    .contact-header h1 {#}
+{#        font-weight: 800;#}
+{#        margin-bottom: 15px;#}
+{#        font-size: 2.8rem;#}
+{#        position: relative;#}
+{#    }#}
+{##}
+{#    .contact-header p {#}
+{#        font-size: 1.2rem;#}
+{#        max-width: 600px;#}
+{#        margin: 0 auto;#}
+{#        position: relative;#}
+{#    }#}
+{##}
+{#    /* Card Shadows and Effects */#}
+{#    .contact-info,#}
+{#    .contact-form {#}
+{#        border-radius: 20px;#}
+{#        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);#}
+{#        transition: all 0.3s ease;#}
+{#        background-color: white;#}
+{#        border: none;#}
+{#        overflow: hidden;#}
+{#    }#}
+{##}
+{#    .contact-info:hover,#}
+{#    .contact-form:hover {#}
+{#        transform: translateY(-5px);#}
+{#        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);#}
+{#    }#}
+{##}
+{#    /* Contact Info Card */#}
+{#    .contact-info {#}
+{#        padding: 40px;#}
+{#        height: 100%;#}
+{#        position: relative;#}
+{#    }#}
+{##}
+{#    .contact-info::after {#}
+{#        content: '';#}
+{#        position: absolute;#}
+{#        top: 0;#}
+{#        left: 0;#}
+{#        width: 6px;#}
+{#        height: 100%;#}
+{#        background: var(--amber-color);#}
+{#        border-top-left-radius: 20px;#}
+{#        border-bottom-left-radius: 20px;#}
+{#    }#}
+{##}
+{#    .contact-info h2 {#}
+{#        margin-bottom: 25px;#}
+{#        font-weight: 700;#}
+{#        color: var(--black);#}
+{#        position: relative;#}
+{#        display: inline-block;#}
+{#    }#}
+{##}
+{#    .contact-info h2::after {#}
+{#        content: '';#}
+{#        position: absolute;#}
+{#        bottom: -10px;#}
+{#        left: 0;#}
+{#        width: 50px;#}
+{#        height: 3px;#}
+{#        background-color: var(--amber-color);#}
+{#    }#}
+{##}
+{#    /* Contact Form Card */#}
+{#    .contact-form {#}
+{#        padding: 40px;#}
+{#        position: relative;#}
+{#        z-index: 1;#}
+{#    }#}
+{##}
+{#    .contact-form::before {#}
+{#        content: '';#}
+{#        position: absolute;#}
+{#        top: 0;#}
+{#        right: 0;#}
+{#        width: 200px;#}
+{#        height: 200px;#}
+{#        background: var(--amber-color);#}
+{#        opacity: 0.05;#}
+{#        border-radius: 50%;#}
+{#        transform: translate(30%, -30%);#}
+{#        z-index: -1;#}
+{#    }#}
+{##}
+{#    .contact-form h2 {#}
+{#        margin-bottom: 25px;#}
+{#        font-weight: 700;#}
+{#        color: var(--black);#}
+{#        position: relative;#}
+{#        display: inline-block;#}
+{#    }#}
+{##}
+{#    .contact-form h2::after {#}
+{#        content: '';#}
+{#        position: absolute;#}
+{#        bottom: -10px;#}
+{#        left: 0;#}
+{#        width: 50px;#}
+{#        height: 3px;#}
+{#        background-color: var(--amber-color);#}
+{#    }#}
+{##}
+{#    /* Contact Items */#}
+{#    .contact-item {#}
+{#        display: flex;#}
+{#        align-items: flex-start;#}
+{#        margin-bottom: 25px;#}
+{#        padding-bottom: 15px;#}
+{#        position: relative;#}
+{#    }#}
+{##}
+{#    .contact-item:not(:last-child)::after {#}
+{#        content: '';#}
+{#        position: absolute;#}
+{#        bottom: 0;#}
+{#        left: 0;#}
+{#        width: 100%;#}
+{#        height: 1px;#}
+{#        background: linear-gradient(to right, rgba(0,0,0,0.05), transparent);#}
+{#    }#}
+{##}
+{#    .contact-item i {#}
+{#        font-size: 20px;#}
+{#        color: var(--amber-color);#}
+{#        margin-right: 15px;#}
+{#        min-width: 30px;#}
+{#        text-align: center;#}
+{#        padding-top: 3px;#}
+{#    }#}
+{##}
+{#    .contact-item-content {#}
+{#        flex: 1;#}
+{#    }#}
+{##}
+{#    .contact-item-content h4 {#}
+{#        font-size: 1rem;#}
+{#        font-weight: 600;#}
+{#        margin-bottom: 5px;#}
+{#        color: var(--black);#}
+{#    }#}
+{##}
+{#    .contact-item-content p {#}
+{#        margin: 0;#}
+{#        color: var(--dark-gray);#}
+{#    }#}
+{##}
+{#    /* Social Media Section */#}
+{#    .social-media {#}
+{#        margin-top: 40px;#}
+{#        background: linear-gradient(to right, rgba(0,0,0,0.02), transparent);#}
+{#        padding: 20px;#}
+{#        border-radius: 15px;#}
+{#    }#}
+{##}
+{#    .social-media h3 {#}
+{#        font-size: 1.2rem;#}
+{#        font-weight: 600;#}
+{#        margin-bottom: 15px;#}
+{#        color: var(--black);#}
+{#    }#}
+{##}
+{#    .social-icons {#}
+{#        display: flex;#}
+{#        gap: 15px;#}
+{#    }#}
+{##}
+{#    .social-icon {#}
+{#        display: flex;#}
+{#        align-items: center;#}
+{#        justify-content: center;#}
+{#        width: 42px;#}
+{#        height: 42px;#}
+{#        border-radius: 50%;#}
+{#        background-color: var(--light-gray);#}
+{#        color: var(--amber-color);#}
+{#        transition: all 0.3s ease;#}
+{#        font-size: 1.1rem;#}
+{#    }#}
+{##}
+{#    .social-icon:hover {#}
+{#        background-color: var(--amber-color);#}
+{#        color: white;#}
+{#        transform: translateY(-5px);#}
+{#    }#}
+{##}
+{#    /* Modern Form Styling */#}
+{#    .form-group {#}
+{#        margin-bottom: 25px;#}
+{#        position: relative;#}
+{#    }#}
+{##}
+{#    .form-control {#}
+{#        padding: 12px 15px;#}
+{#        border-radius: 10px;#}
+{#        border: 2px solid #e9ecef;#}
+{#        transition: all 0.3s ease;#}
+{#    }#}
+{##}
+{#    .form-control:focus {#}
+{#        border-color: var(--amber-color);#}
+{#        box-shadow: 0 0 0 0.25rem rgba(193, 149, 74, 0.15);#}
+{#    }#}
+{##}
+{#    .form-group label {#}
+{#        font-weight: 500;#}
+{#        margin-bottom: 8px;#}
+{#        display: block;#}
+{#        color: var(--black);#}
+{#    }#}
+{##}
+{#    /* Button Styling */#}
+{#    .btn-primary {#}
+{#        background-color: var(--amber-color);#}
+{#        border: none;#}
+{#        padding: 12px 30px;#}
+{#        font-weight: 600;#}
+{#        border-radius: 10px;#}
+{#        box-shadow: 0 5px 15px rgba(193, 149, 74, 0.3);#}
+{#        transition: all 0.3s ease;#}
+{#    }#}
+{##}
+{#    .btn-primary:hover {#}
+{#        background-color: var(--dark-amber);#}
+{#        transform: translateY(-3px);#}
+{#        box-shadow: 0 8px 20px rgba(193, 149, 74, 0.4);#}
+{#    }#}
+{##}
+{#    .btn-primary i {#}
+{#        margin-right: 8px;#}
+{#    }#}
+{##}
+{#    /* FIXED: WhatsApp Floating Button - Positioned on Right Side */#}
+{#    .whatsapp-float {#}
+{#        position: fixed;#}
+{#        right: 30px;#}
+{#        bottom: 30px;#}
+{#        z-index: 1000;#}
+{#    }#}
+{##}
+{#    .whatsapp-float-btn {#}
+{#        display: flex;#}
+{#        align-items: center;#}
+{#        justify-content: center;#}
+{#        width: 60px;#}
+{#        height: 60px;#}
+{#        border-radius: 50%;#}
+{#        background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);#}
+{#        color: white;#}
+{#        box-shadow: 0 5px 15px rgba(37, 211, 102, 0.4);#}
+{#        transition: all 0.3s ease;#}
+{#        text-decoration: none;#}
+{#    }#}
+{##}
+{#    .whatsapp-float-btn i {#}
+{#        font-size: 30px;#}
+{#    }#}
+{##}
+{#    .whatsapp-float-btn:hover {#}
+{#        transform: scale(1.1);#}
+{#        box-shadow: 0 8px 25px rgba(37, 211, 102, 0.5);#}
+{#        color: white;#}
+{#        text-decoration: none;#}
+{#    }#}
+{##}
+{#    /* Tooltip for the floating button */#}
+{#    .whatsapp-tooltip {#}
+{#        position: absolute;#}
+{#        right: 75px;#}
+{#        bottom: 15px;#}
+{#        background-color: white;#}
+{#        color: var(--dark-gray);#}
+{#        padding: 8px 15px;#}
+{#        border-radius: 10px;#}
+{#        font-size: 14px;#}
+{#        font-weight: 500;#}
+{#        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);#}
+{#        opacity: 0;#}
+{#        visibility: hidden;#}
+{#        transition: all 0.3s ease;#}
+{#        white-space: nowrap;#}
+{#    }#}
+{##}
+{#    .whatsapp-float:hover .whatsapp-tooltip {#}
+{#        opacity: 1;#}
+{#        visibility: visible;#}
+{#    }#}
+{##}
+{#    /* WhatsApp Section - Properly Integrated */#}
+{#    .whatsapp-section {#}
+{#        padding: 70px 0;#}
+{#        background-color: var(--off-white);#}
+{#        position: relative;#}
+{#        overflow: hidden;#}
+{#        margin-top: 50px; /* Add space between contact form and WhatsApp section */#}
+{#    }#}
+{##}
+{#    .whatsapp-cta {#}
+{#        background: linear-gradient(135deg, white 0%, #fafafa 100%);#}
+{#        padding: 40px;#}
+{#        border-radius: 20px;#}
+{#        position: relative;#}
+{#        z-index: 1;#}
+{#        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);#}
+{#    }#}
+{##}
+{#    .whatsapp-cta-content {#}
+{#        max-width: 600px;#}
+{#        margin: 0 auto;#}
+{#    }#}
+{##}
+{#    .whatsapp-cta h2 {#}
+{#        font-size: 2rem;#}
+{#        font-weight: 700;#}
+{#        margin-bottom: 15px;#}
+{#        color: var(--black);#}
+{#    }#}
+{##}
+{#    .whatsapp-cta p {#}
+{#        margin-bottom: 25px;#}
+{#        font-size: 1.1rem;#}
+{#        color: var(--dark-gray);#}
+{#    }#}
+{##}
+{#    /* WhatsApp Button - Color fixed for better visibility and harmony */#}
+{#    .whatsapp-btn {#}
+{#        display: inline-flex;#}
+{#        align-items: center;#}
+{#        background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);#}
+{#        color: white;#}
+{#        border: none;#}
+{#        padding: 15px 30px;#}
+{#        border-radius: 50px;#}
+{#        font-weight: 600;#}
+{#        font-size: 1.1rem;#}
+{#        box-shadow: 0 5px 20px rgba(37, 211, 102, 0.3);#}
+{#        transition: all 0.3s ease;#}
+{#    }#}
+{##}
+{#    .whatsapp-btn:hover {#}
+{#        transform: translateY(-5px);#}
+{#        box-shadow: 0 10px 25px rgba(37, 211, 102, 0.4);#}
+{#        color: white; /* Ensure text remains white on hover */#}
+{#        text-decoration: none; /* Remove underline on hover */#}
+{#    }#}
+{##}
+{#    .whatsapp-btn i {#}
+{#        font-size: 1.4rem;#}
+{#        margin-right: 10px;#}
+{#    }#}
+{##}
+{#    /* FIXED: Map Section - Improved spacing and container */#}
+{#    .map-section {#}
+{#        margin: 0;#}
+{#        padding: 70px 0;#}
+{#        background-color: white;#}
+{#    }#}
+{##}
+{#    .map-section h2 {#}
+{#        text-align: center;#}
+{#        margin-bottom: 40px; /* Increased spacing */#}
+{#        font-weight: 700;#}
+{#        position: relative;#}
+{#        display: inline-block;#}
+{#        left: 50%;#}
+{#        transform: translateX(-50%);#}
+{#    }#}
+{##}
+{#    .map-section h2::after {#}
+{#        content: '';#}
+{#        position: absolute;#}
+{#        bottom: -10px;#}
+{#        left: 50%;#}
+{#        transform: translateX(-50%);#}
+{#        width: 50px;#}
+{#        height: 3px;#}
+{#        background-color: var(--amber-color);#}
+{#    }#}
+{##}
+{#    .map-container {#}
+{#        border-radius: 20px;#}
+{#        overflow: hidden;#}
+{#        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);#}
+{#        height: 450px; /* Fixed height for better appearance */#}
+{#    }#}
+{##}
+{#    .map-container iframe {#}
+{#        width: 100%;#}
+{#        height: 100%;#}
+{#        border: 0;#}
+{#    }#}
+{##}
+{#    /* Alert messages */#}
+{#    .alert {#}
+{#        border-radius: 15px;#}
+{#        margin-bottom: 30px;#}
+{#        padding: 15px 20px;#}
+{#        border: none;#}
+{#        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);#}
+{#    }#}
+{##}
+{#    .page-section {#}
+{#        background-color: var(--off-white);#}
+{#        padding-bottom: 70px;#}
+{#    }#}
+{##}
+{#    /* Checkbox styling */#}
+{#    .form-check {#}
+{#        padding-left: 2rem;#}
+{#    }#}
+{##}
+{#    .form-check-input {#}
+{#        width: 1.2rem;#}
+{#        height: 1.2rem;#}
+{#        margin-top: 0.15rem;#}
+{#        margin-left: -2rem;#}
+{#        background-color: #fff;#}
+{#        border: 2px solid #ced4da;#}
+{#    }#}
+{##}
+{#    .form-check-input:checked {#}
+{#        background-color: var(--amber-color);#}
+{#        border-color: var(--amber-color);#}
+{#    }#}
+{##}
+{#    .form-check-label {#}
+{#        font-size: 0.95rem;#}
+{#    }#}
+{##}
+{#    /* Dark mode adaptations */#}
+{#    body.dark-mode .contact-header {#}
+{#        background: linear-gradient(135deg, #1a1a1a 0%, #2c2c2c 100%);#}
+{#    }#}
+{##}
+{#    body.dark-mode .contact-info,#}
+{#    body.dark-mode .contact-form,#}
+{#    body.dark-mode .whatsapp-cta {#}
+{#        background-color: var(--dark-gray);#}
+{#        color: var(--off-white);#}
+{#    }#}
+{##}
+{#    body.dark-mode .contact-info h2,#}
+{#    body.dark-mode .contact-form h2,#}
+{#    body.dark-mode .whatsapp-cta h2,#}
+{#    body.dark-mode .contact-item-content h4,#}
+{#    body.dark-mode .social-media h3 {#}
+{#        color: white;#}
+{#    }#}
+{##}
+{#    body.dark-mode .contact-item-content p,#}
+{#    body.dark-mode .whatsapp-cta p {#}
+{#        color: #e2e8f0;#}
+{#    }#}
+{##}
+{#    body.dark-mode .social-icon {#}
+{#        background-color: #3a3d52;#}
+{#        color: var(--light-amber);#}
+{#    }#}
+{##}
+{#    body.dark-mode .social-icon:hover {#}
+{#        background-color: var(--amber-color);#}
+{#    }#}
+{##}
+{#    body.dark-mode .map-placeholder {#}
+{#        background-color: #3a3d52;#}
+{#        color: var(--off-white);#}
+{#    }#}
+{##}
+{#    body.dark-mode .form-control {#}
+{#        background-color: #3a3d52;#}
+{#        border-color: #4e5269;#}
+{#        color: var(--off-white);#}
+{#    }#}
+{##}
+{#    body.dark-mode .form-check-label {#}
+{#        color: var(--off-white);#}
+{#    }#}
+{##}
+{#    body.dark-mode .social-media {#}
+{#        background: linear-gradient(to right, rgba(255,255,255,0.05), transparent);#}
+{#    }#}
+{##}
+{#    body.dark-mode .contact-item:not(:last-child)::after {#}
+{#        background: linear-gradient(to right, rgba(255,255,255,0.1), transparent);#}
+{#    }#}
+{##}
+{#    body.dark-mode .whatsapp-cta {#}
+{#        background: linear-gradient(135deg, #2c2c2c 0%, #222222 100%);#}
+{#    }#}
+{##}
+{#    body.dark-mode .page-section {#}
+{#        background-color: #1a1a1a;#}
+{#    }#}
+{##}
+{#    /* FIXED: Added styling for WhatsApp contact item to match theme */#}
+{#    .contact-item .fab.fa-whatsapp {#}
+{#        color: var(--amber-color); /* Match with other icons instead of WhatsApp green */#}
+{#    }#}
+{##}
+{#    .contact-item-content a {#}
+{#        color: var(--amber-color);#}
+{#        text-decoration: none;#}
+{#        transition: all 0.3s ease;#}
+{#    }#}
+{##}
+{#    .contact-item-content a:hover {#}
+{#        color: var(--dark-amber);#}
+{#        text-decoration: underline;#}
+{#    }#}
+{##}
+{#    /* Animations for elements */#}
+{#    @keyframes fadeInUp {#}
+{#        from {#}
+{#            opacity: 0;#}
+{#            transform: translate3d(0, 30px, 0);#}
+{#        }#}
+{#        to {#}
+{#            opacity: 1;#}
+{#            transform: translate3d(0, 0, 0);#}
+{#        }#}
+{#    }#}
+{##}
+{#    .animate-fade-in-up {#}
+{#        animation: fadeInUp 0.8s ease-out forwards;#}
+{#    }#}
+{##}
+{#    .delay-1 {#}
+{#        animation-delay: 0.1s;#}
+{#    }#}
+{##}
+{#    .delay-2 {#}
+{#        animation-delay: 0.2s;#}
+{#    }#}
+{##}
+{#    .delay-3 {#}
+{#        animation-delay: 0.3s;#}
+{#    }#}
+{##}
+{#    .delay-4 {#}
+{#        animation-delay: 0.4s;#}
+{#    }#}
+{#</style>#}
+{#{% endblock %}#}
+{##}
+{#{% block content %}#}
+{#<!-- Floating WhatsApp Button on Right Side -->#}
+{#<div class="whatsapp-float">#}
+{#    <a href="https://wa.me/254795471321" target="_blank" rel="noopener noreferrer" class="whatsapp-float-btn">#}
+{#        <i class="fab fa-whatsapp"></i>#}
+{#    </a>#}
+{#    <div class="whatsapp-tooltip">Chat with us on WhatsApp</div>#}
+{#</div>#}
+{##}
+{#<!-- Modern Contact Header -->#}
+{#<section class="contact-header">#}
+{#    <div class="container">#}
+{#        <h1>Get In Touch</h1>#}
+{#        <p>Have a project in mind? Let's turn your vision into reality.</p>#}
+{#    </div>#}
+{#</section>#}
+{##}
+{#<section class="page-section contact-content">#}
+{#    <div class="container">#}
+{#        {% if messages %}#}
+{#            {% for message in messages %}#}
+{#                <div class="alert alert-{{ message.tags }} alert-dismissible fade show animate-fade-in-up" role="alert">#}
+{#                    {{ message }}#}
+{#                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>#}
+{#                </div>#}
+{#            {% endfor %}#}
+{#        {% endif %}#}
+{##}
+{#        <div class="row gy-4">#}
+{#            <div class="col-lg-5">#}
+{#                <div class="contact-info animate-fade-in-up delay-1">#}
+{#                    <h2>Contact Information</h2>#}
+{#                    <p>We're here to help with any questions about our services. Reach out to us using any of these channels.</p>#}
+{##}
+{#                    <div class="contact-details mt-4">#}
+{#                        <div class="contact-item">#}
+{#                            <i class="fas fa-map-marker-alt"></i>#}
+{#                            <div class="contact-item-content">#}
+{#                                <h4>Our Location</h4>#}
+{#                                <p>123 Kipande Street, Nairobi City</p>#}
+{#                            </div>#}
+{#                        </div>#}
+{##}
+{#                        <div class="contact-item">#}
+{#                            <i class="fas fa-phone"></i>#}
+{#                            <div class="contact-item-content">#}
+{#                                <h4>Phone Number</h4>#}
+{#                                <p>(123) 456-7890</p>#}
+{#                            </div>#}
+{#                        </div>#}
+{##}
+{#                        <!-- FIXED: WhatsApp Contact Item - now matches theme -->#}
+{#                        <div class="contact-item">#}
+{#                            <i class="fab fa-whatsapp"></i>#}
+{#                            <div class="contact-item-content">#}
+{#                                <h4>WhatsApp</h4>#}
+{#                                <p><a href="https://wa.me/254795471321" target="_blank" rel="noopener noreferrer">(123) 456-7890</a></p>#}
+{#                            </div>#}
+{#                        </div>#}
+{##}
+{#                        <div class="contact-item">#}
+{#                            <i class="fas fa-envelope"></i>#}
+{#                            <div class="contact-item-content">#}
+{#                                <h4>Email Address</h4>#}
+{#                                <p>info@cloudlinkdevs.com</p>#}
+{#                            </div>#}
+{#                        </div>#}
+{##}
+{#                        <div class="contact-item">#}
+{#                            <i class="fas fa-clock"></i>#}
+{#                            <div class="contact-item-content">#}
+{#                                <h4>Working Hours</h4>#}
+{#                                <p>Monday - Friday: 9:00 AM - 6:00 PM</p>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                    </div>#}
+{##}
+{#                    <div class="social-media">#}
+{#                        <h3>Connect With Us</h3>#}
+{#                        <div class="social-icons">#}
+{#                            <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>#}
+{#                            <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>#}
+{#                            <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>#}
+{#                            <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>#}
+{#                            <a href="#" class="social-icon"><i class="fab fa-github"></i></a>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{##}
+{#            <div class="col-lg-7">#}
+{#                <div class="contact-form animate-fade-in-up delay-2">#}
+{#                    <h2>Send Us a Message</h2>#}
+{#                    <p>Fill out the form below and we'll get back to you as soon as possible.</p>#}
+{##}
+{#                    <form method="post" action="{% url 'core:contact_submit' %}" id="contactForm" class="mt-4">#}
+{#                        {% csrf_token %}#}
+{##}
+{#                        <div class="row">#}
+{#                            <div class="col-md-6">#}
+{#                                <div class="form-group">#}
+{#                                    <label for="name">Your Name <span class="text-danger">*</span></label>#}
+{#                                    <input type="text" id="name" name="name" class="form-control" required>#}
+{#                                </div>#}
+{#                            </div>#}
+{##}
+{#                            <div class="col-md-6">#}
+{#                                <div class="form-group">#}
+{#                                    <label for="email">Email Address <span class="text-danger">*</span></label>#}
+{#                                    <input type="email" id="email" name="email" class="form-control" required>#}
+{#                                </div>#}
+{#                            </div>#}
+{#                        </div>#}
+{##}
+{#                        <div class="form-group">#}
+{#                            <label for="subject">Subject <span class="text-danger">*</span></label>#}
+{#                            <input type="text" id="subject" name="subject" class="form-control" required>#}
+{#                        </div>#}
+{##}
+{#                        <div class="form-group">#}
+{#                            <label for="message">Message <span class="text-danger">*</span></label>#}
+{#                            <textarea id="message" name="message" class="form-control" rows="5" required></textarea>#}
+{#                        </div>#}
+{##}
+{#                        <div class="form-group form-check">#}
+{#                            <input type="checkbox" class="form-check-input" id="privacy" required>#}
+{#                            <label class="form-check-label" for="privacy">I agree to the <a href="#" style="color: var(--amber-color);">privacy policy</a> <span class="text-danger">*</span></label>#}
+{#                        </div>#}
+{##}
+{#                        <button type="submit" class="btn btn-primary mt-3">#}
+{#                            <i class="fas fa-paper-plane"></i>Send Message#}
+{#                        </button>#}
+{#                    </form>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
+{#</section>#}
+{##}
+{#<!-- FIXED: Redesigned WhatsApp CTA Section - Separated from card, proper styling -->#}
+{#<section class="whatsapp-section">#}
+{#    <div class="container">#}
+{#        <div class="whatsapp-cta animate-fade-in-up delay-3">#}
+{#            <div class="whatsapp-cta-content text-center">#}
+{#                <h2>Need Immediate Assistance?</h2>#}
+{#                <p>Get quick responses to your questions via WhatsApp. Our team is ready to help you right away.</p>#}
+{#                <a href="https://wa.me/254795471321" target="_blank" rel="noopener noreferrer" class="whatsapp-btn">#}
+{#                    <i class="fab fa-whatsapp"></i> Chat with us on WhatsApp#}
+{#                </a>#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
+{#</section>#}
+{##}
+{#<!-- FIXED: Map Section - Proper spacing and integration -->#}
+{#<section class="map-section">#}
+{#    <div class="container">#}
+{#        <h2>Our Location</h2>#}
+{#        <div class="map-container animate-fade-in-up delay-4">#}
+{#            <!-- Properly formatted Google Maps embed -->#}
+{#            <iframe#}
+{#                src="https://www.google.com/maps/embed/v1/place?key=AIzaSyAamvbnvSbFnO6aEMdA5J0oSzL6EHOtJCA&q=Kipande+Road,Nairobi,Kenya"#}
+{#                allowfullscreen=""#}
+{#                loading="lazy"#}
+{#                referrerpolicy="no-referrer-when-downgrade">#}
+{#            </iframe>#}
+{#        </div>#}
+{#    </div>#}
+{#</section>#}
+{#{% endblock %}#}
+{##}
+{#{% block extra_js %}#}
+{#<script>#}
+{#    document.addEventListener('DOMContentLoaded', function() {#}
+{#        const contactForm = document.getElementById('contactForm');#}
+{##}
+{#        // Add animation classes dynamically#}
+{#        const animateElements = document.querySelectorAll('.animate-fade-in-up');#}
+{#        animateElements.forEach(element => {#}
+{#            element.style.opacity = '0';#}
+{#            setTimeout(() => {#}
+{#                element.style.opacity = '1';#}
+{#            }, 100);#}
+{#        });#}
+{##}
+{#        if (contactForm) {#}
+{#            contactForm.addEventListener('submit', function(e) {#}
+{#                const submitBtn = this.querySelector('button[type="submit"]');#}
+{#                const originalBtnText = submitBtn.innerHTML;#}
+{##}
+{#                // Basic client-side validation#}
+{#                const name = document.getElementById('name').value.trim();#}
+{#                const email = document.getElementById('email').value.trim();#}
+{#                const subject = document.getElementById('subject').value.trim();#}
+{#                const message = document.getElementById('message').value.trim();#}
+{##}
+{#                if (name === '' || email === '' || subject === '' || message === '') {#}
+{#                    e.preventDefault();#}
+{#                    alert('Please fill out all required fields');#}
+{#                    return false;#}
+{#                }#}
+{##}
+{#                // Email validation#}
+{#                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;#}
+{#                if (!emailRegex.test(email)) {#}
+{#                    e.preventDefault();#}
+{#                    alert('Please enter a valid email address');#}
+{#                    return false;#}
+{#                }#}
+{##}
+{#                // Show loading state#}
+{#                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Sending...';#}
+{#                submitBtn.disabled = true;#}
+{##}
+{#                // Form will submit normally after validation passes#}
+{#                // The loading state will be cleared when the page reloads#}
+{#            });#}
+{#        }#}
+{##}
+{#        // Apply micro-interactions#}
+{#        const formInputs = document.querySelectorAll('.form-control');#}
+{##}
+{#        formInputs.forEach(input => {#}
+{#            input.addEventListener('focus', function() {#}
+{#                this.parentElement.classList.add('focused');#}
+{#            });#}
+{##}
+{#            input.addEventListener('blur', function() {#}
+{#                this.parentElement.classList.remove('focused');#}
+{#            });#}
+{#        });#}
+{##}
+{#        // Add subtle hover effects to form fields#}
+{#        const formGroups = document.querySelectorAll('.form-group');#}
+{#        formGroups.forEach(group => {#}
+{#            const input = group.querySelector('.form-control');#}
+{#            if (input) {#}
+{#                input.addEventListener('mouseover', function() {#}
+{#                    if (!this.classList.contains('focused')) {#}
+{#                        this.style.borderColor = '#d8d8d8';#}
+{#                    }#}
+{#                });#}
+{##}
+{#                input.addEventListener('mouseout', function() {#}
+{#                    if (!this.classList.contains('focused')) {#}
+{#                        this.style.borderColor = '#e9ecef';#}
+{#                    }#}
+{#                });#}
+{#            }#}
+{#        });#}
+{#    });#}
+{#</script>#}
+{#{% endblock %}#}
+
+
 {% extends "base.html" %}
 
 {% block title %}Contact Us - CloudLink_Devs{% endblock %}
@@ -15,50 +1644,192 @@
         --light-gray: #f0f0f0;
     }
 
+    /* Modern Contact Header - Changed color to avoid navbar conflict */
     .contact-header {
-        background: var(--amber-color);
+        background: linear-gradient(135deg, var(--dark-gray) 0%, #454545 100%);
         color: white;
-        padding: 60px 0;
-        margin-bottom: 50px;
+        padding: 100px 0 80px;
+        margin-bottom: 30px; /* Reduced margin */
         text-align: center;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .contact-header::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        opacity: 0.3;
     }
 
     .contact-header h1 {
         font-weight: 800;
         margin-bottom: 15px;
+        font-size: 2.8rem;
+        position: relative;
     }
 
-    .contact-info {
-        background-color: white;
-        border-radius: 10px;
-        box-shadow: 0 0.15rem 1.75rem 0 rgba(0, 0, 0, 0.1);
-        padding: 30px;
-        height: 100%;
+    .contact-header p {
+        font-size: 1.2rem;
+        max-width: 600px;
+        margin: 0 auto;
+        position: relative;
     }
 
+    /* Card Shadows and Effects */
+    .contact-info,
     .contact-form {
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        transition: all 0.3s ease;
         background-color: white;
-        border-radius: 10px;
-        box-shadow: 0 0.15rem 1.75rem 0 rgba(0, 0, 0, 0.1);
-        padding: 30px;
+        border: none;
+        overflow: hidden;
     }
 
+    .contact-info:hover,
+    .contact-form:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Contact Info Card */
+    .contact-info {
+        padding: 40px;
+        height: 100%;
+        position: relative;
+    }
+
+    .contact-info::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 6px;
+        height: 100%;
+        background: var(--amber-color);
+        border-top-left-radius: 20px;
+        border-bottom-left-radius: 20px;
+    }
+
+    .contact-info h2 {
+        margin-bottom: 25px;
+        font-weight: 700;
+        color: var(--black);
+        position: relative;
+        display: inline-block;
+    }
+
+    .contact-info h2::after {
+        content: '';
+        position: absolute;
+        bottom: -10px;
+        left: 0;
+        width: 50px;
+        height: 3px;
+        background-color: var(--amber-color);
+    }
+
+    /* Contact Form Card */
+    .contact-form {
+        padding: 40px;
+        position: relative;
+        z-index: 1;
+    }
+
+    .contact-form::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 200px;
+        height: 200px;
+        background: var(--amber-color);
+        opacity: 0.05;
+        border-radius: 50%;
+        transform: translate(30%, -30%);
+        z-index: -1;
+    }
+
+    .contact-form h2 {
+        margin-bottom: 25px;
+        font-weight: 700;
+        color: var(--black);
+        position: relative;
+        display: inline-block;
+    }
+
+    .contact-form h2::after {
+        content: '';
+        position: absolute;
+        bottom: -10px;
+        left: 0;
+        width: 50px;
+        height: 3px;
+        background-color: var(--amber-color);
+    }
+
+    /* Contact Items */
     .contact-item {
         display: flex;
-        align-items: center;
-        margin-bottom: 20px;
+        align-items: flex-start;
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        position: relative;
+    }
+
+    .contact-item:not(:last-child)::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 1px;
+        background: linear-gradient(to right, rgba(0,0,0,0.05), transparent);
     }
 
     .contact-item i {
         font-size: 20px;
         color: var(--amber-color);
         margin-right: 15px;
-        width: 30px;
+        min-width: 30px;
         text-align: center;
+        padding-top: 3px;
     }
 
+    .contact-item-content {
+        flex: 1;
+    }
+
+    .contact-item-content h4 {
+        font-size: 1rem;
+        font-weight: 600;
+        margin-bottom: 5px;
+        color: var(--black);
+    }
+
+    .contact-item-content p {
+        margin: 0;
+        color: var(--dark-gray);
+    }
+
+    /* Social Media Section */
     .social-media {
-        margin-top: 30px;
+        margin-top: 40px;
+        background: linear-gradient(to right, rgba(0,0,0,0.02), transparent);
+        padding: 20px;
+        border-radius: 15px;
+    }
+
+    .social-media h3 {
+        font-size: 1.2rem;
+        font-weight: 600;
+        margin-bottom: 15px;
+        color: var(--black);
     }
 
     .social-icons {
@@ -70,98 +1841,238 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        width: 40px;
-        height: 40px;
+        width: 42px;
+        height: 42px;
         border-radius: 50%;
         background-color: var(--light-gray);
         color: var(--amber-color);
         transition: all 0.3s ease;
+        font-size: 1.1rem;
     }
 
     .social-icon:hover {
         background-color: var(--amber-color);
         color: white;
+        transform: translateY(-5px);
     }
 
+    /* Modern Form Styling */
     .form-group {
-        margin-bottom: 20px;
+        margin-bottom: 25px;
+        position: relative;
     }
 
-    .btn-primary {
-        background-color: var(--amber-color);
-        border: none;
-        padding: 10px 25px;
-        font-weight: 600;
-    }
-
-    .btn-primary:hover {
-        background-color: var(--dark-amber);
-    }
-
-    .map-section {
-        margin: 70px 0;
-    }
-
-    .map-container {
-        border-radius: 10px;
-        overflow: hidden;
-        box-shadow: 0 0.15rem 1.75rem 0 rgba(0, 0, 0, 0.1);
-    }
-
-    .map-placeholder {
-        height: 400px;
-        background-color: var(--beige-color);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: var(--dark-gray);
-    }
-
-    /* Form animation */
     .form-control {
+        padding: 12px 15px;
+        border-radius: 10px;
+        border: 2px solid #e9ecef;
         transition: all 0.3s ease;
-        border-color: #ced4da;
     }
 
     .form-control:focus {
         border-color: var(--amber-color);
-        box-shadow: 0 0 0 0.25rem rgba(193, 149, 74, 0.25);
+        box-shadow: 0 0 0 0.25rem rgba(193, 149, 74, 0.15);
     }
 
-    /* WhatsApp section styling */
-    .whatsapp-section {
-        padding: 50px 0;
-        animation: fadeInUp 0.8s ease-out;
+    .form-group label {
+        font-weight: 500;
+        margin-bottom: 8px;
+        display: block;
+        color: var(--black);
     }
 
-    .whatsapp-cta .btn {
+    /* Button Styling */
+    .btn-primary {
+        background-color: var(--amber-color);
+        border: none;
+        padding: 12px 30px;
+        font-weight: 600;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(193, 149, 74, 0.3);
         transition: all 0.3s ease;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     }
 
-    .whatsapp-cta .btn:hover {
-        background-color: var(--dark-amber) !important;
+    .btn-primary:hover {
+        background-color: var(--dark-amber);
         transform: translateY(-3px);
-        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        box-shadow: 0 8px 20px rgba(193, 149, 74, 0.4);
     }
 
-    @keyframes fadeInUp {
-        from {
-            opacity: 0;
-            transform: translate3d(0, 30px, 0);
-        }
-        to {
-            opacity: 1;
-            transform: translate3d(0, 0, 0);
-        }
+    .btn-primary i {
+        margin-right: 8px;
     }
 
-    /* Dark mode compatibility */
+    /* WhatsApp Section - Reduced Vertical Padding */
+    .whatsapp-section {
+        padding: 30px 0; /* Reduced padding from 70px to 30px */
+        background-color: var(--off-white);
+        position: relative;
+        overflow: hidden;
+        margin-top: 30px; /* Reduced margin from 50px to 30px */
+    }
+
+    .whatsapp-cta {
+        background: linear-gradient(135deg, white 0%, #fafafa 100%);
+        padding: 30px; /* Reduced padding from 40px to 30px */
+        border-radius: 20px;
+        position: relative;
+        z-index: 1;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        transition: all 0.3s ease;
+    }
+
+    .whatsapp-cta:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+    }
+
+    .whatsapp-cta-content {
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    .whatsapp-cta h2 {
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 15px;
+        color: var(--black);
+    }
+
+    .whatsapp-cta p {
+        margin-bottom: 25px;
+        font-size: 1.1rem;
+        color: var(--dark-gray);
+    }
+
+    /* Improved WhatsApp Button - Styled like Image 2 */
+    .whatsapp-btn {
+        display: inline-flex;
+        align-items: center;
+        background: #25D366;
+        color: white;
+        border: none;
+        padding: 12px 25px;
+        border-radius: 50px;
+        font-weight: 600;
+        font-size: 1rem;
+        box-shadow: 0 5px 15px rgba(37, 211, 102, 0.3);
+        transition: all 0.3s ease;
+        text-decoration: none;
+    }
+
+    .whatsapp-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(37, 211, 102, 0.4);
+        color: white;
+        text-decoration: none;
+    }
+
+    .whatsapp-btn i {
+        font-size: 1.25rem;
+        margin-right: 8px;
+    }
+
+    /* Map Section - Improved spacing */
+    .map-section {
+        margin: 0;
+        padding: 40px 0; /* Reduced padding from 70px to 40px */
+        background-color: white;
+    }
+
+    .map-section h2 {
+        text-align: center;
+        margin-bottom: 30px; /* Reduced spacing from 40px to 30px */
+        font-weight: 700;
+        position: relative;
+        display: inline-block;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .map-section h2::after {
+        content: '';
+        position: absolute;
+        bottom: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 50px;
+        height: 3px;
+        background-color: var(--amber-color);
+    }
+
+    .map-container {
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        height: 450px;
+    }
+
+    .map-container iframe {
+        width: 100%;
+        height: 100%;
+        border: 0;
+    }
+
+    /* Alert messages */
+    .alert {
+        border-radius: 15px;
+        margin-bottom: 30px;
+        padding: 15px 20px;
+        border: none;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    }
+
+    .page-section {
+        background-color: var(--off-white);
+        padding-bottom: 40px; /* Reduced padding from 70px to 40px */
+    }
+
+    /* Checkbox styling */
+    .form-check {
+        padding-left: 2rem;
+    }
+
+    .form-check-input {
+        width: 1.2rem;
+        height: 1.2rem;
+        margin-top: 0.15rem;
+        margin-left: -2rem;
+        background-color: #fff;
+        border: 2px solid #ced4da;
+    }
+
+    .form-check-input:checked {
+        background-color: var(--amber-color);
+        border-color: var(--amber-color);
+    }
+
+    .form-check-label {
+        font-size: 0.95rem;
+    }
+
+    /* Dark mode adaptations */
+    body.dark-mode .contact-header {
+        background: linear-gradient(135deg, #1a1a1a 0%, #2c2c2c 100%);
+    }
+
     body.dark-mode .contact-info,
     body.dark-mode .contact-form,
     body.dark-mode .whatsapp-cta {
         background-color: var(--dark-gray);
         color: var(--off-white);
+    }
+
+    body.dark-mode .contact-info h2,
+    body.dark-mode .contact-form h2,
+    body.dark-mode .whatsapp-cta h2,
+    body.dark-mode .contact-item-content h4,
+    body.dark-mode .social-media h3 {
+        color: white;
+    }
+
+    body.dark-mode .contact-item-content p,
+    body.dark-mode .whatsapp-cta p {
+        color: #e2e8f0;
     }
 
     body.dark-mode .social-icon {
@@ -188,24 +2099,62 @@
         color: var(--off-white);
     }
 
-    /* Alert messages */
-    .alert {
-        border-radius: 10px;
-        margin-bottom: 30px;
+    body.dark-mode .social-media {
+        background: linear-gradient(to right, rgba(255,255,255,0.05), transparent);
     }
 
-    .page-section {
-        background-color: var(--off-white);
-        padding-bottom: 50px;
+    body.dark-mode .contact-item:not(:last-child)::after {
+        background: linear-gradient(to right, rgba(255,255,255,0.1), transparent);
+    }
+
+    body.dark-mode .whatsapp-cta {
+        background: linear-gradient(135deg, #2c2c2c 0%, #222222 100%);
+    }
+
+    body.dark-mode .page-section {
+        background-color: #1a1a1a;
+    }
+
+    /* Animations for elements */
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translate3d(0, 30px, 0);
+        }
+        to {
+            opacity: 1;
+            transform: translate3d(0, 0, 0);
+        }
+    }
+
+    .animate-fade-in-up {
+        animation: fadeInUp 0.8s ease-out forwards;
+    }
+
+    .delay-1 {
+        animation-delay: 0.1s;
+    }
+
+    .delay-2 {
+        animation-delay: 0.2s;
+    }
+
+    .delay-3 {
+        animation-delay: 0.3s;
+    }
+
+    .delay-4 {
+        animation-delay: 0.4s;
     }
 </style>
 {% endblock %}
 
 {% block content %}
+<!-- Modern Contact Header -->
 <section class="contact-header">
     <div class="container">
-        <h1>Contact Us</h1>
-        <p>Have a project in mind? Let's discuss how CloudLink_Devs can help you.</p>
+        <h1>Get In Touch</h1>
+        <p>Have a project in mind? Let's turn your vision into reality.</p>
     </div>
 </section>
 
@@ -213,7 +2162,7 @@
     <div class="container">
         {% if messages %}
             {% for message in messages %}
-                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show animate-fade-in-up" role="alert">
                     {{ message }}
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
@@ -222,35 +2171,41 @@
 
         <div class="row gy-4">
             <div class="col-lg-5">
-                <div class="contact-info">
-                    <h2>Get in Touch</h2>
-                    <p>We'd love to hear from you. Fill out the form or use the contact information below to reach us.</p>
+                <div class="contact-info animate-fade-in-up delay-1">
+                    <h2>Contact Information</h2>
+                    <p>We're here to help with any questions about our services. Reach out to us using any of these channels.</p>
 
                     <div class="contact-details mt-4">
                         <div class="contact-item">
                             <i class="fas fa-map-marker-alt"></i>
-                            <p>123 Tech Street, Digital City</p>
+                            <div class="contact-item-content">
+                                <h4>Our Location</h4>
+                                <p>123 Kipande Street, Nairobi City</p>
+                            </div>
                         </div>
 
                         <div class="contact-item">
                             <i class="fas fa-phone"></i>
-                            <p>(123) 456-7890</p>
-                        </div>
-
-                        <!-- New WhatsApp Contact Item -->
-                        <div class="contact-item">
-                            <i class="fab fa-whatsapp"></i>
-                            <p>Chat with us on WhatsApp: <a href="https://wa.me/254795471321" target="_blank" rel="noopener noreferrer" style="color: var(--amber-color);">(123) 456-7890</a></p>
+                            <div class="contact-item-content">
+                                <h4>Phone Number</h4>
+                                <p>(123) 456-7890</p>
+                            </div>
                         </div>
 
                         <div class="contact-item">
                             <i class="fas fa-envelope"></i>
-                            <p>info@cloudlinkdevs.com</p>
+                            <div class="contact-item-content">
+                                <h4>Email Address</h4>
+                                <p>info@cloudlinkdevs.com</p>
+                            </div>
                         </div>
 
                         <div class="contact-item">
                             <i class="fas fa-clock"></i>
-                            <p>Monday - Friday: 9:00 AM - 6:00 PM</p>
+                            <div class="contact-item-content">
+                                <h4>Working Hours</h4>
+                                <p>Monday - Friday: 9:00 AM - 6:00 PM</p>
+                            </div>
                         </div>
                     </div>
 
@@ -268,7 +2223,7 @@
             </div>
 
             <div class="col-lg-7">
-                <div class="contact-form">
+                <div class="contact-form animate-fade-in-up delay-2">
                     <h2>Send Us a Message</h2>
                     <p>Fill out the form below and we'll get back to you as soon as possible.</p>
 
@@ -307,7 +2262,7 @@
                         </div>
 
                         <button type="submit" class="btn btn-primary mt-3">
-                            <i class="fas fa-paper-plane me-2"></i>Send Message
+                            <i class="fas fa-paper-plane"></i>Send Message
                         </button>
                     </form>
                 </div>
@@ -316,43 +2271,33 @@
     </div>
 </section>
 
-<!-- New WhatsApp CTA Section -->
+<!-- Enhanced WhatsApp CTA Section - Reduced Spacing -->
 <section class="whatsapp-section">
     <div class="container">
-        <div class="whatsapp-cta text-center p-4" style="background-color: white; border-radius: 10px; box-shadow: 0 0.15rem 1.75rem 0 rgba(0, 0, 0, 0.1);">
-            <div class="row align-items-center justify-content-center">
-                <div class="col-md-8">
-                    <h2 class="mb-3">Need an Immediate Response?</h2>
-                    <p class="mb-4">Chat with our team directly on WhatsApp for quick inquiries about our services or to discuss your project in real-time.</p>
-                    <a href="https://wa.me/254795471321" target="_blank" rel="noopener noreferrer" class="btn btn-lg px-4 py-3" style="background-color: var(--amber-color); color: white; font-weight: 600; border-radius: 8px;">
-                        <i class="fab fa-whatsapp me-2" style="font-size: 1.2em;"></i> Start WhatsApp Chat
-                    </a>
-                </div>
+        <div class="whatsapp-cta animate-fade-in-up delay-3">
+            <div class="whatsapp-cta-content text-center">
+                <h2>Need Immediate Assistance?</h2>
+                <p>Get quick responses to your questions via WhatsApp. Our team is ready to help you right away.</p>
+                <a href="https://wa.me/254795471321" target="_blank" rel="noopener noreferrer" class="whatsapp-btn">
+                    <i class="fab fa-whatsapp"></i> Chat with us on WhatsApp
+                </a>
             </div>
         </div>
     </div>
 </section>
 
+<!-- Map Section - Proper spacing and integration -->
 <section class="map-section">
     <div class="container">
-        <h2 class="text-center mb-4">Our Location</h2>
-        <div class="map-container">
-            <!-- Replace with actual Google Maps embed code -->
-            <div class="map-placeholder">
-                <p><i class="fas fa-map-marked-alt me-2"></i> Google Maps will be integrated here</p>
-            </div>
-
-            <!-- Uncomment and replace API_KEY when ready
+        <h2>Our Location</h2>
+        <div class="map-container animate-fade-in-up delay-4">
+            <!-- Properly formatted Google Maps embed -->
             <iframe
-                src="https://www.google.com/maps/embed/v1/place?key=YOUR_API_KEY&q=Space+Needle,Seattle+WA"
-                width="100%"
-                height="400"
-                style="border:0;"
+                src="https://www.google.com/maps/embed/v1/place?key=AIzaSyAamvbnvSbFnO6aEMdA5J0oSzL6EHOtJCA&q=Kipande+Road,Nairobi,Kenya"
                 allowfullscreen=""
                 loading="lazy"
                 referrerpolicy="no-referrer-when-downgrade">
             </iframe>
-            -->
         </div>
     </div>
 </section>
@@ -362,6 +2307,15 @@
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const contactForm = document.getElementById('contactForm');
+
+        // Add animation classes dynamically
+        const animateElements = document.querySelectorAll('.animate-fade-in-up');
+        animateElements.forEach(element => {
+            element.style.opacity = '0';
+            setTimeout(() => {
+                element.style.opacity = '1';
+            }, 100);
+        });
 
         if (contactForm) {
             contactForm.addEventListener('submit', function(e) {
@@ -408,6 +2362,25 @@
             input.addEventListener('blur', function() {
                 this.parentElement.classList.remove('focused');
             });
+        });
+
+        // Add subtle hover effects to form fields
+        const formGroups = document.querySelectorAll('.form-group');
+        formGroups.forEach(group => {
+            const input = group.querySelector('.form-control');
+            if (input) {
+                input.addEventListener('mouseover', function() {
+                    if (!this.classList.contains('focused')) {
+                        this.style.borderColor = '#d8d8d8';
+                    }
+                });
+
+                input.addEventListener('mouseout', function() {
+                    if (!this.classList.contains('focused')) {
+                        this.style.borderColor = '#e9ecef';
+                    }
+                });
+            }
         });
     });
 </script>

@@ -300,9 +300,8 @@ def initiate_direct_payment(request, amount):
     """
     Initiate an STK push request for direct payment without invoice
     """
-    # Get the phone number from the session
-    phone_number = request.session.get('mpesa_phone_number', '')
-    print(f"DEBUG - Phone from session in initiate: {phone_number}")
+    # Get the phone number from the URL query parameter first, then from session as fallback
+    phone_number = request.GET.get('phone', '') or request.session.get('mpesa_phone_number', '')
 
     if not phone_number:
         messages.error(request, "Please provide a phone number.")
@@ -318,8 +317,6 @@ def initiate_direct_payment(request, amount):
     # Description
     description = f"Direct payment: {purpose}"
 
-    print(f"DEBUG - About to call API with phone: {phone_number}")
-
     try:
         # Initialize the M-Pesa API
         mpesa_api = MpesaAPI()
@@ -331,8 +328,6 @@ def initiate_direct_payment(request, amount):
             reference=reference,
             description=description
         )
-
-        print(f"DEBUG - API response: {response}")
 
         # Check if successful
         if 'ResponseCode' in response and response['ResponseCode'] == '0':
@@ -351,11 +346,10 @@ def initiate_direct_payment(request, amount):
                 customer_message=response.get('CustomerMessage', '')
             )
 
-            print(f"DEBUG - Created transaction: {transaction.id}")
-
             # Store transaction ID in session for checking status later
             request.session['mpesa_checkout_request_id'] = response.get('CheckoutRequestID', '')
             request.session['mpesa_direct_payment'] = True
+            request.session['direct_payment_amount'] = float(amount)
             request.session.modified = True
 
             # Redirect to a status checking page
@@ -363,16 +357,128 @@ def initiate_direct_payment(request, amount):
         else:
             # If failed, show error message
             error_message = response.get('errorMessage', 'Failed to initiate M-Pesa payment')
-            print(f"DEBUG - Error from API: {error_message}")
             messages.error(request, error_message)
             return redirect('client_portal:direct_payment')
 
     except Exception as e:
-        print(f"DEBUG - Exception: {str(e)}")
         import traceback
         traceback.print_exc()
         messages.error(request, f"An error occurred: {str(e)}")
         return redirect('client_portal:direct_payment')
+
+
+@login_required
+def initiate_direct_payment(request, amount):
+    """
+    Initiate an STK push request for direct payment without invoice
+    """
+    print("DEBUG - Starting initiate_direct_payment function")
+
+    # Get the phone number from the URL query parameter first, then from session as fallback
+    phone_number = request.GET.get('phone', '') or request.session.get('mpesa_phone_number', '')
+    print(f"DEBUG - Initial phone number: {phone_number}")
+
+    # Ensure the phone number is properly formatted
+    phone_number = ''.join(filter(str.isdigit, phone_number))
+    print(f"DEBUG - Cleaned phone number (digits only): {phone_number}")
+
+    if phone_number.startswith('0'):
+        phone_number = '254' + phone_number[1:]
+    if not phone_number.startswith('254'):
+        phone_number = '254' + phone_number
+
+    print(f"DEBUG - Final formatted phone: {phone_number} for amount: {amount}")
+
+    if not phone_number:
+        print("DEBUG - No phone number provided")
+        messages.error(request, "Please provide a phone number.")
+        return redirect('client_portal:direct_payment')
+
+    # Get the payment purpose from session
+    purpose = request.session.get('direct_payment_purpose', 'Direct payment')
+    print(f"DEBUG - Payment purpose: {purpose}")
+
+    try:
+        print("DEBUG - Attempting to get client")
+        # Create reference from client username and timestamp
+        client = request.user.client_profile
+        reference = f"DIR-{client.user.username}-{timezone.now().strftime('%Y%m%d%H%M%S')}"
+        print(f"DEBUG - Reference: {reference}")
+
+        # Description
+        description = f"Direct payment: {purpose}"
+        print(f"DEBUG - Description: {description}")
+
+        print("DEBUG - Initializing MpesaAPI")
+        # Initialize the M-Pesa API
+        mpesa_api = MpesaAPI()
+
+        # Log the API call parameters
+        print(
+            f"DEBUG - Making API call with: phone={phone_number}, amount={amount}, reference={reference}, description={description}")
+
+        # Send STK push
+        try:
+            response = mpesa_api.initiate_stk_push(
+                phone_number=phone_number,
+                amount=float(amount),
+                reference=reference,
+                description=description
+            )
+            print(f"DEBUG - API Response received: {response}")
+        except Exception as api_error:
+            print(f"DEBUG - API call failed with error: {str(api_error)}")
+            import traceback
+            traceback.print_exc()
+            messages.error(request, f"M-Pesa API error: {str(api_error)}")
+            return redirect('client_portal:direct_payment')
+
+        # Check if successful
+        if 'ResponseCode' in response and response['ResponseCode'] == '0':
+            print("DEBUG - STK push successful")
+            # Create MpesaTransaction record
+            transaction = MpesaTransaction.objects.create(
+                transaction_type='direct_payment',
+                transaction_id=f"DIR-{timezone.now().strftime('%Y%m%d%H%M%S')}",
+                phone_number=phone_number,
+                amount=float(amount),
+                reference=reference,
+                description=description,
+                merchant_request_id=response.get('MerchantRequestID', ''),
+                checkout_request_id=response.get('CheckoutRequestID', ''),
+                response_code=response.get('ResponseCode', ''),
+                response_description=response.get('ResponseDescription', ''),
+                customer_message=response.get('CustomerMessage', '')
+            )
+
+            print(f"DEBUG - Created transaction record: {transaction.id}")
+
+            # Store transaction ID in session for checking status later
+            request.session['mpesa_checkout_request_id'] = response.get('CheckoutRequestID', '')
+            request.session['mpesa_direct_payment'] = True
+            request.session['direct_payment_amount'] = float(amount)
+            request.session.modified = True
+
+            print(f"DEBUG - Updated session with checkout_request_id: {response.get('CheckoutRequestID', '')}")
+            print(f"DEBUG - Redirecting to check_direct_payment_status")
+
+            # Redirect to a status checking page
+            return redirect('mpesa_api:check_direct_payment_status')
+        else:
+            # If failed, show error message
+            error_message = response.get('errorMessage',
+                                         response.get('responseDescription', 'Failed to initiate M-Pesa payment'))
+            print(f"DEBUG - STK push failed: {error_message}")
+            messages.error(request, f"M-Pesa error: {error_message}")
+            return redirect('client_portal:direct_payment')
+
+    except Exception as e:
+        print(f"DEBUG - Exception in initiate_direct_payment: {str(e)}")
+        import traceback
+        traceback.print_exc()
+        messages.error(request, f"An error occurred: {str(e)}")
+        return redirect('client_portal:direct_payment')
+
 
 @login_required
 def check_direct_payment_status(request):
@@ -443,6 +549,33 @@ def check_direct_payment_status(request):
 
             return redirect('client_portal:direct_payment')
 
+    # Render the check status template
     return render(request, 'mpesa_api/check_direct_status.html', context)
 
 
+def process_paypal(request, order_id):
+    """Handle PayPal payment."""
+    try:
+        solution = get_object_or_404(SolutionBuilder, id=order_id)
+
+        # Make sure you have these values in your settings
+        client_id = getattr(settings, 'PAYPAL_CLIENT_ID', 'your-client-id-here')
+
+        context = {
+            'order': solution,
+            'client_id': client_id,
+            'return_url': request.build_absolute_uri(
+                reverse('quotes:payment_callback', kwargs={
+                    'order_id': solution.id,
+                    'payment_method': 'paypal'
+                })
+            ),
+            'cancel_url': request.build_absolute_uri(
+                reverse('quotes:payment_choice', kwargs={'order_id': solution.id})
+            )
+        }
+        return render(request, 'quotes/paypal_payment.html', context)
+    except Exception as e:
+        logger.error(f"Error processing PayPal payment: {e}")
+        messages.error(request, "An error occurred while setting up PayPal payment. Please try again.")
+        return redirect('quotes:payment_choice', order_id=order_id)

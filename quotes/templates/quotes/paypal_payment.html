@@ -1,0 +1,371 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}PayPal Payment - CloudLink_Devs{% endblock %}
+
+{% block extra_css %}
+<style>
+    :root {
+        --beige-color: #f5eadb;
+        --amber-color: #c1954a;
+        --dark-amber: #9e7a39;
+        --light-amber: #d4b06a;
+        --off-white: #faf7f2;
+        --black: #212121;
+        --dark-gray: #333333;
+        --light-gray: #f0f0f0;
+    }
+
+    /* Payment Header */
+    .payment-header {
+        background: linear-gradient(135deg, var(--amber-color) 0%, var(--dark-amber) 100%);
+        color: white;
+        padding: 60px 0;
+        text-align: center;
+    }
+
+    .payment-header h1 {
+        font-weight: 800;
+        margin-bottom: 20px;
+    }
+
+    /* Payment Content */
+    .payment-section {
+        padding: 80px 0;
+        background-color: var(--off-white);
+    }
+
+    .payment-card {
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+        margin-bottom: 30px;
+        background-color: white;
+    }
+
+    .payment-card-header {
+        padding: 20px;
+        background-color: var(--amber-color);
+        color: white;
+        border-bottom: 1px solid var(--light-gray);
+    }
+
+    .payment-card-header h2 {
+        margin-bottom: 0;
+        font-size: 1.5rem;
+        font-weight: 700;
+    }
+
+    .payment-card-body {
+        padding: 30px;
+    }
+
+    /* PayPal Specific */
+    .paypal-logo {
+        max-width: 180px;
+        margin-bottom: 20px;
+    }
+
+    #paypal-button-container {
+        margin: 30px auto;
+        max-width: 500px;
+    }
+
+    .payment-instructions {
+        margin-top: 30px;
+        padding: 20px;
+        background-color: var(--beige-color);
+        border-radius: 10px;
+    }
+
+    .payment-instructions h3 {
+        font-size: 1.2rem;
+        font-weight: 700;
+        margin-bottom: 15px;
+    }
+
+    .instruction-step {
+        display: flex;
+        margin-bottom: 15px;
+    }
+
+    .step-number {
+        width: 25px;
+        height: 25px;
+        border-radius: 50%;
+        background-color: var(--amber-color);
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        margin-right: 15px;
+        flex-shrink: 0;
+    }
+
+    .step-text {
+        font-size: 0.95rem;
+    }
+
+    .payment-status {
+        text-align: center;
+        margin-top: 30px;
+        padding: 20px;
+        border-radius: 10px;
+        display: none;
+    }
+
+    .payment-status.success {
+        background-color: #d4edda;
+        color: #155724;
+        display: block;
+    }
+
+    .payment-status.error {
+        background-color: #f8d7da;
+        color: #721c24;
+        display: block;
+    }
+
+    /* Order summary */
+    .order-summary {
+        background-color: var(--beige-color);
+        border-radius: 10px;
+        padding: 25px;
+    }
+
+    .order-summary-title {
+        font-size: 1.25rem;
+        font-weight: 700;
+        margin-bottom: 20px;
+        color: var(--dark-gray);
+    }
+
+    .order-detail {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+    }
+
+    .order-total {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 20px;
+        padding-top: 20px;
+        border-top: 1px solid rgba(0, 0, 0, 0.1);
+        font-weight: 700;
+        font-size: 1.1rem;
+    }
+
+    /* Buttons */
+    .btn-amber {
+        background-color: var(--amber-color);
+        color: white;
+        font-weight: 600;
+        padding: 10px 20px;
+        border-radius: 5px;
+        border: none;
+        transition: all 0.3s ease;
+    }
+
+    .btn-amber:hover {
+        background-color: var(--dark-amber);
+        color: white;
+    }
+
+    .btn-outline-amber {
+        background-color: transparent;
+        color: var(--amber-color);
+        font-weight: 600;
+        padding: 10px 20px;
+        border-radius: 5px;
+        border: 1px solid var(--amber-color);
+        transition: all 0.3s ease;
+    }
+
+    .btn-outline-amber:hover {
+        background-color: var(--amber-color);
+        color: white;
+    }
+
+    /* Dark mode adaptations */
+    body.dark-mode .payment-section {
+        background-color: #222533;
+    }
+
+    body.dark-mode .payment-card {
+        background-color: var(--dark-gray);
+        color: var(--off-white);
+    }
+
+    body.dark-mode .payment-instructions,
+    body.dark-mode .order-summary {
+        background-color: #222533;
+        color: var(--off-white);
+    }
+
+    body.dark-mode .order-summary-title {
+        color: var(--off-white);
+    }
+
+    body.dark-mode .payment-status.success {
+        background-color: rgba(212, 237, 218, 0.2);
+    }
+
+    body.dark-mode .payment-status.error {
+        background-color: rgba(248, 215, 218, 0.2);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Payment Header -->
+<section class="payment-header">
+    <div class="container">
+        <h1>PayPal Payment</h1>
+        <p class="lead">Complete your payment using PayPal</p>
+    </div>
+</section>
+
+<!-- Payment Content -->
+<section class="payment-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="payment-card">
+                    <div class="payment-card-header">
+                        <h2>PayPal Payment</h2>
+                    </div>
+                    <div class="payment-card-body">
+                        <div class="text-center mb-4">
+                            <img src="{% static 'images/paypal-logo.png' %}" alt="PayPal Logo" class="paypal-logo">
+                            <p>Complete your payment securely using PayPal</p>
+                        </div>
+
+                        <div id="paypal-button-container"></div>
+
+                        <div id="payment-status"></div>
+
+                        <div class="payment-instructions">
+                            <h3>How to Complete PayPal Payment:</h3>
+
+                            <div class="instruction-step">
+                                <div class="step-number">1</div>
+                                <div class="step-text">Click on the PayPal button above.</div>
+                            </div>
+
+                            <div class="instruction-step">
+                                <div class="step-number">2</div>
+                                <div class="step-text">Log in to your PayPal account or pay with a debit/credit card.</div>
+                            </div>
+
+                            <div class="instruction-step">
+                                <div class="step-number">3</div>
+                                <div class="step-text">Review your payment details and confirm the payment.</div>
+                            </div>
+
+                            <div class="instruction-step">
+                                <div class="step-number">4</div>
+                                <div class="step-text">Once payment is completed, you will be redirected to the confirmation page.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="order-summary">
+                    <h3 class="order-summary-title">Order Summary</h3>
+
+                    <div class="order-detail">
+                        <span>Service:</span>
+                        <span>{{ order.service.name }}</span>
+                    </div>
+
+                    <div class="order-detail">
+                        <span>Features:</span>
+                        <span>{{ order.selected_features.count }}</span>
+                    </div>
+
+                    <div class="order-detail">
+                        <span>Appointment Date:</span>
+                        <span>{{ order.appointment_date|date:"F j, Y, g:i a" }}</span>
+                    </div>
+
+                    <div class="order-total">
+                        <span>Total:</span>
+                        <span>${{ order.total_price_usd }}</span>
+                    </div>
+
+                    <div class="mt-4">
+                        <a href="{% url 'quotes:payment_choice' order.id %}" class="btn btn-outline-amber w-100">
+                            <i class="fas fa-arrow-left me-2"></i> Choose Different Payment Method
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://www.paypal.com/sdk/js?client-id={{ client_id }}&currency=USD"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const paymentStatus = document.getElementById('payment-status');
+
+        // Render PayPal buttons
+        paypal.Buttons({
+            style: {
+                layout: 'vertical',
+                color: 'gold',
+                shape: 'rect',
+                label: 'pay'
+            },
+
+            createOrder: function(data, actions) {
+                // Set up the transaction
+                return actions.order.create({
+                    purchase_units: [{
+                        amount: {
+                            value: '{{ order.total_price_usd }}'
+                        },
+                        description: 'CloudLink Devs - {{ order.service.name }} Service'
+                    }]
+                });
+            },
+
+            onApprove: function(data, actions) {
+                // Capture the funds
+                return actions.order.capture().then(function(details) {
+                    // Show success message
+                    paymentStatus.innerHTML = `
+                        <div class="payment-status success">
+                            <i class="fas fa-check-circle fa-2x mb-3"></i>
+                            <h4>Payment Successful!</h4>
+                            <p>Thank you, ${details.payer.name.given_name}! Your payment has been processed successfully.</p>
+                        </div>
+                    `;
+
+                    // Redirect to confirmation page after 3 seconds
+                    setTimeout(function() {
+                        window.location.href = "{% url 'quotes:payment_callback' order.id 'paypal' %}?transaction_id=" + details.id;
+                    }, 3000);
+                });
+            },
+
+            onError: function(err) {
+                // Show error message
+                paymentStatus.innerHTML = `
+                    <div class="payment-status error">
+                        <i class="fas fa-times-circle fa-2x mb-3"></i>
+                        <h4>Payment Failed</h4>
+                        <p>There was an error processing your payment. Please try again.</p>
+                    </div>
+                `;
+            }
+        }).render('#paypal-button-container');
+    });
+</script>
+{% endblock %}

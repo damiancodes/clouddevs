@@ -5,25 +5,82 @@
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'client_portal/css/client_portal.css' %}">
+<style>
+    /* Clean Header and Breadcrumb Styling */
+    .client-portal-wrapper {
+        background-color: #f8f9fa;
+    }
+
+    .breadcrumb-container {
+        padding: 20px 0 10px;
+        margin-bottom: 1.5rem;
+    }
+
+    nav[aria-label="breadcrumb"] {
+        margin-bottom: 5px;
+    }
+
+    .breadcrumb {
+        background: transparent;
+        padding: 0;
+        margin-bottom: 0;
+        font-size: 0.9rem;
+    }
+
+    .breadcrumb-item a {
+        color: #6c757d;
+        text-decoration: none;
+        transition: color 0.2s ease;
+    }
+
+    .breadcrumb-item a:hover {
+        color: #495057;
+        text-decoration: none;
+    }
+
+    .breadcrumb-item.active {
+        color: #495057;
+        font-weight: 500;
+    }
+
+    .breadcrumb-item + .breadcrumb-item::before {
+        color: #adb5bd;
+        padding: 0 0.5rem;
+    }
+
+    h1.page-title {
+        color: #343a40;
+        font-size: 1.8rem;
+        font-weight: 600;
+        margin: 0 0 1rem 0;
+    }
+
+    /* Optional: Add a subtle bottom border for separation */
+    .header-section {
+        border-bottom: 1px solid #e9ecef;
+        margin-bottom: 1.5rem;
+        padding-bottom: 0.5rem;
+    }
+</style>
 {% block client_portal_css %}{% endblock %}
 {% endblock %}
-
-
 
 {% block content %}
 <div class="client-portal-wrapper">
     <div class="container py-4">
         <div class="row">
-            <!-- Breadcrumbs and page title -->
-            <div class="col-12 mb-4">
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="{% url 'core:home' %}">Home</a></li>
-                        <li class="breadcrumb-item"><a href="{% url 'client_portal:dashboard' %}">Client Portal</a></li>
-                        {% block breadcrumb_items %}{% endblock %}
-                    </ol>
-                </nav>
-                <h1 class="mt-2">{% block page_title %}Client Portal{% endblock %}</h1>
+            <!-- Clean Breadcrumbs and page title -->
+            <div class="col-12">
+                <div class="header-section">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="{% url 'core:home' %}">Home</a></li>
+                            <li class="breadcrumb-item"><a href="{% url 'client_portal:dashboard' %}">Client Portal</a></li>
+                            {% block breadcrumb_items %}{% endblock %}
+                        </ol>
+                    </nav>
+                    <h1 class="page-title">{% block page_title %}Client Portal{% endblock %}</h1>
+                </div>
             </div>
         </div>
 

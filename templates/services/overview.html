@@ -1,4 +1,3 @@
-
 {% extends "base.html" %}
 {% load static %}
 
@@ -15,44 +14,158 @@
         --black: #212121;
         --dark-gray: #333333;
         --light-gray: #f0f0f0;
+        --cloud-white: #fefeff;
+        --soft-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        --sharp-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
     }
 
-    /* Services Header */
+    /* Enhanced Services Header */
     .services-header {
-        background: linear-gradient(135deg, var(--amber-color) 0%, var(--dark-amber) 100%);
+        background: linear-gradient(145deg, var(--amber-color) 0%, var(--dark-amber) 100%);
         color: white;
-        padding: 80px 0;
+        padding: 120px 0 80px;
         text-align: center;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .services-header::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 60%);
+        animation: rotate 30s linear infinite;
+    }
+
+    .services-header::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 50px;
+        background: linear-gradient(to top, var(--off-white), transparent);
+    }
+
+    @keyframes rotate {
+        from {
+            transform: rotate(0deg);
+        }
+        to {
+            transform: rotate(360deg);
+        }
+    }
+
+    .services-header-content {
+        position: relative;
+        z-index: 1;
     }
 
     .services-header h1 {
         font-weight: 800;
         margin-bottom: 20px;
+        font-size: 3.5rem;
+        opacity: 0;
+        transform: translateY(30px);
+        animation: fadeInUp 0.8s 0.3s forwards;
     }
 
-    /* Services Cards */
+    .services-header p.lead {
+        font-size: 1.3rem;
+        max-width: 700px;
+        margin: 0 auto;
+        opacity: 0;
+        transform: translateY(30px);
+        animation: fadeInUp 0.8s 0.5s forwards;
+    }
+
+    /* Enhanced Services Section */
     .services-section {
-        padding: 80px 0;
+        padding: 100px 0;
         background-color: var(--off-white);
+        position: relative;
     }
 
+    .services-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c1954a' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        opacity: 0.5;
+        z-index: 0;
+    }
+
+    .services-section .container {
+        position: relative;
+        z-index: 1;
+    }
+
+    /* Modern Section Title */
+    .section-title {
+        text-align: center;
+        margin-bottom: 60px;
+        position: relative;
+    }
+
+    .section-title h2 {
+        color: var(--black);
+        font-weight: 800;
+        margin-bottom: 15px;
+        font-size: 2.5rem;
+        position: relative;
+        display: inline-block;
+    }
+
+    .section-title h2::after {
+        content: '';
+        position: absolute;
+        bottom: -15px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80px;
+        height: 3px;
+        background: linear-gradient(to right, var(--dark-amber), var(--amber-color));
+    }
+
+    .section-title p {
+        color: var(--dark-gray);
+        max-width: 600px;
+        margin: 1.5rem auto 0;
+        font-size: 1.1rem;
+    }
+
+    /* Enhanced Modern Service Cards */
     .service-card {
-        border-radius: 10px;
+        border-radius: 20px;
         overflow: hidden;
-        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+        box-shadow: var(--soft-shadow);
         margin-bottom: 30px;
         height: 100%;
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        transition: all 0.5s cubic-bezier(0.215, 0.61, 0.355, 1);
         background-color: white;
+        position: relative;
+        transform: translateY(50px);
+        opacity: 0;
+    }
+
+    .service-card.visible {
+        transform: translateY(0);
+        opacity: 1;
     }
 
     .service-card:hover {
-        transform: translateY(-10px);
-        box-shadow: 0 1rem 3rem rgba(58, 59, 69, 0.175);
+        transform: translateY(-15px);
+        box-shadow: var(--sharp-shadow);
     }
 
     .service-image {
-        height: 200px;
+        height: 250px;
         overflow: hidden;
         position: relative;
     }
@@ -61,6 +174,11 @@
         width: 100%;
         height: 100%;
         object-fit: cover;
+        transition: transform 0.8s cubic-bezier(0.215, 0.61, 0.355, 1);
+    }
+
+    .service-card:hover .service-image img {
+        transform: scale(1.08);
     }
 
     .service-image::after {
@@ -71,137 +189,379 @@
         width: 100%;
         height: 100%;
         background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.6) 100%);
+        opacity: 0.7;
+        transition: opacity 0.3s ease;
+    }
+
+    .service-card:hover .service-image::after {
+        opacity: 0.9;
     }
 
     .service-content {
-        padding: 25px;
+        padding: 30px;
+        position: relative;
+        z-index: 1;
+    }
+
+    .service-icon {
+        margin-bottom: 25px;
+        width: 70px;
+        height: 70px;
+        background: linear-gradient(145deg, var(--beige-color), var(--off-white));
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--amber-color);
+        font-size: 1.8rem;
+        transition: all 0.3s ease;
+        box-shadow: 0 5px 15px rgba(193, 149, 74, 0.15);
+        transform: rotate(0deg);
+    }
+
+    .service-card:hover .service-icon {
+        transform: rotate(10deg) scale(1.1);
+        background: linear-gradient(145deg, var(--amber-color), var(--dark-amber));
+        color: white;
+        box-shadow: 0 8px 25px rgba(193, 149, 74, 0.3);
     }
 
     .service-content h3 {
         margin-bottom: 15px;
         font-weight: 700;
         color: var(--black);
+        font-size: 1.6rem;
+        transition: transform 0.3s ease;
     }
 
-    .service-icon {
-        margin-bottom: 20px;
-        width: 60px;
-        height: 60px;
-        background-color: var(--beige-color);
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: var(--amber-color);
-        font-size: 1.5rem;
+    .service-card:hover .service-content h3 {
+        transform: translateX(10px);
     }
 
-    /* Process Section */
+    .service-content p {
+        color: var(--dark-gray);
+        margin-bottom: 25px;
+        font-size: 1rem;
+        line-height: 1.7;
+        transition: all 0.3s ease;
+    }
+
+    .service-card:hover .service-content p {
+        color: var(--black);
+    }
+
+    .service-content .btn {
+        padding: 12px 28px;
+        border-radius: 50px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+        z-index: 1;
+        border: none;
+    }
+
+    .service-content .btn::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 0%;
+        height: 100%;
+        background-color: var(--dark-amber);
+        transition: all 0.3s ease;
+        z-index: -1;
+        border-radius: 50px;
+    }
+
+    .service-content .btn:hover::before {
+        width: 100%;
+    }
+
+    .service-content .btn:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(193, 149, 74, 0.3);
+    }
+
+    /* Modernized Process Section */
     .process-section {
-        padding: 80px 0;
+        padding: 100px 0;
         background-color: var(--beige-color);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .process-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 100%);
+    }
+
+    .process-container {
+        position: relative;
+        max-width: 1000px;
+        margin: 0 auto;
+    }
+
+    .process-line {
+        position: absolute;
+        top: 60px;
+        left: 50px;
+        right: 50px;
+        height: 3px;
+        background: linear-gradient(to right, var(--amber-color), var(--dark-amber));
+        z-index: 1;
     }
 
     .process-step {
         text-align: center;
-        padding: 30px;
+        padding: 30px 20px;
         position: relative;
+        z-index: 2;
+        transition: all 0.5s ease;
+        background-color: transparent;
+        border-radius: 20px;
+        transform: translateY(30px);
+        opacity: 0;
+    }
+
+    .process-step.visible {
+        transform: translateY(0);
+        opacity: 1;
+    }
+
+    .process-step:hover {
+        background-color: white;
+        box-shadow: var(--soft-shadow);
+        transform: translateY(-10px);
     }
 
     .step-number {
-        width: 50px;
-        height: 50px;
-        background-color: var(--amber-color);
+        width: 80px;
+        height: 80px;
+        background: linear-gradient(145deg, var(--amber-color), var(--dark-amber));
         color: white;
         border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 1.25rem;
+        font-size: 1.8rem;
         font-weight: 700;
-        margin: 0 auto 20px;
+        margin: 0 auto 25px;
+        box-shadow: 0 10px 20px rgba(193, 149, 74, 0.3);
+        position: relative;
+        z-index: 3;
+        transition: all 0.3s ease;
     }
 
-    .step-connector {
+    .process-step:hover .step-number {
+        transform: scale(1.1);
+        box-shadow: 0 15px 30px rgba(193, 149, 74, 0.4);
+    }
+
+    .process-step h4 {
+        margin-bottom: 15px;
+        font-weight: 700;
+        color: var(--black);
+        font-size: 1.4rem;
+        transition: all 0.3s ease;
+    }
+
+    .process-step:hover h4 {
+        color: var(--amber-color);
+    }
+
+    .process-step p {
+        color: var(--dark-gray);
+        margin-bottom: 0;
+        transition: all 0.3s ease;
+    }
+
+    .process-step:hover p {
+        color: var(--black);
+    }
+
+    /* Enhanced CTA Section */
+    .cta-section {
+        padding: 100px 0;
+        background: linear-gradient(145deg, var(--amber-color) 0%, var(--dark-amber) 100%);
+        color: white;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .cta-section::before {
+        content: '';
         position: absolute;
-        top: 55px;
-        right: -15px;
-        width: 30px;
-        height: 2px;
-        background-color: var(--amber-color);
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.05' fill-rule='evenodd'%3E%3Cpath d='M0 40L40 0H20L0 20M40 40V20L20 40'/%3E%3C/g%3E%3C/svg%3E");
+    }
+
+    .cta-container {
+        position: relative;
         z-index: 1;
     }
 
-    .step-connector:after {
-        content: '';
-        position: absolute;
-        right: 0;
-        top: -4px;
-        width: 10px;
-        height: 10px;
-        border-top: 2px solid var(--amber-color);
-        border-right: 2px solid var(--amber-color);
-        transform: rotate(45deg);
-    }
-
-    /* Last step has no connector */
-    .process-step:last-child .step-connector {
-        display: none;
-    }
-
-    /* CTA Section */
-    .cta-section {
-        padding: 80px 0;
-        background: linear-gradient(135deg, var(--amber-color) 0%, var(--dark-amber) 100%);
-        color: white;
-        text-align: center;
-    }
-
     .cta-title {
-        font-size: la2.5rem;
-        font-weight: 700;
+        font-size: 2.75rem;
+        font-weight: 800;
         margin-bottom: 1.5rem;
+        transform: translateY(30px);
+        opacity: 0;
+    }
+
+    .cta-title.visible {
+        animation: fadeInUp 0.8s forwards;
     }
 
     .cta-text {
         max-width: 700px;
-        margin: 0 auto 2rem;
-        opacity: 0.9;
+        margin: 0 auto 2.5rem;
+        font-size: 1.2rem;
+        line-height: 1.7;
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    .cta-text.visible {
+        animation: fadeInUp 0.8s 0.2s forwards;
+    }
+
+    .cta-buttons {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    .cta-buttons.visible {
+        animation: fadeInUp 0.8s 0.4s forwards;
+    }
+
+    .cta-buttons .btn {
+        padding: 15px 35px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        border-radius: 50px;
+        margin: 0 10px 10px;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .cta-buttons .btn::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 5px;
+        height: 5px;
+        background: rgba(255, 255, 255, 0.5);
+        opacity: 0;
+        border-radius: 100%;
+        transform: scale(1, 1) translate(-50%);
+        transform-origin: 50% 50%;
+    }
+
+    .cta-buttons .btn:hover::after {
+        animation: ripple 1s ease-out;
+    }
+
+    @keyframes ripple {
+        0% {
+            transform: scale(0, 0);
+            opacity: 0.5;
+        }
+        100% {
+            transform: scale(20, 20);
+            opacity: 0;
+        }
+    }
+
+    .btn-light {
+        background-color: white;
+        color: var(--amber-color);
+        border: none;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .btn-light:hover {
+        background-color: var(--off-white);
+        color: var(--dark-amber);
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    }
+
+    .btn-outline-light {
+        color: white;
+        background-color: transparent;
+        border: 2px solid rgba(255, 255, 255, 0.8);
+    }
+
+    .btn-outline-light:hover {
+        background-color: white;
+        color: var(--amber-color);
+        border-color: white;
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
     }
 
     /* Button styles */
     .btn-primary {
-        background-color: var(--amber-color);
-        border-color: var(--amber-color);
+        background: linear-gradient(145deg, var(--amber-color), var(--dark-amber));
+        border: none;
         color: white;
+        box-shadow: 0 5px 15px rgba(193, 149, 74, 0.2);
     }
 
     .btn-primary:hover {
-        background-color: var(--dark-amber);
-        border-color: var(--dark-amber);
-        color: white;
+        background: linear-gradient(145deg, var(--dark-amber), var(--amber-color));
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(193, 149, 74, 0.3);
     }
 
-    .section-title h2 {
-        color: var(--black);
-        font-weight: 700;
-        margin-bottom: 1rem;
+    /* Key Animations */
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
     }
 
-    .section-title p {
-        color: var(--dark-gray);
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
     }
 
-    /* Animation styles */
-    .animate-on-scroll {
-        opacity: 0;
-        transform: translateY(30px);
-        transition: all 0.7s ease-out;
+    @keyframes float {
+        0% {
+            transform: translateY(0px);
+        }
+        50% {
+            transform: translateY(-10px);
+        }
+        100% {
+            transform: translateY(0px);
+        }
     }
 
-    .animate-on-scroll.visible {
-        opacity: 1;
-        transform: translateY(0);
+    /* Floating Elements */
+    .floating-element {
+        animation: float 6s ease-in-out infinite;
     }
 
     /* Dark mode adaptations */
@@ -225,11 +585,19 @@
     }
 
     body.dark-mode .service-icon {
-        background-color: #3a3d52;
+        background: linear-gradient(145deg, #3a3d52, #2c2f40);
+    }
+
+    body.dark-mode .service-card:hover .service-icon {
+        background: linear-gradient(145deg, var(--amber-color), var(--dark-amber));
     }
 
     body.dark-mode .process-section {
-        background-color: #333333;
+        background-color: #2c2f40;
+    }
+
+    body.dark-mode .process-step:hover {
+        background-color: #3a3d52;
     }
 
     body.dark-mode .section-title h2 {
@@ -239,89 +607,117 @@
     body.dark-mode .section-title p {
         color: #c2c5d3;
     }
+
+    /* Responsive styles */
+    @media (max-width: 991px) {
+        .services-header h1 {
+            font-size: 3rem;
+        }
+        
+        .process-line {
+            display: none;
+        }
+        
+        .process-step {
+            margin-bottom: 30px;
+        }
+    }
+
+    @media (max-width: 767px) {
+        .services-header h1 {
+            font-size: 2.5rem;
+        }
+        
+        .services-header {
+            padding: 100px 0 60px;
+        }
+        
+        .service-image {
+            height: 200px;
+        }
+        
+        .section-title h2 {
+            font-size: 2rem;
+        }
+        
+        .cta-title {
+            font-size: 2rem;
+        }
+    }
 </style>
 {% endblock %}
 
 {% block content %}
-<!-- Services Header -->
+<!-- Enhanced Services Header -->
 <section class="services-header">
-    <div class="container">
+    <div class="container services-header-content">
         <h1>Our Services</h1>
         <p class="lead">Comprehensive digital solutions tailored to your business needs</p>
     </div>
 </section>
 
-<!-- Services Section -->
+<!-- Enhanced Services Section -->
 <section class="services-section">
     <div class="container">
-        <div class="section-title text-center mb-5">
+        <div class="section-title" data-aos="fade-up">
             <h2>What We Offer</h2>
-            <p>Explore our range of development services</p>
+            <p>Explore our range of development services designed to transform your business</p>
         </div>
 
         <div class="row">
             <div class="col-lg-4 col-md-6 mb-4">
-                <div class="service-card">
+                <div class="service-card animate-on-scroll">
                     <div class="service-image">
                         <img src="{% static 'images/homepage4.jpg' %}" alt="Web Development">
                     </div>
                     <div class="service-content">
-                        <div class="service-icon">
+                        <div class="service-icon floating-element">
                             <i class="fas fa-laptop-code"></i>
                         </div>
                         <h3>Web Development</h3>
-                        <p>Custom websites and web applications built with modern technologies to meet your business needs.</p>
-                        <ul class="mt-3">
-                            <li>Responsive Web Design</li>
-                            <li>E-commerce Platforms</li>
-                            <li>Content Management Systems</li>
-                            <li>Web Applications</li>
-                        </ul>
-                        <a href="{% url 'services:web_development' %}" class="btn btn-primary mt-3">Learn More</a>
+                        <p>Custom websites and web applications built with modern technologies to meet your business needs and drive growth.</p>
+                        <a href="{% url 'services:web_development' %}" class="btn btn-primary">
+                            <span>Learn More</span>
+                            <i class="fas fa-arrow-right ms-2"></i>
+                        </a>
                     </div>
                 </div>
             </div>
 
             <div class="col-lg-4 col-md-6 mb-4">
-                <div class="service-card">
+                <div class="service-card animate-on-scroll">
                     <div class="service-image">
                         <img src="{% static 'images/homepage1.jpg' %}" alt="App Development">
                     </div>
                     <div class="service-content">
-                        <div class="service-icon">
+                        <div class="service-icon floating-element">
                             <i class="fas fa-mobile-alt"></i>
                         </div>
                         <h3>App Development</h3>
-                        <p>Native and cross-platform mobile applications for iOS and Android to reach your customers anywhere.</p>
-                        <ul class="mt-3">
-                            <li>iOS App Development</li>
-                            <li>Android App Development</li>
-                            <li>Cross-Platform Solutions</li>
-                            <li>App Maintenance & Updates</li>
-                        </ul>
-                        <a href="{% url 'services:app_development' %}" class="btn btn-primary mt-3">Learn More</a>
+                        <p>Native and cross-platform mobile applications for iOS and Android to reach your customers anywhere, anytime.</p>
+                        <a href="{% url 'services:app_development' %}" class="btn btn-primary">
+                            <span>Learn More</span>
+                            <i class="fas fa-arrow-right ms-2"></i>
+                        </a>
                     </div>
                 </div>
             </div>
 
             <div class="col-lg-4 col-md-6 mb-4">
-                <div class="service-card">
+                <div class="service-card animate-on-scroll">
                     <div class="service-image">
                         <img src="{% static 'images/appdev.jpg' %}" alt="POS Systems">
                     </div>
                     <div class="service-content">
-                        <div class="service-icon">
+                        <div class="service-icon floating-element">
                             <i class="fas fa-cash-register"></i>
                         </div>
                         <h3>POS Systems</h3>
-                        <p>Customized point-of-sale solutions for retail, restaurants, and other businesses to streamline operations.</p>
-                        <ul class="mt-3">
-                            <li>Retail POS Systems</li>
-                            <li>Restaurant Management</li>
-                            <li>Inventory Control</li>
-                            <li>Customer Management</li>
-                        </ul>
-                        <a href="{% url 'services:pos_systems' %}" class="btn btn-primary mt-3">Learn More</a>
+                        <p>Customized point-of-sale solutions for retail, restaurants, and other businesses to streamline operations efficiently.</p>
+                        <a href="{% url 'services:pos_systems' %}" class="btn btn-primary">
+                            <span>Learn More</span>
+                            <i class="fas fa-arrow-right ms-2"></i>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -329,61 +725,68 @@
     </div>
 </section>
 
-<!-- Process Section -->
+<!-- Enhanced Process Section -->
 <section class="process-section">
     <div class="container">
-        <div class="section-title text-center mb-5">
+        <div class="section-title" data-aos="fade-up">
             <h2>Our Development Process</h2>
-            <p>How we turn your ideas into reality</p>
+            <p>How we transform your ideas into reality through a proven methodology</p>
         </div>
 
-        <div class="row">
-            <div class="col-lg-3 col-md-6">
-                <div class="process-step">
-                    <div class="step-number">1</div>
-                    <div class="step-connector"></div>
-                    <h4>Discovery</h4>
-                    <p>We learn about your business, goals, and requirements to understand your needs.</p>
+        <div class="process-container">
+            <div class="process-line d-none d-lg-block"></div>
+            
+            <div class="row">
+                <div class="col-lg-3 col-md-6">
+                    <div class="process-step animate-on-scroll">
+                        <div class="step-number">1</div>
+                        <h4>Discovery</h4>
+                        <p>We learn about your business, goals, and requirements to understand your unique needs.</p>
+                    </div>
                 </div>
-            </div>
 
-            <div class="col-lg-3 col-md-6">
-                <div class="process-step">
-                    <div class="step-number">2</div>
-                    <div class="step-connector"></div>
-                    <h4>Planning</h4>
-                    <p>We create a detailed plan with timelines, features, and technical specifications.</p>
+                <div class="col-lg-3 col-md-6">
+                    <div class="process-step animate-on-scroll">
+                        <div class="step-number">2</div>
+                        <h4>Planning</h4>
+                        <p>We create a detailed plan with timelines, features, and technical specifications.</p>
+                    </div>
                 </div>
-            </div>
 
-            <div class="col-lg-3 col-md-6">
-                <div class="process-step">
-                    <div class="step-number">3</div>
-                    <div class="step-connector"></div>
-                    <h4>Development</h4>
-                    <p>Our team builds your solution using agile methodologies with regular updates.</p>
+                <div class="col-lg-3 col-md-6">
+                    <div class="process-step animate-on-scroll">
+                        <div class="step-number">3</div>
+                        <h4>Development</h4>
+                        <p>Our team builds your solution using agile methodologies with regular updates.</p>
+                    </div>
                 </div>
-            </div>
 
-            <div class="col-lg-3 col-md-6">
-                <div class="process-step">
-                    <div class="step-number">4</div>
-                    <h4>Launch & Support</h4>
-                    <p>We deploy your solution and provide ongoing maintenance and support.</p>
+                <div class="col-lg-3 col-md-6">
+                    <div class="process-step animate-on-scroll">
+                        <div class="step-number">4</div>
+                        <h4>Launch & Support</h4>
+                        <p>We deploy your solution and provide ongoing maintenance and support.</p>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-<!-- CTA Section -->
+<!-- Enhanced CTA Section -->
 <section class="cta-section">
-    <div class="container">
-        <h2 class="cta-title">Ready to Start Your Project?</h2>
-        <p class="cta-text">Contact us today for a free consultation and let's bring your ideas to life.</p>
-        <div class="cta-buttons">
-            <a href="{% url 'quotes:solution_builder' %}" class="btn btn-light btn-lg me-3">Get a Quote</a>
-            <a href="{% url 'core:contact' %}" class="btn btn-outline-light btn-lg">Contact Us</a>
+    <div class="container cta-container">
+        <h2 class="cta-title animate-on-scroll">Ready to Start Your Project?</h2>
+        <p class="cta-text animate-on-scroll">Contact us today for a free consultation and let's bring your ideas to life. Our team is ready to help you transform your business.</p>
+        <div class="cta-buttons animate-on-scroll">
+            <a href="{% url 'quotes:solution_builder' %}" class="btn btn-light btn-lg">
+                <i class="fas fa-calculator me-2"></i>
+                Get a Quote
+            </a>
+            <a href="{% url 'core:contact' %}" class="btn btn-outline-light btn-lg">
+                <i class="fas fa-paper-plane me-2"></i>
+                Contact Us
+            </a>
         </div>
     </div>
 </section>
@@ -392,34 +795,325 @@
 {% block extra_js %}
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Add animation classes on scroll
-        const animateElements = document.querySelectorAll('.service-card, .process-step');
-
-        const isInViewport = (element) => {
-            const rect = element.getBoundingClientRect();
-            return (
-                rect.top <= (window.innerHeight || document.documentElement.clientHeight) * 0.85
-            );
-        };
-
-        const checkVisibility = () => {
-            animateElements.forEach((element) => {
-                if (isInViewport(element)) {
-                    element.classList.add('visible');
+        // Enhanced animations with Intersection Observer API
+        const animateElements = document.querySelectorAll('.animate-on-scroll, .cta-title, .cta-text, .cta-buttons');
+        
+        // Create the observer with custom options
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    // Unobserve after animation is triggered
+                    observer.unobserve(entry.target);
                 }
             });
-        };
-
+        }, { 
+            threshold: 0.15, // Trigger when 15% of element is visible
+            rootMargin: '0px 0px -50px 0px' // Slightly before the element comes into view
+        });
+        
+        // Add staggered delays and observe each element
         animateElements.forEach((element, index) => {
-            element.classList.add('animate-on-scroll');
-            element.style.transitionDelay = `${index * 0.1}s`;
+            // Add different delays based on element type and position
+            if (element.classList.contains('service-card')) {
+                element.style.transitionDelay = `${(index % 3) * 0.15}s`;
+            } else if (element.classList.contains('process-step')) {
+                element.style.transitionDelay = `${(index % 4) * 0.15}s`;
+            }
+            
+            observer.observe(element);
+        });
+        
+        // Add ripple effect to buttons
+        const addRippleEffect = (button, event) => {
+            const ripple = document.createElement('span');
+            const rect = button.getBoundingClientRect();
+            
+            const x = event.clientX - rect.left;
+            const y = event.clientY - rect.top;
+            
+            const diameter = Math.max(rect.width, rect.height);
+            const radius = diameter / 2;
+            
+            ripple.style.width = ripple.style.height = `${diameter}px`;
+            ripple.style.left = `${x - radius}px`;
+            ripple.style.top = `${y - radius}px`;
+            ripple.style.position = 'absolute';
+            ripple.style.borderRadius = '50%';
+            ripple.style.backgroundColor = 'rgba(255, 255, 255, 0.3)';
+            ripple.style.transform = 'scale(0)';
+            ripple.style.animation = 'ripple 0.6s linear';
+            
+            button.style.position = 'relative';
+            button.style.overflow = 'hidden';
+            
+            button.appendChild(ripple);
+            
+            setTimeout(() => {
+                ripple.remove();
+            }, 600);
+        };
+        
+        // Add ripple effect to all buttons
+        document.querySelectorAll('.btn').forEach(button => {
+            button.addEventListener('click', function(e) {
+                addRippleEffect(this, e);
+            });
+        });
+        
+        // Add hover animations for service icons
+        document.querySelectorAll('.service-icon').forEach(icon => {
+            icon.addEventListener('mouseenter', function() {
+                this.style.transform = 'scale(1.1) rotate(10deg)';
+            });
+            
+            icon.addEventListener('mouseleave', function() {
+                this.style.transform = '';
+            });
+        });
+        
+        // Parallax effect for header
+        const servicesHeader = document.querySelector('.services-header');
+        window.addEventListener('scroll', function() {
+   const scrollTop = window.pageYOffset;
+
+            if (servicesHeader && scrollTop < 500) {
+                // Create parallax effect by moving the background slower than scroll
+                servicesHeader.style.backgroundPositionY = `${scrollTop * 0.4}px`;
+
+                // Add subtle opacity effect
+                const opacity = 1 - (scrollTop / 1000);
+                servicesHeader.querySelector('.services-header-content').style.opacity = opacity > 0 ? opacity : 0;
+            }
         });
 
-        // Check on load
-        checkVisibility();
+        // Add 3D tilt effect to service cards
+        const serviceTilt = (card, x, y) => {
+            const height = card.clientHeight;
+            const width = card.clientWidth;
 
-        // Check on scroll
-        window.addEventListener('scroll', checkVisibility);
+            const yRotation = 10 * ((x - width / 2) / width);
+            const xRotation = -10 * ((y - height / 2) / height);
+
+            const transform = `perspective(500px) scale(1.05) rotateX(${xRotation}deg) rotateY(${yRotation}deg)`;
+
+            card.style.transform = transform;
+        };
+
+        const serviceCards = document.querySelectorAll('.service-card');
+        serviceCards.forEach(card => {
+            card.addEventListener('mousemove', function(e) {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+
+                serviceTilt(this, x, y);
+            });
+
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = '';
+                // If it's visible (already animated in), add the visible class back
+                if (this.classList.contains('visible')) {
+                    this.style.transform = 'translateY(0)';
+                }
+            });
+        });
+
+        // Add hover animation for process steps
+        document.querySelectorAll('.process-step').forEach(step => {
+            step.addEventListener('mouseenter', function() {
+                // Add pulse animation to step number
+                const stepNumber = this.querySelector('.step-number');
+                stepNumber.style.animation = 'pulse 1s infinite';
+            });
+
+            step.addEventListener('mouseleave', function() {
+                // Remove pulse animation
+                const stepNumber = this.querySelector('.step-number');
+                stepNumber.style.animation = '';
+            });
+        });
+
+        // Add CSS keyframes for pulse animation
+        const style = document.createElement('style');
+        style.innerHTML = `
+            @keyframes pulse {
+                0% {
+                    box-shadow: 0 0 0 0 rgba(193, 149, 74, 0.7);
+                    transform: scale(1);
+                }
+                70% {
+                    box-shadow: 0 0 0 10px rgba(193, 149, 74, 0);
+                    transform: scale(1.05);
+                }
+                100% {
+                    box-shadow: 0 0 0 0 rgba(193, 149, 74, 0);
+                    transform: scale(1);
+                }
+            }
+
+            @keyframes ripple {
+                to {
+                    transform: scale(4);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Add scroll indicator animation for long sections
+        const addScrollIndicator = () => {
+            // Add indicator only for desktop
+            if (window.innerWidth > 992) {
+                const sections = document.querySelectorAll('.services-section, .process-section');
+
+                sections.forEach(section => {
+                    const indicator = document.createElement('div');
+                    indicator.classList.add('scroll-indicator');
+                    indicator.innerHTML = `
+                        <svg width="30" height="30" viewBox="0 0 30 30">
+                            <path d="M15 5v20M7.5 17.5L15 25l7.5-7.5" fill="none" stroke="#c1954a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    `;
+
+                    indicator.style.position = 'absolute';
+                    indicator.style.bottom = '20px';
+                    indicator.style.left = '50%';
+                    indicator.style.transform = 'translateX(-50%)';
+                    indicator.style.opacity = '0';
+                    indicator.style.transition = 'opacity 0.3s ease';
+                    indicator.style.animation = 'bounce 2s infinite';
+
+                    section.style.position = 'relative';
+                    section.appendChild(indicator);
+
+                    // Show indicator when section is in view
+                    const observer = new IntersectionObserver(entries => {
+                        entries.forEach(entry => {
+                            if (entry.isIntersecting) {
+                                // Show indicator only if section has more content to scroll
+                                if (section.scrollHeight > window.innerHeight) {
+                                    setTimeout(() => {
+                                        indicator.style.opacity = '1';
+                                    }, 1000);
+                                }
+                            } else {
+                                indicator.style.opacity = '0';
+                            }
+                        });
+                    });
+
+                    observer.observe(section);
+
+                    // Hide indicator when user scrolls
+                    window.addEventListener('scroll', () => {
+                        const sectionBottom = section.getBoundingClientRect().bottom;
+                        // Hide when user has scrolled near the bottom of the section
+                        if (sectionBottom < window.innerHeight + 100) {
+                            indicator.style.opacity = '0';
+                        }
+                    });
+                });
+
+                // Add bounce animation
+                const bounceStyle = document.createElement('style');
+                bounceStyle.innerHTML = `
+                    @keyframes bounce {
+                        0%, 20%, 50%, 80%, 100% {
+                            transform: translateX(-50%) translateY(0);
+                        }
+                        40% {
+                            transform: translateX(-50%) translateY(-10px);
+                        }
+                        60% {
+                            transform: translateX(-50%) translateY(-5px);
+                        }
+                    }
+                `;
+                document.head.appendChild(bounceStyle);
+            }
+        };
+
+        // Call scroll indicator function
+        addScrollIndicator();
+
+        // Add smooth scroll animation when clicking on any anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    const headerOffset = 80; // Height of fixed header
+                    const elementPosition = targetElement.getBoundingClientRect().top;
+                    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Add floating animation to service icons
+        document.querySelectorAll('.floating-element').forEach((element, index) => {
+            element.style.animation = `float 4s ease-in-out infinite`;
+            element.style.animationDelay = `${index * 0.5}s`;
+        });
+
+        // Add custom cursor effect for interactive elements
+        const addCustomCursor = () => {
+            // Only add custom cursor for desktop
+            if (window.innerWidth > 992 && !('ontouchstart' in window)) {
+                const cursor = document.createElement('div');
+                cursor.classList.add('custom-cursor');
+                document.body.appendChild(cursor);
+
+                cursor.style.position = 'fixed';
+                cursor.style.width = '30px';
+                cursor.style.height = '30px';
+                cursor.style.borderRadius = '50%';
+                cursor.style.border = '2px solid ' + getComputedStyle(document.documentElement).getPropertyValue('--amber-color');
+                cursor.style.pointerEvents = 'none';
+                cursor.style.transform = 'translate(-50%, -50%)';
+                cursor.style.zIndex = '9999';
+                cursor.style.transition = 'transform 0.1s ease, width 0.3s ease, height 0.3s ease, background-color 0.3s ease';
+                cursor.style.opacity = '0';
+
+                document.addEventListener('mousemove', e => {
+                    cursor.style.opacity = '1';
+                    cursor.style.left = e.clientX + 'px';
+                    cursor.style.top = e.clientY + 'px';
+                });
+
+                document.addEventListener('mouseout', () => {
+                    cursor.style.opacity = '0';
+                });
+
+                // Hover effect for interactive elements
+                const interactiveElements = document.querySelectorAll('a, button, .btn, .service-card, .process-step');
+                interactiveElements.forEach(el => {
+                    el.addEventListener('mouseenter', () => {
+                        cursor.style.transform = 'translate(-50%, -50%) scale(1.5)';
+                        cursor.style.backgroundColor = 'rgba(193, 149, 74, 0.1)';
+                        cursor.style.border = '2px solid rgba(193, 149, 74, 0.5)';
+                    });
+
+                    el.addEventListener('mouseleave', () => {
+                        cursor.style.transform = 'translate(-50%, -50%) scale(1)';
+                        cursor.style.backgroundColor = 'transparent';
+                        cursor.style.border = '2px solid ' + getComputedStyle(document.documentElement).getPropertyValue('--amber-color');
+                    });
+                });
+            }
+        };
+
+        // Call custom cursor function
+        addCustomCursor();
     });
 </script>
 {% endblock %}

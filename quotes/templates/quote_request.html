@@ -1,0 +1,570 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Request a Quote - CloudLink_Devs{% endblock %}
+
+{% block extra_css %}
+<style>
+    :root {
+        /* Using your established color scheme */
+        --beige-color: #f5eadb;
+        --amber-color: #c1954a;
+        --dark-amber: #9e7a39;
+        --light-amber: #d4b06a;
+        --off-white: #faf7f2;
+        --black: #212121;
+        --dark-gray: #333333;
+        --light-gray: #f0f0f0;
+    }
+
+    /* Quote Header */
+    .quote-header {
+        background: linear-gradient(135deg, var(--amber-color) 0%, var(--dark-amber) 100%);
+        color: white;
+        padding: 80px 0;
+        text-align: center;
+    }
+
+    .quote-header h1 {
+        font-weight: 800;
+        margin-bottom: 20px;
+    }
+
+    /* Quote Content */
+    .quote-section {
+        padding: 80px 0;
+    }
+
+    .quote-card {
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+        margin-bottom: 30px;
+        background-color: white;
+    }
+
+    .quote-card-header {
+        padding: 20px;
+        background-color: var(--beige-color);
+        border-bottom: 1px solid #e3e6f0;
+    }
+
+    .quote-card-header h2 {
+        margin-bottom: 0;
+        font-size: 1.5rem;
+    }
+
+    .quote-card-body {
+        padding: 30px;
+    }
+
+    /* Form Styling */
+    .form-section {
+        margin-bottom: 40px;
+    }
+
+    .form-section-title {
+        font-size: 1.25rem;
+        font-weight: 700;
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #e3e6f0;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    label {
+        font-weight: 600;
+        margin-bottom: 8px;
+    }
+
+    .required-field::after {
+        content: '*';
+        color: #e74a3b;
+        margin-left: 4px;
+    }
+
+    .form-control {
+        border-radius: 5px;
+        border: 1px solid #d1d3e2;
+        padding: 10px 15px;
+    }
+
+    .form-control:focus {
+        border-color: var(--light-amber);
+        box-shadow: 0 0 0 0.25rem rgba(193, 149, 74, 0.25);
+    }
+
+    .form-text {
+        color: #858796;
+        font-size: 0.875rem;
+        margin-top: 5px;
+    }
+
+    .checkbox-group {
+        margin-top: 10px;
+    }
+
+    .checkbox-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+
+    .checkbox-item input[type="checkbox"] {
+        margin-right: 10px;
+    }
+
+    /* Feature Cards */
+    .feature-card {
+        padding: 15px;
+        border: 1px solid #e3e6f0;
+        border-radius: 5px;
+        margin-bottom: 15px;
+        transition: all 0.3s ease;
+    }
+
+    .feature-card:hover {
+        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+        border-color: var(--amber-color);
+    }
+
+    .feature-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .feature-name {
+        font-weight: 600;
+    }
+
+    .feature-price {
+        font-weight: 600;
+        color: var(--amber-color);
+    }
+
+    .feature-description {
+        font-size: 0.9rem;
+        color: #858796;
+        margin-top: 5px;
+    }
+
+    /* Required indicators */
+    .required-note {
+        color: #e74a3b;
+        font-size: 0.875rem;
+        margin-bottom: 20px;
+    }
+
+    /* Submit button */
+    .submit-button {
+        padding: 12px 30px;
+        font-size: 1rem;
+        font-weight: 600;
+        background-color: var(--amber-color);
+        border: none;
+        border-radius: 5px;
+        color: white;
+        transition: all 0.3s ease;
+    }
+
+    .submit-button:hover {
+        background-color: var(--dark-amber);
+    }
+
+    /* Information panel */
+    .info-panel {
+        border-radius: 10px;
+        padding: 30px;
+        background-color: var(--beige-color);
+        height: 100%;
+    }
+
+    .info-panel h3 {
+        font-size: 1.25rem;
+        font-weight: 700;
+        margin-bottom: 20px;
+        color: var(--dark-gray);
+    }
+
+    .info-item {
+        display: flex;
+        margin-bottom: 20px;
+    }
+
+    .info-icon {
+        width: 40px;
+        height: 40px;
+        background-color: var(--amber-color);
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1rem;
+        margin-right: 15px;
+        flex-shrink: 0;
+    }
+
+    .info-content h4 {
+        font-size: 1rem;
+        font-weight: 700;
+        margin-bottom: 5px;
+        color: var(--dark-gray);
+    }
+
+    .info-content p {
+        color: #6c757d;
+    }
+
+    /* Select box styling */
+    select.form-control {
+        appearance: none;
+        background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 0.75rem center;
+        background-size: 16px 12px;
+    }
+
+    select.form-control:focus {
+        background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='none' stroke='%23c1954a' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3E%3C/svg%3E");
+    }
+
+    /* Dark mode adaptations */
+    body.dark-mode .quote-card {
+        background-color: #2a2c3e;
+    }
+
+    body.dark-mode .quote-card-header,
+    body.dark-mode .info-panel {
+        background-color: #222533;
+    }
+
+    body.dark-mode .form-section-title {
+        border-color: #3a3d52;
+    }
+
+    body.dark-mode .form-control {
+        background-color: #3a3d52;
+        border-color: #3a3d52;
+        color: #f8f9fc;
+    }
+
+    body.dark-mode .form-text,
+    body.dark-mode .feature-description {
+        color: #c2c5d3;
+    }
+
+    body.dark-mode .feature-card {
+        border-color: #3a3d52;
+    }
+
+    body.dark-mode .feature-card:hover {
+        border-color: var(--amber-color);
+    }
+
+    body.dark-mode .info-content h4 {
+        color: #f8f9fc;
+    }
+
+    body.dark-mode .info-content p {
+        color: #c2c5d3;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Quote Header -->
+<section class="quote-header">
+    <div class="container">
+        <h1>Request a Quote</h1>
+        <p class="lead">Fill out the form below to get a custom quote for your project</p>
+    </div>
+</section>
+
+<!-- Quote Content -->
+<section class="quote-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="quote-card">
+                    <div class="quote-card-header">
+                        <h2>Project Details</h2>
+                    </div>
+                    <div class="quote-card-body">
+                        <p class="required-note"><i class="fas fa-asterisk"></i> Indicates required fields</p>
+
+                        <form method="post" action="{% url 'quotes:quote_request' %}">
+                            {% csrf_token %}
+
+                            <!-- Contact Information -->
+                            <div class="form-section">
+                                <h3 class="form-section-title">Contact Information</h3>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="{{ form.name.id_for_label }}" class="required-field">Name</label>
+                                            {{ form.name }}
+                                            {% if form.name.errors %}
+                                                <div class="text-danger">{{ form.name.errors }}</div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="{{ form.email.id_for_label }}" class="required-field">Email</label>
+                                            {{ form.email }}
+                                            {% if form.email.errors %}
+                                                <div class="text-danger">{{ form.email.errors }}</div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="{{ form.phone.id_for_label }}">Phone Number</label>
+                                            {{ form.phone }}
+                                            {% if form.phone.errors %}
+                                                <div class="text-danger">{{ form.phone.errors }}</div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="{{ form.company.id_for_label }}">Company</label>
+                                            {{ form.company }}
+                                            {% if form.company.errors %}
+                                                <div class="text-danger">{{ form.company.errors }}</div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Project Details -->
+                            <div class="form-section">
+                                <h3 class="form-section-title">Project Details</h3>
+
+                                <div class="form-group">
+                                    <label for="{{ form.service.id_for_label }}" class="required-field">Type of Service</label>
+                                    {{ form.service }}
+                                    {% if form.service.errors %}
+                                        <div class="text-danger">{{ form.service.errors }}</div>
+                                    {% endif %}
+                                    {% if form.service.help_text %}
+                                        <div class="form-text">{{ form.service.help_text }}</div>
+                                    {% endif %}
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="{{ form.features.id_for_label }}">Features</label>
+                                    <div id="features-container" class="checkbox-group">
+                                        {% for feature in form.features %}
+                                            <div class="feature-card">
+                                                <div class="feature-header">
+                                                    <div class="feature-name">{{ feature }}</div>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                    {% if form.features.errors %}
+                                        <div class="text-danger">{{ form.features.errors }}</div>
+                                    {% endif %}
+                                    {% if form.features.help_text %}
+                                        <div class="form-text">{{ form.features.help_text }}</div>
+                                    {% endif %}
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="{{ form.requirements.id_for_label }}">Project Requirements</label>
+                                    {{ form.requirements }}
+                                    {% if form.requirements.errors %}
+                                        <div class="text-danger">{{ form.requirements.errors }}</div>
+                                    {% endif %}
+                                    <div class="form-text">Please provide as much detail as possible about your project requirements.</div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="{{ form.budget.id_for_label }}">Budget Range</label>
+                                            {{ form.budget }}
+                                            {% if form.budget.errors %}
+                                                <div class="text-danger">{{ form.budget.errors }}</div>
+                                            {% endif %}
+                                            {% if form.budget.help_text %}
+                                                <div class="form-text">{{ form.budget.help_text }}</div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="{{ form.timeline.id_for_label }}">Project Timeline</label>
+                                            {{ form.timeline }}
+                                            {% if form.timeline.errors %}
+                                                <div class="text-danger">{{ form.timeline.errors }}</div>
+                                            {% endif %}
+                                            {% if form.timeline.help_text %}
+                                                <div class="form-text">{{ form.timeline.help_text }}</div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="text-center">
+                                <button type="submit" class="submit-button">
+                                    <i class="fas fa-paper-plane me-2"></i> Submit Quote Request
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="info-panel">
+                    <h3>What Happens Next?</h3>
+
+                    <div class="info-item">
+                        <div class="info-icon">
+                            <i class="fas fa-clipboard-check"></i>
+                        </div>
+                        <div class="info-content">
+                            <h4>We Review Your Request</h4>
+                            <p>Our team will review your project requirements and determine the best approach.</p>
+                        </div>
+                    </div>
+
+                    <div class="info-item">
+                        <div class="info-icon">
+                            <i class="fas fa-file-invoice-dollar"></i>
+                        </div>
+                        <div class="info-content">
+                            <h4>We Prepare a Detailed Quote</h4>
+                            <p>We'll create a comprehensive quote with a breakdown of costs and timeline.</p>
+                        </div>
+                    </div>
+
+                    <div class="info-item">
+                        <div class="info-icon">
+                            <i class="fas fa-phone-alt"></i>
+                        </div>
+                        <div class="info-content">
+                            <h4>We Contact You</h4>
+                            <p>A member of our team will reach out to discuss your quote and answer any questions.</p>
+                        </div>
+                    </div>
+
+                    <div class="info-item">
+                        <div class="info-icon">
+                            <i class="fas fa-rocket"></i>
+                        </div>
+                        <div class="info-content">
+                            <h4>Project Kickoff</h4>
+                            <p>Once approved, we'll schedule a kickoff meeting to start your project.</p>
+                        </div>
+                    </div>
+
+                    <div class="mt-4">
+                        <p><i class="fas fa-info-circle me-2"></i>Typical response time: 1-2 business days</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Service change handler to update features
+        const serviceSelect = document.getElementById('id_service');
+        const featuresContainer = document.getElementById('features-container');
+
+        if (serviceSelect) {
+            serviceSelect.addEventListener('change', function() {
+                const serviceId = this.value;
+
+                if (serviceId) {
+                    // Fetch features for the selected service
+                    fetch(`/quotes/api/service-features/${serviceId}/`)
+                        .then(response => response.json())
+                        .then(data => {
+                            updateFeatureCheckboxes(data.features);
+                        })
+                        .catch(error => {
+                            console.error('Error fetching service features:', error);
+                        });
+                }
+            });
+        }
+
+        // Update feature checkboxes with pricing info
+        function updateFeatureCheckboxes(features) {
+            // Get all feature checkboxes
+            const featureCards = document.querySelectorAll('.feature-card');
+
+            featureCards.forEach(card => {
+                const checkbox = card.querySelector('input[type="checkbox"]');
+                if (!checkbox) return;
+
+                const featureId = parseInt(checkbox.value);
+                const feature = features.find(f => f.id === featureId);
+
+                if (feature) {
+                    const nameElement = card.querySelector('.feature-name');
+
+                    // Add price info
+                    const priceElement = document.createElement('div');
+                    priceElement.className = 'feature-price';
+
+                    if (feature.price_type === 'fixed') {
+                        priceElement.textContent = `$${feature.price_value.toFixed(2)}`;
+                    } else {
+                        priceElement.textContent = `${feature.price_value.toFixed(2)}%`;
+                    }
+
+                    // Replace header contents with checkbox + name and price
+                    const header = card.querySelector('.feature-header');
+                    header.appendChild(priceElement);
+
+                    // Add description if available
+                    if (feature.description) {
+                        const descElement = document.createElement('div');
+                        descElement.className = 'feature-description';
+                        descElement.textContent = feature.description;
+                        card.appendChild(descElement);
+                    }
+
+                    // Mark required features
+                    if (feature.is_required) {
+                        checkbox.checked = true;
+                        checkbox.disabled = true;
+
+                        const requiredBadge = document.createElement('span');
+                        requiredBadge.className = 'badge bg-secondary ms-2';
+                        requiredBadge.textContent = 'Required';
+                        nameElement.appendChild(requiredBadge);
+                    }
+                }
+            });
+        }
+
+        // Trigger change event on page load if service is pre-selected
+        if (serviceSelect && serviceSelect.value) {
+            serviceSelect.dispatchEvent(new Event('change'));
+        }
+    });
+</script>
+{% endblock %}

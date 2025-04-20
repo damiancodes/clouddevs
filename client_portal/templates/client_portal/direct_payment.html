@@ -1,5 +1,3 @@
-
-
 {% extends 'client_portal/base.html' %}
 {% load static %}
 
@@ -25,83 +23,367 @@
         --light-gray: #f0f0f0;
     }
 
+    /* Main Payment Container */
     .payment-container {
-        background-color: white;
-        border-radius: 10px;
-        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
-        margin-bottom: 30px;
-        padding: 30px;
+        background: linear-gradient(145deg, #ffffff, #f8f9fa);
+        border-radius: 20px;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
+        margin-bottom: 40px;
+        padding: 40px;
+        position: relative;
+        overflow: hidden;
+        border: none;
+    }
+
+    .payment-container::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 150px;
+        height: 150px;
+        background: radial-gradient(var(--amber-color) 5%, transparent 65%);
+        opacity: 0.15;
+        border-radius: 50%;
+        transform: translate(30%, -30%);
+    }
+
+    /* Page Title & Header */
+    .payment-heading {
+        margin-bottom: 35px;
+        text-align: center;
+        position: relative;
+    }
+
+    .payment-heading h3 {
+        font-size: 1.8rem;
+        font-weight: 700;
+        margin-bottom: 15px;
+        color: var(--dark-gray);
+        position: relative;
+        display: inline-block;
+    }
+
+    .payment-heading h3::after {
+        content: '';
+        position: absolute;
+        bottom: -8px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 60px;
+        height: 3px;
+        background-color: var(--amber-color);
+    }
+
+    .payment-heading p {
+        color: #6c757d;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    /* Form Styling */
+    .form-group {
+        margin-bottom: 28px;
+    }
+
+    .form-label {
+        font-weight: 600;
+        margin-bottom: 8px;
+        color: var(--dark-gray);
+        display: block;
+    }
+
+    .form-control {
+        padding: 14px 18px;
+        border-radius: 12px;
+        border: 2px solid #e9ecef;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.02);
+        transition: all 0.3s ease;
+        font-size: 1rem;
+    }
+
+    .form-control:focus {
+        border-color: var(--amber-color);
+        box-shadow: 0 0 0 0.25rem rgba(193, 149, 74, 0.15);
+    }
+
+    .input-group-text {
+        border-top-left-radius: 12px;
+        border-bottom-left-radius: 12px;
+        border: 2px solid #e9ecef;
+        border-right: none;
+        background-color: #f8f9fa;
+        color: #6c757d;
+        font-weight: 600;
+        padding-left: 18px;
+        padding-right: 18px;
+    }
+
+    .input-group .form-control {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+    }
+
+    .form-text {
+        color: #6c757d;
+        font-size: 0.85rem;
+        margin-top: 8px;
+    }
+
+    /* Payment Methods Section */
+    .payment-methods-section {
+        margin: 35px 0;
+    }
+
+    .payment-methods-section h4 {
+        font-size: 1.2rem;
+        font-weight: 600;
+        margin-bottom: 20px;
+        color: var(--dark-gray);
+        position: relative;
+        display: inline-block;
+    }
+
+    .payment-methods-section h4::after {
+        content: '';
+        position: absolute;
+        bottom: -8px;
+        left: 0;
+        width: 40px;
+        height: 3px;
+        background-color: var(--amber-color);
     }
 
     .payment-methods {
-        margin-bottom: 30px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        margin-top: 25px;
     }
 
     .payment-method-card {
-        border: 2px solid #e3e6f0;
-        border-radius: 10px;
-        padding: 20px;
-        margin-bottom: 20px;
+        flex: 1;
+        min-width: 200px;
+        background-color: white;
+        border: 2px solid #e9ecef;
+        border-radius: 16px;
+        padding: 25px 20px;
         cursor: pointer;
         transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+        text-align: center;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.03);
     }
 
     .payment-method-card:hover {
         border-color: var(--amber-color);
-        background-color: rgba(193, 149, 74, 0.05);
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
     }
 
     .payment-method-card.selected {
         border-color: var(--amber-color);
         background-color: rgba(193, 149, 74, 0.05);
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+    }
+
+    .payment-method-card.selected::before {
+        content: '✓';
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        width: 22px;
+        height: 22px;
+        background-color: var(--amber-color);
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.8rem;
+        font-weight: bold;
     }
 
     .payment-method-icon {
-        font-size: 2rem;
+        font-size: 2.5rem;
         margin-bottom: 15px;
         color: var(--amber-color);
+        display: inline-block;
+        position: relative;
+        z-index: 1;
+    }
+
+    .payment-method-icon::after {
+        content: '';
+        position: absolute;
+        width: 50px;
+        height: 50px;
+        background-color: rgba(193, 149, 74, 0.1);
+        border-radius: 50%;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        z-index: -1;
     }
 
     .payment-method-title {
         font-weight: 700;
-        margin-bottom: 5px;
+        margin-bottom: 8px;
+        color: var(--dark-gray);
+        font-size: 1.1rem;
     }
 
     .payment-method-description {
-        color: #858796;
+        color: #6c757d;
         font-size: 0.9rem;
+        margin-bottom: 0;
     }
 
+    /* Payment Form Sections */
     .payment-form {
+        background-color: #f9f9f9;
+        border-radius: 16px;
+        padding: 25px;
         margin-top: 30px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.03);
+        transition: all 0.3s ease;
     }
 
-    .form-group {
+    .payment-form label {
+        font-weight: 600;
+        color: var(--dark-gray);
+    }
+
+    /* M-Pesa Section */
+    #mpesa-form .form-control {
+        padding-left: 50px;
+        background-image: url("https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/M-PESA_LOGO-01.svg/1200px-M-PESA_LOGO-01.svg.png");
+        background-repeat: no-repeat;
+        background-size: 30px;
+        background-position: 12px center;
+    }
+
+    /* PayPal Section */
+    #paypal-form {
+        text-align: center;
+        padding: 30px;
+    }
+
+    #paypal-form img {
+        max-width: 200px;
         margin-bottom: 20px;
     }
 
-    .secure-badge {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 10px;
-        margin-top: 20px;
-        color: #6c757d;
+    /* Crypto Section */
+    .crypto-option {
+        border-radius: 10px;
+        padding: 10px 16px;
+        margin: 0 5px;
+        transition: all 0.3s ease;
+        font-weight: 600;
+    }
+
+    .crypto-option img {
+        height: 20px;
+        width: auto;
+        margin-right: 8px;
+        vertical-align: middle;
+    }
+
+    .crypto-qr-container {
+        background: white;
+        padding: 25px;
+        border-radius: 16px;
+        display: inline-block;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+        margin: 20px 0;
+    }
+
+    .crypto-qr-container img {
+        border-radius: 10px;
+    }
+
+    .crypto-details {
+        background-color: var(--beige-color);
+        border-radius: 16px;
+        padding: 20px;
+        margin-top: 25px;
+    }
+
+    .crypto-details .input-group {
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    }
+
+    .crypto-details .input-group .form-control {
+        border-radius: 12px 0 0 12px;
+        border-right: none;
+        font-family: monospace;
+        font-size: 0.9rem;
+    }
+
+    .crypto-details .input-group button {
+        border-radius: 0 12px 12px 0;
+        border: 2px solid #e9ecef;
+        border-left: none;
+        background-color: white;
+        color: var(--amber-color);
+    }
+
+    /* Timer Styling */
+    .timer {
+        font-size: 1.3rem;
+        font-weight: bold;
+        color: var(--dark-amber);
+        background-color: white;
+        border-radius: 10px;
+        padding: 5px 15px;
+        display: inline-block;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    /* Button Styling */
+    .btn {
+        border-radius: 12px;
+        padding: 12px 24px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+
+    .btn-lg {
+        padding: 14px 30px;
+        font-size: 1.1rem;
+    }
+
+    .btn-success {
+        background: linear-gradient(145deg, #25d08a, #1fb77a);
+        border: none;
+        box-shadow: 0 5px 15px rgba(28, 200, 138, 0.3);
+    }
+
+    .btn-success:hover {
+        background: linear-gradient(145deg, #1fb77a, #19a46b);
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(28, 200, 138, 0.4);
     }
 
     .btn-primary {
-        background-color: var(--amber-color);
-        border-color: var(--amber-color);
+        background: linear-gradient(145deg, #c9a05e, #b38c4e);
+        border: none;
+        box-shadow: 0 5px 15px rgba(193, 149, 74, 0.3);
     }
 
     .btn-primary:hover {
-        background-color: var(--dark-amber);
-        border-color: var(--dark-amber);
+        background: linear-gradient(145deg, #b38c4e, #9e7a39);
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(193, 149, 74, 0.4);
     }
 
     .btn-outline-primary {
         color: var(--amber-color);
-        border-color: var(--amber-color);
+        border: 2px solid var(--amber-color);
+        background: transparent;
     }
 
     .btn-outline-primary:hover,
@@ -109,43 +391,32 @@
         background-color: var(--amber-color);
         border-color: var(--amber-color);
         color: white;
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(193, 149, 74, 0.2);
     }
 
-    .btn-success {
-        background-color: #1cc88a;
-        border-color: #1cc88a;
-    }
-
-    .btn-success:hover {
-        background-color: #169b6b;
-        border-color: #169b6b;
-    }
-
-    .crypto-option img {
-        height: 18px;
-        width: auto;
-        margin-right: 5px;
-    }
-
-    .crypto-qr-container {
-        background-color: white;
+    /* Secure Badge */
+    .secure-badge {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        margin-top: 30px;
         padding: 15px;
-        border-radius: 8px;
-        display: inline-block;
-        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        background-color: #f8f9fa;
+        border-radius: 12px;
+        color: #6c757d;
     }
 
-    .crypto-details {
-        background-color: var(--beige-color);
-        border-radius: 8px;
-        padding: 15px;
-        margin-top: 20px;
-    }
-
-    .timer {
+    .secure-badge i {
+        color: var(--amber-color);
         font-size: 1.2rem;
-        font-weight: bold;
-        color: var(--dark-amber);
+    }
+
+    /* Button Wrapper */
+    .button-wrapper {
+        text-align: center;
+        margin-top: 35px;
     }
 </style>
 {% endblock %}
@@ -154,8 +425,10 @@
 <div class="row">
     <div class="col-lg-8 mx-auto">
         <div class="payment-container">
-            <h4 class="mb-4 text-center">Quick Payment</h4>
-{#            <p class="text-center mb-4">Make a direct payment to your account without requiring an invoice.</p>#}
+            <div class="payment-heading">
+                <h3>Make a Direct Payment</h3>
+                <p>Quick and secure way to make payments without an invoice</p>
+            </div>
 
             <form method="post" action="{% url 'client_portal:direct_payment' %}" id="payment-form">
                 {% csrf_token %}
@@ -167,52 +440,40 @@
                         <span class="input-group-text">$</span>
                         <input type="number" step="0.01" min="1" class="form-control" id="amount" name="amount" required>
                     </div>
-{#                    <div class="form-text">Enter the amount you wish to pay.</div>#}
                 </div>
 
                 <!-- Purpose Input -->
                 <div class="form-group">
                     <label for="purpose" class="form-label">Payment Purpose</label>
                     <input type="text" class="form-control" id="purpose" name="purpose" placeholder="E.g., Deposit, Service fee, etc." required>
-{#                    <div class="form-text">Enter the purpose of your payment.</div>#}
                 </div>
 
                 <!-- Payment Methods -->
-                <div class="payment-methods">
-                    <h5 class="mb-3">Select Payment Method</h5>
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="payment-method-card selected" data-method="mpesa">
-                                <div class="text-center">
-                                    <div class="payment-method-icon">
-                                        <i class="fas fa-mobile-alt"></i>
-                                    </div>
-                                    <h5 class="payment-method-title">M-Pesa</h5>
-{#                                    <p class="payment-method-description">Pay using M-Pesa</p>#}
-                                </div>
+                <div class="payment-methods-section">
+                    <h4>Select Payment Method</h4>
+                    <div class="payment-methods">
+                        <div class="payment-method-card selected" data-method="mpesa">
+                            <div class="payment-method-icon">
+                                <i class="fas fa-mobile-alt"></i>
                             </div>
+                            <h5 class="payment-method-title">M-Pesa</h5>
+                            <p class="payment-method-description">Mobile money payment</p>
                         </div>
-                        <div class="col-md-4">
-                            <div class="payment-method-card" data-method="paypal">
-                                <div class="text-center">
-                                    <div class="payment-method-icon">
-                                        <i class="fab fa-paypal"></i>
-                                    </div>
-                                    <h5 class="payment-method-title">PayPal</h5>
-{#                                    <p class="payment-method-description">Pay with your PayPal account</p>#}
-                                </div>
+
+                        <div class="payment-method-card" data-method="paypal">
+                            <div class="payment-method-icon">
+                                <i class="fab fa-paypal"></i>
                             </div>
+                            <h5 class="payment-method-title">PayPal</h5>
+                            <p class="payment-method-description">Credit/Debit card</p>
                         </div>
-                        <div class="col-md-4">
-                            <div class="payment-method-card" data-method="crypto">
-                                <div class="text-center">
-                                    <div class="payment-method-icon">
-                                        <i class="fab fa-bitcoin"></i>
-                                    </div>
-                                    <h5 class="payment-method-title">Cryptocurrency</h5>
-                                    <p class="payment-method-description">Pay with Bitcoin, Ethereum, etc.</p>
-                                </div>
+
+                        <div class="payment-method-card" data-method="crypto">
+                            <div class="payment-method-icon">
+                                <i class="fab fa-bitcoin"></i>
                             </div>
+                            <h5 class="payment-method-title">Cryptocurrency</h5>
+                            <p class="payment-method-description">Bitcoin, Ethereum, etc.</p>
                         </div>
                     </div>
                 </div>
@@ -227,24 +488,25 @@
                         <input type="text" class="form-control" id="phone-number" name="phone_number" placeholder="+254 7XX XXX XXX">
                         <div class="form-text">Enter the phone number linked to your M-Pesa account</div>
                     </div>
-                    <p class="text-center mt-3">
-                        You will receive a prompt on your phone to confirm the payment after clicking the button below.
+                    <p class="text-center mt-4">
+                        <i class="fas fa-info-circle me-2 text-primary"></i>
+                        You will receive a prompt on your phone to confirm the payment.
                     </p>
                 </div>
 
                 <!-- PayPal Form -->
                 <div id="paypal-form" class="payment-form d-none">
-{#
                     <div class="text-center">
                         <img src="https://www.paypalobjects.com/webstatic/mktg/logo/pp_cc_mark_111x69.jpg" alt="PayPal" height="60">
+                        <p class="mt-3">You will be redirected to PayPal to complete your payment securely.</p>
                     </div>
                 </div>
 
                 <!-- Crypto Form -->
                 <div id="crypto-form" class="payment-form d-none">
-                    <div class="text-center mb-4">
-                        <p>Select a cryptocurrency to pay with:</p>
-                        <div class="btn-group mb-3">
+                    <div class="text-center">
+                        <p class="mb-4">Select a cryptocurrency to pay with:</p>
+                        <div class="btn-group mb-4">
                             <button type="button" class="btn btn-outline-primary active crypto-option" data-crypto="bitcoin">
                                 <img src="{% static 'images/crypto/bitcoin.svg' %}" alt="Bitcoin" onerror="this.src='https://cryptologos.cc/logos/bitcoin-btc-logo.svg?v=022'; this.onerror='';">
                                 Bitcoin
@@ -258,14 +520,15 @@
                                 Litecoin
                             </button>
                         </div>
+
                         <div class="mt-4">
-                            <p>Scan the QR code below to pay <strong>$<span id="crypto-amount">0.00</span></strong>:</p>
+                            <p>Scan the QR code to pay <strong>$<span id="crypto-amount">0.00</span></strong>:</p>
                             <div class="crypto-qr-container">
                                 <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=bitcoin:bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh" alt="Bitcoin QR Code" id="crypto-qr-image" width="200" height="200">
                             </div>
 
                             <div class="crypto-details">
-                                <p class="mb-2">Send payment to this address:</p>
+                                <p class="mb-3">Send payment to this address:</p>
                                 <div class="input-group mb-3">
                                     <input type="text" class="form-control" id="crypto-address" value="bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh" readonly>
                                     <button class="btn btn-outline-secondary" type="button" id="copy-address-btn">
@@ -280,7 +543,7 @@
                 </div>
 
                 <!-- Submit Button -->
-                <div class="text-center mt-4">
+                <div class="button-wrapper">
                     <button type="submit" class="btn btn-success btn-lg">
                         <i class="fas fa-lock me-2"></i> Proceed to Payment
                     </button>
@@ -293,7 +556,7 @@
 
                 <div class="secure-badge">
                     <i class="fas fa-shield-alt"></i>
-                    <span>All payments are secure and encrypted.</span>
+                    <span>All payments are secure and encrypted</span>
                 </div>
             </form>
         </div>
@@ -304,12 +567,21 @@
 {% block client_portal_js %}
 <script>
     $(document).ready(function() {
+        // Add subtle animations to the payment card on load
+        $('.payment-container').css({
+            'opacity': '0',
+            'transform': 'translateY(20px)'
+        }).animate({
+            'opacity': '1',
+            'transform': 'translateY(0)'
+        }, 500);
+
         // Update crypto amount when form amount changes
         $('#amount').on('input', function() {
-            $('#crypto-amount').text($(this).val());
+            $('#crypto-amount').text($(this).val() || '0.00');
         });
 
-        // Payment method selection
+        // Payment method selection with animation
         $('.payment-method-card').on('click', function() {
             $('.payment-method-card').removeClass('selected');
             $(this).addClass('selected');
@@ -317,28 +589,31 @@
             const method = $(this).data('method');
             $('#payment_method').val(method);
 
-            // Show the appropriate form
-            $('.payment-form').addClass('d-none');
-            if (method === 'mpesa') {
-                $('#mpesa-form').removeClass('d-none');
-                $('#crypto-confirm-btn').addClass('d-none');
-                $('button[type="submit"]').removeClass('d-none');
-            } else if (method === 'paypal') {
-                $('#paypal-form').removeClass('d-none');
-                $('#crypto-confirm-btn').addClass('d-none');
-                $('button[type="submit"]').removeClass('d-none');
-            } else if (method === 'crypto') {
-                $('#crypto-form').removeClass('d-none');
-                $('#crypto-confirm-btn').removeClass('d-none');
-                $('button[type="submit"]').addClass('d-none');
-                // Set initial amount
-                $('#crypto-amount').text($('#amount').val() || '0.00');
-                // Reset timer
-                startTimer(15 * 60); // 15 minutes in seconds
-            }
+            // Show the appropriate form with fade effect
+            $('.payment-form').fadeOut(300, function() {
+                $('.payment-form').addClass('d-none');
+
+                if (method === 'mpesa') {
+                    $('#mpesa-form').removeClass('d-none').hide().fadeIn(300);
+                    $('#crypto-confirm-btn').addClass('d-none');
+                    $('button[type="submit"]').removeClass('d-none');
+                } else if (method === 'paypal') {
+                    $('#paypal-form').removeClass('d-none').hide().fadeIn(300);
+                    $('#crypto-confirm-btn').addClass('d-none');
+                    $('button[type="submit"]').removeClass('d-none');
+                } else if (method === 'crypto') {
+                    $('#crypto-form').removeClass('d-none').hide().fadeIn(300);
+                    $('#crypto-confirm-btn').removeClass('d-none').hide().fadeIn(300);
+                    $('button[type="submit"]').addClass('d-none');
+                    // Set initial amount
+                    $('#crypto-amount').text($('#amount').val() || '0.00');
+                    // Reset timer
+                    startTimer(15 * 60); // 15 minutes in seconds
+                }
+            });
         });
 
-        // Crypto selection
+        // Crypto selection with enhanced UI
         $('.crypto-option').on('click', function() {
             $('.crypto-option').removeClass('active');
             $(this).addClass('active');
@@ -346,73 +621,125 @@
             const crypto = $(this).data('crypto');
             const amount = $('#amount').val() || '0.00';
 
-            // Update QR code and address based on selected crypto
-            if (crypto === 'bitcoin') {
-                const address = 'bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh';
-                $('#crypto-qr-image').attr('src', `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=bitcoin:${address}?amount=${amount}`);
-                $('#crypto-address').val(address);
-            } else if (crypto === 'ethereum') {
-                const address = '0x89205A3A3b2A69De6Dbf7f01ED13B2108B2c43e7';
-                $('#crypto-qr-image').attr('src', `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=ethereum:${address}?value=${amount}`);
-                $('#crypto-address').val(address);
-            } else if (crypto === 'litecoin') {
-                const address = 'LTC123abcdefghijklmnopqrstuvwxyz123456';
-                $('#crypto-qr-image').attr('src', `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=litecoin:${address}?amount=${amount}`);
-                $('#crypto-address').val(address);
-            }
+            // Update QR code and address based on selected crypto with loading indicator
+            $('#crypto-qr-image').css('opacity', '0.5');
+
+            setTimeout(function() {
+                if (crypto === 'bitcoin') {
+                    const address = 'bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh';
+                    $('#crypto-qr-image').attr('src', `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=bitcoin:${address}?amount=${amount}`);
+                    $('#crypto-address').val(address);
+                } else if (crypto === 'ethereum') {
+                    const address = '0x89205A3A3b2A69De6Dbf7f01ED13B2108B2c43e7';
+                    $('#crypto-qr-image').attr('src', `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=ethereum:${address}?value=${amount}`);
+                    $('#crypto-address').val(address);
+                } else if (crypto === 'litecoin') {
+                    const address = 'LTC123abcdefghijklmnopqrstuvwxyz123456';
+                    $('#crypto-qr-image').attr('src', `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=litecoin:${address}?amount=${amount}`);
+                    $('#crypto-address').val(address);
+                }
+                $('#crypto-qr-image').css('opacity', '1');
+            }, 300);
         });
 
-        // Copy to clipboard functionality
+        // Improved copy to clipboard functionality
         $('#copy-address-btn').on('click', function() {
             const addressInput = document.getElementById('crypto-address');
             addressInput.select();
             document.execCommand('copy');
 
-            // Show copy confirmation
+            // Enhanced copy confirmation
             const originalText = $(this).html();
             $(this).html('<i class="fas fa-check"></i> Copied!');
+            $(this).css('background-color', '#28a745');
+            $(this).css('color', 'white');
+
             setTimeout(() => {
                 $(this).html(originalText);
+                $(this).css('background-color', '');
+                $(this).css('color', '');
             }, 2000);
         });
 
-        // Crypto payment confirmation
+        // Crypto payment confirmation with better UX
         $('#crypto-confirm-btn').on('click', function() {
             const amount = $('#amount').val();
             const purpose = $('#purpose').val();
             const crypto = $('.crypto-option.active').data('crypto');
 
             if (!amount || !purpose || !crypto) {
-                alert('Please fill in all required fields');
+                // Improved validation feedback
+                if (!amount) $('#amount').addClass('is-invalid');
+                if (!purpose) $('#purpose').addClass('is-invalid');
+                if (!crypto) $('.btn-group').effect('shake', { times: 2, distance: 5 }, 300);
                 return;
             }
 
+            // Show loading state on button
+            const btn = $(this);
+            const originalText = btn.html();
+            btn.html('<i class="fas fa-spinner fa-spin"></i> Processing...');
+            btn.prop('disabled', true);
+
             // Simulate redirect to crypto payment processing
-            window.location.href = `/client/direct-payment/crypto/${amount}/?crypto=${crypto}&purpose=${encodeURIComponent(purpose)}`;
+            setTimeout(function() {
+                window.location.href = `/client/direct-payment/crypto/${amount}/?crypto=${crypto}&purpose=${encodeURIComponent(purpose)}`;
+            }, 1500);
         });
 
-        // Form validation
+        // Improved form validation with better UX
         $('#payment-form').on('submit', function(e) {
             const method = $('#payment_method').val();
+            let isValid = true;
+
+            // Reset validation
+            $('.is-invalid').removeClass('is-invalid');
+
+            if (!$('#amount').val()) {
+                $('#amount').addClass('is-invalid');
+                isValid = false;
+            }
+
+            if (!$('#purpose').val()) {
+                $('#purpose').addClass('is-invalid');
+                isValid = false;
+            }
 
             if (method === 'mpesa') {
                 const phoneNumber = $('#phone-number').val();
-
                 if (!phoneNumber) {
-                    alert('Please enter your M-Pesa phone number');
-                    e.preventDefault();
-                    return false;
+                    $('#phone-number').addClass('is-invalid');
+                    isValid = false;
                 }
             }
 
-            if (!$('#amount').val() || !$('#purpose').val()) {
-                alert('Please enter both amount and purpose');
+            if (!isValid) {
                 e.preventDefault();
+                // Scroll to first invalid element
+                $('html, body').animate({
+                    scrollTop: $('.is-invalid:first').offset().top - 100
+                }, 500);
                 return false;
             }
+
+            // Show loading on button
+            const btn = $('button[type="submit"]');
+            const originalText = btn.html();
+            btn.html('<i class="fas fa-spinner fa-spin"></i> Processing...');
+            btn.prop('disabled', true);
+
+            // Form will submit
+            return true;
         });
 
-        // Timer functionality
+        // Input field animations
+        $('.form-control').on('focus', function() {
+            $(this).closest('.form-group').css('transform', 'translateY(-5px)');
+        }).on('blur', function() {
+            $(this).closest('.form-group').css('transform', 'translateY(0)');
+        });
+
+        // Enhanced timer functionality with visual feedback
         function startTimer(duration) {
             let timer = duration;
             const timerElement = document.getElementById('payment-timer');
@@ -422,16 +749,182 @@
                 let seconds = timer % 60;
 
                 seconds = seconds < 10 ? "0" + seconds : seconds;
-
                 timerElement.textContent = minutes + ":" + seconds;
+
+                // Visual feedback as time decreases
+                if (timer < 300) { // Less than 5 minutes
+                    timerElement.style.color = '#e74a3b';
+                    if (timer % 2 === 0) {
+                        timerElement.style.opacity = '1';
+                    } else {
+                        timerElement.style.opacity = '0.7';
+                    }
+                }
 
                 if (--timer < 0) {
                     clearInterval(interval);
                     timerElement.textContent = "Expired";
-                    $('#crypto-confirm-btn').prop('disabled', true).text('Payment Expired');
+                    timerElement.style.opacity = '1';
+
+                    // Disable button with animation
+                    $('#crypto-confirm-btn').prop('disabled', true)
+                        .html('<i class="fas fa-times me-2"></i> Payment Expired')
+                        .removeClass('btn-primary')
+                        .addClass('btn-secondary');
+
+                    // Add expired overlay to QR code
+                    $('.crypto-qr-container').css('position', 'relative').append(
+                        '<div style="position:absolute; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.5); display:flex; align-items:center; justify-content:center; border-radius:16px;">' +
+                        '<span style="color:white; font-weight:bold; font-size:1.5rem;">EXPIRED</span>' +
+                        '</div>'
+                    );
                 }
             }, 1000);
         }
+
+        // Initialize amount field with focus
+        setTimeout(function() {
+            $('#amount').focus();}, 500);
+
+        // Add input masking for phone number
+        $('#phone-number').on('input', function() {
+            let phoneNumber = $(this).val().replace(/\D/g, ''); // Remove non-digits
+
+            if (phoneNumber.length > 0) {
+                // Format as +254 7XX XXX XXX
+                if (phoneNumber.startsWith('254')) {
+                    // If starts with country code
+                    if (phoneNumber.length > 3) {
+                        phoneNumber = '+' + phoneNumber.substring(0, 3) + ' ' + phoneNumber.substring(3);
+                    } else {
+                        phoneNumber = '+' + phoneNumber;
+                    }
+                } else if (phoneNumber.startsWith('0')) {
+                    // If starts with 0, replace with country code
+                    phoneNumber = '+254 ' + phoneNumber.substring(1);
+                } else if (!phoneNumber.startsWith('+')) {
+                    // If doesn't start with +, assume it's without country code
+                    phoneNumber = '+254 ' + phoneNumber;
+                }
+
+                // Add spaces for readability
+                if (phoneNumber.length > 8) {
+                    phoneNumber = phoneNumber.substring(0, 8) + ' ' + phoneNumber.substring(8);
+                }
+                if (phoneNumber.length > 12) {
+                    phoneNumber = phoneNumber.substring(0, 12) + ' ' + phoneNumber.substring(12);
+                }
+            }
+
+            $(this).val(phoneNumber);
+        });
+
+        // Amount input formatting and validation
+        $('#amount').on('input', function() {
+            let value = $(this).val();
+
+            // Restrict to 2 decimal places
+            if (value.includes('.') && value.split('.')[1].length > 2) {
+                $(this).val(parseFloat(value).toFixed(2));
+            }
+
+            // Add visual feedback for amount
+            const amount = parseFloat(value);
+            if (amount >= 100) {
+                $(this).css('color', '#1cc88a');
+                $(this).css('font-weight', 'bold');
+            } else {
+                $(this).css('color', '');
+                $(this).css('font-weight', '');
+            }
+
+            // Update the crypto amount in real-time
+            $('#crypto-amount').text(value || '0.00');
+        });
+
+        // Tooltip initialization for better UX
+        $('[data-bs-toggle="tooltip"]').tooltip();
+
+        // Add pulse animation to proceed button
+        setInterval(function() {
+            $('button[type="submit"]').animate({
+                'box-shadow': '0 8px 25px rgba(28, 200, 138, 0.4)'
+            }, 1000).animate({
+                'box-shadow': '0 5px 15px rgba(28, 200, 138, 0.3)'
+            }, 1000);
+        }, 2000);
+
+        // Purpose field suggestions
+        const commonPurposes = [
+            'Website Development',
+            'App Development',
+            'Maintenance Fee',
+            'Hosting Payment',
+            'Consultation Fee',
+            'Deposit',
+            'Design Work',
+            'Monthly Service'
+        ];
+
+        $('#purpose').on('focus', function() {
+            // Only show suggestions if field is empty
+            if (!$(this).val()) {
+                let suggestionHtml = '<div class="purpose-suggestions mt-2">';
+
+                commonPurposes.forEach(function(purpose) {
+                    suggestionHtml += `<span class="badge bg-light text-dark me-2 mb-2 purpose-suggestion" style="cursor:pointer; padding:8px 12px;">${purpose}</span>`;
+                });
+
+                suggestionHtml += '</div>';
+
+                // Add suggestions after the field
+                if (!$(this).next('.purpose-suggestions').length) {
+                    $(this).after(suggestionHtml);
+
+                    // Handle suggestion clicks
+                    $('.purpose-suggestion').on('click', function() {
+                        $('#purpose').val($(this).text()).focus();
+                        $('.purpose-suggestions').remove();
+                    });
+                }
+            }
+        }).on('blur', function() {
+            // Remove suggestions when field loses focus
+            setTimeout(function() {
+                $('.purpose-suggestions').fadeOut(300, function() {
+                    $(this).remove();
+                });
+            }, 200);
+        });
+
+        // Track unsaved changes
+        let formChanged = false;
+
+        $('#payment-form :input').on('change input', function() {
+            formChanged = true;
+        });
+
+        // Warn user about unsaved changes if they try to leave
+        window.addEventListener('beforeunload', function(e) {
+            if (formChanged) {
+                e.preventDefault();
+                e.returnValue = 'You have unsaved changes. Are you sure you want to leave?';
+                return e.returnValue;
+            }
+        });
+
+        // Reset the changed flag when form is submitted
+        $('#payment-form').on('submit', function() {
+            formChanged = false;
+        });
     });
 </script>
 {% endblock %}
+
+
+
+
+
+
+
+

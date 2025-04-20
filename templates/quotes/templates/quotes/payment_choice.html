@@ -6,301 +6,305 @@
 {% block extra_css %}
 <style>
     :root {
-        --beige-color: #f5eadb;
-        --amber-color: #c1954a;
-        --dark-amber: #9e7a39;
-        --light-amber: #d4b06a;
-        --off-white: #faf7f2;
-        --black: #212121;
-        --dark-gray: #333333;
-        --light-gray: #f0f0f0;
+        --primary: #2C3E50;
+        --secondary: #E74C3C;
+        --accent: #3498DB;
+        --light: #ECF0F1;
+        --dark: #2C3E50;
+        --white: #FFFFFF;
+        --gray: #95A5A6;
+        --border: #BDC3C7;
     }
 
-    /* Payment Header */
+    .payment-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 40px 20px;
+    }
+
     .payment-header {
-        background: linear-gradient(135deg, var(--amber-color) 0%, var(--dark-amber) 100%);
-        color: white;
-        padding: 80px 0;
         text-align: center;
+        margin-bottom: 40px;
     }
 
     .payment-header h1 {
-        font-weight: 800;
-        margin-bottom: 20px;
-    }
-
-    /* Payment Content */
-    .payment-section {
-        padding: 80px 0;
-        background-color: var(--off-white);
-    }
-
-    .payment-card {
-        border-radius: 10px;
-        overflow: hidden;
-        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
-        margin-bottom: 30px;
-        background-color: white;
-    }
-
-    .payment-card-header {
-        padding: 20px;
-        background-color: var(--amber-color);
-        color: white;
-        border-bottom: 1px solid var(--light-gray);
-    }
-
-    .payment-card-header h2 {
-        margin-bottom: 0;
-        font-size: 1.5rem;
-        font-weight: 700;
-    }
-
-    .payment-card-body {
-        padding: 30px;
-    }
-
-    /* Payment method cards */
-    .payment-method-card {
-        border-radius: 10px;
-        border: 2px solid var(--light-gray);
-        padding: 25px;
-        height: 100%;
-        transition: all 0.3s ease;
-    }
-
-    .payment-method-card:hover {
-        border-color: var(--amber-color);
-        transform: translateY(-5px);
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-    }
-
-    .payment-method-icon {
         font-size: 2.5rem;
-        color: var(--amber-color);
-        margin-bottom: 20px;
-    }
-
-    .payment-method-title {
-        font-size: 1.25rem;
-        font-weight: 700;
+        color: var(--dark);
         margin-bottom: 15px;
     }
 
-    .payment-method-description {
-        color: var(--dark-gray);
-        margin-bottom: 20px;
+    .payment-header p {
+        color: var(--gray);
+        font-size: 1.1rem;
+        max-width: 700px;
+        margin: 0 auto;
     }
 
-    /* Order summary */
+    .payment-content {
+        display: flex;
+        gap: 30px;
+    }
+
+    .payment-methods {
+        flex: 2;
+    }
+
+    .order-summary-container {
+        flex: 1;
+    }
+
+    .payment-section {
+        background: var(--white);
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        padding: 30px;
+        margin-bottom: 30px;
+        border: 1px solid var(--border);
+    }
+
+    .section-title {
+        font-size: 1.4rem;
+        color: var(--dark);
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid var(--border);
+    }
+
+    .payment-options {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .payment-option {
+        display: flex;
+        align-items: center;
+        padding: 20px;
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        color: var(--dark);
+    }
+
+    .payment-option:hover {
+        border-color: var(--accent);
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    .payment-icon {
+        width: 50px;
+        height: 50px;
+        background: var(--light);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 20px;
+        font-size: 1.5rem;
+        color: var(--accent);
+    }
+
+    .payment-details {
+        flex: 1;
+    }
+
+    .payment-name {
+        font-weight: 600;
+        font-size: 1.1rem;
+        margin-bottom: 5px;
+    }
+
+    .payment-description {
+        color: var(--gray);
+        font-size: 0.9rem;
+    }
+
+    .payment-arrow {
+        color: var(--gray);
+        font-size: 1.2rem;
+    }
+
     .order-summary {
-        background-color: var(--beige-color);
-        border-radius: 10px;
-        padding: 25px;
+        position: sticky;
+        top: 20px;
     }
 
-    .order-summary-title {
-        font-size: 1.25rem;
-        font-weight: 700;
-        margin-bottom: 20px;
-        color: var(--dark-gray);
-    }
-
-    .order-detail {
+    .order-item {
         display: flex;
         justify-content: space-between;
-        margin-bottom: 10px;
+        margin-bottom: 15px;
+    }
+
+    .order-label {
+        color: var(--gray);
+    }
+
+    .order-value {
+        font-weight: 500;
     }
 
     .order-total {
         display: flex;
         justify-content: space-between;
-        margin-top: 20px;
-        padding-top: 20px;
-        border-top: 1px solid rgba(0, 0, 0, 0.1);
-        font-weight: 700;
+        margin-top: 25px;
+        padding-top: 15px;
+        border-top: 1px solid var(--border);
         font-size: 1.1rem;
     }
 
-    .currency-toggle {
-        margin-bottom: 15px;
-        text-align: right;
-    }
-
-    /* Buttons */
-    .btn-amber {
-        background-color: var(--amber-color);
-        color: white;
+    .total-label {
         font-weight: 600;
-        padding: 10px 20px;
-        border-radius: 5px;
-        border: none;
-        transition: all 0.3s ease;
     }
 
-    .btn-amber:hover {
-        background-color: var(--dark-amber);
-        color: white;
+    .total-amount {
+        font-weight: 700;
+        color: var(--secondary);
     }
 
-    .btn-outline-amber {
-        background-color: transparent;
-        color: var(--amber-color);
-        font-weight: 600;
-        padding: 10px 20px;
-        border-radius: 5px;
-        border: 1px solid var(--amber-color);
-        transition: all 0.3s ease;
+    .currency-selector {
+        margin-bottom: 20px;
     }
 
-    .btn-outline-amber:hover {
-        background-color: var(--amber-color);
-        color: white;
+    .currency-selector select {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        background: var(--white);
     }
 
-    /* Dark mode adaptations */
-    body.dark-mode .payment-section {
-        background-color: #222533;
+    .skip-payment {
+        text-align: center;
+        margin-top: 30px;
+        padding-top: 20px;
+        border-top: 1px solid var(--border);
     }
 
-    body.dark-mode .payment-card,
-    body.dark-mode .payment-method-card {
-        background-color: var(--dark-gray);
-        color: var(--off-white);
+    .skip-link {
+        color: var(--accent);
+        text-decoration: none;
+        font-weight: 500;
+        display: inline-flex;
+        align-items: center;
     }
 
-    body.dark-mode .payment-method-card {
-        border-color: #3a3d52;
+    .skip-link:hover {
+        text-decoration: underline;
     }
 
-    body.dark-mode .payment-method-description {
-        color: #c2c5d3;
-    }
+    @media (max-width: 768px) {
+        .payment-content {
+            flex-direction: column;
+        }
 
-    body.dark-mode .order-summary {
-        background-color: #222533;
-    }
-
-    body.dark-mode .order-summary-title {
-        color: var(--off-white);
-    }
-
-    body.dark-mode .order-detail,
-    body.dark-mode .order-total {
-        color: #c2c5d3;
-    }
-
-    body.dark-mode .order-total {
-        border-color: rgba(255, 255, 255, 0.1);
+        .order-summary {
+            position: static;
+        }
     }
 </style>
 {% endblock %}
 
 {% block content %}
-<!-- Payment Header -->
-<section class="payment-header">
-    <div class="container">
-        <h1>Choose Payment Method</h1>
-        <p class="lead">Select how you'd like to pay for your custom solution</p>
+<div class="payment-container">
+    <div class="payment-header">
+        <h1>Complete Your Payment</h1>
+        <p>Select your preferred payment method to finalize your order</p>
     </div>
-</section>
 
-<!-- Payment Content -->
-<section class="payment-section">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8">
-                <div class="payment-card">
-                    <div class="payment-card-header">
-                        <h2>Select Payment Method</h2>
-                    </div>
-                    <div class="payment-card-body">
-                        <div class="row">
-                            <div class="col-md-4 mb-4">
-                                <a href="{% url 'quotes:process_mpesa' order.id %}" class="text-decoration-none">
-                                    <div class="payment-method-card">
-                                        <div class="payment-method-icon">
-                                            <i class="fas fa-mobile-alt"></i>
-                                        </div>
-                                        <h3 class="payment-method-title">M-Pesa</h3>
-                                        <p class="payment-method-description">Pay easily using M-Pesa STK Push service. You'll receive a prompt on your phone.</p>
-                                        <button class="btn btn-amber w-100">Pay with M-Pesa</button>
-                                    </div>
-                                </a>
-                            </div>
-                            <div class="col-md-4 mb-4">
-                                <a href="{% url 'quotes:process_paypal' order.id %}" class="text-decoration-none">
-                                    <div class="payment-method-card">
-                                        <div class="payment-method-icon">
-                                            <i class="fab fa-paypal"></i>
-                                        </div>
-                                        <h3 class="payment-method-title">PayPal</h3>
-                                        <p class="payment-method-description">Pay securely with your PayPal account or credit card through PayPal gateway.</p>
-                                        <button class="btn btn-amber w-100">Pay with PayPal</button>
-                                    </div>
-                                </a>
-                            </div>
-                            <div class="col-md-4 mb-4">
-                                <a href="{% url 'quotes:process_crypto' order.id %}" class="text-decoration-none">
-                                    <div class="payment-method-card">
-                                        <div class="payment-method-icon">
-                                            <i class="fab fa-bitcoin"></i>
-                                        </div>
-                                        <h3 class="payment-method-title">Crypto</h3>
-                                        <p class="payment-method-description">Pay using cryptocurrencies like Bitcoin, Ethereum, or other supported coins.</p>
-                                        <button class="btn btn-amber w-100">Pay with Crypto</button>
-                                    </div>
-                                </a>
-                            </div>
+    <div class="payment-content">
+        <div class="payment-methods">
+            <div class="payment-section">
+                <h2 class="section-title">Choose Payment Method</h2>
+
+                <div class="payment-options">
+                    <a href="{% url 'quotes:process_mpesa' order.id %}" class="payment-option">
+                        <div class="payment-icon">
+                            <i class="fas fa-mobile-alt"></i>
                         </div>
+                        <div class="payment-details">
+                            <div class="payment-name">M-Pesa</div>
+                            <div class="payment-description">Pay instantly via M-Pesa</div>
+                        </div>
+                        <div class="payment-arrow">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </a>
 
-                        <div class="text-center mt-4">
-                            <p>Not ready to pay now?</p>
-                            <a href="{% url 'quotes:skip_payment' order.id %}" class="btn btn-outline-amber">
-                                Skip Payment <i class="fas fa-arrow-right"></i>
-                            </a></div>
-                    </div>
+                    <a href="{% url 'quotes:process_paypal' order.id %}" class="payment-option">
+                        <div class="payment-icon">
+                            <i class="fab fa-paypal"></i>
+                        </div>
+                        <div class="payment-details">
+                            <div class="payment-name">PayPal</div>
+                            <div class="payment-description">Pay with PayPal account or card</div>
+                        </div>
+                        <div class="payment-arrow">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </a>
+
+                    <a href="{% url 'quotes:process_crypto' order.id %}" class="payment-option">
+                        <div class="payment-icon">
+                            <i class="fab fa-bitcoin"></i>
+                        </div>
+                        <div class="payment-details">
+                            <div class="payment-name">Cryptocurrency</div>
+                            <div class="payment-description">Pay with Bitcoin or other crypto</div>
+                        </div>
+                        <div class="payment-arrow">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </a>
                 </div>
             </div>
 
-            <div class="col-lg-4">
-                <div class="order-summary">
-                    <div class="currency-toggle">
-                        <select id="currency-select" class="form-select form-select-sm" style="width: auto; display: inline-block;">
-                            <option value="USD">USD</option>
-                            <option value="KSH">KSH</option>
-                        </select>
-                    </div>
+            <div class="skip-payment">
+                <p>Need more time to decide?</p>
+                <a href="{% url 'quotes:skip_payment' order.id %}" class="skip-link">
+                    Skip payment for now <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+            </div>
+        </div>
 
-                    <h3 class="order-summary-title">Order Summary</h3>
+        <div class="order-summary-container">
+            <div class="payment-section order-summary">
+                <h2 class="section-title">Order Summary</h2>
 
-                    <div class="order-detail">
-                        <span>Service:</span>
-                        <span>{{ order.service.name }}</span>
-                    </div>
+                <div class="currency-selector">
+                    <select id="currency-select" class="form-select">
+                        <option value="USD">USD</option>
+                        <option value="KSH">KSH</option>
+                    </select>
+                </div>
 
-                    <div class="order-detail">
-                        <span>Features:</span>
-                        <span>{{ order.features.count }}</span>
-                    </div>
+                <div class="order-item">
+                    <span class="order-label">Service:</span>
+                    <span class="order-value">{{ order.service.name }}</span>
+                </div>
 
-                    <div class="order-detail">
-                        <span>Appointment Date:</span>
-                        <span>{{ order.appointment_date|date:"F j, Y, g:i a" }}</span>
-                    </div>
+                <div class="order-item">
+                    <span class="order-label">Features:</span>
+                    <span class="order-value">{{ order.features.count }}</span>
+                </div>
 
-                    <div class="order-total">
-                        <span>Total:</span>
-                        <span>
-                            <span class="price-usd">${{ order.total_price }}</span>
-                            <span class="price-ksh" style="display:none;">KSH {{ order.total_price_ksh }}</span>
-                        </span>
-                    </div>
+                <div class="order-item">
+                    <span class="order-label">Appointment:</span>
+                    <span class="order-value">{{ order.appointment_date|date:"F j, Y" }}</span>
+                </div>
+
+                <div class="order-total">
+                    <span class="total-label">Total:</span>
+                    <span class="total-amount">
+                        <span class="price-usd">${{ order.total_price }}</span>
+                        <span class="price-ksh" style="display:none;">KSH {{ order.total_price_ksh }}</span>
+                    </span>
                 </div>
             </div>
         </div>
     </div>
-</section>
+</div>
 {% endblock %}
 
 {% block extra_js %}

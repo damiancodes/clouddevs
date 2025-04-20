@@ -1,57 +1,399 @@
 {% extends 'client_portal/base.html' %}
 {% load static %}
 
-{% block client_portal_title %}M-Pesa Direct Payment - Client Portal{% endblock %}
+{% block client_portal_title %}M-Pesa Payment - Client Portal{% endblock %}
 
 {% block breadcrumb_items %}
 <li class="breadcrumb-item"><a href="{% url 'client_portal:direct_payment' %}">Direct Payment</a></li>
 <li class="breadcrumb-item active">M-Pesa Payment</li>
 {% endblock %}
 
-{% block page_title %}M-Pesa Direct Payment{% endblock %}
+{% block page_title %}M-Pesa Payment{% endblock %}
 
 {% block client_portal_css %}
 <style>
-    .mpesa-container {
-        background-color: white;
-        border-radius: 10px;
-        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
-        margin-bottom: 30px;
-        padding: 30px;
+    :root {
+        --mpesa-green: #008a51;
+        --mpesa-red: #ce0e2d;
+        --mpesa-light-green: rgba(0, 138, 81, 0.08);
+        --shadow-sm: 0 5px 15px rgba(0, 0, 0, 0.05);
+        --shadow-md: 0 10px 30px rgba(0, 0, 0, 0.08);
+        --shadow-lg: 0 20px 40px rgba(0, 0, 0, 0.12);
     }
-    
+
+    /* Main Container */
+    .mpesa-container {
+        background: linear-gradient(145deg, #ffffff, #f9fafb);
+        border-radius: 20px;
+        box-shadow: var(--shadow-md);
+        margin-bottom: 40px;
+        padding: 0;
+        overflow: hidden;
+        position: relative;
+        border: none;
+    }
+
+    /* Header Section */
+    .mpesa-header {
+        background: linear-gradient(135deg, var(--mpesa-green) 0%, #006d40 100%);
+        padding: 30px;
+        color: white;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .mpesa-header::before {
+        content: '';
+        position: absolute;
+        top: -50px;
+        right: -50px;
+        width: 150px;
+        height: 150px;
+        background-color: rgba(255, 255, 255, 0.1);
+        border-radius: 50%;
+    }
+
+    .mpesa-header::after {
+        content: '';
+        position: absolute;
+        bottom: -30px;
+        left: -30px;
+        width: 100px;
+        height: 100px;
+        background-color: rgba(255, 255, 255, 0.1);
+        border-radius: 50%;
+    }
+
+    .mpesa-logo-wrapper {
+        width: 90px;
+        height: 90px;
+        background-color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 15px;
+        box-shadow: var(--shadow-sm);
+    }
+
+    .mpesa-logo {
+        max-width: 70px;
+        height: auto;
+    }
+
+    .mpesa-header h2 {
+        font-weight: 700;
+        margin-bottom: 5px;
+        font-size: 1.8rem;
+    }
+
+    .mpesa-header p {
+        opacity: 0.9;
+        margin-bottom: 0;
+        font-size: 1.1rem;
+    }
+
+    /* Payment Summary */
     .payment-summary {
-        background-color: #f8f9fc;
-        border-radius: 10px;
+        padding: 30px;
+        position: relative;
+    }
+
+    .payment-amount {
+        text-align: center;
+        margin-bottom: 25px;
+    }
+
+    .amount-label {
+        font-size: 1rem;
+        color: #6c757d;
+        margin-bottom: 5px;
+    }
+
+    .amount-value {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: var(--mpesa-green);
+    }
+
+    .payment-details {
+        background-color: var(--mpesa-light-green);
+        border-radius: 16px;
         padding: 20px;
         margin-bottom: 30px;
     }
-    
-    .mpesa-logo {
-        max-width: 120px;
-        margin-bottom: 20px;
+
+    .payment-row {
+        display: flex;
+        justify-content: space-between;
+        padding: 12px 0;
+        border-bottom: 1px solid rgba(0, 138, 81, 0.1);
     }
-    
-    .mpesa-instructions {
-        background-color: #f8f9fc;
-        border-left: 4px solid #4e73df;
-        padding: 15px;
-        margin-bottom: 20px;
-        border-radius: 5px;
+
+    .payment-row:last-child {
+        border-bottom: none;
     }
-    
-    .mpesa-instructions ol {
-        margin-bottom: 0;
-        padding-left: 20px;
+
+    .payment-label {
+        color: #6c757d;
+        font-weight: 500;
     }
-    
+
+    .payment-value {
+        font-weight: 600;
+        color: #343a40;
+    }
+
+    /* Form Section */
+    .mpesa-form-section {
+        padding: 0 30px 30px;
+    }
+
+    .form-floating {
+        margin-bottom: 25px;
+    }
+
+    .form-floating input {
+        height: 60px;
+        border-radius: 12px;
+        border: 2px solid #e9ecef;
+        padding: 0.75rem 1rem 0;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+    }
+
+    .form-floating input:focus {
+        border-color: var(--mpesa-green);
+        box-shadow: 0 0 0 0.25rem rgba(0, 138, 81, 0.1);
+    }
+
+    .form-floating label {
+        padding: 1rem 1rem;
+    }
+
+    .icon-input-group {
+        position: relative;
+    }
+
+    .input-icon {
+        position: absolute;
+        left: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--mpesa-green);
+        z-index: 3;
+        font-size: 1.2rem;
+    }
+
+    .icon-padding {
+        padding-left: 45px;
+    }
+
+    /* Buttons */
+    .btn-mpesa {
+        background: linear-gradient(135deg, var(--mpesa-green) 0%, #006d40 100%);
+        color: white;
+        border: none;
+        padding: 15px 30px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        border-radius: 12px;
+        box-shadow: 0 5px 15px rgba(0, 138, 81, 0.3);
+        transition: all 0.3s ease;
+        width: 100%;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .btn-mpesa:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(0, 138, 81, 0.4);
+    }
+
+    .btn-mpesa:active {
+        transform: translateY(-1px);
+    }
+
+    .btn-mpesa .btn-overlay {
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg,
+            rgba(255, 255, 255, 0) 0%,
+            rgba(255, 255, 255, 0.2) 50%,
+            rgba(255, 255, 255, 0) 100%);
+        animation: shimmer 1.5s infinite;
+    }
+
+    @keyframes shimmer {
+        100% {
+            left: 100%;
+        }
+    }
+
+    .btn-back {
+        background-color: transparent;
+        color: #6c757d;
+        border: none;
+        padding: 10px 20px;
+        font-size: 0.95rem;
+        font-weight: 500;
+        border-radius: 10px;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 15px;
+    }
+
+    .btn-back:hover {
+        background-color: #f8f9fa;
+        color: #343a40;
+    }
+
+    .btn-back i {
+        margin-right: 8px;
+    }
+
+    /* Secure Badge */
     .secure-badge {
         display: flex;
         align-items: center;
         justify-content: center;
-        gap: 10px;
-        margin-top: 20px;
+        padding: 20px 30px;
+        background-color: #f8f9fa;
+        border-top: 1px solid #e9ecef;
         color: #6c757d;
+        border-bottom-left-radius: 20px;
+        border-bottom-right-radius: 20px;
+    }
+
+    .secure-badge i {
+        color: var(--mpesa-green);
+        font-size: 1.2rem;
+        margin-right: 10px;
+    }
+
+    /* Phone animation */
+    .phone-animation {
+        position: absolute;
+        width: 180px;
+        height: 320px;
+        background-color: #343a40;
+        border-radius: 30px;
+        top: 50%;
+        right: -300px;
+        transform: translateY(-50%);
+        box-shadow: var(--shadow-lg);
+        overflow: hidden;
+        transition: all 0.5s ease-in-out;
+        opacity: 0;
+    }
+
+    .phone-animation.active {
+        right: -90px;
+        opacity: 1;
+    }
+
+    .phone-screen {
+        position: absolute;
+        top: 12px;
+        left: 10px;
+        right: 10px;
+        bottom: 12px;
+        background-color: white;
+        border-radius: 20px;
+        padding: 15px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .phone-notch {
+        position: absolute;
+        width: 60px;
+        height: 20px;
+        background-color: #343a40;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+    }
+
+    .phone-header {
+        display: flex;
+        align-items: center;
+        border-bottom: 1px solid #e9ecef;
+        padding-bottom: 10px;
+        margin-bottom: 10px;
+    }
+
+    .phone-logo {
+        width: 30px;
+        height: 30px;
+        background-color: var(--mpesa-green);
+        border-radius: 50%;
+        margin-right: 10px;
+    }
+
+    .phone-title {
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: #343a40;
+    }
+
+    .phone-content {
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+    }
+
+    .phone-text {
+        font-size: 0.7rem;
+        margin-bottom: 10px;
+        color: #6c757d;
+    }
+
+    .phone-amount {
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: var(--mpesa-green);
+        margin-bottom: 15px;
+    }
+
+    .phone-buttons {
+        display: flex;
+        border-top: 1px solid #e9ecef;
+        padding-top: 10px;
+    }
+
+    .phone-button {
+        flex: 1;
+        text-align: center;
+        padding: 5px;
+        font-size: 0.7rem;
+        font-weight: 600;
+    }
+
+    .phone-button.accept {
+        color: var(--mpesa-green);
+    }
+
+    .phone-button.cancel {
+        color: var(--mpesa-red);
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+        .phone-animation {
+            display: none;
+        }
     }
 </style>
 {% endblock %}
@@ -60,86 +402,114 @@
 <div class="row">
     <div class="col-lg-8 mx-auto">
         <div class="mpesa-container">
+            <!-- M-Pesa Header -->
+            <div class="mpesa-header">
+                <div class="mpesa-logo-wrapper">
+                    <img src="https://www.safaricom.co.ke/images/MpesaLogo/M-PESA_LOGO.png" alt="M-Pesa Logo" class="mpesa-logo">
+                </div>
+                <h2>M-Pesa Payment</h2>
+                <p>Fast, secure mobile money transactions</p>
+            </div>
+
             <!-- Payment Summary -->
             <div class="payment-summary">
-                <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h5 class="mb-0">Payment Summary</h5>
+                <div class="payment-amount">
+                    <div class="amount-label">Amount to pay</div>
+                    <div class="amount-value">${{ amount|floatformat:2 }}</div>
                 </div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="mb-3">
-                            <strong>Client:</strong> {{ client.full_name }}
+
+                <div class="payment-details">
+                    <div class="payment-row">
+                        <div class="payment-label">Client</div>
+                        <div class="payment-value">{{ client.full_name }}</div>
+                    </div>
+
+                    <div class="payment-row">
+                        <div class="payment-label">Purpose</div>
+                        <div class="payment-value">{{ purpose }}</div>
+                    </div>
+
+                    {% if phone_number %}
+                    <div class="payment-row">
+                        <div class="payment-label">Phone Number</div>
+                        <div class="payment-value">{{ phone_number }}</div>
+                    </div>
+                    {% endif %}
+
+                    <div class="payment-row">
+                        <div class="payment-label">Date</div>
+                        <div class="payment-value">{% now "F j, Y" %}</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- M-Pesa Form Section -->
+            <div class="mpesa-form-section">
+                <form method="post" action="{% url 'client_portal:process_direct_mpesa' amount=amount %}" id="mpesa-form">
+                    {% csrf_token %}
+
+                    <!-- Always include a hidden phone field if there's already a number -->
+                    {% if phone_number %}
+                        <input type="hidden" name="phone_number" value="{{ phone_number }}">
+
+                        <!-- Show confirmation text instead of input field -->
+                        <div class="text-center mb-4">
+                            <p class="lead">A payment request will be sent to your phone</p>
+                            <div class="d-flex align-items-center justify-content-center">
+                                <i class="fas fa-mobile-alt me-2" style="font-size: 1.5rem; color: var(--mpesa-green);"></i>
+                                <span class="fw-bold fs-5">{{ phone_number }}</span>
+                            </div>
                         </div>
-                        <div class="mb-3">
-                            <strong>Purpose:</strong> {{ purpose }}
+                    {% else %}
+                        <div class="form-floating mb-4">
+                            <div class="icon-input-group">
+                                <i class="fas fa-mobile-alt input-icon"></i>
+                                <input type="text" class="form-control icon-padding" id="phone-number" name="phone_number" placeholder="+254 7XX XXX XXX" required>
+                                <label for="phone-number" style="padding-left: 45px;">M-Pesa Phone Number</label>
+                            </div>
+                            <div class="form-text mt-2">Enter the phone number linked to your M-Pesa account</div>
+                        </div>
+                    {% endif %}
+
+                    <!-- Submit Button -->
+                    <button type="submit" class="btn btn-mpesa" id="request-payment-button">
+                        <span class="btn-overlay"></span>
+                        <i class="fas fa-mobile-alt me-2"></i> Request M-Pesa Payment
+                    </button>
+
+                    <div class="text-center">
+                        <a href="{% url 'client_portal:direct_payment' %}" class="btn btn-back">
+                            <i class="fas fa-arrow-left"></i> Choose Another Payment Method
+                        </a>
+                    </div>
+                </form>
+
+                <!-- Phone Animation (visible on larger screens) -->
+                <div class="phone-animation" id="phone-animation">
+                    <div class="phone-notch"></div>
+                    <div class="phone-screen">
+                        <div class="phone-header">
+                            <div class="phone-logo"></div>
+                            <div class="phone-title">M-PESA</div>
+                        </div>
+                        <div class="phone-content">
+                            <div class="phone-text">CloudLink_Devs is requesting</div>
+                            <div class="phone-amount">${{ amount|floatformat:2 }}</div>
+                            <div class="phone-text">Enter M-PESA PIN to authorize payment</div>
+                        </div>
+                        <div class="phone-buttons">
+                            <div class="phone-button cancel">Cancel</div>
+                            <div class="phone-button accept">OK</div>
                         </div>
                     </div>
-                    <div class="col-md-6">
-                        <div class="mb-3">
-                            <strong>Amount to Pay:</strong> ${{ amount|floatformat:2 }}
-                        </div>
-                        {% if phone_number %}
-                        <div class="mb-3">
-                            <strong>Phone Number:</strong> {{ phone_number }}
-                        </div>
-                        {% endif %}
-                    </div>
                 </div>
             </div>
-            
-            <!-- M-Pesa Payment Form -->
-            <div class="text-center mb-4">
-                <img src="https://www.safaricom.co.ke/images/MpesaLogo/M-PESA_LOGO.png" alt="M-Pesa Logo" class="mpesa-logo">
-                <h4>Pay with M-Pesa</h4>
-                <p class="text-muted">Amount to pay: <strong>${{ amount }}</strong></p>
+
+            <!-- Secure Badge -->
+            <div class="secure-badge">
+                <i class="fas fa-shield-alt"></i>
+                <span>All payments are secure and encrypted</span>
             </div>
-            
-            <div class="mpesa-instructions mb-4">
-                <h5>How it works:</h5>
-                <ol>
-                    <li>Enter your M-Pesa registered phone number below</li>
-                    <li>Click the "Request M-Pesa Payment" button</li>
-                    <li>You will receive a payment prompt on your phone</li>
-                    <li>Enter your M-Pesa PIN to complete the payment</li>
-                    <li>Once confirmed, you will be redirected to a receipt page</li>
-                </ol>
-            </div>
-            
-          <form method="post" action="{% url 'client_portal:process_direct_mpesa' amount=amount %}" id="mpesa-form">
-    {% csrf_token %}
-
-    <!-- Always include a hidden phone field if there's already a number -->
-    {% if phone_number %}
-    <input type="hidden" name="phone_number" value="{{ phone_number }}">
-    {% else %}
-    <div class="form-group mb-4">
-        <label for="phone-number" class="form-label">M-Pesa Phone Number</label>
-        <div class="input-group">
-            <span class="input-group-text"><i class="fas fa-mobile-alt"></i></span>
-            <input type="text" class="form-control" id="phone-number" name="phone_number" placeholder="+254 7XX XXX XXX" required>
-        </div>
-        <div class="form-text">Enter the phone number linked to your M-Pesa account (e.g., +254 7XX XXX XXX)</div>
-    </div>
-    {% endif %}
-
-    <!-- Submit Button -->
-    <div class="text-center">
-        <button type="submit" class="btn btn-success btn-lg" id="request-payment-button">
-            <i class="fas fa-mobile-alt me-2"></i> Request M-Pesa Payment
-        </button>
-
-        <div class="mt-3">
-            <a href="{% url 'client_portal:direct_payment' %}" class="btn btn-outline-secondary">
-                <i class="fas fa-arrow-left me-2"></i> Choose Another Payment Method
-            </a>
-        </div>
-    </div>
-
-    <div class="secure-badge">
-        <i class="fas fa-shield-alt"></i>
-        <span>All payments are secure and encrypted.</span>
-    </div>
-</form>
         </div>
     </div>
 </div>
@@ -148,51 +518,114 @@
 {% block client_portal_js %}
 <script>
     $(document).ready(function() {
-        // Phone number validation and formatting
+        // Show phone animation after a delay
+        setTimeout(function() {
+            $('#phone-animation').addClass('active');
+        }, 1000);
+
+        // Phone number validation and formatting with improved behavior
         $('#phone-number').on('input', function() {
-            // Allow only numbers, plus sign, and spaces initially
-            let value = $(this).val().replace(/[^\d\s+]/g, '');
-            
-            // Format for Kenyan numbers if possible
-            if (value.startsWith('+254')) {
-                // Already in international format
-            } else if (value.startsWith('254')) {
-                value = '+' + value;
-            } else if (value.startsWith('0')) {
-                value = '+254' + value.substring(1);
-            } else if (value.startsWith('7') || value.startsWith('1')) {
-                value = '+254' + value;
-            }
-            
-            $(this).val(value);
-        });
-        
-        // Form validation
-        $('#mpesa-form').on('submit', function(e) {
-            const phoneNumber = $('#phone-number').val().trim();
-            
-            if (phoneNumber) {
-                // Simple validation for Kenyan phone number format
-                const validPhone = /^\+?254\d{9}$/.test(phoneNumber.replace(/\s/g, ''));
-                
-                if (!validPhone) {
-                    alert('Please enter a valid Kenyan phone number (e.g., +254 7XX XXX XXX)');
-                    e.preventDefault();
-                    return false;
+            // Remove non-numeric characters except +
+            let value = $(this).val().replace(/[^\d+]/g, '');
+
+            // Format for Kenyan numbers
+            if (value.length > 0) {
+                // If starts with country code
+                if (value.startsWith('+254')) {
+                    // Already in correct format
+                } else if (value.startsWith('254')) {
+                    value = '+' + value;
+                } else if (value.startsWith('0')) {
+                    // If starts with 0, replace with country code
+                    value = '+254' + value.substring(1);
+                } else if (!value.startsWith('+')) {
+                    // Add country code if not present
+                    value = '+254' + value;
+                }
+
+                // Format with spaces for readability after country code
+                if (value.startsWith('+254') && value.length > 4) {
+                    const countryCode = value.substring(0, 4);
+                    const restOfNumber = value.substring(4).replace(/\s/g, '');
+
+                    if (restOfNumber.length > 0) {
+                        value = countryCode + ' ' + restOfNumber;
+                    }
+
+                    // Add another space after first 3 digits of the number
+                    if (restOfNumber.length > 3) {
+                        value = countryCode + ' ' + restOfNumber.substring(0, 3) + ' ' + restOfNumber.substring(3);
+                    }
+
+                    // Add final space after next 3 digits
+                    if (restOfNumber.length > 6) {
+                        value = countryCode + ' ' + restOfNumber.substring(0, 3) + ' ' + restOfNumber.substring(3, 6) + ' ' + restOfNumber.substring(6);
+                    }
                 }
             }
-            // Add explicit form submission handler
-$('#request-payment-button').on('click', function(e) {
-    e.preventDefault();
-    console.log('Payment button clicked, submitting form...');
-    $('#mpesa-form').submit();
-});
 
-// Debug form submission
-$('#mpesa-form').on('submit', function() {
-    console.log('Form submitted with phone number:', $('input[name="phone_number"]').val());
-});
+            $(this).val(value);
         });
+
+        // Form validation - FIX: ensure form actually submits
+        $('#mpesa-form').on('submit', function(e) {
+            const phoneNumber = $('#phone-number').val() ? $('#phone-number').val().trim() : $('input[name="phone_number"]').val().trim();
+
+            if (phoneNumber) {
+                // Simple validation for Kenyan phone number format
+                const strippedNumber = phoneNumber.replace(/\s/g, '');
+                const validPhone = /^\+?254\d{9}$/.test(strippedNumber);
+
+                if (!validPhone) {
+                    // Display error message inline instead of alert
+                    if ($('#phone-error').length === 0) {
+                        $('#phone-number').addClass('is-invalid');
+                        $('#phone-number').after('<div id="phone-error" class="invalid-feedback">Please enter a valid Kenyan phone number (e.g., +254 7XX XXX XXX)</div>');
+                    }
+                    e.preventDefault();
+                    return false;
+                } else {
+                    $('#phone-number').removeClass('is-invalid');
+                    $('#phone-error').remove();
+                }
+            }
+
+            // Show loading state on button
+            const btn = $('#request-payment-button');
+            const originalText = btn.html();
+            btn.html('<i class="fas fa-spinner fa-spin me-2"></i> Processing...');
+            btn.prop('disabled', true);
+
+            // Visual animation for the phone - but don't interfere with form submission
+            $('#phone-animation').css('right', '-60px');
+
+            // IMPORTANT: Make sure the form actually submits - don't return false
+            return true;
+        });
+
+        // Extra explicit form submission handler to ensure STK push works
+        $('#request-payment-button').on('click', function() {
+            // Just let the native form submission handle it
+            console.log('Payment button clicked');
+        });
+
+        $('#phone-number').on('focus', function() {
+            $(this).closest('.form-floating').css('transform', 'translateY(-5px)');
+        }).on('blur', function() {
+            $(this).closest('.form-floating').css('transform', 'translateY(0)');
+        });
+
+        setInterval(function() {
+            $('.btn-overlay').css('left', '-100%');
+            setTimeout(function() {
+                $('.btn-overlay').css('transition', 'none');
+                $('.btn-overlay').css('left', '100%');
+                setTimeout(function() {
+                    $('.btn-overlay').css('transition', 'all 1.5s ease');
+                    $('.btn-overlay').css('left', '-100%');
+                }, 50);
+            }, 1500);
+        }, 3000);
     });
 </script>
 {% endblock %}

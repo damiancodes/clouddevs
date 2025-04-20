@@ -1523,16 +1523,11 @@ def process_direct_credit_card(request, amount):
     })
 
 
+from django.urls import reverse
+
+
 @login_required
 def process_direct_mpesa(request, amount):
-    """Process direct M-Pesa payment"""
-    # Clear previous payment data when starting a new flow
-    if request.method == 'GET':
-        # Clear previous session data
-        request.session.pop('mpesa_phone_number', None)
-        request.session.pop('mpesa_checkout_request_id', None)
-        request.session.pop('mpesa_direct_payment', None)
-        request.session.modified = True
     """Process direct M-Pesa payment"""
     try:
         client = request.user.client_profile
@@ -1544,43 +1539,40 @@ def process_direct_mpesa(request, amount):
 
     if request.method == 'POST':
         # Get phone number from the form
-        phone_number = request.POST.get('phone_number', '')
-        print(f"DEBUG - Phone from form: {phone_number}")
+        phone_number = request.POST.get('phone_number', '').strip()
 
-        if phone_number:
-            # Format phone number before storing (similar to API)
-            if phone_number.startswith('+'):
-                phone_number = phone_number[1:]
-            if phone_number.startswith('0'):
-                phone_number = '254' + phone_number[1:]
-            if not phone_number.startswith('254'):
-                phone_number = '254' + phone_number
-
-            print(f"DEBUG - Formatted phone: {phone_number}")
-
-            # Store data in session - make sure to use session.modified = True
-            request.session['mpesa_phone_number'] = phone_number
-            request.session['direct_payment_amount'] = float(amount)
-            request.session.modified = True
-
-            print(f"DEBUG - Session after storing: {request.session.get('mpesa_phone_number')}")
-
-            # Forward to the M-Pesa API for processing
-            return redirect('mpesa_api:initiate_direct_payment', amount=amount)
-        else:
+        if not phone_number:
             messages.error(request, 'Please enter your M-Pesa phone number.')
+            return render(request, 'client_portal/payment_direct_mpesa.html', {
+                'amount': amount,
+                'purpose': purpose,
+                'client': client
+            })
 
-    # For GET requests, or if POST didn't redirect (e.g., missing phone number)
-    phone_number = request.session.get('mpesa_phone_number', '')
-    print(f"DEBUG - Phone for display: {phone_number}")
+        # Format phone number consistently
+        if phone_number.startswith('+'):
+            phone_number = phone_number[1:]
+        if phone_number.startswith('0'):
+            phone_number = '254' + phone_number[1:]
+        if not phone_number.startswith('254'):
+            phone_number = '254' + phone_number
+
+        # Store data in session
+        request.session['mpesa_phone_number'] = phone_number
+        request.session['direct_payment_amount'] = float(amount)
+        request.session.modified = True
+
+        # Use reverse to generate the correct URL
+        redirect_url = reverse('mpesa_api:initiate_direct_payment', kwargs={'amount': amount})
+        return redirect(f"{redirect_url}?phone={phone_number}")
 
     # Display M-Pesa payment form
     return render(request, 'client_portal/payment_direct_mpesa.html', {
         'amount': amount,
         'purpose': purpose,
-        'phone_number': phone_number,
         'client': client
     })
+
 @login_required
 def direct_payment_success(request, payment_method, transaction_id):
     """Handle successful direct payment"""

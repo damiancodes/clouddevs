@@ -1,0 +1,407 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Order Confirmation - CloudLink_Devs{% endblock %}
+
+{% block extra_css %}
+<style>
+    :root {
+        --beige-color: #f5eadb;
+        --amber-color: #c1954a;
+        --dark-amber: #9e7a39;
+        --light-amber: #d4b06a;
+        --off-white: #faf7f2;
+        --black: #212121;
+        --dark-gray: #333333;
+        --light-gray: #f0f0f0;
+    }
+
+    /* Confirmation Header */
+    .confirmation-header {
+        background: linear-gradient(135deg, var(--amber-color) 0%, var(--dark-amber) 100%);
+        color: white;
+        padding: 80px 0;
+        text-align: center;
+    }
+
+    .confirmation-header h1 {
+        font-weight: 800;
+        margin-bottom: 20px;
+    }
+
+    /* Confirmation Content */
+    .confirmation-section {
+        padding: 80px 0;
+        background-color: var(--off-white);
+    }
+
+    .confirmation-card {
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+        margin-bottom: 30px;
+        background-color: white;
+    }
+
+    .confirmation-card-header {
+        padding: 20px;
+        background-color: var(--amber-color);
+        color: white;
+        border-bottom: 1px solid var(--light-gray);
+    }
+
+    .confirmation-card-header h2 {
+        margin-bottom: 0;
+        font-size: 1.5rem;
+        font-weight: 700;
+    }
+
+    .confirmation-card-body {
+        padding: 30px;
+    }
+
+    /* Success Icon */
+    .success-icon {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    .success-icon i {
+        color: #28a745;
+        font-size: 5rem;
+    }
+
+    /* Order Details */
+    .order-details {
+        margin-top: 40px;
+    }
+
+    .order-detail-group {
+        margin-bottom: 30px;
+    }
+
+    .order-detail-title {
+        font-size: 1.2rem;
+        font-weight: 700;
+        margin-bottom: 15px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid var(--light-gray);
+    }
+
+    .order-detail-row {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+    }
+
+    .order-detail-label {
+        font-weight: 600;
+        color: var(--dark-gray);
+    }
+
+    .order-detail-value {
+        color: var(--black);
+    }
+
+    /* Features List */
+    .features-list {
+        margin-top: 20px;
+    }
+
+    .feature-item {
+        padding: 10px 15px;
+        background-color: var(--light-gray);
+        border-radius: 5px;
+        margin-bottom: 10px;
+    }
+
+    /* Payment Info */
+    .payment-info {
+        margin-top: 30px;
+        padding: 20px;
+        background-color: var(--beige-color);
+        border-radius: 10px;
+    }
+
+    .payment-info-title {
+        font-size: 1.1rem;
+        font-weight: 700;
+        margin-bottom: 15px;
+    }
+
+    /* What Next Section */
+    .what-next-section {
+        margin-top: 40px;
+        padding: 30px;
+        background-color: var(--light-gray);
+        border-radius: 10px;
+    }
+
+    .what-next-title {
+        font-size: 1.3rem;
+        font-weight: 700;
+        margin-bottom: 20px;
+    }
+
+    .next-step {
+        display: flex;
+        margin-bottom: 20px;
+    }
+
+    .step-number {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background-color: var(--amber-color);
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        margin-right: 15px;
+    }
+
+    .step-content h3 {
+        font-size: 1.1rem;
+        font-weight: 700;
+        margin-bottom: 5px;
+    }
+
+    .step-content p {
+        color: var(--dark-gray);
+    }
+
+    /* Buttons */
+    .btn-amber {
+        background-color: var(--amber-color);
+        color: white;
+        font-weight: 600;
+        padding: 10px 20px;
+        border-radius: 5px;
+        border: none;
+        transition: all 0.3s ease;
+    }
+
+    .btn-amber:hover {
+        background-color: var(--dark-amber);
+        color: white;
+    }
+
+    .btn-outline-amber {
+        background-color: transparent;
+        color: var(--amber-color);
+        font-weight: 600;
+        padding: 10px 20px;
+        border-radius: 5px;
+        border: 1px solid var(--amber-color);
+        transition: all 0.3s ease;
+    }
+
+    .btn-outline-amber:hover {
+        background-color: var(--amber-color);
+        color: white;
+    }
+
+    /* Dark mode adaptations */
+    body.dark-mode .confirmation-section {
+        background-color: #222533;
+    }
+
+    body.dark-mode .confirmation-card {
+        background-color: var(--dark-gray);
+        color: var(--off-white);
+    }
+
+    body.dark-mode .order-detail-title {
+        border-color: #3a3d52;
+    }
+
+    body.dark-mode .feature-item {
+        background-color: #3a3d52;
+        color: var(--off-white);
+    }
+
+    body.dark-mode .what-next-section {
+        background-color: #3a3d52;
+    }
+
+    body.dark-mode .payment-info {
+        background-color: #222533;
+    }
+
+    body.dark-mode .order-detail-label {
+        color: #c2c5d3;
+    }
+
+    body.dark-mode .order-detail-value {
+        color: var(--off-white);
+    }
+
+    body.dark-mode .step-content p {
+        color: #c2c5d3;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Confirmation Header -->
+<section class="confirmation-header">
+    <div class="container">
+        <h1>Order Confirmation</h1>
+        <p class="lead">Thank you for your order!</p>
+    </div>
+</section>
+
+<!-- Confirmation Content -->
+<section class="confirmation-section">
+    <div class="container">
+        <div class="confirmation-card">
+            <div class="confirmation-card-header">
+                <h2>Order Successfully Placed</h2>
+            </div>
+            <div class="confirmation-card-body">
+                <div class="success-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+
+                <div class="text-center mb-4">
+                    <h3>Thank You, {{ order.name }}!</h3>
+                    <p>Your custom solution order has been successfully placed. We have sent a confirmation email to <strong>{{ order.email }}</strong> with all the details.</p>
+                </div>
+
+                <!-- Order Details -->
+                <div class="order-details">
+                    <div class="order-detail-group">
+                        <h4 class="order-detail-title">Order Information</h4>
+                        <div class="order-detail-row">
+                            <span class="order-detail-label">Service:</span>
+                            <span class="order-detail-value">{{ order.service.name }}</span>
+                        </div>
+                        <div class="order-detail-row">
+                            <span class="order-detail-label">Order Date:</span>
+                            <span class="order-detail-value">{{ order.created_at|date:"F j, Y, g:i a" }}</span>
+                        </div>
+                        <div class="order-detail-row">
+                            <span class="order-detail-label">Appointment Date:</span>
+                            <span class="order-detail-value">{{ order.appointment_date|date:"F j, Y, g:i a" }}</span>
+                        </div>
+                    </div>
+
+                    <div class="order-detail-group">
+                        <h4 class="order-detail-title">Selected Features</h4>
+                        <div class="features-list">
+                            {% for feature in order.selected_features.all %}
+                                <div class="feature-item">
+                                    <div class="d-flex justify-content-between">
+                                        <span>{{ feature.feature.name }}</span>
+                                        <span>
+                                            {% if feature.price_type == 'fixed' %}
+                                                ${{ feature.price_at_order }}
+                                            {% else %}
+                                                {{ feature.feature.price_value }}% (${{ feature.price_at_order }})
+                                            {% endif %}
+                                        </span>
+                                    </div>
+                                </div>
+                            {% empty %}
+                                <p>No additional features selected.</p>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <div class="order-detail-group">
+                        <h4 class="order-detail-title">Pricing</h4>
+                        <div class="order-detail-row">
+                            <span class="order-detail-label">Total (USD):</span>
+                            <span class="order-detail-value">${{ order.total_price_usd }}</span>
+                        </div>
+                        <div class="order-detail-row">
+                            <span class="order-detail-label">Total (KSH):</span>
+                            <span class="order-detail-value">KSH {{ order.total_price_ksh }}</span>
+                        </div>
+                    </div>
+
+                    {% if order.is_paid %}
+                        <div class="payment-info">
+                            <h4 class="payment-info-title">Payment Information</h4>
+                            <div class="order-detail-row">
+                                <span class="order-detail-label">Payment Method:</span>
+                                <span class="order-detail-value">
+                                    {% if order.payment_method == 'mpesa' %}
+                                        M-Pesa
+                                    {% elif order.payment_method == 'paypal' %}
+                                        PayPal
+                                    {% elif order.payment_method == 'crypto' %}
+                                        Cryptocurrency
+                                    {% else %}
+                                        {{ order.payment_method|capfirst }}
+                                    {% endif %}
+                                </span>
+                            </div>
+                            {% if order.transaction_id %}
+                                <div class="order-detail-row">
+                                    <span class="order-detail-label">Transaction ID:</span>
+                                    <span class="order-detail-value">{{ order.transaction_id }}</span>
+                                </div>
+                            {% endif %}
+                        </div>
+                    {% elif payment_skipped %}
+                        <div class="payment-info">
+                            <h4 class="payment-info-title">Payment Information</h4>
+                            <p>You've chosen to skip payment for now. Our team will contact you regarding payment options.</p>
+                        </div>
+                    {% endif %}
+                </div>
+
+                <!-- What Next Section -->
+                <div class="what-next-section">
+                    <h3 class="what-next-title">What's Next?</h3>
+
+                    <div class="next-step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h3>Confirmation Email</h3>
+                            <p>We've sent a detailed confirmation email to your inbox with all the order information.</p>
+                        </div>
+                    </div>
+
+                    <div class="next-step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h3>Team Review</h3>
+                            <p>Our team will review your order and prepare for your upcoming appointment.</p>
+                        </div>
+                    </div>
+
+                    <div class="next-step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h3>Consultation</h3>
+                            <p>We'll meet with you on the scheduled appointment date to discuss your custom solution in detail.</p>
+                        </div>
+                    </div>
+
+                    <div class="next-step">
+                        <div class="step-number">4</div>
+                        <div class="step-content">
+                            <h3>Project Kickoff</h3>
+                            <p>After the consultation, we'll finalize the project scope and begin work on your custom solution.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center mt-5">
+                    <a href="{% url 'core:home' %}" class="btn btn-amber">
+                        <i class="fas fa-home me-2"></i> Return to Home
+                    </a>
+                    {% if not order.is_paid and not payment_skipped %}
+                        <a href="{% url 'quotes:payment_choice' order.id %}" class="btn btn-outline-amber ms-3">
+                            <i class="fas fa-credit-card me-2"></i> Complete Payment
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

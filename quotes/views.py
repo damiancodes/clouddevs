@@ -1,123 +1,3 @@
-# from django.shortcuts import render, redirect, get_object_or_404
-# from django.contrib import messages
-# from django.core.mail import send_mail
-# from django.conf import settings
-# from django.http import JsonResponse
-# from .models import Service, ServiceFeature, QuoteRequest
-# from .forms import QuoteRequestForm, ServiceEstimatorForm
-#
-#
-#
-# def quote_request(request):
-#     """Display and process the quote request form"""
-#     if request.method == 'POST':
-#         form = QuoteRequestForm(request.POST)
-#         if form.is_valid():
-#             quote_request = form.save()
-#
-#             # Send notification email to admins
-#             subject = f"New Quote Request: {quote_request.service.name}"
-#             message = f"""
-#             A new quote request has been submitted:
-#
-#             Name: {quote_request.name}
-#             Email: {quote_request.email}
-#             Phone: {quote_request.phone}
-#             Company: {quote_request.company}
-#
-#             Service: {quote_request.service.name}
-#             Estimated Cost: ${quote_request.calculated_estimate}
-#
-#             Requirements: {quote_request.requirements}
-#             Budget: {quote_request.budget}
-#             Timeline: {quote_request.timeline}
-#
-#             View in admin: {request.build_absolute_uri('/admin/quotes/quoterequest/')}{quote_request.id}/change/
-#             """
-#
-#             try:
-#                 send_mail(
-#                     subject,
-#                     message,
-#                     settings.DEFAULT_FROM_EMAIL,
-#                     [settings.ADMIN_EMAIL],
-#                     fail_silently=False,
-#                 )
-#             except Exception as e:
-#                 # Log the error but don't show to user
-#                 print(f"Error sending email: {e}")
-#
-#             # Redirect to thank you page
-#             return redirect('quotes:thank_you')
-#     else:
-#         form = QuoteRequestForm()
-#
-#     return render(request, 'quotes/quote_request.html', {'form': form})
-#
-#
-# def service_estimator(request):
-#     """Interactive service estimation tool"""
-#     services = Service.objects.all()
-#
-#     if request.method == 'POST':
-#         form = ServiceEstimatorForm(request.POST)
-#         if form.is_valid():
-#             # Save the form data to session for use in quote_request
-#             request.session['estimator_data'] = {
-#                 'service_id': form.cleaned_data['service'].id,
-#                 'feature_ids': [f.id for f in form.cleaned_data['features']]
-#             }
-#
-#             # Redirect to quote request with pre-filled data
-#             return redirect('quotes:quote_request')
-#     else:
-#         form = ServiceEstimatorForm()
-#
-#     return render(request, 'quotes/service_estimator.html', {
-#         'services': services,
-#         'form': form
-#     })
-#
-#
-# def get_service_features(request, service_id):
-#     """AJAX endpoint to get features for a specific service"""
-#     service = get_object_or_404(Service, id=service_id)
-#     features = service.features.all()
-#
-#     # Format data for JSON response
-#     features_data = [
-#         {
-#             'id': feature.id,
-#             'name': feature.name,
-#             'description': feature.description,
-#             'price_type': feature.price_type,
-#             'price_value': float(feature.price_value),
-#             'is_required': feature.is_required
-#         }
-#         for feature in features
-#     ]
-#
-#     return JsonResponse({
-#         'service': {
-#             'id': service.id,
-#             'name': service.name,
-#             'description': service.description,
-#             'base_price': float(service.base_price)
-#         },
-#         'features': features_data
-#     })
-#
-#
-# def thank_you(request):
-#     """Thank you page after quote submission"""
-#     return render(request, 'quotes/thank_you.html')
-#
-#
-#
-#
-#
-#
-#
 
 
 
@@ -236,47 +116,88 @@ def service_estimator(request):
     })
 
 
+# def get_service_features(request, service_id):
+#     """AJAX endpoint to get features for a specific service"""
+#     try:
+#         # Make sure to get the actual Service object
+#         service = get_object_or_404(Service, id=service_id)
+#
+#         # Try accessing features - this might be service.features or service.service_features
+#         try:
+#             features = service.features.all()
+#         except AttributeError:
+#             # If 'features' relationship isn't available, try service_features
+#             features = service.service_features.all()
+#
+#         # Format data for JSON response
+#         features_data = [
+#             {
+#                 'id': feature.id,
+#                 'name': feature.name,
+#                 'description': feature.description,
+#                 'price_type': feature.price_type,
+#                 'price_value': float(feature.price_value),
+#                 'is_required': feature.is_required
+#             }
+#             for feature in features
+#         ]
+#
+#         return JsonResponse({
+#             'service': {
+#                 'id': service.id,
+#                 'name': service.name,
+#                 'description': service.description,
+#                 'base_price': float(service.base_price)
+#             },
+#             'features': features_data
+#         })
+#     except Exception as e:
+#         print(f"Error in get_service_features: {e}")
+#         return JsonResponse({
+#             'error': str(e)
+#         }, status=500)
+
 def get_service_features(request, service_id):
     """AJAX endpoint to get features for a specific service"""
     try:
-        # Make sure to get the actual Service object
         service = get_object_or_404(Service, id=service_id)
 
-        # Try accessing features - this might be service.features or service.service_features
+        # Try to get features through the correct related name
         try:
-            features = service.features.all()
-        except AttributeError:
-            # If 'features' relationship isn't available, try service_features
-            features = service.service_features.all()
+            features = service.service_features.all()  # Use the correct related_name
+            print(f"Found {features.count()} features for service {service.name}")
+        except Exception as e:
+            print(f"Error accessing features: {e}")
+            features = []
 
         # Format data for JSON response
-        features_data = [
-            {
+        features_data = []
+        for feature in features:
+            feature_data = {
                 'id': feature.id,
-                'name': feature.name,
+                'name': feature.title,  # Note: Using 'title' from your model
                 'description': feature.description,
-                'price_type': feature.price_type,
-                'price_value': float(feature.price_value),
-                'is_required': feature.is_required
+                'price_type': getattr(feature, 'price_type', 'fixed'),
+                'price_value': float(getattr(feature, 'price_value', 0)),
+                'is_required': getattr(feature, 'is_required', False)
             }
-            for feature in features
-        ]
+            features_data.append(feature_data)
+
+        # Use base_price field
+        base_price = getattr(service, 'base_price', 0.0)
 
         return JsonResponse({
             'service': {
                 'id': service.id,
                 'name': service.name,
                 'description': service.description,
-                'base_price': float(service.base_price)
+                'base_price': float(base_price)
             },
             'features': features_data
         })
     except Exception as e:
-        print(f"Error in get_service_features: {e}")
-        return JsonResponse({
-            'error': str(e)
-        }, status=500)
-
+        logger.error(f"Error in get_service_features: {e}")
+        return JsonResponse({'error': str(e)}, status=500)
 
 def thank_you(request):
     """Thank you page after quote submission"""
@@ -291,7 +212,6 @@ def solution_builder(request):
         'services': services,
     }
     return render(request, 'quotes/templates/quotes/solution_builder.html', context)
-
 def get_exchange_rate(request):
     """API endpoint to get current USD to KSH exchange rate."""
     rate = ExchangeRate.get_rate()
@@ -377,6 +297,7 @@ def payment_choice(request, order_id):
         context = {
             'order': solution,
         }
+        # Make sure this template exists at quotes/templates/quotes/payment_choice.html
         return render(request, 'quotes/payment_choice.html', context)
     except Exception as e:
         logger.error(f"Error in payment choice: {e}")
@@ -387,10 +308,13 @@ def payment_choice(request, order_id):
 def process_mpesa(request, order_id):
     """Handle M-Pesa STK push payment."""
     try:
+        # Get the solution
         solution = get_object_or_404(SolutionBuilder, id=order_id)
-        context = {
-            'order': solution,
-        }
+
+        # Pass the solution to the template
+        context = {'order': solution}
+
+        # Use the correct template path
         return render(request, 'quotes/mpesa_payment.html', context)
     except Exception as e:
         logger.error(f"Error processing M-Pesa payment: {e}")
@@ -398,6 +322,50 @@ def process_mpesa(request, order_id):
         return redirect('quotes:payment_choice', order_id=order_id)
 
 
+@require_POST
+# @require_POST
+# def mpesa_stk_push(request):
+#     """API endpoint to initiate M-Pesa STK push."""
+#     try:
+#         data = json.loads(request.body)
+#         phone_number = data.get('phone_number')
+#         order_id = data.get('order_id')
+#         amount = data.get('amount')
+#
+#         # Get the order
+#         solution = get_object_or_404(SolutionBuilder, id=order_id)
+#
+#         # Import your existing M-Pesa API function, or use direct API
+#         # This depends on how your mpesa_api app is structured
+#         try:
+#             from mpesa_api.api import stk_push
+#             response = stk_push(phone_number, float(amount))
+#
+#             if response and response.get('ResponseCode') == '0':
+#                 return JsonResponse({
+#                     'success': True,
+#                     'checkout_request_id': response.get('CheckoutRequestID'),
+#                     'message': 'STK push sent successfully.'
+#                 })
+#             else:
+#                 return JsonResponse({
+#                     'success': False,
+#                     'message': response.get('ResponseDescription', 'Failed to send STK push. Please try again.')
+#                 })
+#         except ImportError:
+#             # Fallback if M-Pesa API import fails - simulate success for testing
+#             return JsonResponse({
+#                 'success': True,
+#                 'checkout_request_id': str(uuid.uuid4()),
+#                 'message': 'STK push simulation successful (test mode).'
+#             })
+#
+#     except Exception as e:
+#         logger.error(f"Error in M-Pesa STK push: {e}")
+#         return JsonResponse({
+#             'success': False,
+#             'message': f'Failed to send STK push. Error: {str(e)}'
+#         })
 @require_POST
 def mpesa_stk_push(request):
     """API endpoint to initiate M-Pesa STK push."""
@@ -407,24 +375,79 @@ def mpesa_stk_push(request):
         order_id = data.get('order_id')
         amount = data.get('amount')
 
+        # Format phone number consistently
+        phone_number = ''.join(filter(str.isdigit, phone_number))
+        if phone_number.startswith('0'):
+            phone_number = '254' + phone_number[1:]
+        if not phone_number.startswith('254'):
+            phone_number = '254' + phone_number
+
+        # Get the order
         solution = get_object_or_404(SolutionBuilder, id=order_id)
 
-        # In a real-world scenario, you would call your existing M-Pesa API here
-        # You already have m-pesa integration in your client_portal app
-        # For this example, we'll simulate a successful response
-        checkout_request_id = str(uuid.uuid4())
+        # Create reference and description
+        reference = f"SOL-{solution.id}"
+        description = f"Payment for {solution.service.name} service"
 
-        # Simulate API success
-        return JsonResponse({
-            'success': True,
-            'checkout_request_id': checkout_request_id,
-            'message': 'STK push sent successfully.'
-        })
+        # Import the MpesaAPI class from mpesa_api
+        from mpesa_api.api import MpesaAPI
+
+        # Initialize and use the M-Pesa API
+        mpesa_api = MpesaAPI()
+
+        # Send STK push
+        response = mpesa_api.initiate_stk_push(
+            phone_number=phone_number,
+            amount=float(amount),
+            reference=reference,
+            description=description
+        )
+
+        # Check if successful
+        if response and response.get('ResponseCode') == '0':
+            # Create transaction record in the mpesa_api app
+            from mpesa_api.models import MpesaTransaction
+            from django.utils import timezone
+
+            transaction = MpesaTransaction.objects.create(
+                transaction_type='solution_payment',
+                transaction_id=f"SOL-{timezone.now().strftime('%Y%m%d%H%M%S')}",
+                phone_number=phone_number,
+                amount=float(amount),
+                reference=reference,
+                description=description,
+                merchant_request_id=response.get('MerchantRequestID', ''),
+                checkout_request_id=response.get('CheckoutRequestID', ''),
+                response_code=response.get('ResponseCode', ''),
+                response_description=response.get('ResponseDescription', ''),
+                customer_message=response.get('CustomerMessage', '')
+            )
+
+            # Store checkout request ID for status checking
+            request.session['mpesa_checkout_request_id'] = response.get('CheckoutRequestID')
+            request.session['mpesa_solution_id'] = solution.id
+
+            return JsonResponse({
+                'success': True,
+                'checkout_request_id': response.get('CheckoutRequestID'),
+                'message': 'STK push sent successfully.'
+            })
+        else:
+            # Response exists but has an error
+            error_message = response.get('errorMessage', response.get('ResponseDescription',
+                                                                      'Failed to send STK push. Please try again.'))
+            return JsonResponse({
+                'success': False,
+                'message': error_message
+            })
+
     except Exception as e:
         logger.error(f"Error in M-Pesa STK push: {e}")
+        import traceback
+        traceback.print_exc()  # Print full stack trace to console
         return JsonResponse({
             'success': False,
-            'message': 'Failed to send STK push. Please try again.'
+            'message': f'Failed to send STK push. Error: {str(e)}'
         })
 
 
@@ -436,40 +459,72 @@ def mpesa_check_status(request):
         checkout_request_id = data.get('checkout_request_id')
         order_id = data.get('order_id')
 
-        # In a real-world scenario, you would call your existing M-Pesa API here
-        # For this example, let's simulate a successful payment after a few checks
+        # Import necessary modules from mpesa_api
+        from mpesa_api.api import MpesaAPI
+        from mpesa_api.models import MpesaTransaction
 
-        # Simulate successful payment (in a real app, this would be based on actual API response)
-        transaction_id = f"MPESA{str(uuid.uuid4())[:8].upper()}"
+        # Get the transaction
+        try:
+            transaction = MpesaTransaction.objects.get(checkout_request_id=checkout_request_id)
 
-        return JsonResponse({
-            'success': True,
-            'status': 'completed',
-            'transaction_id': transaction_id,
-            'message': 'Payment successful.'
-        })
+            # If already completed, return the status
+            if transaction.is_completed:
+                return JsonResponse({
+                    'success': transaction.is_successful,
+                    'status': 'completed',
+                    'transaction_id': transaction.transaction_id,
+                    'message': transaction.result_description or 'Payment processed successfully.'
+                })
+
+            # Query status from M-Pesa API
+            mpesa_api = MpesaAPI()
+            response = mpesa_api.query_stk_status(checkout_request_id)
+
+            # Check response
+            if 'ResultCode' in response:
+                # Update transaction
+                transaction.result_code = response.get('ResultCode', '')
+                transaction.result_description = response.get('ResultDesc', '')
+                transaction.is_completed = True
+                transaction.is_successful = response.get('ResultCode', '') == '0'
+
+                # If successful, update transaction ID
+                if transaction.is_successful and 'MpesaReceiptNumber' in response:
+                    transaction.transaction_id = response.get('MpesaReceiptNumber')
+
+                transaction.save()
+
+                return JsonResponse({
+                    'success': transaction.is_successful,
+                    'status': 'completed',
+                    'transaction_id': transaction.transaction_id,
+                    'message': transaction.result_description or 'Payment processed successfully.'
+                })
+            else:
+                # Still pending
+                return JsonResponse({
+                    'status': 'pending',
+                    'message': 'Payment is being processed'
+                })
+
+        except MpesaTransaction.DoesNotExist:
+            return JsonResponse({
+                'success': False,
+                'status': 'failed',
+                'message': 'Transaction not found.'
+            })
+
     except Exception as e:
         logger.error(f"Error checking M-Pesa status: {e}")
+        import traceback
+        traceback.print_exc()  # Print full stack trace to console
         return JsonResponse({
             'success': False,
             'status': 'failed',
-            'message': 'Failed to verify payment status. Please try again.'
+            'message': f'Failed to verify payment status. Error: {str(e)}'
         })
 
 
-def process_paypal(request, order_id):
-    """Handle PayPal payment."""
-    try:
-        solution = get_object_or_404(SolutionBuilder, id=order_id)
-        context = {
-            'order': solution,
-            'client_id': settings.PAYPAL_CLIENT_ID  # You'll need to define this in settings.py
-        }
-        return render(request, 'quotes/paypal_payment.html', context)
-    except Exception as e:
-        logger.error(f"Error processing PayPal payment: {e}")
-        messages.error(request, "An error occurred while setting up PayPal payment. Please try again.")
-        return redirect('quotes:payment_choice', order_id=order_id)
 
 
 def process_crypto(request, order_id):
@@ -478,13 +533,16 @@ def process_crypto(request, order_id):
         solution = get_object_or_404(SolutionBuilder, id=order_id)
         context = {
             'order': solution,
-            'crypto_address': settings.CRYPTO_ADDRESS  # You'll need to define this in settings.py
+            'crypto_address': settings.CRYPTO_ADDRESS
         }
         return render(request, 'quotes/crypto_payment.html', context)
     except Exception as e:
         logger.error(f"Error processing Crypto payment: {e}")
         messages.error(request, "An error occurred while setting up cryptocurrency payment. Please try again.")
-        return redirect('quotes:payment_choice', order_id=order_id)
+        from django.http import HttpResponseRedirect
+        return HttpResponseRedirect(f'/quotes/payment-choice/{order_id}/')
+
+
 
 
 def skip_payment(request, order_id):
@@ -604,3 +662,45 @@ def send_order_confirmation(solution, payment_skipped=False):
     except Exception as e:
         logger.error(f"Error sending confirmation email: {e}")
         return False
+
+
+def process_paypal(request, order_id):
+    """Handle PayPal payment."""
+    try:
+        solution = get_object_or_404(SolutionBuilder, id=order_id)
+
+        # Make sure you have these values in your settings
+        client_id = getattr(settings, 'PAYPAL_CLIENT_ID', 'your-client-id-here')
+
+        # Get the client_id if the user is authenticated
+        client_id = None
+        if request.user.is_authenticated:
+            try:
+                client_id = request.user.client_profile.id
+            except:
+                pass
+
+        # Properly use reverse to generate URLs
+        return_url = request.build_absolute_uri(
+            reverse('quotes:payment_callback',
+                    kwargs={'order_id': solution.id, 'payment_method': 'paypal'})
+        )
+
+        cancel_url = request.build_absolute_uri(
+            reverse('quotes:payment_choice',
+                    kwargs={'order_id': solution.id})
+        )
+
+        context = {
+            'order': solution,
+            'client_id': client_id,
+            'return_url': return_url,
+            'cancel_url': cancel_url
+        }
+
+        return render(request, 'quotes/paypal_payment.html', context)
+
+    except Exception as e:
+        logger.error(f"Error processing PayPal payment: {e}")
+        messages.error(request, "An error occurred while setting up PayPal payment. Please try again.")
+        return redirect('quotes:payment_choice', order_id=order_id)

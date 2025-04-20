@@ -71,4 +71,9 @@ urlpatterns = [
     path('payment-callback/<int:order_id>/<str:payment_method>/', views.payment_callback, name='payment_callback'),
     path('confirmation/<int:order_id>/', views.confirmation, name='confirmation'),
     path('thank-you/', views.thank_you, name='thank_you'),
+
+
+
+
+
 ]

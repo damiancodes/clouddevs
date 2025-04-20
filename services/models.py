@@ -16,6 +16,9 @@ class Service(models.Model):
     features = models.TextField()
     icon = models.CharField(max_length=50, help_text="Font Awesome class name")
     image = models.ImageField(upload_to='services/', blank=True, null=True)
+    # Add the base_price field
+    base_price = models.DecimalField(max_digits=10, decimal_places=2, default=0.00,
+                                    help_text="Starting price for this service")
     is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -37,17 +40,25 @@ class ServiceFeature(models.Model):
     title = models.CharField(max_length=100)
     description = models.TextField()
     icon = models.CharField(max_length=50, help_text="Font Awesome class name")
+    # Add pricing fields for the solution builder
+    price_type = models.CharField(max_length=20,
+                                 choices=[('fixed', 'Fixed Amount'), ('percentage', 'Percentage of Base')],
+                                 default='fixed')
+    price_value = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    is_required = models.BooleanField(default=False,
+                                     help_text="If checked, this feature will be automatically included")
 
     def __str__(self):
         return f"{self.service.name} - {self.title}"
 
-    class ServiceOrder(models.Model):
-        """Model for storing the display order of services."""
-        service = models.OneToOneField(Service, on_delete=models.CASCADE, related_name='display_order')
-        order = models.IntegerField(default=0)
 
-        class Meta:
-            ordering = ['order']
+class ServiceOrder(models.Model):
+    """Model for storing the display order of services."""
+    service = models.OneToOneField(Service, on_delete=models.CASCADE, related_name='display_order')
+    order = models.IntegerField(default=0)
 
-        def __str__(self):
-            return f"{self.service.name} (Order: {self.order})"
+    class Meta:
+        ordering = ['order']
+
+    def __str__(self):
+        return f"{self.service.name} (Order: {self.order})"
