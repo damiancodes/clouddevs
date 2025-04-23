@@ -1,204 +1,4 @@
-{#<!-- templates/admin/dashboard.html -->#}
-{#{% extends "admin/base_site.html" %}#}
-{#{% load i18n static %}#}
-{##}
-{#{% block title %}Dashboard | CloudLink_Devs Admin{% endblock %}#}
-{##}
-{#{% block extrahead %}#}
-{##}
-{#</a>#}
-{#<style>#}
-{#    .dashboard-card {#}
-{#        padding: 20px;#}
-{#        border-radius: 5px;#}
-{#        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);#}
-{#        margin-bottom: 20px;#}
-{#    }#}
-{#    .dashboard-card h3 {#}
-{#        margin-top: 0;#}
-{#        border-bottom: 1px solid #eee;#}
-{#        padding-bottom: 10px;#}
-{#    }#}
-{#    .stats-grid {#}
-{#        display: grid;#}
-{#        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));#}
-{#        gap: 20px;#}
-{#    }#}
-{#    .stat-card {#}
-{#        background-color: white;#}
-{#        padding: 20px;#}
-{#        border-radius: 5px;#}
-{#        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);#}
-{#        text-align: center;#}
-{#    }#}
-{#    .stat-value {#}
-{#        font-size: 2rem;#}
-{#        font-weight: bold;#}
-{#    }#}
-{#    .stat-label {#}
-{#        color: #6c757d;#}
-{#    }#}
-{#</style>#}
-{#{% endblock %}#}
-{##}
-{#{% block content %}#}
-{#<div class="dashboard-card">#}
-{#    <h3>CloudLink_Devs Admin Dashboard</h3>#}
-{##}
-{#    <div class="stats-grid">#}
-{#        <div class="stat-card">#}
-{#            <div class="stat-value">${{ total_invoiced|floatformat:2 }}</div>#}
-{#            <div class="stat-label">Total Invoiced</div>#}
-{#        </div>#}
-{#        <div class="stat-card">#}
-{#            <div class="stat-value">${{ total_paid|floatformat:2 }}</div>#}
-{#            <div class="stat-label">Total Paid</div>#}
-{#        </div>#}
-{#        <div class="stat-card">#}
-{#            <div class="stat-value">${{ balance_due|floatformat:2 }}</div>#}
-{#            <div class="stat-label">Balance Due</div>#}
-{#        </div>#}
-{#        <div class="stat-card">#}
-{#            <div class="stat-value">{{ total_clients }}</div>#}
-{#            <div class="stat-label">Total Clients</div>#}
-{#        </div>#}
-{#    </div>#}
-{#</div>#}
-{##}
-{#<div class="dashboard-card">#}
-{#    <h3>Projects by Status</h3>#}
-{#    <table class="table">#}
-{#        <thead>#}
-{#            <tr>#}
-{#                <th>Status</th>#}
-{#                <th>Count</th>#}
-{#            </tr>#}
-{#        </thead>#}
-{#        <tbody>#}
-{#            {% for status in projects_by_status %}#}
-{#            <tr>#}
-{#                <td>{{ status.status }}</td>#}
-{#                <td>{{ status.count }}</td>#}
-{#            </tr>#}
-{#            {% endfor %}#}
-{#        </tbody>#}
-{#    </table>#}
-{#</div>#}
-{##}
-{#<div class="dashboard-card">#}
-{#    <h3>Payments by Method</h3>#}
-{#    <table class="table">#}
-{#        <thead>#}
-{#            <tr>#}
-{#                <th>Method</th>#}
-{#                <th>Count</th>#}
-{#                <th>Total</th>#}
-{#            </tr>#}
-{#        </thead>#}
-{#        <tbody>#}
-{#            {% for method in payment_by_method %}#}
-{#            <tr>#}
-{#                <td>{{ method.payment_method }}</td>#}
-{#                <td>{{ method.count }}</td>#}
-{#                <td>${{ method.total|floatformat:2 }}</td>#}
-{#            </tr>#}
-{#            {% endfor %}#}
-{#        </tbody>#}
-{#    </table>#}
-{#</div>#}
-{##}
-{#<div class="dashboard-card">#}
-{#    <h3>Recent Payments</h3>#}
-{#    <table class="table">#}
-{#        <thead>#}
-{#            <tr>#}
-{#                <th>Date</th>#}
-{#                <th>Invoice</th>#}
-{#                <th>Client</th>#}
-{#                <th>Method</th>#}
-{#                <th>Amount</th>#}
-{#            </tr>#}
-{#        </thead>#}
-{#        <tbody>#}
-{#            {% for payment in recent_payments %}#}
-{#            <tr>#}
-{#                <td>{{ payment.payment_date }}</td>#}
-{#                <td>{{ payment.invoice.invoice_number }}</td>#}
-{#                <td>{{ payment.invoice.client.full_name }}</td>#}
-{#                <td>{{ payment.get_payment_method_display }}</td>#}
-{#                <td>${{ payment.amount|floatformat:2 }}</td>#}
-{#            </tr>#}
-{#            {% endfor %}#}
-{#        </tbody>#}
-{#    </table>#}
-{#</div>#}
-{##}
-{#<div class="dashboard-card">#}
-{#    <h3>Overdue Invoices</h3>#}
-{#    {% if overdue_invoices %}#}
-{#    <table class="table">#}
-{#        <thead>#}
-{#            <tr>#}
-{#                <th>Invoice #</th>#}
-{#                <th>Client</th>#}
-{#                <th>Due Date</th>#}
-{#                <th>Amount Due</th>#}
-{#            </tr>#}
-{#        </thead>#}
-{#        <tbody>#}
-{#            {% for invoice in overdue_invoices %}#}
-{#            <tr>#}
-{#                <td>{{ invoice.invoice_number }}</td>#}
-{#                <td>{{ invoice.client.full_name }}</td>#}
-{#                <td>{{ invoice.due_date }}</td>#}
-{#                <td>${{ invoice.balance_due|floatformat:2 }}</td>#}
-{#            </tr>#}
-{#            {% endfor %}#}
-{#        </tbody>#}
-{#    </table>#}
-{#    {% else %}#}
-{#    <p>No overdue invoices!</p>#}
-{#    {% endif %}#}
-{#</div>#}
-{#    <div class="dashboard-card">#}
-{#    <h3>Services Management</h3>#}
-{#    <div class="d-flex justify-content-between mb-3">#}
-{#        <div>#}
-{#            <p>Manage your company's service offerings including Web Development, App Development, and POS Systems.</p>#}
-{#        </div>#}
-{#        <div>#}
-{#            <a href="{% url 'client_portal:admin_services' %}" class="btn btn-primary">Manage Services</a>#}
-{#        </div>#}
-{#    </div>#}
-{#    <table class="table">#}
-{#        <thead>#}
-{#            <tr>#}
-{#                <th>Service Type</th>#}
-{#                <th>Count</th>#}
-{#            </tr>#}
-{#        </thead>#}
-{#        <tbody>#}
-{#            {% for type in services_by_type %}#}
-{#            <tr>#}
-{#                <td>#}
-{#                    {% if type.service_type == 'web' %}Web Development#}
-{#                    {% elif type.service_type == 'app' %}App Development#}
-{#                    {% elif type.service_type == 'pos' %}POS System#}
-{#                    {% else %}{{ type.service_type }}{% endif %}#}
-{#                </td>#}
-{#                <td>{{ type.count }}</td>#}
-{#            </tr>#}
-{#            {% empty %}#}
-{#            <tr>#}
-{#                <td colspan="2">No services configured. Add services to display here.</td>#}
-{#            </tr>#}
-{#            {% endfor %}#}
-{#        </tbody>#}
-{#    </table>#}
-{#</div>#}
-{#{% endblock %}#}
-
-
+<!-- templates/admin/dashboard.html -->
 {% extends "admin/base_site.html" %}
 {% load i18n static %}
 
@@ -206,121 +6,45 @@
 
 {% block extrahead %}
 
+</a>
 <style>
-    :root {
-        --amber-color: #c1954a;
-        --dark-amber: #9e7a39;
-        --light-amber: #d4b06a;
-        --off-white: #faf7f2;
-        --dark-gray: #333333;
-    }
-
-    .dashboard-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 20px;
-        padding-bottom: 10px;
-        border-bottom: 1px solid #eee;
-    }
-
-    .dashboard-title {
-        margin: 0;
-        color: var(--dark-gray);
-    }
-
-    .logout-btn {
-        background-color: var(--amber-color);
-        color: white;
-        border: none;
-        padding: 8px 16px;
-        border-radius: 4px;
-        transition: all 0.3s ease;
-        text-decoration: none;
-        display: inline-flex;
-        align-items: center;
-    }
-
-    .logout-btn:hover {
-        background-color: var(--dark-amber);
-        transform: translateY(-2px);
-        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    }
-
-    .logout-btn i {
-        margin-right: 8px;
-    }
-
     .dashboard-card {
         padding: 20px;
         border-radius: 5px;
         box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
         margin-bottom: 20px;
-        background-color: white;
     }
-
     .dashboard-card h3 {
         margin-top: 0;
         border-bottom: 1px solid #eee;
         padding-bottom: 10px;
-        color: var(--dark-gray);
     }
-
     .stats-grid {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
         gap: 20px;
     }
-
     .stat-card {
-        background-color: var(--off-white);
+        background-color: white;
         padding: 20px;
         border-radius: 5px;
-        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.1);
+        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
         text-align: center;
-        transition: transform 0.3s ease;
     }
-
-    .stat-card:hover {
-        transform: translateY(-5px);
-    }
-
     .stat-value {
         font-size: 2rem;
         font-weight: bold;
-        color: var(--amber-color);
     }
-
     .stat-label {
-        color: var(--dark-gray);
-        text-transform: uppercase;
-        font-size: 0.9rem;
-        margin-top: 10px;
-    }
-
-    .table {
-        width: 100%;
-        margin-bottom: 1rem;
-        color: var(--dark-gray);
-    }
-
-    .table th {
-        background-color: var(--off-white);
-        border-bottom: 2px solid var(--amber-color);
+        color: #6c757d;
     }
 </style>
 {% endblock %}
 
 {% block content %}
-<div class="dashboard-header">
-    <h1 class="dashboard-title">CloudLink_Devs Admin Dashboard</h1>
-    <a href="{% url 'client_portal:logout' %}" class="logout-btn">
-        <i class="fas fa-sign-out-alt"></i> Logout
-    </a>
-</div>
-
 <div class="dashboard-card">
-    <h3>Financial Overview</h3>
+    <h3>CloudLink_Devs Admin Dashboard</h3>
+
     <div class="stats-grid">
         <div class="stat-card">
             <div class="stat-value">${{ total_invoiced|floatformat:2 }}</div>
@@ -436,8 +160,7 @@
     <p>No overdue invoices!</p>
     {% endif %}
 </div>
-
-<div class="dashboard-card">
+    <div class="dashboard-card">
     <h3>Services Management</h3>
     <div class="d-flex justify-content-between mb-3">
         <div>
@@ -474,3 +197,280 @@
     </table>
 </div>
 {% endblock %}
+
+{##}
+{#{% extends "admin/base_site.html" %}#}
+{#{% load i18n static %}#}
+{##}
+{#{% block title %}Dashboard | CloudLink_Devs Admin{% endblock %}#}
+{##}
+{#{% block extrahead %}#}
+{##}
+{#<style>#}
+{#    :root {#}
+{#        --amber-color: #c1954a;#}
+{#        --dark-amber: #9e7a39;#}
+{#        --light-amber: #d4b06a;#}
+{#        --off-white: #faf7f2;#}
+{#        --dark-gray: #333333;#}
+{#    }#}
+{##}
+{#    .dashboard-header {#}
+{#        display: flex;#}
+{#        justify-content: space-between;#}
+{#        align-items: center;#}
+{#        margin-bottom: 20px;#}
+{#        padding-bottom: 10px;#}
+{#        border-bottom: 1px solid #eee;#}
+{#    }#}
+{##}
+{#    .dashboard-title {#}
+{#        margin: 0;#}
+{#        color: var(--dark-gray);#}
+{#    }#}
+{##}
+{#    .logout-btn {#}
+{#        background-color: var(--amber-color);#}
+{#        color: white;#}
+{#        border: none;#}
+{#        padding: 8px 16px;#}
+{#        border-radius: 4px;#}
+{#        transition: all 0.3s ease;#}
+{#        text-decoration: none;#}
+{#        display: inline-flex;#}
+{#        align-items: center;#}
+{#    }#}
+{##}
+{#    .logout-btn:hover {#}
+{#        background-color: var(--dark-amber);#}
+{#        transform: translateY(-2px);#}
+{#        box-shadow: 0 4px 6px rgba(0,0,0,0.1);#}
+{#    }#}
+{##}
+{#    .logout-btn i {#}
+{#        margin-right: 8px;#}
+{#    }#}
+{##}
+{#    .dashboard-card {#}
+{#        padding: 20px;#}
+{#        border-radius: 5px;#}
+{#        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);#}
+{#        margin-bottom: 20px;#}
+{#        background-color: white;#}
+{#    }#}
+{##}
+{#    .dashboard-card h3 {#}
+{#        margin-top: 0;#}
+{#        border-bottom: 1px solid #eee;#}
+{#        padding-bottom: 10px;#}
+{#        color: var(--dark-gray);#}
+{#    }#}
+{##}
+{#    .stats-grid {#}
+{#        display: grid;#}
+{#        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));#}
+{#        gap: 20px;#}
+{#    }#}
+{##}
+{#    .stat-card {#}
+{#        background-color: var(--off-white);#}
+{#        padding: 20px;#}
+{#        border-radius: 5px;#}
+{#        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.1);#}
+{#        text-align: center;#}
+{#        transition: transform 0.3s ease;#}
+{#    }#}
+{##}
+{#    .stat-card:hover {#}
+{#        transform: translateY(-5px);#}
+{#    }#}
+{##}
+{#    .stat-value {#}
+{#        font-size: 2rem;#}
+{#        font-weight: bold;#}
+{#        color: var(--amber-color);#}
+{#    }#}
+{##}
+{#    .stat-label {#}
+{#        color: var(--dark-gray);#}
+{#        text-transform: uppercase;#}
+{#        font-size: 0.9rem;#}
+{#        margin-top: 10px;#}
+{#    }#}
+{##}
+{#    .table {#}
+{#        width: 100%;#}
+{#        margin-bottom: 1rem;#}
+{#        color: var(--dark-gray);#}
+{#    }#}
+{##}
+{#    .table th {#}
+{#        background-color: var(--off-white);#}
+{#        border-bottom: 2px solid var(--amber-color);#}
+{#    }#}
+{#</style>#}
+{#{% endblock %}#}
+{##}
+{#{% block content %}#}
+{#<div class="dashboard-header">#}
+{#    <h1 class="dashboard-title">CloudLink_Devs Admin Dashboard</h1>#}
+{#    <a href="{% url 'client_portal:logout' %}" class="logout-btn">#}
+{#        <i class="fas fa-sign-out-alt"></i> Logout#}
+{#    </a>#}
+{#</div>#}
+{##}
+{#<div class="dashboard-card">#}
+{#    <h3>Financial Overview</h3>#}
+{#    <div class="stats-grid">#}
+{#        <div class="stat-card">#}
+{#            <div class="stat-value">${{ total_invoiced|floatformat:2 }}</div>#}
+{#            <div class="stat-label">Total Invoiced</div>#}
+{#        </div>#}
+{#        <div class="stat-card">#}
+{#            <div class="stat-value">${{ total_paid|floatformat:2 }}</div>#}
+{#            <div class="stat-label">Total Paid</div>#}
+{#        </div>#}
+{#        <div class="stat-card">#}
+{#            <div class="stat-value">${{ balance_due|floatformat:2 }}</div>#}
+{#            <div class="stat-label">Balance Due</div>#}
+{#        </div>#}
+{#        <div class="stat-card">#}
+{#            <div class="stat-value">{{ total_clients }}</div>#}
+{#            <div class="stat-label">Total Clients</div>#}
+{#        </div>#}
+{#    </div>#}
+{#</div>#}
+{##}
+{#<div class="dashboard-card">#}
+{#    <h3>Projects by Status</h3>#}
+{#    <table class="table">#}
+{#        <thead>#}
+{#            <tr>#}
+{#                <th>Status</th>#}
+{#                <th>Count</th>#}
+{#            </tr>#}
+{#        </thead>#}
+{#        <tbody>#}
+{#            {% for status in projects_by_status %}#}
+{#            <tr>#}
+{#                <td>{{ status.status }}</td>#}
+{#                <td>{{ status.count }}</td>#}
+{#            </tr>#}
+{#            {% endfor %}#}
+{#        </tbody>#}
+{#    </table>#}
+{#</div>#}
+{##}
+{#<div class="dashboard-card">#}
+{#    <h3>Payments by Method</h3>#}
+{#    <table class="table">#}
+{#        <thead>#}
+{#            <tr>#}
+{#                <th>Method</th>#}
+{#                <th>Count</th>#}
+{#                <th>Total</th>#}
+{#            </tr>#}
+{#        </thead>#}
+{#        <tbody>#}
+{#            {% for method in payment_by_method %}#}
+{#            <tr>#}
+{#                <td>{{ method.payment_method }}</td>#}
+{#                <td>{{ method.count }}</td>#}
+{#                <td>${{ method.total|floatformat:2 }}</td>#}
+{#            </tr>#}
+{#            {% endfor %}#}
+{#        </tbody>#}
+{#    </table>#}
+{#</div>#}
+{##}
+{#<div class="dashboard-card">#}
+{#    <h3>Recent Payments</h3>#}
+{#    <table class="table">#}
+{#        <thead>#}
+{#            <tr>#}
+{#                <th>Date</th>#}
+{#                <th>Invoice</th>#}
+{#                <th>Client</th>#}
+{#                <th>Method</th>#}
+{#                <th>Amount</th>#}
+{#            </tr>#}
+{#        </thead>#}
+{#        <tbody>#}
+{#            {% for payment in recent_payments %}#}
+{#            <tr>#}
+{#                <td>{{ payment.payment_date }}</td>#}
+{#                <td>{{ payment.invoice.invoice_number }}</td>#}
+{#                <td>{{ payment.invoice.client.full_name }}</td>#}
+{#                <td>{{ payment.get_payment_method_display }}</td>#}
+{#                <td>${{ payment.amount|floatformat:2 }}</td>#}
+{#            </tr>#}
+{#            {% endfor %}#}
+{#        </tbody>#}
+{#    </table>#}
+{#</div>#}
+{##}
+{#<div class="dashboard-card">#}
+{#    <h3>Overdue Invoices</h3>#}
+{#    {% if overdue_invoices %}#}
+{#    <table class="table">#}
+{#        <thead>#}
+{#            <tr>#}
+{#                <th>Invoice #</th>#}
+{#                <th>Client</th>#}
+{#                <th>Due Date</th>#}
+{#                <th>Amount Due</th>#}
+{#            </tr>#}
+{#        </thead>#}
+{#        <tbody>#}
+{#            {% for invoice in overdue_invoices %}#}
+{#            <tr>#}
+{#                <td>{{ invoice.invoice_number }}</td>#}
+{#                <td>{{ invoice.client.full_name }}</td>#}
+{#                <td>{{ invoice.due_date }}</td>#}
+{#                <td>${{ invoice.balance_due|floatformat:2 }}</td>#}
+{#            </tr>#}
+{#            {% endfor %}#}
+{#        </tbody>#}
+{#    </table>#}
+{#    {% else %}#}
+{#    <p>No overdue invoices!</p>#}
+{#    {% endif %}#}
+{#</div>#}
+{##}
+{#<div class="dashboard-card">#}
+{#    <h3>Services Management</h3>#}
+{#    <div class="d-flex justify-content-between mb-3">#}
+{#        <div>#}
+{#            <p>Manage your company's service offerings including Web Development, App Development, and POS Systems.</p>#}
+{#        </div>#}
+{#        <div>#}
+{#            <a href="{% url 'client_portal:admin_services' %}" class="btn btn-primary">Manage Services</a>#}
+{#        </div>#}
+{#    </div>#}
+{#    <table class="table">#}
+{#        <thead>#}
+{#            <tr>#}
+{#                <th>Service Type</th>#}
+{#                <th>Count</th>#}
+{#            </tr>#}
+{#        </thead>#}
+{#        <tbody>#}
+{#            {% for type in services_by_type %}#}
+{#            <tr>#}
+{#                <td>#}
+{#                    {% if type.service_type == 'web' %}Web Development#}
+{#                    {% elif type.service_type == 'app' %}App Development#}
+{#                    {% elif type.service_type == 'pos' %}POS System#}
+{#                    {% else %}{{ type.service_type }}{% endif %}#}
+{#                </td>#}
+{#                <td>{{ type.count }}</td>#}
+{#            </tr>#}
+{#            {% empty %}#}
+{#            <tr>#}
+{#                <td colspan="2">No services configured. Add services to display here.</td>#}
+{#            </tr>#}
+{#            {% endfor %}#}
+{#        </tbody>#}
+{#    </table>#}
+{#</div>#}
+{#{% endblock %}#}
